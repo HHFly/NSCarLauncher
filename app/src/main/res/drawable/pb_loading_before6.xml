@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:duration="150">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/ic_load1"
+            android:gravity="center" />
+    </item>
+    <item android:duration="150">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/ic_load2"
+            android:gravity="center" />
+    </item>
+    <item android:duration="150">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/ic_load3"
+            android:gravity="center" />
+    </item>
+    <item android:duration="150">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/ic_load4"
+            android:gravity="center" />
+    </item>
+    <item android:duration="150">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/ic_load5"
+            android:gravity="center" />
+    </item>
+    <item android:duration="150">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/ic_load6"
+            android:gravity="center" />
+    </item>
+    <item android:duration="150">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/ic_load7"
+            android:gravity="center" />
+    </item>
+
+    <item android:duration="150">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/ic_load8"
+            android:gravity="center" />
+    </item>
+    <item android:duration="150">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/ic_load9"
+            android:gravity="center" />
+    </item>
+    <item android:duration="150">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/ic_load10"
+            android:gravity="center" />
+    </item>
+    <item android:duration="150">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/ic_load11"
+            android:gravity="center" />
+    </item>
+    <item android:duration="150">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/ic_load12"
+            android:gravity="center" />
+    </item>
+</animation-list>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 标题栏 -->
+    <dimen name="titlebar_height">88px</dimen>
+    <dimen name="titlebar_title_textsize">30px</dimen>
+    <dimen name="titlebar_title_textsize_sub">26px</dimen>
+
+    <!-- 线条宽度 -->
+    <dimen name="view_line_width">2px</dimen>
+
+
+    <!-- 店铺-选择框-radiobutton
+     shop_dialog_select_rb_radio:圆角
+     shop_dialog_select_rb_width:边框宽度
+     -->
+    <dimen name="shop_dialog_select_rb_radio">5px</dimen>
+    <dimen name="shop_dialog_select_rb_width">2px</dimen>
+
+    <dimen name="shape_stroke_width">2px</dimen>
+    <dimen name="shape_corners_radius">8px</dimen>
+
+    <!-- 按钮圆角 -->
+    <dimen name="shape_btn_commonly_radius">10px</dimen>
+    <dimen name="shape_btn_important_radius">80px</dimen>
+    <dimen name="shape_btn_small_radius">5px</dimen>
+
+    <dimen name="shape_num_stroke_width">1px</dimen>
+
+
+    <dimen name="textsize_10px">10px</dimen>
+    <dimen name="textsize_20px">20px</dimen>
+    <dimen name="textsize_22px">22px</dimen>
+    <dimen name="textsize_24px">24px</dimen>
+    <dimen name="textsize_26px">26px</dimen>
+    <dimen name="textsize_28px">28px</dimen>
+    <dimen name="textsize_30px">30px</dimen>
+
+    <!-- 输入框左侧标题同一最小宽度 -->
+    <dimen name="edit_title_minWidth">160px</dimen>
+    <!--我的-->
+    <dimen name="me_image_height">88px</dimen>
+</resources>

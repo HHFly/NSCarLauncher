@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="1000px" android:layout_height="80px" android:background="@mipmap/title_bg"
+    android:layout_centerHorizontal="true">
+    <ImageView
+        android:id="@+id/center_img"
+    android:layout_width="72px"
+    android:layout_height="72px"
+    android:layout_centerInParent="true"
+    android:scaleType="center"
+    android:src="@mipmap/title_center"/>
+    <ImageView
+        android:layout_width="52px"
+        android:layout_height="52px"
+        android:scaleType="center"
+        android:src="@mipmap/title_left"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="230px"
+        android:layout_toLeftOf="@+id/center_img"/>
+    <ImageView
+        android:id="@+id/title_iv_sound"
+        android:layout_width="48px"
+        android:layout_height="48px"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/title_sound"
+        android:layout_toRightOf="@+id/center_img"
+        android:layout_marginLeft="230px"
+        />
+</RelativeLayout>

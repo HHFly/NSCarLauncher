@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NSCarLauncher</string>
+    <string name="电台">电台</string>
+    <string name="天气">天气</string>
+    <string name="杭州交通经济广播">杭州交通经济广播</string>
+    <string name="车辆未授权">车辆未授权</string>
+
+</resources>

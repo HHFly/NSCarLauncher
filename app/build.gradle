@@ -1,0 +1,74 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.example.dell.nscarlauncher"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+//            JPUSH_PKGNAME     : applicationId,
+//            JPUSH_APPKEY      : "dd35eb272ea54587cc5461e9", //JPush上注册的包名对应的appkey.
+//            JPUSH_CHANNEL     : "developer-default", //暂时填写默认值即可.
+
+         //自己弄的框架配置
+             WHITE_PKGNAME     : applicationId,//包名
+            WHITE_FILEPROVIDER: "${applicationId}.fileprovider",//7.0文件Provider对应的authorities
+
+        ]
+        buildConfigField("String", "WEB_INTERFACE", "\"androidInterface\"")
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+        // ... and any other excludes go here
+    }
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //自动适配框架
+    implementation 'com.zhy:autolayout:1.4.5'
+    //图片加载框架
+    implementation 'com.facebook.fresco:fresco:1.4.0'
+    implementation 'jp.wasabeef:fresco-processors:2.1.0'
+    //工具类封装
+    implementation 'com.white.app:mkcommon-core:1.1.20'
+    implementation 'com.white.app:mkcommon-refresh-header:1.0.1'
+    implementation 'com.white.app:mkcommon-refresh-footer:1.0.1'
+    implementation 'com.white.app:mkcommon-refresh-layout:1.0.1'
+    //网络请求框架
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.2'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.mark.app:mkbasetools:1.0.0'
+    implementation 'com.bakerj:infinite-cards:1.0.3'
+    //沉浸式实现
+    implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
+}

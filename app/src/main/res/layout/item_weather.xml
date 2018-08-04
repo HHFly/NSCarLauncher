@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="373px"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="50px"
+    android:layout_marginRight="50px"
+    android:background="#080B0F">
+    <TextView
+    style="@style/BaseText.Tv"
+        android:id="@+id/tv_w_time"
+        android:layout_gravity="center_horizontal"
+        android:text="16:20"
+        android:textSize="72px"
+        android:includeFontPadding="false"
+        android:layout_marginTop="-10px"
+        android:lineSpacingMultiplier="1"
+        android:lineSpacingExtra="0dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:layout_marginBottom="0dp"
+
+    />
+    <TextView style="@style/BaseText.Tv"
+        android:id="@+id/tv_w_authorize"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/车辆未授权"
+        android:textSize="24px"
+        android:textColor="#78A9FC"
+        android:layout_marginTop="23px"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="27px">
+
+        <ImageView
+            android:id="@+id/iv_w_weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:src="@mipmap/ic_cloudy_icon" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13px"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_w_temperature"
+                style="@style/BaseText.Tv"
+                android:text="16°"
+                android:textSize="24px"
+
+                />
+            <TextView style="@style/BaseText.Tv"
+                android:id="@+id/tv_w_weather"
+                android:text="多云"
+                android:textSize="24px"
+                />
+        </LinearLayout>
+
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/tv_w_location"
+            android:text="杭州"
+            android:textSize="36px"
+            android:layout_marginLeft="15px"
+            android:layout_gravity="bottom"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24px"
+        >
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/tv_w_date"
+            android:text="2017/10/14"
+            android:textSize="36px"
+            />
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/tv_w_week"
+            android:text="星期二"
+            android:textSize="36px"
+            android:layout_marginLeft="24px"
+            />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="300px"
+        android:layout_height="300px"
+        android:layout_marginTop="24px"
+        android:background="@mipmap/ic_w_bg"
+        android:layout_gravity="center_horizontal"
+       >
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_w_bg_ball" />
+        <com.example.dell.nscarlauncher.widget.CircleView
+            android:id="@+id/wave_view"
+            android:layout_centerInParent="true"
+            android:layout_width="240px"
+            android:layout_height="240px"
+            />
+        <LinearLayout
+            android:id="@+id/ll_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="73px"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100px">
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/tv_w_speed"
+            android:textSize="98px"
+            android:text="20"
+            android:includeFontPadding="false"
+            android:layout_marginTop="-20px"
+            />
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="36px"
+            android:text="KM"
+            android:includeFontPadding="false"
+            android:layout_marginTop="-20px"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#EEEEEE"
+            android:textSize="24px"
+            android:text="Sport"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/ll_speed"
+            android:layout_marginTop="24px"
+           />
+    </RelativeLayout>
+</LinearLayout>
