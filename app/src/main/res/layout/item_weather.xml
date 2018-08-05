@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="373px"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginLeft="50px"
     android:layout_marginRight="50px"
     android:background="#080B0F">
@@ -26,19 +26,19 @@
         android:text="@string/车辆未授权"
         android:textSize="24px"
         android:textColor="#78A9FC"
-        android:layout_marginTop="23px"
+
         />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="27px">
+        android:layout_marginTop="7px">
 
         <ImageView
             android:id="@+id/iv_w_weather"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="59px"
+            android:layout_height="45px"
             android:layout_gravity="bottom"
             android:src="@mipmap/ic_cloudy_icon" />
         <LinearLayout
@@ -99,8 +99,8 @@
 
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="240px"
+            android:layout_height="240px"
             android:layout_centerInParent="true"
             android:src="@mipmap/ic_w_bg_ball" />
         <com.example.dell.nscarlauncher.widget.CircleView

@@ -18,7 +18,7 @@ import com.example.dell.nscarlauncher.common.FrescoUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.mark.app.base.recylerview.MkViewHolder;
 
-import com.zhy.autolayout.utils.AutoUtils;
+//import com.zhy.autolayout.utils.AutoUtils;
 
 /**
  * RecyclerView的ViewHolder
@@ -28,7 +28,7 @@ import com.zhy.autolayout.utils.AutoUtils;
 public class AutoViewHolder extends MkViewHolder {
     public AutoViewHolder(View view) {
         super(view);
-        AutoUtils.autoSize(view);
+//        AutoUtils.autoSize(view);
     }
     /**
      * 设置Edittext文本监听

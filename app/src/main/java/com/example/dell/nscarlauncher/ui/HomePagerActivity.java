@@ -10,6 +10,7 @@ import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.example.dell.nscarlauncher.ui.home.HomeData;
 import com.example.dell.nscarlauncher.ui.home.HomePagerOneFragment;
+import com.example.dell.nscarlauncher.ui.home.HomePagerTwoFragment;
 import com.example.dell.nscarlauncher.ui.home.model.HomeModel;
 import com.example.dell.nscarlauncher.widget.CustomViewPager;
 import com.gyf.barlibrary.BarHide;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
     private ArrayList<Fragment> mFragments;
-    private CustomViewPager viewPager;
+    private ViewPager viewPager;
     private  int PageCount;
     private ArrayList<HomeModel> mData;
     @Override
@@ -28,9 +29,10 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
     @Override
     public void initView() {
-        initData();
+        initDa();
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
-        viewPager.setOffscreenPageLimit(PageCount-1);
+//        viewPager.setOffscreenPageLimit(PageCount-1);
+        viewPager.setOffscreenPageLimit(1);
 
     }
 
@@ -55,6 +57,12 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             case R.id.title_iv_sound:
                 break;
         }
+    }
+    private  void initDa(){
+        HomePagerTwoFragment homePagerOneFragment =new HomePagerTwoFragment();
+        HomePagerTwoFragment homePagerTwoFragment =new HomePagerTwoFragment();
+        mFragments.add(homePagerOneFragment);
+        mFragments.add(homePagerTwoFragment);
     }
     private void  initData(){
         HomeData data =new HomeData();

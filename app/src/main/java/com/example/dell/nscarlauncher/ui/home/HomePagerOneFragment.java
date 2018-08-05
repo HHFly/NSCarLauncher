@@ -1,5 +1,6 @@
 package com.example.dell.nscarlauncher.ui.home;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -23,6 +24,7 @@ public class HomePagerOneFragment extends BaseFragment {
            HomeModel homeModel =new HomeModel(Data.get(i));
            mData.add(homeModel);
        }
+       initRvAdapter(mData);
     }
 
     @Override
@@ -42,7 +44,7 @@ public class HomePagerOneFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        initRvAdapter(mData);
+
     }
 
     @Override
@@ -80,6 +82,8 @@ public class HomePagerOneFragment extends BaseFragment {
 //
 //            });
 
+        }else {
+            mAdapter.notifyDataSetChanged();
         }
     }
 }

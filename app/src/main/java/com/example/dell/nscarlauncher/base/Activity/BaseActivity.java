@@ -10,6 +10,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
 import android.text.SpannableString;
@@ -36,7 +37,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.gyf.barlibrary.BarHide;
 import com.gyf.barlibrary.ImmersionBar;
 import com.white.lib.utils.location.LocationManagerUtil;
-import com.zhy.autolayout.AutoLayoutActivity;
+//import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.io.File;
 import java.util.List;
@@ -47,7 +48,7 @@ import java.util.List;
  * activity基类
  */
 
-public abstract class BaseActivity extends AutoLayoutActivity implements View.OnClickListener, ShowLoadingDialogListener {
+public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener, ShowLoadingDialogListener {
     private final String TAG = getClass().getSimpleName();
     /**
      * 存放View

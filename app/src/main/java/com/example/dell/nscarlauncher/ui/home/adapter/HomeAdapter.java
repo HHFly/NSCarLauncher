@@ -20,7 +20,10 @@ public class HomeAdapter extends MultipleSourcesRvAdapter {
     public int getRowsCountInSection(int var1) {
         return 1;
     }
-
+    @Override
+    public int getSectionsCount() {
+        return mData.size();
+    }
     @Override
     public View onCreateView(ViewGroup var1, int var2) {
         return inflater(var1, mData.get(var2).getLayout());

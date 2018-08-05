@@ -7,9 +7,11 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.example.dell.nscarlauncher.BuildConfig;
 import com.example.dell.nscarlauncher.common.FrescoUtils;
 import com.example.dell.nscarlauncher.common.PDLifecycleHandle;
 import com.example.dell.nscarlauncher.common.ToastUtils;
+import com.white.lib.utils.UtilsConfig;
 
 
 /**
@@ -41,7 +43,10 @@ App extends Application {
         registerActivityLifecycleCallbacks(new PDLifecycleHandle());
         //初始化Fresco
         FrescoUtils.initialize(this);
-
+        //初始化white框架
+        UtilsConfig
+                .getInstance(this)
+                .setLogOpen(BuildConfig.IS_OPEN_LOG);
 
     }
 

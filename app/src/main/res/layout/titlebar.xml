@@ -7,12 +7,10 @@
     android:layout_width="72px"
     android:layout_height="72px"
     android:layout_centerInParent="true"
-    android:scaleType="center"
     android:src="@mipmap/title_center"/>
     <ImageView
         android:layout_width="52px"
         android:layout_height="52px"
-        android:scaleType="center"
         android:src="@mipmap/title_left"
         android:layout_centerVertical="true"
         android:layout_marginRight="230px"

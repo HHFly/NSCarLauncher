@@ -7,20 +7,20 @@
     <ImageView
         android:id="@+id/ctl_iv_left"
         android:layout_gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="31px"
+        android:layout_height="36px"
         android:src="@mipmap/ic_left"/>
     <ImageView
     android:id="@+id/ctl_iv_center"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="80px"
+    android:layout_height="80px"
     android:src="@mipmap/ic_pause"
     android:layout_marginLeft="40px"/>
     <ImageView
         android:id="@+id/ctl_iv_right"
         android:layout_gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="31px"
+        android:layout_height="36px"
         android:src="@mipmap/ic_right"
         android:layout_marginLeft="40px"/>
 </LinearLayout>
