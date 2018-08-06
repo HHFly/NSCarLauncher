@@ -1,4 +1,4 @@
-package com.example.dell.nscarlauncher.ui.home;
+package com.example.dell.nscarlauncher.ui.home.fragment;
 
 import android.annotation.SuppressLint;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import static android.support.v7.widget.LinearLayoutManager.*;
 
-public class HomePagerOneFragment extends BaseFragment {
+public class HomePagerFragment extends BaseFragment {
     private HomeAdapter mAdapter;
     private ArrayList<HomeModel> mData = new ArrayList<>();
 

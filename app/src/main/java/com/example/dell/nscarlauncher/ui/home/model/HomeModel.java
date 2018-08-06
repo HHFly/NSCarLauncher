@@ -2,7 +2,7 @@ package com.example.dell.nscarlauncher.ui.home.model;
 
 import android.support.annotation.LayoutRes;
 
-import com.example.dell.nscarlauncher.ui.home.ClassType;
+import com.example.dell.nscarlauncher.ui.home.androideunm.ClassType;
 
 public class HomeModel {
     private String name ;

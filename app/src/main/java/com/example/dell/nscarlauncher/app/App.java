@@ -11,6 +11,7 @@ import com.example.dell.nscarlauncher.BuildConfig;
 import com.example.dell.nscarlauncher.common.FrescoUtils;
 import com.example.dell.nscarlauncher.common.PDLifecycleHandle;
 import com.example.dell.nscarlauncher.common.ToastUtils;
+import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.white.lib.utils.UtilsConfig;
 
 
@@ -30,7 +31,8 @@ App extends Application {
 
     private Activity mCurActivity;
 
-
+    //共享handle变量
+    public static HomePagerOneFragment.PagerOneHnadler pagerOneHnadler;
 
     @Override
     public void onCreate() {
@@ -47,7 +49,8 @@ App extends Application {
         UtilsConfig
                 .getInstance(this)
                 .setLogOpen(BuildConfig.IS_OPEN_LOG);
-
+        /*初始化Handle*/
+        pagerOneHnadler = new HomePagerOneFragment.PagerOneHnadler();
     }
 
 

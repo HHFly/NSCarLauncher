@@ -98,17 +98,17 @@
        >
 
 
-        <ImageView
-            android:layout_width="240px"
-            android:layout_height="240px"
-            android:layout_centerInParent="true"
-            android:src="@mipmap/ic_w_bg_ball" />
-        <com.example.dell.nscarlauncher.widget.CircleView
-            android:id="@+id/wave_view"
-            android:layout_centerInParent="true"
-            android:layout_width="240px"
-            android:layout_height="240px"
-            />
+
+
+            <com.example.dell.nscarlauncher.widget.CircleView
+                android:id="@+id/wave_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+
+
+
         <LinearLayout
             android:id="@+id/ll_speed"
             android:layout_width="wrap_content"

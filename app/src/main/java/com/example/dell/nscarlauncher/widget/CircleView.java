@@ -33,15 +33,15 @@ public class CircleView extends View{
     private int mCircleSTROKEWidth = 2;
     private int mLineSTROKEWidth = 1;
 
-    private int mCircleColor = Color.WHITE;
-    private int mRingColor = Color.WHITE;
-    private int mWaveColor = Color.WHITE;
+    private int mCircleColor = getResources().getColor(R.color.main_bg);
+    private int mRingColor =getResources().getColor(R.color.colorCircle);
+    private int mWaveColor = getResources().getColor(R.color.main_bg);
 
     private Handler mHandler;
     private long c = 0L;
     private boolean mStarted = false;
     private final float f = 0.033F;
-    private int mAlpha = 50;// 透明度
+    private int mAlpha = 100;// 透明度
     private float mAmplitude = 10.0F; // 振幅
     private float mWaterLevel = 0.5F;// 水高(0~1)
     private Path mPath;
@@ -195,7 +195,10 @@ public class CircleView extends View{
         // 得到控件的宽高
         int width = getWidth();
         int height = getHeight();
-        setBackgroundColor(mContext.getResources().getColor(R.color.main_bg));
+
+        mScreenWidth =  getWidth();
+        mScreenHeight = getHeight();
+//        setBackgroundColor(mContext.getResources().getColor(R.color.main_bg));
         // 计算当前油量线和水平中线的距离
         float centerOffset = Math.abs(mScreenWidth / 2 * mWaterLevel
                 - mScreenWidth / 4);
@@ -210,16 +213,16 @@ public class CircleView extends View{
             startAngle = horiAngle;
             sweepAngle = 180F - 2 * horiAngle;
         }
+//
+//        canvas.drawLine(mScreenWidth * 3 / 8, mScreenHeight * 5 / 8,
+//                mScreenWidth * 5 / 8, mScreenHeight * 5 / 8, linePaint);
 
-        canvas.drawLine(mScreenWidth * 3 / 8, mScreenHeight * 5 / 8,
-                mScreenWidth * 5 / 8, mScreenHeight * 5 / 8, linePaint);
-
-        float num = flowPaint.measureText(flowNum);
-        canvas.drawText(flowNum, mScreenWidth * 4 / 8 - num / 2,
-                mScreenHeight * 4 / 8, flowPaint);
-        float left = leftPaint.measureText(flowLeft);
-        canvas.drawText(flowLeft, mScreenWidth * 4 / 8 - left / 2,
-                mScreenHeight * 3 / 8, leftPaint);
+//        float num = flowPaint.measureText(flowNum);
+//        canvas.drawText(flowNum, mScreenWidth * 4 / 8 - num / 2,
+//                mScreenHeight * 4 / 8, flowPaint);
+//        float left = leftPaint.measureText(flowLeft);
+//        canvas.drawText(flowLeft, mScreenWidth * 4 / 8 - left / 2,
+//                mScreenHeight * 3 / 8, leftPaint);
 
         // 如果未开始（未调用startWave方法）,绘制一个扇形
         if ((!mStarted) || (mScreenWidth == 0) || (mScreenHeight == 0)) {

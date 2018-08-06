@@ -4,5 +4,13 @@
     <string name="天气">天气</string>
     <string name="杭州交通经济广播">杭州交通经济广播</string>
     <string name="车辆未授权">车辆未授权</string>
+    <string name="天">天</string>
+    <string name="一">一</string>
+    <string name="二">二</string>
+    <string name="三">三</string>
+    <string name="四">四</string>
+    <string name="五">五</string>
+    <string name="六">六</string>
+    <string name="星期">星期</string>
 
 </resources>

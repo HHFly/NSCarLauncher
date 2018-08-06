@@ -1,4 +1,4 @@
-package com.example.dell.nscarlauncher.ui.home;
+package com.example.dell.nscarlauncher.ui.home.fragment;
 
 import android.view.View;
 

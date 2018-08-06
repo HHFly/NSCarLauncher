@@ -13,6 +13,7 @@
     -->
     <color name="view_line">#FFFFFF</color>
     <color name="main_bg">#5680BB</color>
+
     <!--
     color_main_blue主色调-蓝色
     home_label_blue首页标签色调
@@ -34,4 +35,5 @@
 
     <color name="color_line_border">#C7C7C7</color>
     <color name="colorBlack_Three">#333333</color>
+    <color name="colorCircle">#1C1E2E</color>
 </resources>
