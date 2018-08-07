@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200px" android:layout_height="120px"
+    android:orientation="horizontal"
+    android:background="#222741">
+<TextView style="@style/BaseText.Tv"
+    android:textSize="36px"
+    android:id="@+id/tv_fm_re_hz"
+    android:text="87.50"
+   android:layout_marginLeft="30px"
+    android:layout_marginTop="37px"
+    />
+
+    <TextView
+        style="@style/BaseText.Tv"
+        android:text="MHZ"
+        android:textSize="24px"
+        android:layout_marginLeft="8px"
+        android:layout_marginTop="38px"
+     />
+</LinearLayout>

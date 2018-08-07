@@ -8,12 +8,11 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
-    <include layout="@layout/titlebar" />
-
     <me.relex.circleindicator.CircleIndicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"
@@ -24,6 +23,14 @@
         android:layout_marginBottom="0dp"
         android:layout_marginTop="2dp"
         android:orientation="horizontal"></me.relex.circleindicator.CircleIndicator>
+    <FrameLayout
+        android:id="@+id/frame_main"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+    <include layout="@layout/titlebar" />
+
+
 
 
 </RelativeLayout>

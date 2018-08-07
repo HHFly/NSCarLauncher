@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_f_fm_bg">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="201px"
+    android:layout_marginTop="137px"
+    android:layout_marginRight="240px">
+
+<ImageView
+    android:id="@+id/iv_back"
+    android:layout_width="71px"
+    android:layout_height="71px"
+    android:src="@mipmap/ic_fm_back_btn"/>
+<ImageView
+    android:id="@+id/iv_search"
+    android:layout_width="46px"
+    android:layout_height="46px"
+    android:src="@mipmap/ic_f_fm_search"
+    android:layout_alignParentRight="true"
+   android:layout_marginTop="13px"/>
+
+    <ImageView
+        android:id="@+id/iv_fm_left"
+        android:layout_width="43px"
+        android:layout_height="50px"
+        android:layout_marginLeft="224px"
+        android:layout_marginTop="59px"
+        android:src="@mipmap/ic_fm_left"
+        />
+
+    <ImageView
+        android:id="@+id/iv_fm_right"
+        android:layout_width="43px"
+        android:layout_height="50px"
+        android:layout_marginRight="224px"
+        android:layout_marginTop="59px"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_fm_right"
+        />
+    <TextView
+        android:id="@+id/tv_fm_Hz"
+        style="@style/BaseText.Tv"
+        android:textSize="100px"
+        android:text="97.80"
+        android:layout_centerInParent="true"/>
+
+    <TextView style="@style/BaseText.Tv"
+        android:text="FM"
+        android:textSize="36px"
+        android:layout_alignBottom="@+id/iv_fm_left"
+        android:layout_toLeftOf="@+id/tv_fm_Hz"
+        android:layout_marginRight="30px"
+        />
+    <TextView style="@style/BaseText.Tv"
+        android:text="MHZ"
+        android:textSize="36px"
+        android:layout_alignBottom="@+id/iv_fm_left"
+        android:layout_toRightOf="@+id/tv_fm_Hz"
+        android:layout_marginLeft="30px"
+        />
+</RelativeLayout>
+
+<com.example.dell.nscarlauncher.widget.RadioRulerView
+    android:id="@+id/rule"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_marginTop="79px"
+    android:layout_marginLeft="320px"
+    android:layout_marginRight="318px"
+    android:padding="8dp"
+    app:line_color="#F2F2F2"
+    app:line_divider="3dp"
+    app:line_width="2dp"
+    app:move_line_color="#E85945" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginLeft="300px"
+    android:layout_marginTop="70px">
+    <TextView
+        style="@style/BaseText.Tv"
+        android:text="FM"
+        android:textColor="#B9D3FF"
+        android:textSize="36px"
+        android:layout_marginLeft="20px"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_fm_shine"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_marginTop="30px"
+        android:layout_width="wrap_content"
+        android:layout_height="120px">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>
+</LinearLayout>

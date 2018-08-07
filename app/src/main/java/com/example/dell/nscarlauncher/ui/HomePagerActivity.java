@@ -11,7 +11,11 @@ import android.widget.LinearLayout;
 import com.example.dell.nscarlauncher.MainActivity;
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.Activity.BaseActivity;
+import com.example.dell.nscarlauncher.common.ToastUtils;
+import com.example.dell.nscarlauncher.common.util.FragmentUtils;
+import com.example.dell.nscarlauncher.ui.fm.FMFragment;
 import com.example.dell.nscarlauncher.ui.home.HomeData;
+import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerFragment;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
@@ -24,10 +28,11 @@ import me.relex.circleindicator.CircleIndicator;
 public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
     private ArrayList<Fragment> mFragments;
     private ViewPager viewPager;
-    private CircleIndicator indicator;//指示器
-    private  int PageCount;
+    private CircleIndicator indicator;//viewpager指示器
+    private Fragment mCurFragment;//当前页
+    private FMFragment fmFragment ;
+
     private ArrayList<HomeModel> mData;
-    private ImageView imageViews;
     @Override
     public int getContentViewResId() {
         return R.layout.activity_homepager;
@@ -55,6 +60,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public void setListener() {
         super.setListener();
         setClickListener(R.id.title_iv_sound);
+        setClickListener(R.id.center_img);
         viewPager.addOnPageChangeListener(this);
     }
 
@@ -63,16 +69,88 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         super.onClick(v);
         switch (v.getId()){
             case R.id.title_iv_sound:
+
+                break;
+            case R.id.center_img:
+                hideFragment();
                 break;
         }
     }
+    //初始化viewpager 数据
     private  void initDa(){
         HomePagerOneFragment homePagerOneFragment =new HomePagerOneFragment();
+        homePagerOneFragment.setHomePagerActivity(this);
         HomePagerTwoFragment homePagerTwoFragment =new HomePagerTwoFragment();
         mFragments.add(homePagerOneFragment);
         mFragments.add(homePagerTwoFragment);
+        createFragment();
     }
-//    private void  initData(){
+
+    /**
+     * 初始化fragment
+     */
+    private void createFragment() {
+      fmFragment =new FMFragment();
+      fmFragment.setHomePagerActivity(this);
+    }
+    /*隐藏fragemt*/
+    public  void  hideFragment(){
+        setViewVisibility(R.id.frame_main,false);
+    }
+    /*显示fragment*/
+
+    public void showFragemnt(){
+        setViewVisibility(R.id.frame_main,true);
+    }
+
+
+    @Override
+    public void onPageScrolled(int i, float v, int i1) {
+
+    }
+
+    @Override
+    public void onPageSelected(int i) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
+
+    }
+    /**
+     * 选择Fragment
+     *
+     * @param fragment
+     */
+    private void switchFragment(Fragment fragment) {
+        showFragemnt();
+        mCurFragment = FragmentUtils.selectFragment(this, mCurFragment, fragment, R.id.frame_main);
+    }
+    public void  jumpFragment(@FragmentType int type ){
+        switch (type){
+            case  FragmentType.FM:
+                switchFragment(fmFragment);
+                break;
+        }
+    }
+
+    private class MyAdapter extends FragmentPagerAdapter {
+        MyAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+    }
+    //    private void  initData(){
 //        HomeData data =new HomeData();
 //        mData= data.getData();
 //        ArrayList<HomeModel> page =new ArrayList<>();
@@ -97,38 +175,4 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 //        }
 //
 //    }
-
-
-    @Override
-    public void onPageScrolled(int i, float v, int i1) {
-
-    }
-
-    @Override
-    public void onPageSelected(int i) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int i) {
-
-    }
-
-
-
-    private class MyAdapter extends FragmentPagerAdapter {
-        MyAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-    }
 }

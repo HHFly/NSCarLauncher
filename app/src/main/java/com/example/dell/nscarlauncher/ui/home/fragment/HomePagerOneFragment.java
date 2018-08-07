@@ -9,6 +9,8 @@ import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.common.util.TimeUtils;
+import com.example.dell.nscarlauncher.ui.HomePagerActivity;
+import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.example.dell.nscarlauncher.widget.CircleView;
 
@@ -20,10 +22,15 @@ public class HomePagerOneFragment extends BaseFragment {
     private static TextView tv_w_time;
     private static TextView tv_w_date;
     private static TextView tv_w_week;
-
+    private HomePagerActivity homePagerActivity;
     //thread flag
     private volatile boolean timeFlag = true;
     private volatile boolean weatherFlag = true;
+
+    public void setHomePagerActivity(HomePagerActivity homePagerActivity) {
+        this.homePagerActivity = homePagerActivity;
+    }
+
     @Override
     public int getContentResId() {
         return R.layout.fragment_home1;
@@ -39,7 +46,7 @@ public class HomePagerOneFragment extends BaseFragment {
 
     @Override
     public void setListener() {
-
+        setClickListener(R.id.FM);
     }
 
     @Override
@@ -51,14 +58,20 @@ public class HomePagerOneFragment extends BaseFragment {
     @Override
     public void initView() {
 
-        circleView.setmWaterLevel(0.5f);
+        circleView.setmWaterLevel(0.3f);
         circleView.startWave();
 
     }
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()){
+            case R.id.FM:
+                if(homePagerActivity!=null){
+                    homePagerActivity.jumpFragment(FragmentType.FM);
+                }
+                break;
+        }
     }
 
     @Override
