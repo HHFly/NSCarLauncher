@@ -7,7 +7,6 @@ import android.support.annotation.AnimRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
@@ -26,22 +25,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.ShowLoadingDialogListener;
 import com.example.dell.nscarlauncher.base.dialog.LoadingDialog;
-import com.example.dell.nscarlauncher.common.FrescoUtils;
-import com.example.dell.nscarlauncher.common.ToastUtils;
+import com.example.dell.nscarlauncher.common.util.FrescoUtils;
+import com.example.dell.nscarlauncher.common.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gyf.barlibrary.BarHide;
 import com.gyf.barlibrary.ImmersionBar;
 import com.white.lib.utils.location.LocationManagerUtil;
 //import com.zhy.autolayout.AutoLayoutActivity;
-
-import java.io.File;
-import java.util.List;
-
 
 
 /**

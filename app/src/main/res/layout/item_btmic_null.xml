@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_f_fm_bg">
+    <TextView style="@style/BaseText.Tv"
+    android:textSize="48px"
+    android:text="@string/蓝牙音乐"
+    android:layout_marginLeft="145px"
+    android:layout_marginTop="114px"
+    />
+   <RelativeLayout
+       android:layout_width="600px"
+       android:layout_height="400px"
+       android:layout_centerInParent="true"
+       android:background="@drawable/shape_rectagle_white_5rd"
+       >
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/bt_tip"
+           android:textSize="36px"
+           android:textColor="#010101"
+           android:layout_centerInParent="true"/>
+   </RelativeLayout>
+    
+</RelativeLayout>

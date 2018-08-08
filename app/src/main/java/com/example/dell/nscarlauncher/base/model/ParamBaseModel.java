@@ -4,7 +4,7 @@ package com.example.dell.nscarlauncher.base.model;
 
 
 
-import com.example.dell.nscarlauncher.common.MapUtils;
+import com.example.dell.nscarlauncher.common.util.MapUtils;
 
 import java.util.Map;
 

@@ -4,7 +4,7 @@ package com.example.dell.nscarlauncher.base.model;
 
 
 
-import com.example.dell.nscarlauncher.common.JsonUtils;
+import com.example.dell.nscarlauncher.common.util.JsonUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

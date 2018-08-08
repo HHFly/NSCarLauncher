@@ -5,18 +5,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.example.dell.nscarlauncher.MainActivity;
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.Activity.BaseActivity;
-import com.example.dell.nscarlauncher.common.ToastUtils;
 import com.example.dell.nscarlauncher.common.util.FragmentUtils;
 import com.example.dell.nscarlauncher.ui.fm.FMFragment;
-import com.example.dell.nscarlauncher.ui.home.HomeData;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
-import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerFragment;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.example.dell.nscarlauncher.ui.home.model.HomeModel;

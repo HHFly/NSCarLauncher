@@ -5,8 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.example.dell.nscarlauncher.base.Activity.BaseActivity;
-import com.example.dell.nscarlauncher.common.LogUtils;
-
 
 
 /**

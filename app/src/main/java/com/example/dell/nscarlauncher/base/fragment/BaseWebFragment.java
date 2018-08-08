@@ -21,7 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.dell.nscarlauncher.BuildConfig;
-import com.example.dell.nscarlauncher.common.LogUtils;
+import com.example.dell.nscarlauncher.common.util.LogUtils;
 
 
 /**

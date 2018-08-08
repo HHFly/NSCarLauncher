@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,22 +19,10 @@ import android.widget.TextView;
 
 import com.example.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.example.dell.nscarlauncher.base.ShowLoadingDialogListener;
-import com.example.dell.nscarlauncher.common.FrescoUtils;
-import com.example.dell.nscarlauncher.common.listener.DefOnUploadPicListener;
+import com.example.dell.nscarlauncher.common.util.FrescoUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import com.white.lib.utils.location.LocationManagerUtil;
-import com.white.lib.utils.luban.LubanUtil;
-import com.white.lib.utils.luban.model.LubanResultData;
-
-import java.io.File;
-import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 /**
  * fragment基类

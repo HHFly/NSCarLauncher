@@ -56,8 +56,7 @@
                 style="@style/BaseLine.Horizontal"
                 android:layout_width="17px"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10px"
-                android:layout_toLeftOf="@+id/tv_fm_name"
+                android:layout_marginLeft="24px"
                 />
             <View
                 style="@style/BaseLine.Horizontal"

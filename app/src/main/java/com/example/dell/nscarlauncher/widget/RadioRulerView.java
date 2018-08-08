@@ -241,7 +241,7 @@ public class RadioRulerView extends View {
                 xPoint = activePointers.valueAt(0);
                 if(xPoint != null){
                     xPoint.x += (mLineWidth + mLineDivider);
-                    if(xPoint.x > mMaxX) xPoint.x = mLeftWidth;
+                    if(xPoint.x > mMaxX) break;
                 }else {
                     PointF position = new PointF(mLeftWidth, mHeight);
                     activePointers.put(0, position);

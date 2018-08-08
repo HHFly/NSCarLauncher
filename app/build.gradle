@@ -26,6 +26,7 @@ android {
                 cppFlags ""
             }
         }
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -74,4 +75,8 @@ dependencies {
     implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
     //viewpager 指示器
     implementation 'me.relex:circleindicator:1.2.2@aar'
+    //fa
+    implementation 'com.android.support:multidex:1.0.3'
+//gif
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
 }

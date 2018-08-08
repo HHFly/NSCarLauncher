@@ -12,5 +12,8 @@
     <string name="五">五</string>
     <string name="六">六</string>
     <string name="星期">星期</string>
+    <string name="蓝牙音乐">蓝牙音乐</string>
+    <string name="bt_tip">蓝牙未连接，请先连接蓝牙</string>
+    <string name="暂无音乐">暂无音乐</string>
 
 </resources>

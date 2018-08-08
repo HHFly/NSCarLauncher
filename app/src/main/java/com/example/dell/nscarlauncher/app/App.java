@@ -2,25 +2,30 @@ package com.example.dell.nscarlauncher.app;
 
 
 import android.app.Activity;
-import android.app.Application;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.media.AudioManager;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.os.IFmService;
+import android.os.IKdAudioControlService;
+import android.os.RemoteException;
+import android.os.ServiceManager;
+import android.support.multidex.MultiDexApplication;
 
 import com.example.dell.nscarlauncher.BuildConfig;
-import com.example.dell.nscarlauncher.common.FrescoUtils;
-import com.example.dell.nscarlauncher.common.PDLifecycleHandle;
-import com.example.dell.nscarlauncher.common.ToastUtils;
+import com.example.dell.nscarlauncher.common.util.FrescoUtils;
+import com.example.dell.nscarlauncher.common.util.PDLifecycleHandle;
+import com.example.dell.nscarlauncher.common.util.ToastUtils;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.white.lib.utils.UtilsConfig;
 
 
 /**
- * Created by zhuwh on 2018/4/10.
+ * Created by z on 2018/4/10.
  */
 
 public class
-App extends Application {
+App extends MultiDexApplication {
 
     private static App s_app;
 
@@ -28,8 +33,25 @@ App extends Application {
         return s_app;
     }
 
+    private  IFmService radio;  //收音机
+
+    private   IKdAudioControlService audioservice = IKdAudioControlService.Stub
+            .asInterface(ServiceManager.getService("audioCtrl"));
+    AudioManager audioManager;
 
     private Activity mCurActivity;
+
+    public  IFmService getRadio() {
+        return radio;
+    }
+
+    public  IKdAudioControlService getAudioservice() {
+        return audioservice;
+    }
+
+    public AudioManager getAudioManager() {
+        return audioManager;
+    }
 
     //共享handle变量
     public static HomePagerOneFragment.PagerOneHnadler pagerOneHnadler;
@@ -51,9 +73,32 @@ App extends Application {
                 .setLogOpen(BuildConfig.IS_OPEN_LOG);
         /*初始化Handle*/
         pagerOneHnadler = new HomePagerOneFragment.PagerOneHnadler();
+        /*初始化驱动模块*/
+        initService();
+
     }
+    private void initService(){
+        initFm();
+    }
+    private void  initFm(){
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        // radio初始化
+        radio = IFmService.Stub.asInterface(ServiceManager.getService("fm"));
+        try {
 
+            radio.FmTest();
 
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            audioservice.setBassLevel(120);
+            audioservice.setSurroundWidth(7);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void registerActivityListener() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
