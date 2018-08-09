@@ -60,6 +60,8 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
     public void setListener() {
         setClickListener(R.id.iv_back);
         setClickListener(R.id.iv_search);
+        setClickListener(R.id.iv_fm_left);
+        setClickListener(R.id.iv_fm_right);
         mRule.setOnValueChangeListener(this);
     }
 
@@ -80,8 +82,17 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
             case R.id.iv_search:
                 mRule.startAutoSeachFM();
                 break;
+            case R.id.iv_fm_left:
+                channel=channel-0.5f;
+                changeChannel(channel);
+                break;
+            case R.id.iv_fm_right:
+                channel=channel+0.5f;
+                changeChannel(channel);
+                break;
         }
     }
+    /*初始化数据*/
     private void  initData(){
         /*初始化模块*/
         getService();
@@ -119,7 +130,13 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
             mAdapter.setOnItemClickListener(new FMAdapter.OnItemClickListener() {
                 @Override
                 public void onClickFM(String data) {
-
+                   channel= Float.valueOf(data);
+                    setTvText(R.id.tv_fm_Hz,data);
+                    try {
+                        System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 变换广播频道
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                 }
 
             });
@@ -172,15 +189,17 @@ public void openFm(){
         /*滑动监听回调*/
     @Override
     public void onValueChange(float value) {
-        setTvText(R.id.tv_fm_Hz,String.valueOf(value));
-        channel=value;
-        try {
-            System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 变换广播频道
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        changeChannel(value);
     }
-
+private void changeChannel(float value){
+    setTvText(R.id.tv_fm_Hz,String.valueOf(value));
+    channel=value;
+    try {
+        System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 变换广播频道
+    } catch (RemoteException e) {
+        e.printStackTrace();
+    }
+}
 /*音频焦点处理*/
     AudioManager.OnAudioFocusChangeListener afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override

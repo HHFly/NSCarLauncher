@@ -11,10 +11,10 @@
         android:layout_marginTop="121px"
 
         >
-        <include layout="@layout/item_weather"/>
+
         <include layout="@layout/item_fm" />
         <include layout="@layout/item_bt_music"/>
         <include layout="@layout/item_fm"/>
-
+        <include layout="@layout/item_weather"/>
     </LinearLayout>
 </LinearLayout>

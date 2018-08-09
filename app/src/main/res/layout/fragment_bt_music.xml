@@ -26,7 +26,7 @@
             android:id="@+id/bt_gif"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@mipmap/bt_music"
+
             />
         </RelativeLayout>
         <ImageView
@@ -55,11 +55,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="529px">
         <TextView style="@style/BaseText.Tv"
+            android:id="@+id/tv_bt_songname"
             android:text="心中的日月"
             android:textSize="36px"
 
             />
         <TextView
+            android:id="@+id/tv_bt_singer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24px"
@@ -68,4 +70,30 @@
             android:layout_marginLeft="40px"
             />
     </LinearLayout>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="310dp">
+
+    <TextView style="@style/BaseText.Tv"
+        android:textSize="24px"
+        android:text="03:50"
+        android:layout_gravity="center_vertical"
+        />
+    <SeekBar
+        android:id="@+id/music_progress_bar"
+        android:layout_width="1000px"
+        android:layout_height="wrap_content"
+        android:thumb="@null"
+        />
+    <TextView style="@style/BaseText.Tv"
+        android:textSize="24px"
+        android:text="03:50"
+        android:layout_gravity="center_vertical"
+        />
+</LinearLayout>
+    <include layout="@layout/item_btmic_null"
+        android:visibility="gone"/>
 </RelativeLayout>

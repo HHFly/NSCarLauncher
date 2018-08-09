@@ -8,6 +8,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.IFmService;
 import android.os.IKdAudioControlService;
+import android.os.IKdBtService;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.support.multidex.MultiDexApplication;
@@ -38,7 +39,7 @@ App extends MultiDexApplication {
     private   IKdAudioControlService audioservice = IKdAudioControlService.Stub
             .asInterface(ServiceManager.getService("audioCtrl"));
     AudioManager audioManager;
-
+    private IKdBtService btservice ;
     private Activity mCurActivity;
 
     public  IFmService getRadio() {
@@ -51,6 +52,10 @@ App extends MultiDexApplication {
 
     public AudioManager getAudioManager() {
         return audioManager;
+    }
+
+    public IKdBtService getBtservice() {
+        return btservice;
     }
 
     //共享handle变量
@@ -79,7 +84,13 @@ App extends MultiDexApplication {
     }
     private void initService(){
         initFm();
+        btService();
     }
+    /*蓝牙*/
+    private  void  btService(){
+        btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
+    }
+    /*收音机*/
     private void  initFm(){
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         // radio初始化

@@ -9,6 +9,7 @@ import android.view.View;
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.example.dell.nscarlauncher.common.util.FragmentUtils;
+import com.example.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
 import com.example.dell.nscarlauncher.ui.fm.FMFragment;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
@@ -24,7 +25,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private ViewPager viewPager;
     private CircleIndicator indicator;//viewpager指示器
     private Fragment mCurFragment;//当前页
-    private FMFragment fmFragment ;
+    private FMFragment fmFragment ;//收音机
+    private BTMusicFragment btMusicFragment;//蓝牙音乐
 
     private ArrayList<HomeModel> mData;
     @Override
@@ -86,6 +88,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private void createFragment() {
       fmFragment =new FMFragment();
       fmFragment.setHomePagerActivity(this);
+      btMusicFragment =new BTMusicFragment();
+
     }
     /*隐藏fragemt*/
     public  void  hideFragment(){
@@ -125,6 +129,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         switch (type){
             case  FragmentType.FM:
                 switchFragment(fmFragment);
+                break;
+            case  FragmentType.BTMUSIC:
+                switchFragment(btMusicFragment);
                 break;
         }
     }
