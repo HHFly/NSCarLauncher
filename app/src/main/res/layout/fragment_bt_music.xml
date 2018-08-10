@@ -70,29 +70,15 @@
             android:layout_marginLeft="40px"
             />
     </LinearLayout>
+
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="310dp">
+    <include layout="@layout/item_bt_music_seekbar" />
 
-    <TextView style="@style/BaseText.Tv"
-        android:textSize="24px"
-        android:text="03:50"
-        android:layout_gravity="center_vertical"
-        />
-    <SeekBar
-        android:id="@+id/music_progress_bar"
-        android:layout_width="1000px"
-        android:layout_height="wrap_content"
-        android:thumb="@null"
-        />
-    <TextView style="@style/BaseText.Tv"
-        android:textSize="24px"
-        android:text="03:50"
-        android:layout_gravity="center_vertical"
-        />
 </LinearLayout>
     <include layout="@layout/item_btmic_null"
         android:visibility="gone"/>

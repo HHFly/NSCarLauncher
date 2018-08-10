@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="50px">
+    <TextView style="@style/BaseText.Tv"
+        android:textSize="24px"
+        android:text="03:50"
+        android:layout_gravity="center_vertical"
+        />
+    <SeekBar
+        android:id="@+id/music_progress_bar"
+        android:layout_width="560px"
+        android:layout_height="wrap_content"
+        android:thumb="@null"
+        />
+    <TextView style="@style/BaseText.Tv"
+        android:textSize="24px"
+        android:text="03:50"
+        android:layout_gravity="center_vertical"
+        />
+</LinearLayout>

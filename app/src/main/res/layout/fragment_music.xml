@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@mipmap/ic_f_fm_bg">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+    <LinearLayout
+    android:layout_width="0px"
+    android:layout_height="match_parent"
+    android:layout_weight="59"
+        android:orientation="vertical">
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="48px"
+            android:text="@string/本地音乐"
+            android:layout_marginLeft="145px"
+            android:layout_marginTop="114px"
+            />
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="340px"></android.support.v4.view.ViewPager>
+        <include layout="@layout/item_music_control" />
+        <include layout="@layout/item_music_seekbar"/>
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="41">
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="48px"
+            android:text="@string/音乐列表"
+
+            android:layout_marginTop="198px"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="576px"
+            android:layout_height="match_parent"
+          ></android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+    </LinearLayout>
+    <include layout="@layout/item_music_null"
+        android:visibility="gone"/>
+</RelativeLayout>

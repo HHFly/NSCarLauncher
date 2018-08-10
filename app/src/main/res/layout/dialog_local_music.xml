@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="604dp"
+    android:layout_height="444dp"
+    android:background="@mipmap/ic_f_fm_bg">
+    
+    <ImageButton
+        android:id="@+id/local_music_usb" 
+        android:layout_width="61dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="22dp"
+        android:layout_centerHorizontal="true"
+        />
+    
+    <ImageButton
+        android:id="@+id/local_music_locality"
+        android:layout_width="111dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="90dp"
+        />
+    
+    <ImageButton 
+        android:id="@+id/local_music_refresh"
+        android:layout_width="125dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="18dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="75dp"
+       />
+    <ImageView 
+        android:id="@+id/local_music_cursor"
+        android:layout_width="400dp"
+        android:layout_height="152dp"
+        android:layout_marginTop="-50dp"
+        android:layout_marginLeft="-50dp"
+       />
+    
+    <ListView
+        android:id="@+id/local_music_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+
+        android:dividerHeight="6dp"  
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:fadeScrollbars="false"
+        android:layout_marginTop="80dp"/>
+
+</RelativeLayout>
