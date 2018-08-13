@@ -15,6 +15,7 @@ import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.example.dell.nscarlauncher.ui.home.model.HomeModel;
+import com.example.dell.nscarlauncher.ui.music.MusicFragment;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private Fragment mCurFragment;//当前页
     private FMFragment fmFragment ;//收音机
     private BTMusicFragment btMusicFragment;//蓝牙音乐
-
+    private MusicFragment musicFragment;//本地音乐
     private ArrayList<HomeModel> mData;
     @Override
     public int getContentViewResId() {
@@ -89,7 +90,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
       fmFragment =new FMFragment();
       fmFragment.setHomePagerActivity(this);
       btMusicFragment =new BTMusicFragment();
-
+        musicFragment= new MusicFragment();
     }
     /*隐藏fragemt*/
     public  void  hideFragment(){
@@ -132,6 +133,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 break;
             case  FragmentType.BTMUSIC:
                 switchFragment(btMusicFragment);
+                break;
+            case  FragmentType.MUSIC:
+                switchFragment(musicFragment);
                 break;
         }
     }

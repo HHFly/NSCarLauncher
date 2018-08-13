@@ -48,6 +48,7 @@ public class HomePagerOneFragment extends BaseFragment {
     public void setListener() {
         setClickListener(R.id.FM);
         setClickListener(R.id.bt_music);
+        setClickListener(R.id.music);
     }
 
     @Override
@@ -75,6 +76,11 @@ public class HomePagerOneFragment extends BaseFragment {
             case R.id.bt_music:
                 if(homePagerActivity!=null){
                     homePagerActivity.jumpFragment(FragmentType.BTMUSIC);
+                }
+                break;
+            case R.id.music:
+                if(homePagerActivity!=null){
+                    homePagerActivity.jumpFragment(FragmentType.MUSIC);
                 }
                 break;
         }

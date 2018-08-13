@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="200px" android:layout_height="120px"
     android:orientation="horizontal"
-    android:background="#222741">
+    android:background="#222741"
+    android:layout_marginRight="28px">
 <TextView style="@style/BaseText.Tv"
     android:textSize="36px"
     android:id="@+id/tv_fm_re_hz"

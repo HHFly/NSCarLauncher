@@ -21,9 +21,39 @@
             android:layout_marginLeft="145px"
             android:layout_marginTop="114px"
             />
-        <android.support.v4.view.ViewPager
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="340px"></android.support.v4.view.ViewPager>
+            android:layout_height="340px"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/circle_image"
+                android:layout_width="240px"
+                android:layout_height="240px"
+                android:layout_gravity="center_horizontal"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                >
+                <TextView style="@style/BaseText.Tv"
+                    android:id="@+id/tv_bt_songname"
+                    android:text="心中的日月"
+                    android:textSize="36px"
+
+                    />
+                <TextView
+                    android:id="@+id/tv_bt_singer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24px"
+                    android:textColor="#999999"
+                    android:text="－王力宏"
+                    android:layout_marginLeft="40px"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+      
         <include layout="@layout/item_music_control" />
         <include layout="@layout/item_music_seekbar"/>
 </LinearLayout>

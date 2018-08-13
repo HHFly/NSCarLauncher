@@ -6,7 +6,7 @@
     android:layout_marginRight="50px"
     android:background="@mipmap/item_bg">
     <RelativeLayout
-        android:id="@+id/bt_music"
+        android:id="@+id/music"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

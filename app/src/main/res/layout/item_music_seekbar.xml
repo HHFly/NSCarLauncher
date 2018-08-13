@@ -4,8 +4,9 @@
     android:orientation="horizontal"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:layout_marginTop="50px">
+    android:layout_marginTop="30px">
     <TextView style="@style/BaseText.Tv"
+        android:id="@+id/current_time"
         android:textSize="24px"
         android:text="03:50"
         android:layout_gravity="center_vertical"
@@ -17,6 +18,7 @@
         android:thumb="@null"
         />
     <TextView style="@style/BaseText.Tv"
+        android:id="@+id/music_total_time"
         android:textSize="24px"
         android:text="03:50"
         android:layout_gravity="center_vertical"

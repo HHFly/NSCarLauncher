@@ -52,11 +52,11 @@
     <style name="nodarken_style" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground"> @android:color/transparent </item>
         <item name="android:backgroundDimEnabled">false</item>
-        <item name="@android:windowEnterAnimation">@anim/dialog_localmusic_enter</item>
+
     </style>
 
     <style name="dialog_localmusic_style" parent="android:Animation">
-        <item name="@android:windowEnterAnimation">@anim/dialog_localmusic_enter</item>
-        <item name="@android:windowExitAnimation">@anim/dialog_localmusic_exit</item>
+
+
     </style>
 </resources>

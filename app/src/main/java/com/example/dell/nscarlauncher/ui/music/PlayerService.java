@@ -32,7 +32,7 @@ public class PlayerService extends Service {
 			if (msg.what == 1) {
 				if(mediaPlayer != null) {
 					currentTime = mediaPlayer.getCurrentPosition(); // 获取当前音乐播放的位置
-					FragmentMusic.setMusicProgress(currentTime);
+					MusicFragment.setMusicProgress(currentTime);
 					handler.sendEmptyMessageDelayed(1, 1000);
 				}
 			}
@@ -51,7 +51,7 @@ public class PlayerService extends Service {
 
 			@Override
 			public void onCompletion(MediaPlayer mp) {
-				FragmentMusic.bt_next.performClick();//下一首
+				MusicFragment.bt_next.performClick();//下一首
 			}
 		});
 	}
@@ -87,7 +87,7 @@ public class PlayerService extends Service {
 	/**
 	 * 播放音乐
 	 * 
-	 * @param position
+	 * @param
 	 */
 	private void play(int currentTime) {
 		if (isPause && currentTime== 0) {
@@ -96,7 +96,7 @@ public class PlayerService extends Service {
 		}else{
 			try {
 				if (currentTime== 0) {
-					FragmentMusic.flag_first = false;
+					MusicFragment.flag_first = false;
 				}
 				mediaPlayer.reset();// 把各项参数恢复到初始状态
 				mediaPlayer.setDataSource(DialogLocalMusic.data.get(DialogLocalMusic.musicID).url);
@@ -178,14 +178,14 @@ public class PlayerService extends Service {
 			//设置歌曲专辑内置图片
 			String albumArt = CursorMusicImage.getImage(PlayerService.this, ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).url);
 			if (albumArt == null) {
-				FragmentMusic.circle_image.nextRoatate(R.drawable.one);
+//				MusicFragment.circle_image.setImageResource();
 			} else {
 				Bitmap bm = BitmapFactory.decodeFile(albumArt);
 				BitmapDrawable bmpDraw = new BitmapDrawable(bm);
-				FragmentMusic.circle_image.setImageDrawable(bmpDraw);
+				MusicFragment.circle_image.setImageDrawable(bmpDraw);
 			}
 					
-			FragmentMusic.setMusicInfo(musicName, artist);
+			MusicFragment.setMusicInfo(musicName, artist);
 			if (!isPause) {
 				mediaPlayer.start(); // 开始播放
 			}

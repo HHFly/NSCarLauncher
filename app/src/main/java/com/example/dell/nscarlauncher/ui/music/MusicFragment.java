@@ -15,8 +15,10 @@ import android.os.SystemProperties;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
@@ -51,7 +53,9 @@ public class MusicFragment extends BaseFragment {
     static IKdBtService btservice;
     static boolean system_flag, am_flag,flag_play;
     static Context context;
-    public static ImageButton bt_open, bt_play, bt_back, bt_next, bt_u, bt_music_model;
+    public static ImageView bt_open, bt_play, bt_back, bt_next, bt_u, bt_music_model;
+    public static TextView tv_music_songname, tv_music_singer, music_current_time, music_total_time;
+    public  static ImageView circle_image;
     @Override
     public int getContentResId() {
         return R.layout.fragment_music;
@@ -59,15 +63,23 @@ public class MusicFragment extends BaseFragment {
 
     @Override
     public void findView() {
-        bt_play=getView(R.id.bt_gif);
+        bt_play=getView(R.id.music_play);
         music_progress_bar=getView(R.id.music_progress_bar);
-          context=  getContext();
+        music_current_time =getView(R.id.current_time);
+        music_total_time=getView(R.id.music_total_time);
+        tv_music_songname=getView(R.id.tv_bt_songname);
+        tv_music_singer =getView(R.id.tv_bt_singer);
+        circle_image =getView(R.id.circle_image);
+        bt_music_model=getView(R.id.iv_music_mode);
+        context=  getContext();
     }
 
     @Override
     public void setListener() {
         setClickListener(R.id.iv_fm_left);
         setClickListener(R.id.iv_fm_right);
+        setClickListener(R.id.music_play);
+
     }
 
     @Override
@@ -92,38 +104,84 @@ public class MusicFragment extends BaseFragment {
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.music_play:
+                play();
+                break;
             case R.id.iv_fm_left:
                 musicBack();
                 break;
             case R.id.iv_fm_right:
                 musicNext();
                 break;
+            case R.id.iv_music_mode:
+                setMode();
+                break;
         }
     }
+  /*音乐模式*/
+  private  void setMode(){
+      try {
+          if (music_model == 1) {
+//              bt_music_model.setBackgroundResource(R.drawable.music_model_singlecycle);
+              music_model = 2;
+          } else if (music_model == 2) {
+//              bt_music_model.setBackgroundResource(R.drawable.music_model_randomcycle);
+              music_model = 3;
+          } else if (music_model == 3) {
+//              bt_music_model.setBackgroundResource(R.drawable.music_model_listcycle);
+              music_model = 1;
+          }
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+  }
 
+/*音乐播放*/
+private  void  play(){
+    if (!flag_play) {
+        if (audioManager.requestAudioFocus(afChangeListener, 12,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
+                && audioManager.requestAudioFocus(afSystemChangeListener, AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            system_flag = true;
+            am_flag = true;
+            if (DialogLocalMusic.data.size() > 0) {
+//                circle_image.roatateStart();
+                bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                broadcastMusicInfo(getActivity(), FlagProperty.PLAY_MSG);
+                flag_play = true;
+            }
+        }
+    } else {
+        if (audioManager.abandonAudioFocus(afChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
+                && audioManager.abandonAudioFocus(
+                afSystemChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            system_flag = false;
+            am_flag = false;
+
+//            circle_image.roatatePause();
+            bt_play.setBackgroundResource(R.mipmap.ic_play);
+            broadcastMusicInfo(getActivity(), FlagProperty.PAUSE_MSG);
+            flag_play = false;
+        }
+    }
+}
     /*上一首*/
     private void musicBack(){
-        if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
-            new Thread() {
-                public void run() {
-                    myHandler.sendMessage(myHandler.obtainMessage(MUSCI_BACK));
-                }
-
-
-            }.start();
+        if (flag_play) {
+            bt_play.performClick();
         }
+        myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
+        MusicModel.getPrevMusic(getActivity(), music_model);
     }
 /*下一首*/
 private  void  musicNext(){
-    if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
-        new Thread() {
-            public void run() {
-                myHandler.sendMessage(myHandler.obtainMessage(MUSIC_NEXT));
-            }
-
-            ;
-        }.start();
+    if (flag_play) {
+        bt_play.performClick();
     }
+
+    myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
+    MusicModel.getNextMusic(getActivity(), music_model);
 }
     /*进度条*/
     private void initSeekBar(){
@@ -132,21 +190,22 @@ private  void  musicNext(){
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-//                int totaltime = (int) Math.ceil(DialogLocalMusic.data.get(DialogLocalMusic.musicID).duration);
-//                int num = (int) Math.ceil(Math.round((float) progress / 100.0 * totaltime));
-//
-//                if (PlayerService.is_start_speed) {
-//                    circle_image.roatateStart();
-//                    bt_play.setBackgroundResource(R.drawable.fragment_music_pause);
-//                    flag_play = true;
-//                }
-//
-//                Intent i = new Intent(getActivity(), PlayerService.class);
-//                i.putExtra("progress", num);
-//                i.putExtra("MSG", FlagProperty.PROGRESS_CHANGE);
-//                getActivity().startService(i);
-//                flag_drag = false;
-//                flag_first = true;
+                int totaltime = (int) Math.ceil(DialogLocalMusic.data.get(DialogLocalMusic.musicID).duration);
+                int num = (int) Math.ceil(Math.round((float) progress / 100.0 * totaltime));
+
+                if (PlayerService.is_start_speed) {
+
+                    bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                    flag_play = true;
+                }
+
+                Intent i = new Intent(getActivity(), PlayerService.class);
+                i.putExtra("progress", num);
+                i.putExtra("MSG", FlagProperty.PROGRESS_CHANGE);
+                getActivity().startService(i);
+                flag_drag = false;
+                flag_first = true;
+
             }
 
             @Override
@@ -157,7 +216,7 @@ private  void  musicNext(){
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                FragmentMusic.progress = progress;
+                MusicFragment.progress = progress;
 
             }
         });
@@ -172,9 +231,15 @@ private  void  musicNext(){
 
 
     // 设置歌曲信息
-    public  void setMusicInfo(String songname, String singer) {
-       setTvText(R.id.tv_bt_songname,songname);
-       setTvText(R.id.tv_bt_singer,("").equals(singer)?"":"-"+singer);
+    public static void setMusicInfo(String songname, String singer) {
+        if (tv_music_songname != null) {
+            tv_music_songname.setText(songname);
+            if (!("").equals(singer)) {
+                tv_music_singer.setText("- " + singer);
+            } else {
+                tv_music_singer.setText("");
+            }
+        }
     }
 
 
@@ -302,6 +367,39 @@ private  void  musicNext(){
             flag_play = true;
         }
     }
+    // 设置歌曲进度条信息
+    public static void setMusicProgress(int time) {
+        time /= 1000; // 得到的是毫秒级别的
+        if (music_time != time && !flag_drag) {
+            music_time = time;
+            int totaltime = (int) Math.ceil(DialogLocalMusic.data.get(DialogLocalMusic.musicID).duration);
+            totaltime /= 1000;
+            if (time > totaltime) {
+                time = totaltime; // 避免毫秒级时间产生时间误差
+            }
+            if (totaltime > 0) {
+                int progress = (int) Math.ceil(time * 100 / totaltime);
+                if (flag_first) {
+                    if (progress > MusicFragment.progress) {
+                        music_progress_bar.setProgress(progress);
+                        flag_first = false;
+                    }
+                } else {
+                    music_progress_bar.setProgress(progress);
+                }
+                music_current_time.setText("" + getTime(time / 60) + ":" + getTime(time % 60));
+                music_total_time.setText("" + getTime(totaltime / 60) + ":" + getTime(totaltime % 60));
+            }
+        }
+    }
 
+    // 时间格式化为00
+    public static String getTime(int time) {
+        if (time < 10) {
+            return "0" + time;
+        } else {
+            return "" + time;
+        }
+    }
 
 }
