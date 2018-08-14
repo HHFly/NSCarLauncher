@@ -14,11 +14,11 @@ public class CursorMusicImage {
 		// System.out.println(c.getString(c.getColumnIndex("_data")));
 		if (c.moveToFirst()) {
 			do {
-				// 通过Cursor 获取路径，如果路径相同则break；
+				// 閫氳繃Cursor 鑾峰彇璺緞锛屽鏋滆矾寰勭浉鍚屽垯break
 				System.out.println("////////" + filePath);
 				path = c.getString(c.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
 				System.out.println("?????????" + path);
-				// 查找到相同的路径则返回，此时cursorPosition 便是指向路径所指向的Cursor 便可以返回了
+				// 鏌ユ壘鍒扮浉鍚岀殑璺緞鍒欒繑鍥烇紝姝ゆ椂cursorPosition 渚挎槸鎸囧悜璺緞鎵�鎸囧悜鐨凜ursor 渚垮彲浠ヨ繑鍥炰簡
 				if (path.equals(filePath)) {
 					// System.out.println("audioPath = " + path);
 					// System.out.println("filePath = " + filePath);
@@ -27,7 +27,7 @@ public class CursorMusicImage {
 				}
 			} while (c.moveToNext());
 		}
-		// 这两个没有什么作用，调试的时候用
+		//
 		// String audioPath = c.getString(c
 		// .getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
 		//

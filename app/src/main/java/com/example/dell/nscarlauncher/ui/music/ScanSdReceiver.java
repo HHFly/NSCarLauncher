@@ -19,7 +19,7 @@ public class ScanSdReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (Intent.ACTION_MEDIA_SCANNER_STARTED.equals(action)){
-        	System.out.println("É¨Ãè¿ªÊ¼");
+        	System.out.println("æ‰«æå¼€å§‹");
             Cursor c1 = context.getContentResolver()
             .query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                     new String[]{MediaStore.Audio.Media.TITLE,
@@ -31,12 +31,12 @@ public class ScanSdReceiver extends BroadcastReceiver {
             count1 = c1.getCount();
             System.out.println("count:"+count);
             builder = new AlertDialog.Builder(context);
-            builder.setMessage("ÕıÔÚÉ¨Ãè´æ´¢¿¨...");
+            builder.setMessage("æ­£åœ¨æ‰«æå­˜å‚¨å¡...");
             ad = builder.create();
             ad.show();
              
         }else if(Intent.ACTION_MEDIA_SCANNER_FINISHED.equals(action)){
-        	System.out.println("É¨Ãè½áÊø");
+        	System.out.println("æ‰«æç»“æŸ");
             Cursor c2 = context.getContentResolver()
             .query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                     new String[]{MediaStore.Audio.Media.TITLE,
@@ -49,11 +49,11 @@ public class ScanSdReceiver extends BroadcastReceiver {
             count = count2-count1;
             ad.cancel();
             if (count>=0){
-                Toast.makeText(context, "¹²Ôö¼Ó" +
-                        count + "Ê×¸èÇú", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "å…±å¢åŠ " +
+                        count + "é¦–æ­Œæ›²", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(context, "¹²¼õÉÙ" +
-                        count + "Ê×¸èÇú", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "å…±å‡å°‘" +
+                        count + "é¦–æ­Œæ›²", Toast.LENGTH_LONG).show();
             }   
         }   
     }

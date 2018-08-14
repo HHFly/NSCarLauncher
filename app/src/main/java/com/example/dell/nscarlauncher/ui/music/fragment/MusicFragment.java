@@ -1,8 +1,6 @@
-package com.example.dell.nscarlauncher.ui.music;
+package com.example.dell.nscarlauncher.ui.music.fragment;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Handler;
@@ -10,13 +8,11 @@ import android.os.IKdAudioControlService;
 import android.os.IKdBtService;
 import android.os.Message;
 import android.os.RemoteException;
-import android.os.ServiceManager;
-import android.os.SystemProperties;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -24,8 +20,15 @@ import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
+import com.example.dell.nscarlauncher.ui.fm.FMAdapter;
+import com.example.dell.nscarlauncher.ui.music.DialogLocalMusic;
+import com.example.dell.nscarlauncher.ui.music.adapter.MusicAdapter;
+import com.example.dell.nscarlauncher.ui.music.model.Mp3Info;
+import com.example.dell.nscarlauncher.ui.music.model.MusicModel;
+import com.example.dell.nscarlauncher.ui.music.Service.PlayerService;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
@@ -56,6 +59,8 @@ public class MusicFragment extends BaseFragment {
     public static ImageView bt_open, bt_play, bt_back, bt_next, bt_u, bt_music_model;
     public static TextView tv_music_songname, tv_music_singer, music_current_time, music_total_time;
     public  static ImageView circle_image;
+  private   List<Mp3Info> mData = new ArrayList<>();//数据源
+    private MusicAdapter mAdapter;
     @Override
     public int getContentResId() {
         return R.layout.fragment_music;
@@ -85,9 +90,9 @@ public class MusicFragment extends BaseFragment {
     @Override
     public void initView() {
 
-
+        new DialogLocalMusic(getContext());
         initSeekBar();
-
+        getMusicData();
     }
 
     @Override
@@ -401,5 +406,40 @@ private  void  musicNext(){
             return "" + time;
         }
     }
+/*初始化本地音乐数据*/
+  private  void getMusicData(){
+      mData =DialogLocalMusic.data;
 
+        initRvAdapter(mData);
+  }
+
+    /**
+     * 初始化adapter
+     *
+     *
+     */
+    private void initRvAdapter( List<Mp3Info> data) {
+        if (mAdapter == null) {
+            RecyclerView rv = getView(R.id.recyclerView);
+            mAdapter =new MusicAdapter(data);
+
+            if (rv != null) {
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                rv.setLayoutManager(linearLayoutManager);
+                rv.setAdapter(mAdapter);
+            }
+            mAdapter.setOnItemClickListener(new MusicAdapter.OnItemClickListener() {
+
+                @Override
+                public void onClickMusic(Mp3Info data) {
+
+                }
+            });
+
+        }else {
+            mAdapter.notifyDataSetChanged();
+        }
+        setViewVisibilityGone(R.id.item_music_null,data==null||data.size()==0);
+    }
 }

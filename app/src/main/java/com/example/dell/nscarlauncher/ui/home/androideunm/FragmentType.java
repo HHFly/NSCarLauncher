@@ -5,7 +5,8 @@ import android.support.annotation.IntDef;
 @IntDef({
         FragmentType.FM,
         FragmentType.BTMUSIC,
-        FragmentType.MUSIC
+        FragmentType.MUSIC,
+        FragmentType.PHONE
 })
 public @interface FragmentType {
     /*电台*/
@@ -14,5 +15,6 @@ public @interface FragmentType {
     int BTMUSIC =1;
     /*本地音乐*/
     int MUSIC =2;
-
+/*电话*/
+int PHONE=3;
 }

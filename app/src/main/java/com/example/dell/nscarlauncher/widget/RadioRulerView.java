@@ -45,7 +45,7 @@ public class RadioRulerView extends View {
     private PointF xPoint;
     private int mPaddingBottom;
     private int mPaddingTop;
-    private boolean mIsAuto = false;
+    private boolean mIsAuto = true;
 
     public RadioRulerView(Context context) {
         super(context);

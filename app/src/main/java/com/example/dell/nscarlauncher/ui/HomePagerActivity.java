@@ -15,7 +15,8 @@ import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.example.dell.nscarlauncher.ui.home.model.HomeModel;
-import com.example.dell.nscarlauncher.ui.music.MusicFragment;
+import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
+import com.example.dell.nscarlauncher.ui.phone.PhoneFragment;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private FMFragment fmFragment ;//收音机
     private BTMusicFragment btMusicFragment;//蓝牙音乐
     private MusicFragment musicFragment;//本地音乐
+    private PhoneFragment phoneFragment;//电话
     private ArrayList<HomeModel> mData;
     @Override
     public int getContentViewResId() {
@@ -78,6 +80,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         HomePagerOneFragment homePagerOneFragment =new HomePagerOneFragment();
         homePagerOneFragment.setHomePagerActivity(this);
         HomePagerTwoFragment homePagerTwoFragment =new HomePagerTwoFragment();
+        homePagerOneFragment.setHomePagerActivity(this);
         mFragments.add(homePagerOneFragment);
         mFragments.add(homePagerTwoFragment);
         createFragment();
@@ -91,6 +94,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
       fmFragment.setHomePagerActivity(this);
       btMusicFragment =new BTMusicFragment();
         musicFragment= new MusicFragment();
+        phoneFragment= new PhoneFragment();
     }
     /*隐藏fragemt*/
     public  void  hideFragment(){
@@ -137,9 +141,12 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             case  FragmentType.MUSIC:
                 switchFragment(musicFragment);
                 break;
+             case  FragmentType.PHONE:
+                 switchFragment(phoneFragment);
+                 break;
         }
     }
-
+    /*viewpager适配器*/
     private class MyAdapter extends FragmentPagerAdapter {
         MyAdapter(FragmentManager fm) {
             super(fm);

@@ -1,4 +1,4 @@
-package com.example.dell.nscarlauncher.ui.music;
+package com.example.dell.nscarlauncher.ui.music.Service;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,26 +12,30 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
+import com.example.dell.nscarlauncher.ui.music.CursorMusicImage;
+import com.example.dell.nscarlauncher.ui.music.DialogLocalMusic;
+import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
+import com.example.dell.nscarlauncher.ui.music.model.Mp3Info;
 
 
 public class PlayerService extends Service {
 
 
-	private MediaPlayer mediaPlayer; // Ã½Ìå²¥·ÅÆ÷¶ÔÏó
-	private int msg;				//²¥·ÅĞÅÏ¢
-	public static boolean isPause; 		// ÔİÍ£×´Ì¬
-	private int currentTime;		//µ±Ç°²¥·Å½ø¶È
+	private MediaPlayer mediaPlayer; // åª’ä½“æ’­æ”¾å™¨å¯¹è±¡
+	private int msg;				//æ’­æ”¾ä¿¡æ¯
+	public static boolean isPause; 		//  æš‚åœçŠ¶æ€
+	private int currentTime;		//å½“å‰æ’­æ”¾è¿›åº¦
 	
-	public static boolean is_start_speed = true;  //ÊÇ·ñµÚÒ»´Î¿ì½ø²¥·Å
+	public static boolean is_start_speed = true;  //æ˜¯å¦ç¬¬ä¸€æ¬¡å¿«è¿›æ’­æ”¾
 	
 	/**
-	 * handlerÓÃÀ´½ÓÊÕÏûÏ¢£¬À´·¢ËÍ¹ã²¥¸üĞÂ²¥·ÅÊ±¼ä
+	 * handlerç”¨æ¥æ¥æ”¶æ¶ˆæ¯ï¼Œæ¥å‘é€å¹¿æ’­æ›´æ–°æ’­æ”¾æ—¶é—´
 	 */
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == 1) {
 				if(mediaPlayer != null) {
-					currentTime = mediaPlayer.getCurrentPosition(); // »ñÈ¡µ±Ç°ÒôÀÖ²¥·ÅµÄÎ»ÖÃ
+					currentTime = mediaPlayer.getCurrentPosition(); // è·å–å½“å‰éŸ³ä¹æ’­æ”¾çš„ä½ç½®
 					MusicFragment.setMusicProgress(currentTime);
 					handler.sendEmptyMessageDelayed(1, 1000);
 				}
@@ -45,13 +49,13 @@ public class PlayerService extends Service {
 		Log.d("service", "service created");
 		mediaPlayer = new MediaPlayer();
 		/**
-		 * ÉèÖÃÒôÀÖ²¥·ÅÍê³ÉÊ±µÄ¼àÌıÆ÷
+		 * è®¾ç½®éŸ³ä¹æ’­æ”¾å®Œæˆæ—¶çš„ç›‘å¬å™¨
 		 */
 		mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
 
 			@Override
 			public void onCompletion(MediaPlayer mp) {
-				MusicFragment.bt_next.performClick();//ÏÂÒ»Ê×
+				MusicFragment.bt_next.performClick();//ï¿½ï¿½Ò»ï¿½ï¿½
 			}
 		});
 	}
@@ -64,18 +68,18 @@ public class PlayerService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		is_start_speed = false;
-		msg = intent.getIntExtra("MSG", 0);			//²¥·ÅĞÅÏ¢
-		if (msg == FlagProperty.PLAY_MSG) {	//Ö±½Ó²¥·ÅÒôÀÖ
+		msg = intent.getIntExtra("MSG", 0);			//æ’­æ”¾ä¿¡æ¯
+		if (msg == FlagProperty.PLAY_MSG) {	//ç›´æ¥æ’­æ”¾éŸ³ä¹
 			play(0);
-		} else if (msg == FlagProperty.PAUSE_MSG) {	//ÔİÍ£
+		} else if (msg == FlagProperty.PAUSE_MSG) {	//æš‚åœ
 			pause();	
-		} else if (msg == FlagProperty.STOP_MSG) {		//Í£Ö¹
+		} else if (msg == FlagProperty.STOP_MSG) {		//åœæ­¢
 			stop();
-		} else if (msg == FlagProperty.PRIVIOUS_MSG) {	//ÉÏÒ»Ê×
+		} else if (msg == FlagProperty.PRIVIOUS_MSG) {	//ä¸Šä¸€é¦–
 			previous();
-		} else if (msg == FlagProperty.NEXT_MSG) {		//ÏÂÒ»Ê×
+		} else if (msg == FlagProperty.NEXT_MSG) {		//ä¸‹ä¸€é¦–
 			next();
-		} else if (msg == FlagProperty.PROGRESS_CHANGE) {	//½ø¶È¸üĞÂ
+		} else if (msg == FlagProperty.PROGRESS_CHANGE) {	//è¿›åº¦æ›´æ–°
 			currentTime = intent.getIntExtra("progress", -1);
 			play(currentTime);
 		} else if (msg == FlagProperty.PLAYING_MSG) {
@@ -85,7 +89,7 @@ public class PlayerService extends Service {
 	}
 	
 	/**
-	 * ²¥·ÅÒôÀÖ
+	 *  æ’­æ”¾éŸ³ä¹
 	 * 
 	 * @param
 	 */
@@ -98,10 +102,10 @@ public class PlayerService extends Service {
 				if (currentTime== 0) {
 					MusicFragment.flag_first = false;
 				}
-				mediaPlayer.reset();// °Ñ¸÷Ïî²ÎÊı»Ö¸´µ½³õÊ¼×´Ì¬
+				mediaPlayer.reset();//æŠŠå„é¡¹å‚æ•°æ¢å¤åˆ°åˆå§‹çŠ¶æ€
 				mediaPlayer.setDataSource(DialogLocalMusic.data.get(DialogLocalMusic.musicID).url);
-				mediaPlayer.prepare(); // ½øĞĞ»º³å
-				mediaPlayer.setOnPreparedListener(new PreparedListener(currentTime));// ×¢²áÒ»¸ö¼àÌıÆ÷
+				mediaPlayer.prepare(); // è¿›è¡Œç¼“å†²
+				mediaPlayer.setOnPreparedListener(new PreparedListener(currentTime));// æ³¨å†Œä¸€ä¸ªç›‘å¬å™¨
 				handler.sendEmptyMessage(1);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -110,7 +114,7 @@ public class PlayerService extends Service {
 	}
 
 	/**
-	 * ÔİÍ£ÒôÀÖ
+	 * æš‚åœéŸ³ä¹
 	 */
 	private void pause() {
 		if (mediaPlayer != null && mediaPlayer.isPlaying()) {
@@ -120,7 +124,7 @@ public class PlayerService extends Service {
 	}
 
 	/**
-	 * ÉÏÒ»Ê×
+	 * ä¸Šä¸€é¦–
 	 */
 	private void previous() {
 		isPause = false;
@@ -128,7 +132,7 @@ public class PlayerService extends Service {
 	}
 
 	/**
-	 * ÏÂÒ»Ê×
+	 *  ä¸‹ä¸€é¦–
 	 */
 	private void next() {
 		isPause = false;
@@ -136,13 +140,13 @@ public class PlayerService extends Service {
 	}
 
 	/**
-	 * Í£Ö¹ÒôÀÖ
+	 *åœæ­¢éŸ³ä¹
 	 */
 	private void stop() {
 		if (mediaPlayer != null) {
 			mediaPlayer.stop();
 			try {
-				mediaPlayer.prepare(); // ÔÚµ÷ÓÃstopºóÈç¹ûĞèÒªÔÙ´ÎÍ¨¹ıstart½øĞĞ²¥·Å,ĞèÒªÖ®Ç°µ÷ÓÃprepareº¯Êı
+				mediaPlayer.prepare(); //åœ¨è°ƒç”¨stopåå¦‚æœéœ€è¦å†æ¬¡é€šè¿‡startè¿›è¡Œæ’­æ”¾,éœ€è¦ä¹‹å‰è°ƒç”¨prepareå‡½æ•°
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -160,7 +164,7 @@ public class PlayerService extends Service {
 
 	/**
 	 * 
-	 * ÊµÏÖÒ»¸öOnPrepareLister½Ó¿Ú,µ±ÒôÀÖ×¼±¸ºÃµÄÊ±ºò¿ªÊ¼²¥·Å
+	 * å®ç°ä¸€ä¸ªOnPrepareListeræ¥å£,å½“éŸ³ä¹å‡†å¤‡å¥½çš„æ—¶å€™å¼€å§‹æ’­æ”¾
 	 * 
 	 */
 	private final class PreparedListener implements OnPreparedListener {
@@ -175,7 +179,7 @@ public class PlayerService extends Service {
 			String musicName = ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).title;
 			String artist = ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).artist;
 			
-			//ÉèÖÃ¸èÇú×¨¼­ÄÚÖÃÍ¼Æ¬
+			//è®¾ç½®æ­Œæ›²ä¸“è¾‘å†…ç½®å›¾ç‰‡
 			String albumArt = CursorMusicImage.getImage(PlayerService.this, ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).url);
 			if (albumArt == null) {
 //				MusicFragment.circle_image.setImageResource();
@@ -187,9 +191,9 @@ public class PlayerService extends Service {
 					
 			MusicFragment.setMusicInfo(musicName, artist);
 			if (!isPause) {
-				mediaPlayer.start(); // ¿ªÊ¼²¥·Å
+				mediaPlayer.start(); // å¼€å§‹æ’­æ”¾
 			}
-			if (currentTime > 0) { // Èç¹ûÒôÀÖ²»ÊÇ´ÓÍ·²¥·Å
+			if (currentTime > 0) { //  å¦‚æœéŸ³ä¹ä¸æ˜¯ä»å¤´æ’­æ”¾
 				mediaPlayer.seekTo(currentTime);
 			}
 		}

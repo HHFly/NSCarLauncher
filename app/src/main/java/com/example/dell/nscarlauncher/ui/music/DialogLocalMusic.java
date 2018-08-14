@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
@@ -26,11 +25,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
+import com.example.dell.nscarlauncher.ui.music.Service.PlayerService;
+import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
+import com.example.dell.nscarlauncher.ui.music.model.Mp3Info;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class DialogLocalMusic implements OnClickListener {
 		Window window = dialog.getWindow();
 		window.setContentView(R.layout.dialog_local_music);
 		WindowManager.LayoutParams lp = window.getAttributes();
-		lp.y = 34; // ĞÂÎ»ÖÃY×ø±ê
+		lp.y = 34; //
 		window.setAttributes(lp);
 		window.setWindowAnimations(R.style.dialog_localmusic_style);
 		this.context = context;
@@ -185,14 +186,14 @@ public class DialogLocalMusic implements OnClickListener {
 		if (cursorCount > 0) {
 			cursor.moveToFirst();
 			while (i < cursorCount) {
-				// ¸èÇúÎÄ¼şµÄÂ·¾¶ £ºMediaStore.Audio.Media.DATA
+				// æ­Œæ›²æ–‡ä»¶çš„è·¯å¾„ ï¼šMediaStore.Audio.Media.DATA
 				url = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
 				if (url.toLowerCase().indexOf(path) > -1) {
 					Mp3Info info = new Mp3Info();
 					info.id = j++;
 					info.displayName = cursor
 							.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME));
-					System.out.println("¸èÇúÃû:" + info.displayName);
+					System.out.println("æ­Œæ›²å:" + info.displayName);
 					info.duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
 					info.title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
 					info.artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
@@ -224,14 +225,14 @@ public class DialogLocalMusic implements OnClickListener {
 	// data.clear();
 	// File file = new File(path);
 	// if (file.exists()) {
-	// File[] files = file.listFiles();// ¶ÁÈ¡
+	// File[] files = file.listFiles();// ï¿½ï¿½È¡
 	// getFileName(files);
 	// }
 	// }
 	//
-	// //´ÓÄ¿Â¼ÖĞ»ñÈ¡ÒôÀÖÎÄ¼ş
+	// //ï¿½ï¿½Ä¿Â¼ï¿½Ğ»ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 	// private void getFileName(File[] files) {
-	// if (files != null) {// ÏÈÅĞ¶ÏÄ¿Â¼ÊÇ·ñÎª¿Õ£¬·ñÔò»á±¨¿ÕÖ¸Õë
+	// if (files != null) {// ï¿½ï¿½ï¿½Ğ¶ï¿½Ä¿Â¼ï¿½Ç·ï¿½Îªï¿½Õ£ï¿½ï¿½ï¿½ï¿½ï¿½á±¨ï¿½ï¿½Ö¸ï¿½ï¿½
 	// for (File file : files) {
 	// if (file.isDirectory()) {
 	// getFileName(file.listFiles());
@@ -246,10 +247,10 @@ public class DialogLocalMusic implements OnClickListener {
 	// }
 	// }
 
-	// ¹âÁÁÓÎ±êËæ×Åµã»÷µÄ²»Í¬¶ø²»Í¬
+	//å…‰äº®æ¸¸æ ‡éšç€ç‚¹å‡»çš„ä¸åŒè€Œä¸åŒ
 	public static void changeCursorPosition(int nextPosition) {
 		Animation animation = new TranslateAnimation(cursor_position, nextPosition, 0, 0);
-		animation.setFillAfter(true);// True:Í¼Æ¬Í£ÔÚ¶¯»­½áÊøÎ»ÖÃ
+		animation.setFillAfter(true);//  True:å›¾ç‰‡åœåœ¨åŠ¨ç”»ç»“æŸä½ç½®
 		animation.setDuration(300);
 		cursor.startAnimation(animation);
 		cursor_position = nextPosition;

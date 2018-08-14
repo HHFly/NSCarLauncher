@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="95px">
+<LinearLayout
+   android:layout_centerVertical="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView style="@style/BaseText.Tv"
+        android:id="@+id/item_songname"
+        android:textSize="24px"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:maxEms="20"
+        android:text="空白格（电影《一生一世》片尾曲）"
+        />
+    <TextView style="@style/BaseText.Tv"
+        android:id="@+id/item_singer"
+        android:layout_marginLeft="40px"
+        android:textSize="18px"
+        android:textColor="#999999"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:maxEms="15"
+        android:text="－杨宗纬"
+        />
+</LinearLayout>
+
+    <View style="@style/BaseLine.Horizontal"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

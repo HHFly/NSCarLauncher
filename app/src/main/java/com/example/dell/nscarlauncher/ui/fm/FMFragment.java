@@ -34,6 +34,8 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
     private IKdAudioControlService audioservice ;
     AudioManager audioManager;
    private static String FMCHANNEL ="channel";
+   private  boolean mIsAuto =true; //是否自动搜索
+
     public void setHomePagerActivity(HomePagerActivity homePagerActivity) {
         this.homePagerActivity = homePagerActivity;
     }
@@ -80,7 +82,11 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
                SPUtil.getInstance(getContext(),FMCHANNEL).putFloat(FMCHANNEL,channel);
                 break;
             case R.id.iv_search:
-                mRule.startAutoSeachFM();
+                if(mIsAuto) {
+                    mRule.setAutoSearchFM(mIsAuto);
+                    mRule.startAutoSeachFM();
+                }
+                mIsAuto=!mIsAuto;
                 break;
             case R.id.iv_fm_left:
                 channel=channel-0.5f;
@@ -191,6 +197,9 @@ public void openFm(){
     public void onValueChange(float value) {
         changeChannel(value);
     }
+
+    /*变换频道
+    **/
 private void changeChannel(float value){
     setTvText(R.id.tv_fm_Hz,String.valueOf(value));
     channel=value;
