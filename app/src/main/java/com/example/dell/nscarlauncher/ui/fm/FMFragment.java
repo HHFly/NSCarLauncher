@@ -3,7 +3,6 @@ package com.example.dell.nscarlauncher.ui.fm;
 import android.media.AudioManager;
 import android.os.IKdAudioControlService;
 import android.os.RemoteException;
-import android.os.ServiceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,16 +11,11 @@ import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.common.util.SPUtil;
-import com.example.dell.nscarlauncher.ui.HomePagerActivity;
-import com.example.dell.nscarlauncher.ui.home.adapter.HomeAdapter;
-import com.example.dell.nscarlauncher.ui.home.model.HomeModel;
+import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.widget.RadioRulerView;
 
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static android.support.v7.widget.LinearLayoutManager.HORIZONTAL;
 
 public class FMFragment extends BaseFragment implements RadioRulerView.OnValueChangeListener{
     private FMAdapter mAdapter ;

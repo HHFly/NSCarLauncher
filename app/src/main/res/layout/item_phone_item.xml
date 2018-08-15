@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="800px"
+    android:layout_height="90px"
+    android:background="@mipmap/ic_item_phone_itembg">
+    <RelativeLayout
+        android:id="@+id/rl_1"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="36px"
+            android:text="@string/号码"
+            android:layout_centerInParent="true"/>
+        <View style="@style/BaseLine.Horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_width="120px"
+            android:layout_height="4px"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/select_phone_item_color"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_2"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="36px"
+            android:text="@string/联系人"
+            android:layout_centerInParent="true"/>
+        <View style="@style/BaseLine.Horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_width="120px"
+            android:layout_height="4px"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/select_phone_item_color"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_3"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="36px"
+            android:text="@string/通话记录"
+            android:layout_centerInParent="true"/>
+        <View style="@style/BaseLine.Horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_width="120px"
+            android:layout_height="4px"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/select_phone_item_color"/>
+    </RelativeLayout>
+</LinearLayout>

@@ -37,7 +37,7 @@
         <meta-data
             android:name="design_height"
             android:value="720" />
-        <activity android:name=".ui.HomePagerActivity" android:screenOrientation="landscape">
+        <activity android:name=".ui.home.HomePagerActivity" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

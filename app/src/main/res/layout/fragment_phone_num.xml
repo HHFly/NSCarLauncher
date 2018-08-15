@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_phone_num_bg">
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="100px"
+    android:layout_centerInParent="true">
+
+    <LinearLayout
+        android:id="@+id/ll_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true">
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/num"
+            android:layout_marginLeft="40px"
+            android:textSize="36px"
+            android:text=""/>
+
+        <ImageView
+            android:id="@+id/num_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="60px"
+            android:paddingRight="50px"
+            android:src="@mipmap/ic_phone_delete" />
+    </LinearLayout>
+    <View style="@style/BaseLine.Horizontal"
+        android:layout_alignLeft="@+id/ll_num"
+        android:layout_alignRight="@+id/ll_num"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
+</RelativeLayout>

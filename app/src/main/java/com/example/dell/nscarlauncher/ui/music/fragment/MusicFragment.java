@@ -425,16 +425,21 @@ private  void  musicNext(){
 
             if (rv != null) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                 rv.setLayoutManager(linearLayoutManager);
                 rv.setAdapter(mAdapter);
             }
             mAdapter.setOnItemClickListener(new MusicAdapter.OnItemClickListener() {
 
                 @Override
-                public void onClickMusic(Mp3Info data) {
-
+                public void onClickMusic(Mp3Info data, int Pos) {
+                    DialogLocalMusic.musicID=Pos;
+                    if (flag_play) {
+                        bt_play.performClick();
+                    }
+                    play();
                 }
+
+
             });
 
         }else {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_f_fm_bg">
+<include layout="@layout/item_phone_key"/>
+    <LinearLayout
+        android:layout_width="800px"
+        android:layout_height="480px"
+        android:orientation="vertical"
+        android:layout_marginLeft="200px"
+        android:layout_marginTop="165px">
+    <include layout="@layout/item_phone_item"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+    </LinearLayout>
+    
+</LinearLayout>

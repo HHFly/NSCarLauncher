@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="90px">
+<TextView style="@style/BaseText.Tv"
+    android:id="@+id/name"
+    android:textSize="36px"
+    android:layout_marginLeft="65px"
+    android:layout_centerVertical="true"/>
+
+    <TextView style="@style/BaseText.Tv"
+        android:id="@+id/number"
+        android:textSize="36px"
+        android:layout_marginRight="65px"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"/>
+    <View style="@style/BaseLine.Horizontal"
+        android:layout_marginLeft="42px"
+        android:layout_marginRight="42px"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

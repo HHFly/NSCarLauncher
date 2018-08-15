@@ -1,42 +1,40 @@
-package com.example.dell.nscarlauncher.ui.music.adapter;
+package com.example.dell.nscarlauncher.ui.phone.adapter;
 
 import android.view.View;
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.adapter.AutoViewHolder;
 import com.example.dell.nscarlauncher.base.adapter.BaseListRvAdapter;
-import com.example.dell.nscarlauncher.ui.music.model.Mp3Info;
+import com.example.dell.nscarlauncher.ui.phone.model.MemberData;
 
 import java.util.List;
 
-public class MusicAdapter extends BaseListRvAdapter<Mp3Info> {
-    public MusicAdapter(List<Mp3Info> data) {
+public class PMemberAdapter extends BaseListRvAdapter<MemberData> {
+    public PMemberAdapter(List<MemberData> data) {
         super(data);
     }
 
     @Override
     public int getItemResId() {
-        return R.layout.item_musiclist;
+        return R.layout.item_phone_menber;
     }
 
     @Override
-    public void bindBodyData(AutoViewHolder holder,final int bodyPos,final Mp3Info data) {
-        holder.text(R.id.item_songname,data.displayName);
-        holder.text(R.id.item_singer,data.artist);
+    public void bindBodyData(AutoViewHolder holder, int bodyPos,final MemberData data) {
+        holder.text(R.id.name,data.getName());
+        holder.text(R.id.number,data.getNumber());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
                 if(onItemClickListener!=null){
-                    onItemClickListener.onClickMusic(data,bodyPos);
+                    onItemClickListener.onClickMem(data);
                 }
             }
         });
-
     }
     private OnItemClickListener onItemClickListener;
-
     public void setOnItemClickListener(OnItemClickListener listener) {
         onItemClickListener = listener;
     }
@@ -47,7 +45,7 @@ public class MusicAdapter extends BaseListRvAdapter<Mp3Info> {
          *
          *
          */
-        void onClickMusic(Mp3Info data,int Pos);
+        void onClickMem(MemberData data);
 
 
     }

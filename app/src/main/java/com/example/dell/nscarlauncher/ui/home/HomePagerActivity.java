@@ -1,4 +1,4 @@
-package com.example.dell.nscarlauncher.ui;
+package com.example.dell.nscarlauncher.ui.home;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

@@ -397,6 +397,21 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             view.setEnabled(isEnable);
         }
     }
+
+    //    /**
+//     * 获取TextView文本
+//     *
+//     * @param id
+//     * @return
+//     */
+    public String getTvText(@IdRes int id) {
+        View view = getView(id);
+        if (view != null && view instanceof TextView) {
+            TextView tv = (TextView) view;
+                return tv.getText().toString();
+        }
+        return "";
+    }
 //    /**
 //     * 压缩图片
 //     *

@@ -30,8 +30,9 @@
     <color name="btn_click_blue">#0280E6</color>
     <color name="btn_small_blue">#289bf8</color>
     <color name="white">#ffffff</color>
+
     <color name="red_fo3a53">#F03A53</color>
-    <color name="colorText">#333333</color>
+    <color name="colorText">#EEEEEE</color>
 
     <color name="color_line_border">#C7C7C7</color>
     <color name="colorBlack_Three">#333333</color>
