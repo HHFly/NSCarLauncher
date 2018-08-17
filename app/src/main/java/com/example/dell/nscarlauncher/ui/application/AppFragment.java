@@ -1,10 +1,10 @@
-package com.example.dell.nscarlauncher.ui.phone;
+package com.example.dell.nscarlauncher.ui.application;
 
 import android.view.View;
 
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 
-public class PTalklogFragment extends BaseFragment {
+public class AppFragment extends BaseFragment {
     @Override
     public int getContentResId() {
         return 0;

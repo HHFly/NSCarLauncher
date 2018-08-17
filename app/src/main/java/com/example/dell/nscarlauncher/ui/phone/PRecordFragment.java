@@ -7,20 +7,21 @@ import android.view.View;
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.ui.phone.adapter.PMemberAdapter;
+import com.example.dell.nscarlauncher.ui.phone.adapter.PRecordAdapter;
 import com.example.dell.nscarlauncher.ui.phone.model.PhoneBookInfo;
+import com.example.dell.nscarlauncher.ui.phone.model.PhoneRecordInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PMemberFragment extends BaseFragment{
-    private PMemberAdapter mAdapter;
-    private List<PhoneBookInfo> mData =new ArrayList<>();
+public class PRecordFragment extends BaseFragment {
+    private PRecordAdapter mAdapter;
+    private List<PhoneRecordInfo> mData =new ArrayList<>();
 
-    public void setmData(List<PhoneBookInfo> mData) {
+    public void setmData(List<PhoneRecordInfo> mData) {
         this.mData = mData;
         initRvAdapter(this.mData);
     }
-
     @Override
     public int getContentResId() {
         return R.layout.fragment_phone_member;
@@ -50,23 +51,23 @@ public class PMemberFragment extends BaseFragment{
      *
      *
      */
-    private void initRvAdapter( List<PhoneBookInfo> data) {
+    private void initRvAdapter( List<PhoneRecordInfo> data) {
         if (mAdapter == null) {
             RecyclerView rv = getView(R.id.recyclerView);
-            mAdapter =new PMemberAdapter(data);
+            mAdapter =new PRecordAdapter(data);
 
             if (rv != null) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                 rv.setLayoutManager(linearLayoutManager);
                 rv.setAdapter(mAdapter);
             }
-            mAdapter.setOnItemClickListener(new PMemberAdapter.OnItemClickListener() {
+            mAdapter.setOnItemClickListener(new PRecordAdapter.OnItemClickListener() {
 
                 @Override
-                public void onClickMem(PhoneBookInfo data) {
-
+                public void onClickMem(PhoneRecordInfo data) {
                     PhoneFragment.callphone(data.getNumber());
                 }
+
 
 
             });

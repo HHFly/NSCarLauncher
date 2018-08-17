@@ -21,5 +21,19 @@
     <string name="号码">号码</string>
     <string name="联系人">联系人</string>
     <string name="通话记录">通话记录</string>
+    <string name="保持通话">保持通话：</string>
+    <string name="设置">设置</string>
+    <string name="应用中心">应用中心</string>
+    <string name="显示">显示</string>
+    <string name="蓝牙">蓝牙</string>
+    <string name="WiFi">WiFi</string>
+    <string name="语言和输入法">语言和输入法</string>
+    <string name="均衡器">均衡器</string>
+    <string name="日期和时间">日期和时间</string>
+    <string name="车辆设置">车辆设置</string>
+    <string name="能量回收">能量回收</string>
+    <string name="升级">升级</string>
+    <string name="关于">关于</string>
+    <string name="帮助">帮助</string>
 
 </resources>

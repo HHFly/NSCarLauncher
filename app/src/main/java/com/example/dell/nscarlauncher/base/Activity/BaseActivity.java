@@ -213,11 +213,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     protected void initImmersionBar() {
         //在BaseActivity里初始化
         mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.with(this)
-                .transparentBar()
-                .barAlpha(0)
-                .hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
-                .init();
+        mImmersionBar.hideBar(BarHide.FLAG_HIDE_BAR).init();
     }
     /**
      * 是否可以使用沉浸式

@@ -1,4 +1,4 @@
-package com.example.dell.nscarlauncher.ui.phone;
+package com.example.dell.nscarlauncher.ui.setting;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -6,24 +6,23 @@ import android.view.View;
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.example.dell.nscarlauncher.ui.phone.PhoneFragment;
 import com.example.dell.nscarlauncher.ui.phone.adapter.PMemberAdapter;
 import com.example.dell.nscarlauncher.ui.phone.model.PhoneBookInfo;
+import com.example.dell.nscarlauncher.ui.setting.adapter.SetAdapter;
+import com.example.dell.nscarlauncher.ui.setting.eumn.SetType;
+import com.example.dell.nscarlauncher.ui.setting.model.SetData;
+import com.example.dell.nscarlauncher.ui.setting.model.SetModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class PMemberFragment extends BaseFragment{
-    private PMemberAdapter mAdapter;
-    private List<PhoneBookInfo> mData =new ArrayList<>();
-
-    public void setmData(List<PhoneBookInfo> mData) {
-        this.mData = mData;
-        initRvAdapter(this.mData);
-    }
+public class SetFragment extends BaseFragment {
+    private SetData  mData =new SetData();
+    private SetAdapter mAdapter;
 
     @Override
     public int getContentResId() {
-        return R.layout.fragment_phone_member;
+        return R.layout.fragment_set;
     }
 
     @Override
@@ -38,7 +37,7 @@ public class PMemberFragment extends BaseFragment{
 
     @Override
     public void initView() {
-
+      initRvAdapter(mData.getData());
     }
 
     @Override
@@ -50,24 +49,22 @@ public class PMemberFragment extends BaseFragment{
      *
      *
      */
-    private void initRvAdapter( List<PhoneBookInfo> data) {
+    private void initRvAdapter( List<SetModel> data) {
         if (mAdapter == null) {
             RecyclerView rv = getView(R.id.recyclerView);
-            mAdapter =new PMemberAdapter(data);
+            mAdapter =new SetAdapter(data);
 
             if (rv != null) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                 rv.setLayoutManager(linearLayoutManager);
                 rv.setAdapter(mAdapter);
             }
-            mAdapter.setOnItemClickListener(new PMemberAdapter.OnItemClickListener() {
+            mAdapter.setOnItemClickListener(new SetAdapter.OnItemClickListener() {
 
                 @Override
-                public void onClickMem(PhoneBookInfo data) {
-
-                    PhoneFragment.callphone(data.getNumber());
+                public void onClickData(SetModel data) {
+                    Click(data);
                 }
-
 
             });
 
@@ -75,5 +72,11 @@ public class PMemberFragment extends BaseFragment{
             mAdapter.notifyDataSetChanged();
         }
 
+    }
+    private void Click(SetModel data){
+            switch (data.getItem()){
+                case SetType.DISPLAY:
+                    break;
+            }
     }
 }

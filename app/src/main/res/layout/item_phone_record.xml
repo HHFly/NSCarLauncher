@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="90px">
+    <ImageView
+        android:layout_width="23px"
+        android:layout_height="23px"
+        android:layout_marginLeft="63px"
+        android:layout_marginTop="30px"
+        android:src="@mipmap/ic_phone_record"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="107px"
+        android:layout_marginTop="30px"
+        android:orientation="vertical"
+        >
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/name"
+            android:textSize="18px"
+           />
+
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/number"
+            android:textSize="24px"
+            android:layout_marginTop="8px"
+            />
+    </LinearLayout>
+
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_alignParentRight="true"
+    android:layout_marginTop="30px"
+    android:layout_marginRight="78px"
+    >
+    <TextView style="@style/BaseText.Tv"
+        android:id="@+id/call_count"
+        android:textSize="18px"
+        />
+
+    <TextView style="@style/BaseText.Tv"
+        android:id="@+id/call_time"
+        android:textSize="18px"
+        android:layout_marginTop="10px"
+        />
+</LinearLayout>
+    <View style="@style/BaseLine.Horizontal"
+        android:layout_marginLeft="42px"
+        android:layout_marginRight="42px"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

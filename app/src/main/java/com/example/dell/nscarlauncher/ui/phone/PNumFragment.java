@@ -43,7 +43,7 @@ public class PNumFragment extends BaseFragment {
                 break;
         }
     }
-    private void subString(){
+    public void subString(){
         number=  getTvText(R.id.num);
         if (number!=null&&number.length()>0){
             number =number.substring(0,number.length()-1);

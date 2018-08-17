@@ -59,7 +59,7 @@ public class DialogLocalMusic implements OnClickListener {
 
 	public DialogLocalMusic(final Context context) {
 		dialog = new Dialog(context, R.style.nodarken_style);
-		dialog.show();
+//		dialog.show();
 		Window window = dialog.getWindow();
 		window.setContentView(R.layout.dialog_local_music);
 		WindowManager.LayoutParams lp = window.getAttributes();
@@ -78,7 +78,7 @@ public class DialogLocalMusic implements OnClickListener {
 
 		listview = (ListView) window.findViewById(R.id.local_music_listview);
 
-		dialog.hide();
+//		dialog.hide();
 
 		getFile(PATH_SDCARD);
 		adapter = new MusicListAdapter(context);

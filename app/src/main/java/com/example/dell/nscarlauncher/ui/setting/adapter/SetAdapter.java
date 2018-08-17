@@ -1,38 +1,37 @@
-package com.example.dell.nscarlauncher.ui.phone.adapter;
+package com.example.dell.nscarlauncher.ui.setting.adapter;
 
 import android.view.View;
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.adapter.AutoViewHolder;
 import com.example.dell.nscarlauncher.base.adapter.BaseListRvAdapter;
-import com.example.dell.nscarlauncher.ui.phone.model.PhoneBookInfo;
+import com.example.dell.nscarlauncher.ui.setting.model.SetModel;
 
 import java.util.List;
 
-public class PMemberAdapter extends BaseListRvAdapter<PhoneBookInfo> {
-    public PMemberAdapter(List<PhoneBookInfo> data) {
+public class SetAdapter extends BaseListRvAdapter<SetModel> {
+    public SetAdapter(List<SetModel> data) {
         super(data);
     }
 
     @Override
     public int getItemResId() {
-        return R.layout.item_phone_menber;
+        return R.layout.item_set;
     }
 
     @Override
-    public void bindBodyData(AutoViewHolder holder, int bodyPos,final PhoneBookInfo data) {
-        holder.text(R.id.name,data.getName());
-        holder.text(R.id.number,data.getNumber());
-        holder.get(R.id.number).setOnClickListener(new View.OnClickListener() {
+    public void bindBodyData(AutoViewHolder holder, int bodyPos,final SetModel data) {
+            holder.image(R.id.iv_set,data.getLogo());
+            holder.text(R.id.tv_name,data.getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 if(onItemClickListener!=null){
-                    onItemClickListener.onClickMem(data);
+                    onItemClickListener.onClickData(data);
                 }
             }
         });
+
     }
     private OnItemClickListener onItemClickListener;
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -45,7 +44,7 @@ public class PMemberAdapter extends BaseListRvAdapter<PhoneBookInfo> {
          *
          *
          */
-        void onClickMem(PhoneBookInfo data);
+        void onClickData(SetModel data);
 
 
     }

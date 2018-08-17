@@ -11,6 +11,7 @@
         />
 
     <RelativeLayout
+        android:id="@+id/rl_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -50,10 +51,11 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:layout_below="@+id/rl_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="529px">
+        android:layout_marginTop="50px">
         <TextView style="@style/BaseText.Tv"
             android:id="@+id/tv_bt_songname"
             android:text="心中的日月"
@@ -72,11 +74,12 @@
     </LinearLayout>
 
 <LinearLayout
+    android:layout_below="@+id/rl_play"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_centerHorizontal="true"
-    android:layout_marginTop="310dp">
+    android:layout_marginTop="145px">
     <include layout="@layout/item_bt_music_seekbar" />
 
 </LinearLayout>

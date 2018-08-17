@@ -6,7 +6,9 @@ import android.support.annotation.IntDef;
         FragmentType.FM,
         FragmentType.BTMUSIC,
         FragmentType.MUSIC,
-        FragmentType.PHONE
+        FragmentType.PHONE,
+        FragmentType.SET,
+        FragmentType.APPLICATION
 })
 public @interface FragmentType {
     /*电台*/
@@ -15,6 +17,10 @@ public @interface FragmentType {
     int BTMUSIC =1;
     /*本地音乐*/
     int MUSIC =2;
-/*电话*/
-int PHONE=3;
+    /*电话*/
+    int PHONE=3;
+/*设置*/
+    int SET =4;
+    /*应用*/
+    int APPLICATION =5;
 }

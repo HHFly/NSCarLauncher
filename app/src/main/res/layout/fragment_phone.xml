@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/ic_f_fm_bg">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 <include layout="@layout/item_phone_key"/>
     <LinearLayout
         android:layout_width="800px"
@@ -18,5 +22,10 @@
 
     </android.support.v4.view.ViewPager>
     </LinearLayout>
-    
-</LinearLayout>
+    </LinearLayout>
+    <include layout="@layout/item_phone_calling"
+        android:visibility="gone"/>
+    <include layout="@layout/item_btphone_null"
+        android:visibility="gone"/>
+
+</RelativeLayout>

@@ -4,6 +4,7 @@ package com.example.dell.nscarlauncher.app;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.IFmService;
@@ -17,6 +18,7 @@ import com.example.dell.nscarlauncher.BuildConfig;
 import com.example.dell.nscarlauncher.common.util.FrescoUtils;
 import com.example.dell.nscarlauncher.common.util.PDLifecycleHandle;
 import com.example.dell.nscarlauncher.common.util.ToastUtils;
+import com.example.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.white.lib.utils.UtilsConfig;
 
@@ -41,7 +43,7 @@ App extends MultiDexApplication {
     AudioManager audioManager;
     private IKdBtService btservice ;
     private Activity mCurActivity;
-
+    private BlueMusicBroadcoast bluetoothReceiver; //蓝牙广播接受
     public  IFmService getRadio() {
         return radio;
     }
@@ -85,6 +87,7 @@ App extends MultiDexApplication {
     private void initService(){
         initFm();
         btService();
+        registMyReceiver();
     }
     /*蓝牙*/
     private  void  btService(){
@@ -109,6 +112,39 @@ App extends MultiDexApplication {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+    /*反注册接收器*/
+    public void  unregistMyReceiver(){
+        unregisterReceiver(bluetoothReceiver);
+    }
+    /*注册接收器*/
+    private void registMyReceiver() {
+        bluetoothReceiver = new BlueMusicBroadcoast();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.kangdi.BroadCast.RequestPinCode");
+        intentFilter.addAction("com.kangdi.BroadCast.PinCode");
+        intentFilter.addAction("com.kangdi.BroadCast.RingCall");
+        intentFilter.addAction("com.kangdi.BroadCast.CallStart");
+        intentFilter.addAction("com.kangdi.BroadCast.CallEnd");
+        intentFilter.addAction("com.kangdi.BroadCast.CallOutGoing");
+        intentFilter.addAction("com.kangdi.BroadCast.HandsFreeConnect");
+        intentFilter.addAction("com.kangdi.BroadCast.HandsFreeDisconnect");
+        intentFilter.addAction("com.kangdi.BroadCast.AudioConnect");
+        intentFilter.addAction("com.kangdi.BroadCast.AudioDisconnect");
+        intentFilter.addAction("com.kangdi.BroadCast.PbapConnect");
+        intentFilter.addAction("com.kangdi.BroadCast.PbapGetCompleted");
+        intentFilter.addAction("com.kangdi.BroadCast.SimCallStart");
+        intentFilter.addAction("com.kangdi.BroadCast.MusicInfoChanged");
+        intentFilter.addAction("android.intent.action.NEW_OUTGOING_CALL");
+        intentFilter.addAction("android.intent.action.PHONE_STATE");
+        intentFilter.addAction("com.kangdi.BroadCast.TrackProgress");
+        intentFilter.addAction("com.kangdi.BroadCast.CallActive");
+
+        intentFilter.addAction("com.kangdi.BroadCast.open4GAduioPath");
+        intentFilter.addAction("com.kangdi.BroadCast.AcMediaStatusChanged");
+        intentFilter.addAction("com.kangdi.BroadCast.PhoneState");
+
+        registerReceiver(bluetoothReceiver, intentFilter);
     }
 
     private void registerActivityListener() {

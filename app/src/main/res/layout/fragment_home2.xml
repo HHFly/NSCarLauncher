@@ -13,8 +13,8 @@
         >
 
         <include layout="@layout/item_phone" />
-        <include layout="@layout/item_bt_music"/>
-        <include layout="@layout/item_music"/>
-        <include layout="@layout/item_weather"/>
+        <include layout="@layout/item_setting"/>
+        <include layout="@layout/item_app"/>
+        <include layout="@layout/item_setting"/>
     </LinearLayout>
 </LinearLayout>

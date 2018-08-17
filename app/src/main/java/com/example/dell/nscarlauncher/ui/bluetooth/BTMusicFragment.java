@@ -161,10 +161,17 @@ private  void  musicNext(){
         });
     }
     /*获取全局模块*/
+    /*获取全局模块*/
     private void  getService(){
-        audioservice=App.get().getAudioservice();
-        audioManager=App.get().getAudioManager();
-        btservice =App.get().getBtservice();
+        if(audioservice==null) {
+            audioservice = App.get().getAudioservice();
+        }
+        if(audioManager==null) {
+            audioManager = App.get().getAudioManager();
+        }
+        if(btservice==null) {
+            btservice = App.get().getBtservice();
+        }
     }
 
 

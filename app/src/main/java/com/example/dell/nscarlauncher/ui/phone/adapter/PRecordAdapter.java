@@ -5,29 +5,29 @@ import android.view.View;
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.adapter.AutoViewHolder;
 import com.example.dell.nscarlauncher.base.adapter.BaseListRvAdapter;
-import com.example.dell.nscarlauncher.ui.phone.model.PhoneBookInfo;
+import com.example.dell.nscarlauncher.ui.phone.model.PhoneRecordInfo;
 
 import java.util.List;
 
-public class PMemberAdapter extends BaseListRvAdapter<PhoneBookInfo> {
-    public PMemberAdapter(List<PhoneBookInfo> data) {
+public class PRecordAdapter extends BaseListRvAdapter<PhoneRecordInfo> {
+    public PRecordAdapter(List<PhoneRecordInfo> data) {
         super(data);
     }
 
     @Override
     public int getItemResId() {
-        return R.layout.item_phone_menber;
+        return R.layout.item_phone_record;
     }
 
     @Override
-    public void bindBodyData(AutoViewHolder holder, int bodyPos,final PhoneBookInfo data) {
+    public void bindBodyData(AutoViewHolder holder, int bodyPos,final PhoneRecordInfo data) {
         holder.text(R.id.name,data.getName());
         holder.text(R.id.number,data.getNumber());
-        holder.get(R.id.number).setOnClickListener(new View.OnClickListener() {
+        holder.text(R.id.call_count,data.getCall_count());
+        holder.text(R.id.call_time,data.getCall_time());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 if(onItemClickListener!=null){
                     onItemClickListener.onClickMem(data);
                 }
@@ -45,7 +45,7 @@ public class PMemberAdapter extends BaseListRvAdapter<PhoneBookInfo> {
          *
          *
          */
-        void onClickMem(PhoneBookInfo data);
+        void onClickMem(PhoneRecordInfo data);
 
 
     }

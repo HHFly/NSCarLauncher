@@ -26,6 +26,7 @@ public class HomePagerTwoFragment extends BaseFragment {
     @Override
     public void setListener() {
         setClickListener(R.id.rl_phone);
+        setClickListener(R.id.set);
     }
 
     @Override
@@ -39,6 +40,16 @@ public class HomePagerTwoFragment extends BaseFragment {
             case R.id.rl_phone:
                 if(homePagerActivity!=null){
                     homePagerActivity.jumpFragment(FragmentType.PHONE);
+                }
+                break;
+            case R.id.set:
+                if(homePagerActivity!=null){
+                    homePagerActivity.jumpFragment(FragmentType.SET);
+                }
+                break;
+            case R.id.rl_app:
+                if(homePagerActivity!=null){
+                    homePagerActivity.jumpFragment(FragmentType.APPLICATION);
                 }
                 break;
         }

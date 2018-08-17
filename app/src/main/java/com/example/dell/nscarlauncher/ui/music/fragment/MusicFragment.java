@@ -34,9 +34,6 @@ import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
 public class MusicFragment extends BaseFragment {
-    private GifImageView mGifImageView;
-    private GifDrawable gifDrawable;
-    private boolean isPlay;
 
     private final static int DIRECTION_PREV = 1; // 向前切歌
     private final static int DIRECTION_NEXT = 2; // 向后切歌
@@ -90,7 +87,7 @@ public class MusicFragment extends BaseFragment {
     @Override
     public void initView() {
 
-        new DialogLocalMusic(getContext());
+
         initSeekBar();
         getMusicData();
     }
