@@ -11,7 +11,7 @@ import java.util.List;
  * Created by zhuwh on 2017/10/7.
  */
 
-public class PDLifecycleHandle implements Application.ActivityLifecycleCallbacks {
+public class NSLifecycleHandle implements Application.ActivityLifecycleCallbacks {
 
     private static int resumed;
     private static int paused;

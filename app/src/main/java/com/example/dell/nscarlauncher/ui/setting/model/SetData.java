@@ -36,11 +36,11 @@ public class SetData {
         setModel4.setLogo(R.mipmap.ic_set_language);
         data.add(setModel4);
 
-        SetModel setModel5 =new SetModel();
-        setModel5.setName(getString(R.string.均衡器));
-        setModel5.setItem(SetType.EQULIZER);
-        setModel5.setLogo(R.mipmap.ic_set_equlizer);
-        data.add(setModel5);
+//        SetModel setModel5 =new SetModel();
+//        setModel5.setName(getString(R.string.均衡器));
+//        setModel5.setItem(SetType.EQULIZER);
+//        setModel5.setLogo(R.mipmap.ic_set_equlizer);
+//        data.add(setModel5);
 
         SetModel setModel6 =new SetModel();
         setModel6.setName(getString(R.string.日期和时间));

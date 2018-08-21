@@ -96,6 +96,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onResume() {
         super.onResume();
+        //初始化沉浸式
+        if (isImmersionBarEnabled())
+            initImmersionBar();
         if (isSecondResume) {
             onUnFirstResume();
         } else {
@@ -113,7 +116,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         }
         if (!isLoadingShow && !mLoadingDialog.isAdded()) {
             isLoadingShow = true;
-            mLoadingDialog.show(getFragmentManager());
+            mLoadingDialog.show(getSupportFragmentManager());
         }
     }
     
@@ -210,7 +213,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         if (mImmersionBar != null)
             mImmersionBar.destroy();  //在BaseActivity里销毁
     }
-    protected void initImmersionBar() {
+    public void initImmersionBar() {
         //在BaseActivity里初始化
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.hideBar(BarHide.FLAG_HIDE_BAR).init();

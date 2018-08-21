@@ -16,7 +16,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.example.dell.nscarlauncher.BuildConfig;
 import com.example.dell.nscarlauncher.common.util.FrescoUtils;
-import com.example.dell.nscarlauncher.common.util.PDLifecycleHandle;
+import com.example.dell.nscarlauncher.common.util.NSLifecycleHandle;
 import com.example.dell.nscarlauncher.common.util.ToastUtils;
 import com.example.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
@@ -71,7 +71,7 @@ App extends MultiDexApplication {
         //初始化服务
 
         ToastUtils.init(this);
-        registerActivityLifecycleCallbacks(new PDLifecycleHandle());
+        registerActivityLifecycleCallbacks(new NSLifecycleHandle());
         //初始化Fresco
         FrescoUtils.initialize(this);
         //初始化white框架
@@ -215,6 +215,6 @@ App extends MultiDexApplication {
      * @return
      */
     public Activity getCurActivity() {
-        return PDLifecycleHandle.currentActivity();
+        return NSLifecycleHandle.currentActivity();
     }
 }

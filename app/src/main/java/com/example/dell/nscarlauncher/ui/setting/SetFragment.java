@@ -1,11 +1,13 @@
 package com.example.dell.nscarlauncher.ui.setting;
 
+import android.provider.Settings;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.example.dell.nscarlauncher.common.util.JumpUtils;
 import com.example.dell.nscarlauncher.ui.phone.PhoneFragment;
 import com.example.dell.nscarlauncher.ui.phone.adapter.PMemberAdapter;
 import com.example.dell.nscarlauncher.ui.phone.model.PhoneBookInfo;
@@ -76,7 +78,21 @@ public class SetFragment extends BaseFragment {
     private void Click(SetModel data){
             switch (data.getItem()){
                 case SetType.DISPLAY:
+                    JumpUtils.actActivity(getActivity(),Settings.ACTION_DISPLAY_SETTINGS);
                     break;
+                case  SetType.DATE:
+                    JumpUtils.actActivity(getActivity(),Settings.ACTION_DATE_SETTINGS);
+                    break;
+                case  SetType.LANGUAGE:
+                    JumpUtils.actActivity(getActivity(),Settings.ACTION_INPUT_METHOD_SETTINGS);
+                case  SetType.ABOUT:
+                    JumpUtils.actActivity(getActivity(),Settings.ACTION_DEVICE_INFO_SETTINGS);
+                    break;
+                case SetType.BT:
+                    break;
+                 case  SetType.WIFI:
+                     JumpUtils.actActivity(getActivity(),Settings.ACTION_WIFI_SETTINGS);
+                     break;
             }
     }
 }

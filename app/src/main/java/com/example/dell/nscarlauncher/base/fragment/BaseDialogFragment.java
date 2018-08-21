@@ -1,14 +1,16 @@
 package com.example.dell.nscarlauncher.base.fragment;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
+import android.support.v4.app.DialogFragment;
 import android.app.FragmentManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
+import com.gyf.barlibrary.BarHide;
+import com.gyf.barlibrary.ImmersionBar;
 
 
 /**
@@ -26,7 +30,7 @@ import com.example.dell.nscarlauncher.app.App;
 
 public abstract class BaseDialogFragment extends DialogFragment implements View.OnClickListener {
     private final String TAG = getClass().getSimpleName();
-
+    protected ImmersionBar mImmersionBar;
     private boolean isCanceledOnTouchOutside = true;
 
     @Override
@@ -46,12 +50,39 @@ public abstract class BaseDialogFragment extends DialogFragment implements View.
         if(this.getStartInBottom()) {
             this.startInBottom();
         }
+        if(this.getStartInTop()) {
+            this.startInTop();
+        }
+    }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (isImmersionBarEnabled())
+            initImmersionBar();
+    }
+    /**
+     * 是否在Fragment使用沉浸式
+     *
+     * @return the boolean
+     */
+    protected boolean isImmersionBarEnabled() {
+        return true;
+    }
+
+    /**
+     * 初始化沉浸式
+     */
+    protected void initImmersionBar() {
+        mImmersionBar = ImmersionBar.with(this, getDialog());
+        mImmersionBar.hideBar(BarHide.FLAG_HIDE_BAR).init();
     }
     protected boolean getStartInBottom() {
         return false;
     }
-
+    protected boolean getStartInTop() {
+        return false;
+    }
     protected void startInBottom() {
         Window win = this.getDialog().getWindow();
         win.setBackgroundDrawable(new ColorDrawable(16777215));
@@ -59,6 +90,17 @@ public abstract class BaseDialogFragment extends DialogFragment implements View.
         this.getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
         WindowManager.LayoutParams params = win.getAttributes();
         params.gravity = 80;
+        params.width = -1;
+        params.height = -2;
+        win.setAttributes(params);
+    }
+    protected void startInTop() {
+        Window win = this.getDialog().getWindow();
+        win.setBackgroundDrawable(new ColorDrawable(16777215));
+        DisplayMetrics dm = new DisplayMetrics();
+        this.getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        WindowManager.LayoutParams params = win.getAttributes();
+        params.gravity = Gravity.TOP;
         params.width = -1;
         params.height = -2;
         win.setAttributes(params);
@@ -78,7 +120,7 @@ public abstract class BaseDialogFragment extends DialogFragment implements View.
      *
      * @param manager
      */
-    public void show(FragmentManager manager) {
+    public void show(android.support.v4.app.FragmentManager manager) {
         try {
             show(manager, TAG);
         } catch (Exception e) {

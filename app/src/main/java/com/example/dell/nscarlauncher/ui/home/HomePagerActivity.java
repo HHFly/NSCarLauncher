@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.IKdBtService;
 import android.os.Message;
 import android.os.RemoteException;
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -38,6 +39,7 @@ import com.example.dell.nscarlauncher.ui.music.Service.PlayerService;
 import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.example.dell.nscarlauncher.ui.phone.PhoneFragment;
 import com.example.dell.nscarlauncher.ui.setting.SetFragment;
+import com.example.dell.nscarlauncher.widget.DialogVolumeControl;
 
 import java.util.ArrayList;
 
@@ -46,6 +48,7 @@ import me.relex.circleindicator.CircleIndicator;
 public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
     public static final int CALL_ANSWER = 4; // 接听来电
     public static final int CALL_HUNGUP = 5; // 挂断来电
+    private DialogVolumeControl dialogVolumeControl ;
     private ArrayList<Fragment> mFragments;
     private ViewPager viewPager;
     private CircleIndicator indicator;//viewpager指示器
@@ -64,6 +67,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     @Override
     protected void onResume() {
         super.onResume();
+        DialogVolumeControl.volumeResume();
         if (comingReceiver == null) {
             comingReceiver = new ComingReceiver();
             IntentFilter intentFilter = new IntentFilter();
@@ -105,6 +109,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         if(btservice==null) {
             btservice = App.get().getBtservice();
         }
+
+
     }
     @Override
     public void setListener() {
@@ -119,7 +125,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         super.onClick(v);
         switch (v.getId()){
             case R.id.title_iv_sound:
-
+                showVolumeDialog();
                 break;
             case R.id.center_img:
                 hideFragment();
@@ -232,6 +238,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         if (alertDialog != null) {
             alertDialog.dismiss();
         }
+        dialogVolumeControl=null;
         stopService(new Intent(this, PlayerService.class));
     }
 
@@ -352,4 +359,15 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             }
         };
     };
+
+    /*
+     * 显示音量*/
+    private  void  showVolumeDialog(){
+        if(dialogVolumeControl ==null){
+            dialogVolumeControl =new DialogVolumeControl();
+        }
+
+        dialogVolumeControl.setContent(this.getActivity(),this);
+        dialogVolumeControl.show(getSupportFragmentManager());
+    }
 }
