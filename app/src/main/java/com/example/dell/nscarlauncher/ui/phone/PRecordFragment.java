@@ -53,7 +53,7 @@ public class PRecordFragment extends BaseFragment {
      */
     private void initRvAdapter( List<PhoneRecordInfo> data) {
         if (mAdapter == null) {
-            RecyclerView rv = getView(R.id.recyclerView);
+            RecyclerView rv = getView(R.id.recyclerView1);
             mAdapter =new PRecordAdapter(data);
 
             if (rv != null) {

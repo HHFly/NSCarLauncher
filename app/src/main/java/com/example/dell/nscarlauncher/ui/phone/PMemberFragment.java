@@ -52,7 +52,7 @@ public class PMemberFragment extends BaseFragment{
      */
     private void initRvAdapter( List<PhoneBookInfo> data) {
         if (mAdapter == null) {
-            RecyclerView rv = getView(R.id.recyclerView);
+            RecyclerView rv = getView(R.id.recyclerView1);
             mAdapter =new PMemberAdapter(data);
 
             if (rv != null) {

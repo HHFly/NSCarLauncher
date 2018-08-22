@@ -8,6 +8,7 @@ import android.view.View;
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.common.util.JumpUtils;
+import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.phone.PhoneFragment;
 import com.example.dell.nscarlauncher.ui.phone.adapter.PMemberAdapter;
 import com.example.dell.nscarlauncher.ui.phone.model.PhoneBookInfo;
@@ -95,6 +96,13 @@ public class SetFragment extends BaseFragment {
                  case  SetType.WIFI:
                      JumpUtils.actActivity(getActivity(),Settings.ACTION_WIFI_SETTINGS);
                      break;
+                case  SetType.CARSET:
+                    JumpUtils.actAPK(getActivity(), FragmentType.CARSET);
+                    break;
+                case  SetType.RECOVERY:
+                    JumpUtils.actAPK(getActivity(), FragmentType.POWERRECOVER);
+                    break;
+
             }
     }
 }

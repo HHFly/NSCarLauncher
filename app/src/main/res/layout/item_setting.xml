@@ -4,9 +4,10 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="50px"
     android:layout_marginRight="50px"
-    android:background="@mipmap/item_bg">
+    android:background="@mipmap/item_bg"
+    android:id="@+id/rl_set">
     <RelativeLayout
-        android:id="@+id/set"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

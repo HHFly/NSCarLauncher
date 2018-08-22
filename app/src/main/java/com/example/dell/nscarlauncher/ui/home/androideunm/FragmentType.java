@@ -8,7 +8,12 @@ import android.support.annotation.IntDef;
         FragmentType.MUSIC,
         FragmentType.PHONE,
         FragmentType.SET,
-        FragmentType.APPLICATION
+        FragmentType.APPLICATION,
+        FragmentType.AIRCONTROLL,
+        FragmentType.CARCONTROLL,
+        FragmentType.CARSET,
+        FragmentType.CARPOWER,
+        FragmentType.POWERRECOVER
 })
 public @interface FragmentType {
     /*电台*/
@@ -23,4 +28,14 @@ public @interface FragmentType {
     int SET =4;
     /*应用*/
     int APPLICATION =5;
+    /*空调*/
+    int AIRCONTROLL =6;
+    /*车辆控制*/
+    int CARCONTROLL =7;
+    /*车辆设置*/
+    int CARSET =8;
+    /*车辆电池管理*/
+    int CARPOWER= 9;
+    /*车辆能量回收*/
+    int POWERRECOVER=10;
 }

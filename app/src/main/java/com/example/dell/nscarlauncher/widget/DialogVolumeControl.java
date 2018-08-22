@@ -27,7 +27,7 @@ import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 
 
 public class DialogVolumeControl extends BaseDialogFragment {
-	//¸ù²¼¾Ö
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	View mRootView;
 	Context content ;
 	static Dialog dialog;
@@ -54,7 +54,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 		return rootView;
 	}
 	/**
-	 * ³õÊ¼»¯
+	 * ï¿½ï¿½Ê¼ï¿½ï¿½
 	 *
 	 * @param
 	 */
@@ -63,35 +63,35 @@ public class DialogVolumeControl extends BaseDialogFragment {
 		
 		audiomanage = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 		
-		//Í¨»°ÒôÁ¿
+		//Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		int max = audiomanage.getStreamMaxVolume( AudioManager.STREAM_VOICE_CALL );
 		int current = audiomanage.getStreamVolume( AudioManager.STREAM_VOICE_CALL );
 		Log.d("VIOCE_CALL", "max : " + max + " current : " + current);
 		
-		//ÏµÍ³ÒôÁ¿
+		//ÏµÍ³ï¿½ï¿½ï¿½ï¿½
 		max = audiomanage.getStreamMaxVolume( AudioManager.STREAM_SYSTEM );
 		current = audiomanage.getStreamVolume( AudioManager.STREAM_SYSTEM );
 		Log.d("SYSTEM", "max : " + max + " current : " + current);
 
-		//ÁåÉùÒôÁ¿
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		max = audiomanage.getStreamMaxVolume( AudioManager.STREAM_RING );
 		current = audiomanage.getStreamVolume( AudioManager.STREAM_RING );
 		Log.d("RING", "max : " + max + " current : " + current);
 
-		//ÒôÀÖÒôÁ¿
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		max = audiomanage.getStreamMaxVolume( AudioManager.STREAM_MUSIC );
 		current = audiomanage.getStreamVolume( AudioManager.STREAM_MUSIC );
 		FlagProperty.STREAM_MUSIC = current;
 		FlagProperty.STREAM_MAX_MUSIC = max;
 		Log.d("MUSIC", "max : " + max + " current : " + current);
 
-		//ÌáÊ¾ÉùÒôÒôÁ¿
+		//ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		max = audiomanage.getStreamMaxVolume( AudioManager.STREAM_ALARM );
 		current = audiomanage.getStreamVolume( AudioManager.STREAM_ALARM );
 		Log.d("ALARM", "max : " + max + " current : " + current);
 
 		
-		//¶ÔÒôÁ¿½øĞĞ³õÊ¼»¯
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ³ï¿½Ê¼ï¿½ï¿½
 		thumb_volume = (SeekBar) window.findViewById(R.id.thumb_volume);
 
 		
@@ -112,7 +112,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 	            	setVolumeImage(FlagProperty.STREAM_MUSIC);
 	            	audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, FlagProperty.STREAM_MUSIC, 0);
 	            	flag_quiet = true;
-	            	System.out.println("¾²ÒôFlagProperty.STREAM_MUSIC: " + FlagProperty.STREAM_MUSIC);
+//	            	System.out.println("ï¿½ï¿½ï¿½ï¿½FlagProperty.STREAM_MUSIC: " + FlagProperty.STREAM_MUSIC);
 				}else{
 					FlagProperty.STREAM_MUSIC = last_volume;
 					VerticalSeekBar.progress = Math.round(FlagProperty.STREAM_MUSIC * 100 / FlagProperty.STREAM_MAX_MUSIC);
@@ -120,7 +120,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 	            	setVolumeImage(FlagProperty.STREAM_MUSIC);
 	            	audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, FlagProperty.STREAM_MUSIC, 0);
 	            	flag_quiet = false;
-	            	System.out.println("·Ç¾²ÒôFlagProperty.STREAM_MUSIC: " + FlagProperty.STREAM_MUSIC);
+//	            	System.out.println("ï¿½Ç¾ï¿½ï¿½ï¿½FlagProperty.STREAM_MUSIC: " + FlagProperty.STREAM_MUSIC);
 				}
 				
 			}
@@ -136,8 +136,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 			thumb_volume.setProgress(VerticalSeekBar.progress);
 		}
 	}
-	
-	//ÒôÁ¿µ÷½Ú¼àÌı
+//	 æ»‘åŠ¨ç›‘å¬
 	private OnSeekBarChangeListener verticalSeekBarChangeListener = new OnSeekBarChangeListener()
     {
         
@@ -166,7 +165,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
         }
     };
 	
-    //ÒôÁ¿´óĞ¡Í¼Æ¬ÏÔÊ¾
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¡Í¼Æ¬ï¿½ï¿½Ê¾
     public void setVolumeImage(int volume){
     	if (volume == 0) {
     		imagebtn_volume.setBackgroundResource(R.mipmap.volume_03_off);

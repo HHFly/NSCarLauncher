@@ -1,18 +1,19 @@
-package com.example.dell.nscarlauncher;
+package com.example.dell.nscarlauncher.ui.application;
 
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.view.View;
 
+import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.adapter.AutoViewHolder;
 import com.example.dell.nscarlauncher.base.adapter.BaseListRvAdapter;
 import com.example.dell.nscarlauncher.base.adapter.BaseRvAdapter;
 
 import java.util.List;
 
-public class MainAdapter extends BaseListRvAdapter<ResolveInfo> {
+public class AppAdapter extends BaseListRvAdapter<ResolveInfo> {
 private PackageManager packageManager;
-    public MainAdapter(List<ResolveInfo> data,PackageManager packageManager) {
+    public AppAdapter(List<ResolveInfo> data, PackageManager packageManager) {
         super(data);
         this.packageManager=packageManager;
     }

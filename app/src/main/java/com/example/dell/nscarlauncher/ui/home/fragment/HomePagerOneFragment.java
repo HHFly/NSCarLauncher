@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.example.dell.nscarlauncher.common.util.JumpUtils;
 import com.example.dell.nscarlauncher.common.util.TimeUtils;
 import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
@@ -49,6 +50,7 @@ public class HomePagerOneFragment extends BaseFragment {
         setClickListener(R.id.FM);
         setClickListener(R.id.bt_music);
         setClickListener(R.id.music);
+        setClickListener(R.id.rl_air);
     }
 
     @Override
@@ -83,6 +85,9 @@ public class HomePagerOneFragment extends BaseFragment {
                     homePagerActivity.jumpFragment(FragmentType.MUSIC);
                 }
                 break;
+            case R.id.rl_air:
+                JumpUtils.actAPK(getActivity(),FragmentType.AIRCONTROLL);
+                    break;
         }
     }
 

@@ -16,7 +16,7 @@
             android:id="@+id/iv_fm"
             android:layout_width="250px"
             android:layout_height="250px"
-            android:src="@mipmap/ic_bt_music_bg" />
+            android:src="@mipmap/ic_music" />
 
         <LinearLayout
             android:visibility="gone"

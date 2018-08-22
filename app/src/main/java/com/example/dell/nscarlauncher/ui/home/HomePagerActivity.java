@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.IKdBtService;
@@ -21,17 +22,20 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.example.dell.nscarlauncher.common.util.FragmentUtils;
+import com.example.dell.nscarlauncher.common.util.JumpUtils;
 import com.example.dell.nscarlauncher.ui.application.AppFragment;
 import com.example.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.example.dell.nscarlauncher.ui.fm.FMFragment;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
+import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerThreeFragment;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.example.dell.nscarlauncher.ui.home.model.HomeModel;
 import com.example.dell.nscarlauncher.ui.music.DialogLocalMusic;
@@ -115,6 +119,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     @Override
     public void setListener() {
         super.setListener();
+        setClickListener(R.id.iv_power);
         setClickListener(R.id.title_iv_sound);
         setClickListener(R.id.center_img);
         viewPager.addOnPageChangeListener(this);
@@ -130,6 +135,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             case R.id.center_img:
                 hideFragment();
                 break;
+            case R.id.iv_power:
+                JumpUtils.actAPK(this,FragmentType.CARPOWER);
+                break;
         }
     }
     //初始化viewpager 数据
@@ -138,8 +146,11 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         homePagerOneFragment.setHomePagerActivity(this);
         HomePagerTwoFragment homePagerTwoFragment =new HomePagerTwoFragment();
         homePagerTwoFragment.setHomePagerActivity(this);
+        HomePagerThreeFragment homePagerThreeFragment =new HomePagerThreeFragment();
+        homePagerThreeFragment.setHomePagerActivity(this);
         mFragments.add(homePagerOneFragment);
         mFragments.add(homePagerTwoFragment);
+        mFragments.add(homePagerThreeFragment);
         createFragment();
 
         new DialogLocalMusic(getApplicationContext());
@@ -252,7 +263,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 //            page.add(homeModel);
 //            mData.remove(0);
 //            if(page.size()==4){
-//                HomePagerFragment homePagerFragment =new HomePagerFragment();
+//                HomePagerThreeFragment homePagerFragment =new HomePagerThreeFragment();
 //                homePagerFragment.setmData(page);
 //                page.clear();
 //                mFragments.add(homePagerFragment);
@@ -260,7 +271,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 //            }
 //        }
 //        if(page.size()>0) {
-//            HomePagerFragment homePagerFragment = new HomePagerFragment();
+//            HomePagerThreeFragment homePagerFragment = new HomePagerThreeFragment();
 //            homePagerFragment.setmData(page);
 //            page.clear();
 //            mFragments.add(homePagerFragment);
@@ -370,5 +381,16 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
         dialogVolumeControl.setContent(this.getActivity(),this);
         dialogVolumeControl.show(getSupportFragmentManager());
+    }
+    /*打开高德*/
+    public void  openNavi(){
+        PackageManager packageManager = getPackageManager();
+
+        String packageName = "com.autonavi.amapauto";//高德地图
+        Intent launchIntentForPackage = packageManager.getLaunchIntentForPackage(packageName);
+        if (launchIntentForPackage != null)
+            startActivity(launchIntentForPackage);
+        else
+            Toast.makeText(this, "未安装该应用", Toast.LENGTH_SHORT).show();
     }
 }

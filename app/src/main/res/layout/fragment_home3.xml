@@ -2,17 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"  android:background="#080B0F">
-    <android.support.v7.widget.RecyclerView
-        android:visibility="visible"
-        android:id="@+id/recyclerView"
-        android:scrollbars="none"
-        android:nestedScrollingEnabled="false"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
         android:layout_marginLeft="30px"
         android:layout_marginRight="30px"
-        android:layout_marginTop="71px"
-        android:layout_marginBottom="45px">
+        android:layout_marginTop="121px"
 
-    </android.support.v7.widget.RecyclerView>
+        >
+
+        <include layout="@layout/item_app" />
+        <include layout="@layout/item_setting"/>
+
+    </LinearLayout>
 </LinearLayout>
