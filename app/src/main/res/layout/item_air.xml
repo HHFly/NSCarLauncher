@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30px"
-        android:text="@string/电话"
+        android:text="@string/空调"
         android:textSize="48px"
         android:textColor="#EEEEEE"
         />
@@ -86,7 +86,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="70px"
         android:layout_marginBottom="40px"
-        android:src="@mipmap/ic_play"/>
+        android:src="@mipmap/ic_bt_phone"/>
 
 
 </LinearLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_f_fm_bg">
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="96px"
+    android:layout_marginTop="82px"
+    android:layout_marginLeft="90px"
+    android:layout_marginRight="90px">
+<ImageView
+    android:id="@+id/iv_return"
+    android:layout_width="40px"
+    android:layout_height="31px"
+    android:layout_marginLeft="30px"
+    android:src="@mipmap/set_button_return"
+    android:layout_centerVertical="true"
+    />
+<TextView style="@style/BaseText.Tv"
+    android:textSize="36px"
+    android:text="@string/蓝牙"
+    android:layout_centerVertical="true"
+    android:layout_marginLeft="110px"/>
+    <android.support.v7.widget.SwitchCompat
+        android:visibility="gone"
+        android:id="@+id/isopen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:theme="@style/mySwitch"
+        android:layout_marginLeft="900px"/>
+    <View style="@style/BaseLine.Horizontal"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_btshow"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="90px"
+        android:layout_marginRight="90px">
+        <LinearLayout
+            android:id="@+id/ll_name"
+            android:layout_width="wrap_content"
+            android:layout_height="96px"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="24px"
+            android:textColor="#989898"
+            android:text="@string/我的设备"
+            android:layout_marginLeft="110px"
+
+            />
+            <TextView style="@style/BaseText.Tv"
+                android:id="@+id/bt_name"
+                android:layout_marginLeft="900px"
+
+                android:textSize="36px"/>
+        </LinearLayout>
+        <View style="@style/BaseLine.Horizontal"
+          />
+        <LinearLayout
+            android:id="@+id/ll_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="96px"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView style="@style/BaseText.Tv"
+                android:textSize="24px"
+                android:textColor="#989898"
+                android:text="PIN码"
+                android:layout_marginLeft="110px"
+
+                />
+            <TextView style="@style/BaseText.Tv"
+                android:id="@+id/bt_pin"
+                android:layout_marginLeft="900px"
+
+                android:textSize="36px"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

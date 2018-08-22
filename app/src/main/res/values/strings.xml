@@ -35,5 +35,9 @@
     <string name="升级">升级</string>
     <string name="关于">关于</string>
     <string name="帮助">帮助</string>
+    <string name="我的设备">我的设备</string>
+    <string name="整车控制">整车控制</string>
+    <string name="导航">导航</string>
+    <string name="空调">空调</string>
 
 </resources>

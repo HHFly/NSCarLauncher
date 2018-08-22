@@ -85,10 +85,12 @@ public class SetFragment extends BaseFragment {
                     break;
                 case  SetType.LANGUAGE:
                     JumpUtils.actActivity(getActivity(),Settings.ACTION_INPUT_METHOD_SETTINGS);
+                    break;
                 case  SetType.ABOUT:
                     JumpUtils.actActivity(getActivity(),Settings.ACTION_DEVICE_INFO_SETTINGS);
                     break;
                 case SetType.BT:
+                    JumpUtils.actActivity(getActivity(),BlueToothSetActivity.class);
                     break;
                  case  SetType.WIFI:
                      JumpUtils.actActivity(getActivity(),Settings.ACTION_WIFI_SETTINGS);

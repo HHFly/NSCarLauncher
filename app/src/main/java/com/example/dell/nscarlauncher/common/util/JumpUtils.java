@@ -10,4 +10,9 @@ public class JumpUtils {
         act.startActivity(intent);
         act.overridePendingTransition(0,0);
     }
+    public  static void actActivity(Activity act, Class ca){
+        Intent intent =new Intent(act,ca);
+        act.startActivity(intent);
+        act.overridePendingTransition(0,0);
+    }
 }

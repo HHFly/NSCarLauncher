@@ -76,17 +76,28 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30px"
-        android:text="@string/电话"
+        android:text="string/导航"
         android:textSize="48px"
         android:textColor="#EEEEEE"
         />
-    <ImageView
-        android:layout_width="80px"
-        android:layout_height="80px"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="70px"
-        android:layout_marginBottom="40px"
-        android:src="@mipmap/ic_play"/>
+        android:layout_marginBottom="40px">
+        <ImageView
+            android:layout_width="52px"
+            android:layout_height="50px"
 
+            />
+        <ImageView
+            android:layout_width="60px"
+            android:layout_height="50px"
+            android:layout_marginLeft="60px"
+            />
+
+
+    </LinearLayout>
 
 </LinearLayout>

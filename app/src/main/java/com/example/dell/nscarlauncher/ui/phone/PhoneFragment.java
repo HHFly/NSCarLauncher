@@ -80,8 +80,8 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         bt_call=getView(R.id.call_start);
         bt_stop=getView(R.id.call_stop);
         rl_call =getView(R.id.item_phone_calling);
-        viewPager=getView(R.id.viewPager);
-        mFragments = new ArrayList<>();
+        viewPager=getView(R.id.viewPager1);
+
     }
 
     @Override
@@ -138,6 +138,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
            ;
        }.start();
+
    }
     /*添加电话号码*/
     private void addphone(String num){
@@ -312,6 +313,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                         if(!"".equals(number)) {
                             btservice.btDial(number);
                         }
+                        rl_call.setVisibility(View.VISIBLE);
                         break;
                     case PHONE_END:
                         btservice.btHungupCall();
@@ -429,6 +431,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
     }
     private void   initData() {
+        mFragments = new ArrayList<>();
          pNumFragment =new PNumFragment();
          pMemberFragment =new PMemberFragment();
          pRecordFragment =new PRecordFragment();

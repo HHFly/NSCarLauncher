@@ -16,7 +16,7 @@
         android:layout_marginTop="165px">
     <include layout="@layout/item_phone_item"/>
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
+        android:id="@+id/viewPager1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

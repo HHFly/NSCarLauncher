@@ -68,7 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      * 定位管理工具类
      */
     private LocationManagerUtil mLocationManagerUtil;
-    protected ImmersionBar mImmersionBar;
+    protected static  ImmersionBar mImmersionBar;
     protected void superOnCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -216,6 +216,10 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public void initImmersionBar() {
         //在BaseActivity里初始化
         mImmersionBar = ImmersionBar.with(this);
+        initBarAll();
+
+    }
+    public static  void  initBarAll(){
         mImmersionBar.hideBar(BarHide.FLAG_HIDE_BAR).init();
     }
     /**

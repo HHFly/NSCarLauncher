@@ -188,8 +188,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
      * @param fragment
      */
     private void switchFragment(Fragment fragment) {
-        showFragemnt();
+
         mCurFragment = FragmentUtils.selectFragment(this, mCurFragment, fragment, R.id.frame_main);
+        showFragemnt();
     }
     public void  jumpFragment(@FragmentType int type ){
         switch (type){

@@ -15,6 +15,7 @@ import android.util.Log;
 
 
 import com.example.dell.nscarlauncher.common.util.LogUtils;
+import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.example.dell.nscarlauncher.ui.phone.PhoneFragment;
 import com.white.lib.utils.log.LogUtil;
@@ -99,8 +100,8 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_HC)) {
             FlagProperty.flag_bluetooth = true;
 //            KLog.e("flag_bluetooth: "+FlagProperty.flag_bluetooth);
-//            if (MainKondi.fragment_now instanceof FragmentPhone) {
-//                MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE);
+//            if (HomePagerActivity.fragment_now instanceof FragmentPhone) {
+//                HomePagerActivity.changeFragment(MainKondi.FRAGMENT_PHONE);
 //            }
 //            HomeTitleLayout.setBluetooth(1);
         }
