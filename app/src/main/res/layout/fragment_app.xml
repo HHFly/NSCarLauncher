@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="73px"
+
     android:background="@mipmap/ic_f_fm_bg"
     >
 
@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
-
+        android:layout_marginTop="80px"
+        android:layout_marginLeft="73px"
         android:id="@+id/app_rv">
 
     </android.support.v7.widget.RecyclerView>

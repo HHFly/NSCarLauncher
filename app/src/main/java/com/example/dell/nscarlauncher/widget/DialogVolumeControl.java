@@ -27,7 +27,7 @@ import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 
 
 public class DialogVolumeControl extends BaseDialogFragment {
-	//������
+	//
 	View mRootView;
 	Context content ;
 	static Dialog dialog;
@@ -54,7 +54,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 		return rootView;
 	}
 	/**
-	 * ��ʼ��
+	 *
 	 *
 	 * @param
 	 */
@@ -63,35 +63,35 @@ public class DialogVolumeControl extends BaseDialogFragment {
 		
 		audiomanage = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 		
-		//ͨ������
+		//
 		int max = audiomanage.getStreamMaxVolume( AudioManager.STREAM_VOICE_CALL );
 		int current = audiomanage.getStreamVolume( AudioManager.STREAM_VOICE_CALL );
 		Log.d("VIOCE_CALL", "max : " + max + " current : " + current);
 		
-		//ϵͳ����
+		//
 		max = audiomanage.getStreamMaxVolume( AudioManager.STREAM_SYSTEM );
 		current = audiomanage.getStreamVolume( AudioManager.STREAM_SYSTEM );
 		Log.d("SYSTEM", "max : " + max + " current : " + current);
 
-		//��������
+		//
 		max = audiomanage.getStreamMaxVolume( AudioManager.STREAM_RING );
 		current = audiomanage.getStreamVolume( AudioManager.STREAM_RING );
 		Log.d("RING", "max : " + max + " current : " + current);
 
-		//��������
+		//
 		max = audiomanage.getStreamMaxVolume( AudioManager.STREAM_MUSIC );
 		current = audiomanage.getStreamVolume( AudioManager.STREAM_MUSIC );
 		FlagProperty.STREAM_MUSIC = current;
 		FlagProperty.STREAM_MAX_MUSIC = max;
 		Log.d("MUSIC", "max : " + max + " current : " + current);
 
-		//��ʾ��������
+		//
 		max = audiomanage.getStreamMaxVolume( AudioManager.STREAM_ALARM );
 		current = audiomanage.getStreamVolume( AudioManager.STREAM_ALARM );
 		Log.d("ALARM", "max : " + max + " current : " + current);
 
 		
-		//���������г�ʼ��
+		//
 		thumb_volume = (SeekBar) window.findViewById(R.id.thumb_volume);
 
 		
@@ -101,7 +101,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 
 		
 		imagebtn_volume.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				if (!flag_quiet) {
@@ -120,12 +120,12 @@ public class DialogVolumeControl extends BaseDialogFragment {
 	            	setVolumeImage(FlagProperty.STREAM_MUSIC);
 	            	audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, FlagProperty.STREAM_MUSIC, 0);
 	            	flag_quiet = false;
-//	            	System.out.println("�Ǿ���FlagProperty.STREAM_MUSIC: " + FlagProperty.STREAM_MUSIC);
+//
 				}
-				
+
 			}
 		});
-		
+
 	}
 
 	public static void volumeResume(){

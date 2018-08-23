@@ -52,6 +52,9 @@ import me.relex.circleindicator.CircleIndicator;
 public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
     public static final int CALL_ANSWER = 4; // 接听来电
     public static final int CALL_HUNGUP = 5; // 挂断来电
+    HomePagerOneFragment homePagerOneFragment;
+    HomePagerTwoFragment homePagerTwoFragment;
+    HomePagerThreeFragment homePagerThreeFragment;
     private DialogVolumeControl dialogVolumeControl ;
     private ArrayList<Fragment> mFragments;
     private ViewPager viewPager;
@@ -94,6 +97,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 //        viewPager.setOffscreenPageLimit(PageCount-1);
         viewPager.setOffscreenPageLimit(mFragments.size());
         indicator.setViewPager(viewPager);
+
     }
 
     @Override
@@ -142,17 +146,16 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
     //初始化viewpager 数据
     private  void initDa(){
-        HomePagerOneFragment homePagerOneFragment =new HomePagerOneFragment();
+        homePagerOneFragment =new HomePagerOneFragment();
         homePagerOneFragment.setHomePagerActivity(this);
-        HomePagerTwoFragment homePagerTwoFragment =new HomePagerTwoFragment();
+        homePagerTwoFragment =new HomePagerTwoFragment();
         homePagerTwoFragment.setHomePagerActivity(this);
-        HomePagerThreeFragment homePagerThreeFragment =new HomePagerThreeFragment();
+        homePagerThreeFragment =new HomePagerThreeFragment();
         homePagerThreeFragment.setHomePagerActivity(this);
         mFragments.add(homePagerOneFragment);
         mFragments.add(homePagerTwoFragment);
         mFragments.add(homePagerThreeFragment);
         createFragment();
-
         new DialogLocalMusic(getApplicationContext());
     }
 
@@ -171,6 +174,11 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     /*隐藏fragemt*/
     public  void  hideFragment(){
         setViewVisibility(R.id.frame_main,false);
+        freshlayout();
+    }
+
+    private void freshlayout() {
+        homePagerOneFragment.freshlayout(fmFragment);
     }
     /*显示fragment*/
 
@@ -246,7 +254,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     protected void onDestroy() {
         super.onDestroy();
         App.get().unregistMyReceiver();
-        unregisterReceiver(comingReceiver);
+        if(comingReceiver!=null) {
+            unregisterReceiver(comingReceiver);
+        }
         if (alertDialog != null) {
             alertDialog.dismiss();
         }

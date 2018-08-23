@@ -11,9 +11,9 @@ import com.example.dell.nscarlauncher.base.adapter.BaseRvAdapter;
 
 import java.util.List;
 
-public class AppAdapter extends BaseListRvAdapter<ResolveInfo> {
+public class AppAdapter extends BaseListRvAdapter<AppInfo> {
 private PackageManager packageManager;
-    public AppAdapter(List<ResolveInfo> data, PackageManager packageManager) {
+    public AppAdapter(List<AppInfo> data, PackageManager packageManager) {
         super(data);
         this.packageManager=packageManager;
     }
@@ -24,9 +24,10 @@ private PackageManager packageManager;
     }
 
     @Override
-    public void bindBodyData(AutoViewHolder holder, int bodyPos, final ResolveInfo data) {
-        holder.imageDrawable(R.id.img,data.activityInfo.loadIcon(packageManager));
-        holder.text(R.id.name,data.activityInfo.loadLabel(packageManager).toString());
+    public void bindBodyData(AutoViewHolder holder, int bodyPos, final AppInfo data) {
+        holder.imageDrawable(R.id.apk_img,data.getAppIcon());
+
+        holder.text(R.id.apk_name,data.getAppLabel());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +51,6 @@ private PackageManager packageManager;
          *
          * @param data
          */
-        void onClick(ResolveInfo data);
+        void onClick(AppInfo data);
     }
 }

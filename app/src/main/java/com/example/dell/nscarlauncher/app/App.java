@@ -115,8 +115,11 @@ App extends MultiDexApplication {
     }
     /*反注册接收器*/
     public void  unregistMyReceiver(){
-        unregisterReceiver(bluetoothReceiver);
+        if(bluetoothReceiver!=null) {
+            unregisterReceiver(bluetoothReceiver);
+        }
     }
+
     /*注册接收器*/
     private void registMyReceiver() {
         bluetoothReceiver = new BlueMusicBroadcoast();

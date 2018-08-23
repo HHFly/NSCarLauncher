@@ -32,7 +32,7 @@ public class JumpUtils {
                 actActivity(act,"com.kandi.acarpower","com.kandi.acarpower.activity.PowerRecoveryActivity");
                 break;
             case FragmentType.CARPOWER:
-                actActivity(act,"com.kandi.powermanager"," com.kandi.powermanager.view.PowerManagerActivity");
+                actActivity(act,"com.kandi.powermanager","com.kandi.powermanager.view.PowerManagerActivity");
                 break;
         }
     }

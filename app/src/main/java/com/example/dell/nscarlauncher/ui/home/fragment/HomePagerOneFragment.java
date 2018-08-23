@@ -9,7 +9,9 @@ import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.common.util.JumpUtils;
+import com.example.dell.nscarlauncher.common.util.SPUtil;
 import com.example.dell.nscarlauncher.common.util.TimeUtils;
+import com.example.dell.nscarlauncher.ui.fm.FMFragment;
 import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.home.androideunm.HandleKey;
@@ -137,5 +139,8 @@ public class HomePagerOneFragment extends BaseFragment {
 
         }
     }
-
+    public void  freshlayout(FMFragment fmFragment){
+       float a= SPUtil.getInstance(getContext(),FMFragment.FMCHANNEL).getFloat(FMFragment.FMCHANNEL,93.0f);
+       setTvText(R.id.tv_fm_hz,String.valueOf(a));
+    }
 }

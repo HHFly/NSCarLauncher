@@ -33,7 +33,7 @@ public class RadioRulerView extends View {
     private int mLineDivider;    //两条刻度线间的距离
     private float mLeftWidth;  //尺子离view左边的距离
 
-    private int mMaxLineCount = 220; //总共要画多少条刻度
+    private int mMaxLineCount = 200; //总共要画多少条刻度
     private Paint mMoveLinePaint;   //移动尺子的画笔
     private int mValue;        //尺子被选中的值
     private float mMaxX;  //onTouch中能触摸的最大x值
@@ -228,6 +228,27 @@ public class RadioRulerView extends View {
     public void startAutoSeachFM(){
         if(mIsAuto)
             new Thread(new SeachThread()).start();
+    }
+    /*根据频道设置刻度*/
+    public void setChannel(float channel) {
+        xPoint = activePointers.valueAt(0);
+        if(xPoint != null){
+            int fmchannel= (int) ((channel-88)*10f);
+            xPoint.x=  fmchannel*(mLineDivider*mDensity + mLineWidth)+mLeftWidth;
+
+
+        }else {
+            PointF position = new PointF(mLeftWidth, mHeight);
+            activePointers.put(0, position);
+        }
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        invalidate();
     }
 
     /**

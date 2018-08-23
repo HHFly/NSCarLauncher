@@ -19,6 +19,7 @@
         android:src="@mipmap/fm_bg" />
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_fm"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
@@ -30,7 +31,7 @@
         android:id="@+id/tv_fm_hz"
        style="@style/BaseText.Tv"
         android:textSize="36px"
-        android:text="91.8"
+
         />
     <TextView
         style="@style/BaseText.Tv"
@@ -42,7 +43,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:visibility="gone"
             android:layout_below="@+id/ll_fm"
             android:layout_marginTop="24px">
 

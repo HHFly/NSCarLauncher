@@ -78,7 +78,7 @@ public class VerticalSeekBar extends SeekBar {
 		return true;
 	}
 	
-	//获取按下时的进度
+
 	public int getDownProgress(float pos){
 		int num = (int)(100 - (pos -25.0)/1.8);
 		if (num < 0) {

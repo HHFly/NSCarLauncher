@@ -8,7 +8,7 @@
         android:layout_width="300px"
         android:layout_height="38px"
         android:progressDrawable="@drawable/seekbar_style"
-        android:thumb="@mipmap/volume_thumb_off"
+        android:thumb="@mipmap/ic_volume"
 
 
 
