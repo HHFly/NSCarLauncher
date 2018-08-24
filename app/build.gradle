@@ -80,4 +80,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 //gif
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+    //高德地图 定位功能
+    implementation 'com.amap.api:location:3.4.1'
+    implementation 'com.amap.api:search:5.2.1'
 }

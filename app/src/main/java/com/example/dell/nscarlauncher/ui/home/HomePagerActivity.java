@@ -254,8 +254,13 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     protected void onDestroy() {
         super.onDestroy();
         App.get().unregistMyReceiver();
-        if(comingReceiver!=null) {
-            unregisterReceiver(comingReceiver);
+
+        try {
+            if (comingReceiver!=null) {
+                this.unregisterReceiver(comingReceiver);
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
         if (alertDialog != null) {
             alertDialog.dismiss();
@@ -402,5 +407,10 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             startActivity(launchIntentForPackage);
         else
             Toast.makeText(this, "未安装该应用", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+       return;
     }
 }

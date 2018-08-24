@@ -115,8 +115,12 @@ App extends MultiDexApplication {
     }
     /*反注册接收器*/
     public void  unregistMyReceiver(){
-        if(bluetoothReceiver!=null) {
-            unregisterReceiver(bluetoothReceiver);
+        try {
+            if (bluetoothReceiver!=null) {
+                this.unregisterReceiver(bluetoothReceiver);
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
     }
 
