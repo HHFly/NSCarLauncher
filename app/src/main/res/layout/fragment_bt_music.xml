@@ -58,7 +58,7 @@
         android:layout_marginTop="50px">
         <TextView style="@style/BaseText.Tv"
             android:id="@+id/tv_bt_songname"
-            android:text="心中的日月"
+            android:text=""
             android:textSize="36px"
 
             />
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:textSize="24px"
             android:textColor="#999999"
-            android:text="－王力宏"
+            android:text=""
             android:layout_marginLeft="40px"
             />
     </LinearLayout>
@@ -80,7 +80,9 @@
     android:orientation="horizontal"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="145px">
-    <include layout="@layout/item_bt_music_seekbar" />
+
+    <include layout="@layout/item_bt_music_seekbar"
+        android:visibility="gone"/>
 
 </LinearLayout>
     <include layout="@layout/item_btmic_null"

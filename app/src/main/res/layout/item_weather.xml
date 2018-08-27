@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="373px"
     android:layout_height="match_parent"
     android:layout_marginLeft="50px"
     android:layout_marginRight="50px"
     android:background="#080B0F">
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="373px"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        >
     <TextView
     style="@style/BaseText.Tv"
         android:id="@+id/tv_w_time"
@@ -26,7 +33,7 @@
         android:text="@string/车辆未授权"
         android:textSize="24px"
         android:textColor="#78A9FC"
-
+        android:visibility="gone"
         />
     <LinearLayout
         android:layout_width="wrap_content"
@@ -88,38 +95,41 @@
             />
 
     </LinearLayout>
-
+    </LinearLayout>
     <RelativeLayout
         android:layout_width="300px"
         android:layout_height="300px"
-        android:layout_marginTop="24px"
-        android:background="@mipmap/ic_w_bg"
+        android:layout_marginTop="27px"
+        android:layout_below="@+id/ll_top"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
        >
 
+        <ImageView
+            android:visibility="visible"
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:background="@mipmap/ic_w_bg"
+            android:layout_centerInParent="true"/>
 
-
-
-            <com.example.dell.nscarlauncher.widget.CircleView
+            <com.example.dell.nscarlauncher.widget.WaveView
                 android:id="@+id/wave_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="240px"
+                android:layout_height="240px"
+                android:layout_centerInParent="true"
                 />
-
-
-
 
         <LinearLayout
             android:id="@+id/ll_speed"
             android:layout_width="wrap_content"
             android:layout_height="73px"
             android:orientation="horizontal"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="100px">
+          android:layout_centerInParent="true"
+           >
         <TextView style="@style/BaseText.Tv"
             android:id="@+id/tv_w_speed"
             android:textSize="98px"
-            android:text="20"
+            android:text="0"
             android:includeFontPadding="false"
             android:layout_marginTop="-20px"
             />
@@ -131,6 +141,7 @@
         </LinearLayout>
 
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#EEEEEE"
@@ -141,4 +152,4 @@
             android:layout_marginTop="24px"
            />
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

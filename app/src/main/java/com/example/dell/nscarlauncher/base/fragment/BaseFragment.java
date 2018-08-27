@@ -43,7 +43,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     /**
      * 是否非第一次执行onResume方法
      */
-    private boolean isSecondResume;
+    public boolean isSecondResume;
     /**
      * 定位管理工具类
      */
@@ -69,7 +69,9 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             isSecondResume = true;
         }
     }
+    public void Resume(){
 
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -78,7 +78,7 @@
                 />
             <TextView style="@style/BaseText.Tv"
                 android:id="@+id/bt_pin"
-                android:layout_marginLeft="900px"
+                android:layout_marginLeft="934px"
 
                 android:textSize="36px"/>
         </LinearLayout>

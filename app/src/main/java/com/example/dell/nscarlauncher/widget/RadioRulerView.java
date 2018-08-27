@@ -31,7 +31,7 @@ public class RadioRulerView extends View {
     private int mMoveLineColor;//移动尺子刻度线的颜色
     private float mDensity;
     private int mLineDivider;    //两条刻度线间的距离
-    private float mLeftWidth;  //尺子离view左边的距离
+    private float mLeftWidth=141.0f;  //尺子离view左边的距离
 
     private int mMaxLineCount = 200; //总共要画多少条刻度
     private Paint mMoveLinePaint;   //移动尺子的画笔
@@ -232,15 +232,13 @@ public class RadioRulerView extends View {
     /*根据频道设置刻度*/
     public void setChannel(float channel) {
         xPoint = activePointers.valueAt(0);
-        if(xPoint != null){
-            int fmchannel= (int) ((channel-88)*10f);
-            xPoint.x=  fmchannel*(mLineDivider*mDensity + mLineWidth)+mLeftWidth;
-
-
-        }else {
+        if(xPoint== null){
             PointF position = new PointF(mLeftWidth, mHeight);
             activePointers.put(0, position);
+            xPoint = activePointers.valueAt(0);
         }
+        int fmchannel= Math.round ((channel-88)*10);
+        xPoint.x=  fmchannel*(mLineDivider*mDensity + mLineWidth)+mLeftWidth;
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {

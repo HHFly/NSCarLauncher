@@ -2,6 +2,7 @@ package com.example.dell.nscarlauncher.ui.home.fragment;
 
 import android.os.Handler;
 import android.os.Message;
+import android.os.RemoteException;
 import android.provider.Settings;
 import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
@@ -32,7 +33,8 @@ import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.example.dell.nscarlauncher.ui.home.model.WeatherData;
-import com.example.dell.nscarlauncher.widget.CircleView;
+import com.example.dell.nscarlauncher.widget.PlayControllView;
+import com.example.dell.nscarlauncher.widget.WaveView;
 import com.white.lib.utils.ToastUtil;
 
 import java.util.Calendar;
@@ -41,8 +43,10 @@ import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.example.dell.nscarlauncher.ui.fm.FMFragment.FMCHANNEL;
+
 public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch.OnWeatherSearchListener {
-    private CircleView circleView;
+    private WaveView circleView;
     private static TextView tv_w_time;
     private static TextView tv_w_date;
     private static TextView tv_w_week;
@@ -54,9 +58,15 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     //thread flag
     private volatile boolean timeFlag = true;
     private volatile boolean weatherFlag = true;
+  // 播发控制
+    private PlayControllView fmPaly ;
+    //fragment
+    private  FMFragment fmFragment;
+    private float channel;
 
-    public void setHomePagerActivity(HomePagerActivity homePagerActivity) {
+    public void setFragment(HomePagerActivity homePagerActivity,FMFragment fmFragment) {
         this.homePagerActivity = homePagerActivity;
+        this.fmFragment =fmFragment;
     }
 
     @Override
@@ -67,9 +77,11 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     @Override
     public void findView() {
         circleView =getView(R.id.wave_view);
+//        fmPaly=getView(R.id.fm_playcontroll);
         tv_w_time =getView(R.id.tv_w_time);
         tv_w_date =getView(R.id.tv_w_date);
         tv_w_week=getView(R.id.tv_w_week);
+
     }
 
     @Override
@@ -78,22 +90,67 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         setClickListener(R.id.bt_music);
         setClickListener(R.id.music);
         setClickListener(R.id.rl_air);
-    }
 
+    }
+    private void setFmPalyListen(){
+        fmPaly.setOnItemClickListener(new PlayControllView.OnItemClickListener() {
+            @Override
+            public void onClickLeft() {
+                if(fmFragment!=null){
+                    fmFragment.leftFm();
+                }
+            }
+
+            @Override
+            public void onClickCenter(boolean isPlay) {
+                FmPaly(isPlay);
+
+            }
+
+            @Override
+            public void onClickRight() {
+                if(fmFragment!=null){
+                    fmFragment.rightFm();
+
+                }
+            }
+        });
+    }
+    private void  FmPaly(boolean isPlay){
+        if(isPlay){
+            if(fmFragment!=null){
+                fmFragment.openFm();
+
+            }
+        }else {
+            if(fmFragment!=null){
+                fmFragment.closeFm();
+
+            }
+        }
+    }
     @Override
     public void onResume() {
         super.onResume();
-        init_time();
-    }
 
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
     @Override
     public void initView() {
 
-        circleView.setmWaterLevel(0.3f);
-        circleView.startWave();
+        init_time();
         initLocation();
+        circleView.setProgress(50);
+        setFmMHZ();
     }
-
+    private void setFmMHZ(){
+        channel= SPUtil.getInstance(getContext(),FMCHANNEL).getFloat(FMCHANNEL,93.0f);
+        setTvText(R.id.tv_fm_hz,String.valueOf(channel));
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -118,12 +175,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        circleView.stopWave();
-        circleView = null;
-    }
+
 
     //日期 时间模块初始化
     private void init_time() {
@@ -168,8 +220,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     }
     /*刷新布局*/
     public void  freshlayout(FMFragment fmFragment){
-       float a= SPUtil.getInstance(getContext(),FMFragment.FMCHANNEL).getFloat(FMFragment.FMCHANNEL,93.0f);
-       setTvText(R.id.tv_fm_hz,String.valueOf(a));
+        setFmMHZ();
     }
     // 初始化定位
     private void initLocation() {

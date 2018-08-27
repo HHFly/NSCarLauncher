@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.Activity.BaseActivity;
+import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.common.util.FragmentUtils;
 import com.example.dell.nscarlauncher.common.util.JumpUtils;
 import com.example.dell.nscarlauncher.ui.application.AppFragment;
@@ -59,7 +60,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private ArrayList<Fragment> mFragments;
     private ViewPager viewPager;
     private CircleIndicator indicator;//viewpager指示器
-    private Fragment mCurFragment;//当前页
+    private BaseFragment mCurFragment;//当前页
     private FMFragment fmFragment ;//收音机
     private BTMusicFragment btMusicFragment;//蓝牙音乐
     private MusicFragment musicFragment;//本地音乐
@@ -146,8 +147,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
     //初始化viewpager 数据
     private  void initDa(){
+        createFragment();
         homePagerOneFragment =new HomePagerOneFragment();
-        homePagerOneFragment.setHomePagerActivity(this);
+        homePagerOneFragment.setFragment(this,fmFragment);
         homePagerTwoFragment =new HomePagerTwoFragment();
         homePagerTwoFragment.setHomePagerActivity(this);
         homePagerThreeFragment =new HomePagerThreeFragment();
@@ -155,7 +157,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         mFragments.add(homePagerOneFragment);
         mFragments.add(homePagerTwoFragment);
         mFragments.add(homePagerThreeFragment);
-        createFragment();
+
         new DialogLocalMusic(getApplicationContext());
     }
 
@@ -209,6 +211,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private void switchFragment(Fragment fragment) {
 
         mCurFragment = FragmentUtils.selectFragment(this, mCurFragment, fragment, R.id.frame_main);
+        mCurFragment.Resume();
         showFragemnt();
     }
     public void  jumpFragment(@FragmentType int type ){
@@ -265,6 +268,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         if (alertDialog != null) {
             alertDialog.dismiss();
         }
+
         dialogVolumeControl=null;
         stopService(new Intent(this, PlayerService.class));
     }

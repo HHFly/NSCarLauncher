@@ -61,12 +61,14 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 
     public final static String ACTION_4G_OUT_GOING = "com.kangdi.BroadCast.open4GAduioPath"; // 4g电话拨通
 
-    public final static String ACTION_AC_MEDIA_STATUS_CHANGED = "com.kangdi.BroadCast.AcMediaStatusChanged";
+    public final static String ACTION_AC_MEDIA_STATUS_CHANGED = "com.kangdi.BroadCast.AcMediaStatusChanged";//蓝牙音乐开关广播
+    public final static String   ACTION_BT_STREAM_SUSPEND= "com.kangdi.BroadCast.BtStreamSusppend"; //蓝牙音乐开广播
+    public final static String   ACTION_BT_STREAM_START= "com.kangdi.BroadCast.BtStreamStart";//蓝牙音乐关广播
 
     static IKdBtService btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
 
     static AudioManager audioManager;
-
+    private  String MusicStaus="0";
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -246,9 +248,11 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         }
         if (intent.getAction().equals(ACTION_AC)) {
             // Toast.makeText(context, "音频蓝牙已连接", Toast.LENGTH_LONG);
+            BTMusicFragment.setNullViewGone(false);
         }
         if (intent.getAction().equals(ACTION_AD)) {
             // Toast.makeText(context, "音频蓝牙已断开", Toast.LENGTH_LONG);
+            BTMusicFragment.setNullViewGone(true);
         }
         if (intent.getAction().equals(ACTION_MUSIC_INFO_CHANGED)) {
             String music_info = intent.getStringExtra(KEY_MUSICINFO);
@@ -256,7 +260,13 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 JSONArray jsonArr = new JSONArray(music_info);
                 JSONObject obj = (JSONObject) jsonArr.get(0);
                 //if (FragmentMusic.flag_bluetooth_music) {
-                    MusicFragment.setMusicInfo(obj.getString("SongName"), obj.getString("SingerName"));
+//                    MusicFragment.setMusicInfo(obj.getString("SongName"), obj.getString("SingerName"));
+                    BTMusicFragment.setMusicInfo(obj.getString("SongName"), obj.getString("SingerName"));
+
+//                    if (MusicStaus.equals(obj.getString("SongIsPlay"))){
+//                        BTMusicFragment.stopGif();
+//                        MusicStaus
+//                    }
                     if (obj.getString("SongTotalTime").compareTo("") == 0) {
 
                     } else {
@@ -272,12 +282,18 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 e.printStackTrace();
             }
         }
-
+        if (intent.getAction().equals(ACTION_BT_STREAM_START)) {
+//            int  intent.getStringExtra(KEY_MEDIA_STATUS)
+            int a = 1;
+        }
+        if (intent.getAction().equals(ACTION_BT_STREAM_SUSPEND)) {
+//            int  intent.getStringExtra(KEY_MEDIA_STATUS)
+            int a = 1;
+        }
         if (intent.getAction().equals(ACTION_TRACK_PROGRESS)) {
-            //if (FragmentMusic.flag_bluetooth_music) {
                 int time = intent.getIntExtra(KEY_TRACK_POSITON, 0);
-//                BTMusicFragment.setBlueMusicProgress(time);
-            //}
+                BTMusicFragment.setBlueMusicProgress(time);
+
         }
         if (intent.getAction().equals(ACTION_SIM_CALL_START)) {
             FlagProperty.is_3gcall_start = true;

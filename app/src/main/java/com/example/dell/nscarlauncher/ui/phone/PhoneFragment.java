@@ -67,6 +67,11 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     }
 
     @Override
+    public void Resume() {
+        requestAudioFocus();
+    }
+
+    @Override
     public int getContentResId() {
         return R.layout.fragment_phone;
     }

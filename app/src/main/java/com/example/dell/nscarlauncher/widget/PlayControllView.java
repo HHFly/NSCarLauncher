@@ -17,6 +17,7 @@ public class PlayControllView extends LinearLayout {
     private ImageView left;
     private ImageView center;
     private ImageView right;
+    public boolean isPlay;
 
     public PlayControllView(Context context) {
         super(context);
@@ -29,7 +30,32 @@ public class PlayControllView extends LinearLayout {
         left=(ImageView) findViewById(R.id.ctl_iv_left);
         center=(ImageView) findViewById(R.id.ctl_iv_center);
         right=(ImageView) findViewById(R.id.ctl_iv_right);
+        left.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onItemClickListener!=null){
+                    onItemClickListener.onClickLeft();
+                }
+            }
+        });
+        center.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isPlay=!isPlay;
+                if(onItemClickListener!=null){
 
+                    onItemClickListener.onClickCenter(isPlay);
+                }
+            }
+        });
+        right.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onItemClickListener!=null){
+                    onItemClickListener.onClickRight();
+                }
+            }
+        });
     }
     public void setRLvisiable(boolean isShow){
         left.setVisibility(isShow?View.VISIBLE : View.GONE);
@@ -38,16 +64,23 @@ public class PlayControllView extends LinearLayout {
     public void setPlay(boolean isPlay){
         center.setImageResource(isPlay?R.mipmap.ic_pause:R.mipmap.ic_play);
     }
-    public void setCenterOnClickListener(OnClickListener clickListener) {
-        if(center != null)
-            center.setOnClickListener(clickListener);
+
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        onItemClickListener = listener;
     }
-    public void setLeftOnClickListener(OnClickListener clickListener) {
-        if(left != null)
-            left.setOnClickListener(clickListener);
+
+    public interface OnItemClickListener {
+        /**
+         * 点击
+         *
+         *
+         */
+        void onClickLeft();
+        void onClickCenter(boolean isPlay);
+        void onClickRight();
     }
-    public void setRightOnClickListener(OnClickListener clickListener) {
-        if(right != null)
-            right.setOnClickListener(clickListener);
-    }
+
 }

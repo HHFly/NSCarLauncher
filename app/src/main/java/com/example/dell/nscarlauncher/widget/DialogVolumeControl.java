@@ -112,7 +112,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 	            	setVolumeImage(FlagProperty.STREAM_MUSIC);
 	            	audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, FlagProperty.STREAM_MUSIC, 0);
 	            	flag_quiet = true;
-//	            	System.out.println("����FlagProperty.STREAM_MUSIC: " + FlagProperty.STREAM_MUSIC);
+//
 				}else{
 					FlagProperty.STREAM_MUSIC = last_volume;
 					VerticalSeekBar.progress = Math.round(FlagProperty.STREAM_MUSIC * 100 / FlagProperty.STREAM_MAX_MUSIC);
@@ -165,7 +165,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
         }
     };
 	
-    //������СͼƬ��ʾ
+    //
     public void setVolumeImage(int volume){
     	if (volume == 0) {
     		imagebtn_volume.setBackgroundResource(R.mipmap.volume_03_off);

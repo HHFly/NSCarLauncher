@@ -224,4 +224,5 @@ App extends MultiDexApplication {
     public Activity getCurActivity() {
         return NSLifecycleHandle.currentActivity();
     }
+
 }

@@ -13,7 +13,9 @@ import android.os.SystemProperties;
 import android.util.Log;
 import android.view.View;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
@@ -24,10 +26,12 @@ import java.io.IOException;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
+import static com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment.tv_music_songname;
+
 public class BTMusicFragment extends BaseFragment {
     private GifImageView mGifImageView;
-    private GifDrawable gifDrawable;
-    private boolean isPlay;
+    public static GifDrawable gifDrawable;
+    private static boolean isPlay;
 
     private final static int DIRECTION_PREV = 1; // 向前切歌
     private final static int DIRECTION_NEXT = 2; // 向后切歌
@@ -45,6 +49,8 @@ public class BTMusicFragment extends BaseFragment {
     static AudioManager audioManager;
     static IKdAudioControlService audioservice ;
     static IKdBtService btservice;
+    public static TextView  music_current_time,tv_bt_music_songname,tv_bt_music_singer;
+    public static RelativeLayout NullView ;//空界面
     @Override
     public int getContentResId() {
         return R.layout.fragment_bt_music;
@@ -53,7 +59,11 @@ public class BTMusicFragment extends BaseFragment {
     @Override
     public void findView() {
         mGifImageView=getView(R.id.bt_gif);
-        music_progress_bar=getView(R.id.music_progress_bar);
+        music_progress_bar=getView(R.id.bt_music_progress_bar);
+        music_current_time =getView(R.id.bt_music_current_time);
+        tv_bt_music_singer=getView(R.id.tv_bt_singer);
+        tv_bt_music_songname=getView(R.id.tv_bt_songname);
+        NullView =getView(R.id.bt_mic_null);
     }
 
     @Override
@@ -79,6 +89,11 @@ public class BTMusicFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+
+    }
+
+    @Override
+    public void Resume() {
         getService();
         requestAudioFocus();
     }
@@ -89,6 +104,7 @@ public class BTMusicFragment extends BaseFragment {
             case R.id.bt_gif:
                 gifPlay(isPlay);
                 isPlay=!isPlay;
+
                 break;
             case R.id.iv_fm_left:
                 musicBack();
@@ -98,9 +114,32 @@ public class BTMusicFragment extends BaseFragment {
                 break;
         }
     }
+    /*暂停*/
+    public void musicPause(){
+        if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
+            new Thread() {
+                public void run() {
+                    myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
+                }
 
+
+            }.start();
+        }
+    }
+    /*播放*/
+    public void musicPlay(){
+        if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
+            new Thread() {
+                public void run() {
+                    myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
+                }
+
+
+            }.start();
+        }
+    }
     /*上一首*/
-    private void musicBack(){
+    public void musicBack(){
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
             new Thread() {
                 public void run() {
@@ -112,7 +151,7 @@ public class BTMusicFragment extends BaseFragment {
         }
     }
 /*下一首*/
-private  void  musicNext(){
+public  void  musicNext(){
     if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
         new Thread() {
             public void run() {
@@ -160,7 +199,25 @@ private  void  musicNext(){
             }
         });
     }
-    /*获取全局模块*/
+    // 设置蓝牙音乐进度条信息
+    public static void setBlueMusicProgress(int time) {
+        time /= 1000;
+        int total_time = BlueMusicBroadcoast.music_total_time;
+        if (time > total_time) {
+            time = total_time;
+        }
+        int progress = (int) Math.ceil(time * 100 / total_time);
+         music_progress_bar.setProgress(progress);
+         music_current_time.setText("" + getTime(time / 60) + ":" + getTime(time % 60));
+    }
+    // 时间格式化为00
+    public static String getTime(int time) {
+        if (time < 10) {
+            return "0" + time;
+        } else {
+            return "" + time;
+        }
+    }
     /*获取全局模块*/
     private void  getService(){
         if(audioservice==null) {
@@ -176,11 +233,19 @@ private  void  musicNext(){
 
 
 
+
     // 设置歌曲信息
-    public  void setMusicInfo(String songname, String singer) {
-       setTvText(R.id.tv_bt_songname,songname);
-       setTvText(R.id.tv_bt_singer,("").equals(singer)?"":"-"+singer);
+    public static void setMusicInfo(String songname, String singer) {
+        if (tv_bt_music_songname != null) {
+            tv_bt_music_songname.setText(songname);
+            if (!("").equals(singer)) {
+                tv_bt_music_singer.setText("- " + singer);
+            } else {
+                tv_bt_music_singer.setText("");
+            }
+        }
     }
+
 
     /*初始化gif控制*/
     private void initGif(){
@@ -194,10 +259,27 @@ private  void  musicNext(){
             e.printStackTrace();
         }
     }
+    /*开启gif*/
+    public  static  void startGif(){
+        if(gifDrawable!=null) {
+            gifDrawable.start();
+            isPlay=false;
+        }
+    }
+    /*关闭gif*/
+    public  static  void stopGif(){
+        if(gifDrawable!=null) {
+            gifDrawable.stop();
+            isPlay=true;
+        }
+    }
     private void gifPlay(boolean isPlay){
         if(isPlay){
+             musicPlay();
             gifDrawable.start();
+
         }else {
+            musicPause();
             gifDrawable.stop();
         }
     }
@@ -210,11 +292,11 @@ private  void  musicNext(){
                         getView(R.id.bt_gif).performClick();
                         break;
                     case MUSIC_BLUETOOTH_CLOSE:
-
+                        btservice.btAvrPause();
                         break;
 
                     case MUSIC_BLUETOOTH_OPEN:
-
+                        btservice.btAvrPlay();
                         break;
                     case MUSCI_BACK:
                         btservice.btAvrLast();
@@ -299,6 +381,12 @@ private  void  musicNext(){
 
         } else {
            setVisibilityGone(R.id.bt_mic_null,true);
+        }
+    }
+    public static  void setNullViewGone(boolean isShow){
+        NullView.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        if(isShow){
+            stopGif();
         }
     }
 }

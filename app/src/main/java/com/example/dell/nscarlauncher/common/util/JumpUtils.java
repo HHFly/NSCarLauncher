@@ -2,6 +2,7 @@ package com.example.dell.nscarlauncher.common.util;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 
@@ -40,7 +41,12 @@ public class JumpUtils {
         Intent intent =new Intent();
         intent.setClassName(classname,main);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-        act.startActivity(intent);
-        act.overridePendingTransition(0,0);
+        try {
+            act.startActivity(intent);
+            act.overridePendingTransition(0,0);
+        }catch (Exception e){
+            Toast.makeText(act, "未安装该应用", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

@@ -4,19 +4,22 @@
     android:orientation="horizontal"
     android:layout_height="wrap_content">
     <TextView style="@style/BaseText.Tv"
+        android:id="@+id/bt_music_current_time"
         android:textSize="24px"
-        android:text="03:50"
+        android:text="00.00"
         android:layout_gravity="center_vertical"
         />
     <SeekBar
-        android:id="@+id/music_progress_bar"
+        android:id="@+id/bt_music_progress_bar"
         android:layout_width="1000px"
         android:layout_height="wrap_content"
-        android:thumb="@null"
+        android:thumb="@mipmap/ic_volume"
+        android:layout_gravity="center_vertical"
         />
     <TextView style="@style/BaseText.Tv"
+        android:id="@+id/btmusic_total_time"
         android:textSize="24px"
-        android:text="03:50"
+        android:text="00:00"
         android:layout_gravity="center_vertical"
         />
 </LinearLayout>
