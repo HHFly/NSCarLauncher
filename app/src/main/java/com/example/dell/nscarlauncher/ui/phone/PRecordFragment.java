@@ -17,14 +17,13 @@ import java.util.List;
 public class PRecordFragment extends BaseFragment {
     private PRecordAdapter mAdapter;
     private List<PhoneRecordInfo> mData =new ArrayList<>();
-
+    RecyclerView rv ;
     public void setmData(List<PhoneRecordInfo> mData) {
         this.mData = mData;
-        initRvAdapter(this.mData);
     }
     @Override
     public int getContentResId() {
-        return R.layout.fragment_phone_member;
+        return R.layout.fragment_phone_record;
     }
 
     @Override
@@ -39,9 +38,11 @@ public class PRecordFragment extends BaseFragment {
 
     @Override
     public void initView() {
-
+        initRvAdapter(mData);
     }
-
+    public void  refresh(){
+        initRvAdapter(mData);
+    }
     @Override
     public void onClick(View v) {
 
@@ -51,9 +52,10 @@ public class PRecordFragment extends BaseFragment {
      *
      *
      */
-    private void initRvAdapter( List<PhoneRecordInfo> data) {
+    public void initRvAdapter( List<PhoneRecordInfo> data) {
+
         if (mAdapter == null) {
-            RecyclerView rv = getView(R.id.recyclerView1);
+            rv = getView(R.id.recyclerView1);
             mAdapter =new PRecordAdapter(data);
 
             if (rv != null) {
@@ -73,8 +75,17 @@ public class PRecordFragment extends BaseFragment {
             });
 
         }else {
-            mAdapter.notifyDataSetChanged();
+            if(rv==null){
+                rv = getView(R.id.recyclerView2);
+                if (rv != null) {
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                    rv.setLayoutManager(linearLayoutManager);
+                    rv.setAdapter(mAdapter);
+                }
+            }
+            mAdapter.notifyData(data,true);
         }
 
     }
+
 }

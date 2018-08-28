@@ -58,17 +58,19 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     static AudioManager audioManager;
     static IKdAudioControlService audioservice ;
     static IKdBtService btservice;
+
+    public static RelativeLayout NullView ;//空界面
     private int callIndex;
 
     @Override
     public void onResume() {
         super.onResume();
-        requestAudioFocus();
+
     }
 
     @Override
     public void Resume() {
-        requestAudioFocus();
+
     }
 
     @Override
@@ -86,13 +88,15 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         bt_stop=getView(R.id.call_stop);
         rl_call =getView(R.id.item_phone_calling);
         viewPager=getView(R.id.viewPager1);
-
+        NullView =getView(R.id.bt_phone_null);
     }
 
     @Override
     public void setListener() {
+        setClickListener(R.id.call_stop);
         setClickListener(R.id.iv_call);
         setClickListener(R.id.ll_other);
+        setClickListener(R.id.call_start);
         setClickListener(R.id.rl_1);
         setClickListener(R.id.rl_2);
         setClickListener(R.id.rl_3);
@@ -117,9 +121,9 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         getService();
         viewPager.setAdapter(new MyAdapter(getFragmentManager()));
 //        viewPager.setOffscreenPageLimit(PageCount-1);
-        viewPager.setOffscreenPageLimit(2);
+        viewPager.setOffscreenPageLimit(3);
         setViewSelected(R.id.rl_1,true);
-
+        requestAudioFocus();
     }
     /*获取全局模块*/
     private void  getService(){
@@ -133,18 +137,26 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
             btservice = App.get().getBtservice();
         }
     }
-    /*电话*/
+    /*打电话*/
    public static void callphone(String num){
        number=num;
        new Thread() {
            public void run() {
                myHandler.sendMessage(myHandler.obtainMessage(PHONE_START));
            }
-
-           ;
        }.start();
 
    }
+   /*挂电话*/
+    public static void hangDownphone(){
+
+        new Thread() {
+            public void run() {
+                myHandler.sendMessage(myHandler.obtainMessage(PHONE_END));
+            }
+        }.start();
+
+    }
     /*添加电话号码*/
     private void addphone(String num){
         pNumFragment.setNumber(num);
@@ -179,30 +191,49 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                 break;
             case 1:
                 tabSelected(2);
+                pMemberFragment.refresh();
                 break;
             case 2:
                 tabSelected(3);
+                pRecordFragment.refresh();
                 break;
 
         }
     }
+    /*获取通话记录*/
+    public  static  void getPhoneRecord(){
+        try {
+            getPhoneRecordStr(btservice.getCallHistoryJsonString());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
     // 使蓝牙获取到的通话记录存储起来
-    public void getPhoneRecord(String str) {
+    public static void getPhoneRecordStr(String str) {
         if (str != null && str.compareTo("") != 0) {
+            if(phoneRecordInfos==null){
+                phoneRecordInfos =new ArrayList<>();
+            }
             phoneRecordInfos.clear();
             try {
                 JSONArray jsonArray = new JSONArray(str);
+                if(jsonArray.length()==0){
+                    return;
+                }
                 int len = jsonArray.length();
                 for (int i = 0; i < len; i++) {
                     PhoneRecordInfo info = new PhoneRecordInfo();
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                   String call_time = changeTimeToStandard(jsonObject.getString("callTime"));
+                    String call_time = changeTimeToStandard(jsonObject.getString("callTime"));
                     String name = jsonObject.getString("name");
                    String number = jsonObject.getString("callNumber");
                    info.setName(name);
                    info.setNumber(number);
                    info.setCall_time(call_time);
-                 phoneRecordInfos.add(info);
+                   phoneRecordInfos.add(info);
+                }
+                if(pRecordFragment!=null) {
+                    pRecordFragment.setmData(phoneRecordInfos);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -210,13 +241,27 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         }
     }
     // 使蓝牙获取到的电话本存储起来
-    public static void getPhoneBook(String str) {
+    public static void getPhoneBook() {
+        try {
+            getPhoneBookStr(btservice.getContactsJsonString());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    // 使蓝牙获取到的电话本存储起来
+    public static void getPhoneBookStr(String str) {
         // subStringPrintf(str, 1024);
-        System.out.println("++++" + str);
+//        System.out.println("++++" + str);
         if (str != null && str.compareTo("") != 0) {
+            if(phoneBookInfos==null){
+                phoneBookInfos= new ArrayList<>();
+            }
             phoneBookInfos.clear();
             try {
                 JSONArray jsonArray = new JSONArray(str);
+                if(jsonArray.length()==0){
+                    return;
+                }
                 int len = jsonArray.length();
                 for (int i = 0; i < len; i++) {
                     PhoneBookInfo info = new PhoneBookInfo();
@@ -231,16 +276,19 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                         info.setNumber(number);
 //                        System.out.println(info.name + " : " + info.number);
                        phoneBookInfos.add(info);
+
                     }
                 }
-                pMemberFragment.setmData(phoneBookInfos);
+                if(pMemberFragment!=null) {
+                    pMemberFragment.setmData(phoneBookInfos);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
     // 改时间为标准格式
-    public String changeTimeToStandard(String time) { // 20160807T183300
+    private static String changeTimeToStandard(String time) { // 20160807T183300
         String result = "";
         if (time.length() >= 15) {
             result += time.substring(0, 4) + "-";
@@ -268,7 +316,9 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         }
         phone_call_time = 0;
         flag_phone = true;
-        rl_call.setVisibility(View.VISIBLE);//显示界面
+        if(rl_call!=null) {
+            rl_call.setVisibility(View.VISIBLE);//显示界面
+        }
         new CountThread().start();
     }
     // 通话开始开启一个计时线程
@@ -302,7 +352,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
             return "" + num;
         }
     }
-    public static Handler myHandler = new Handler(App.get().getMainLooper()) {
+    public static Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             try {
                 switch (msg.what) {
@@ -437,17 +487,17 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     }
     private void   initData() {
         mFragments = new ArrayList<>();
-         pNumFragment =new PNumFragment();
-         pMemberFragment =new PMemberFragment();
-         pRecordFragment =new PRecordFragment();
+        if(pNumFragment==null) {
+            pNumFragment = new PNumFragment();
+        }
+        if(pMemberFragment==null){
+         pMemberFragment =new PMemberFragment();}
+         if(pRecordFragment==null){
+         pRecordFragment =new PRecordFragment();}
         mFragments.add(pNumFragment);
         mFragments.add(pMemberFragment);
         mFragments.add(pRecordFragment);
-        try {
-            getPhoneRecord(btservice.getCallHistoryJsonString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
     /*viewpager适配器*/
     private class MyAdapter extends FragmentPagerAdapter {
@@ -485,6 +535,12 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                 break;
             case R.id.iv_call:
                 callphone(pNumFragment.getNumber());
+                break;
+            case R.id.call_stop:
+                hangDownphone();
+                break;
+            case R.id.call_start:
+
                 break;
             case R.id.ll_1:
                 addphone("1");
@@ -554,9 +610,16 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
             FlagProperty.flag_bluetooth = true;
 
-
+            getPhoneRecord();
+            getPhoneBook();
         } else {
             setVisibilityGone(R.id.bt_phone_null,true);
+        }
+    }
+
+    public static  void setNullViewGone(boolean isShow){
+        if(NullView!=null) {
+            NullView.setVisibility(isShow ? View.VISIBLE : View.GONE);
         }
     }
 }

@@ -89,7 +89,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             new Thread() {
                 public void run() {
                     try {
-                        PhoneFragment.getPhoneBook(btservice.getContactsJsonString());
+                        PhoneFragment.getPhoneBookStr(btservice.getContactsJsonString());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -106,6 +106,9 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 //                HomePagerActivity.changeFragment(MainKondi.FRAGMENT_PHONE);
 //            }
 //            HomeTitleLayout.setBluetooth(1);
+            PhoneFragment.setNullViewGone(false);
+            PhoneFragment.getPhoneBook();
+            PhoneFragment.getPhoneRecord();
         }
         if (intent.getAction().equals(ACTION_HD)) {
 //            if (MainKondi.fragment_now instanceof FragmentPhone) {
@@ -118,6 +121,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 }
 
             }*/
+            PhoneFragment.setNullViewGone(true);
             FlagProperty.flag_bluetooth = false;
 //            HomeTitleLayout.setBluetooth(0);
         }
@@ -262,11 +266,12 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 //if (FragmentMusic.flag_bluetooth_music) {
 //                    MusicFragment.setMusicInfo(obj.getString("SongName"), obj.getString("SingerName"));
                     BTMusicFragment.setMusicInfo(obj.getString("SongName"), obj.getString("SingerName"));
-
-//                    if (MusicStaus.equals(obj.getString("SongIsPlay"))){
-//                        BTMusicFragment.stopGif();
-//                        MusicStaus
-//                    }
+                    if(obj.getString("SongIsPlay")!=null) {
+                        if (!getBtPlayStaus(BTMusicFragment.isPlay).equals(obj.getString("SongIsPlay"))) {
+                            BTMusicFragment.isPlay = !BTMusicFragment.isPlay;
+                            BTMusicFragment.gifPlayShow();
+                        }
+                    }
                     if (obj.getString("SongTotalTime").compareTo("") == 0) {
 
                     } else {
@@ -346,7 +351,10 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         }
 
     }
+    private  static String getBtPlayStaus(boolean isPlay){
 
+        return isPlay?"1":"0";
+    }
     // 时间格式化为00
     public static String getTime(int time) {
         if (time < 10) {

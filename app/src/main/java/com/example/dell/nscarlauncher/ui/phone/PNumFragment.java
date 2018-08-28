@@ -1,19 +1,21 @@
 package com.example.dell.nscarlauncher.ui.phone;
 
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 
 public class PNumFragment extends BaseFragment {
     private  String number;
+    static TextView TvNum;
     @Override
     public int getContentResId() {
         return R.layout.fragment_phone_num;
     }
     public void setNumber(String num){
         number =  getTvText(R.id.num)+num;
-        setTvText(R.id.num,number);
+        TvNum.setText(number);
     }
 
     public String getNumber() {
@@ -22,7 +24,7 @@ public class PNumFragment extends BaseFragment {
 
     @Override
     public void findView() {
-
+        TvNum= getView(R.id.num);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class PNumFragment extends BaseFragment {
         number=  getTvText(R.id.num);
         if (number!=null&&number.length()>0){
             number =number.substring(0,number.length()-1);
-            setTvText(R.id.num,number);
+            TvNum.setText(number);
         }
     }
 }

@@ -157,7 +157,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         mFragments.add(homePagerOneFragment);
         mFragments.add(homePagerTwoFragment);
         mFragments.add(homePagerThreeFragment);
-
+        mCurFragment = FragmentUtils.selectFragment(this, mCurFragment, phoneFragment, R.id.frame_main);
         new DialogLocalMusic(getApplicationContext());
     }
 
@@ -266,7 +266,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             e.printStackTrace();
         }
         if (alertDialog != null) {
-            alertDialog.dismiss();
+            dimissShow();
         }
 
         dialogVolumeControl=null;
@@ -314,6 +314,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public void dimissShow() {
         if (alertDialog != null) {
             alertDialog.dismiss();
+            initImmersionBar();
         }
     }
     // 来电显示弹出框
@@ -339,8 +340,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                         };
                     }.start();
 //                    MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 接听时进入电话页面
+                    jumpFragment(FragmentType.PHONE);
                     FlagProperty.flag_phone_incall_click = true;
-                    alertDialog.dismiss();
+                   dimissShow();
                 }
             });
             bt_refuse.setOnClickListener(new View.OnClickListener() {
@@ -364,7 +366,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
                         };
                     }.start();
-                    alertDialog.dismiss();
+                  dimissShow();
                 }
             });
         }

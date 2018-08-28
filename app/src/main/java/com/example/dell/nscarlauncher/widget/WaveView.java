@@ -8,6 +8,9 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -30,7 +33,7 @@ public class WaveView extends View {
     /*sin曲线的路径*/
     private Path path;
     /*sin曲线 1/4个周期的宽度*/
-    private int cycle = 100;
+    private int cycle = 60;
     /*sin曲线振幅的高度*/
     private int waveHeight = 30;
     /*sin曲线的起点*/
@@ -44,6 +47,8 @@ public class WaveView extends View {
     /*是否自增长*/
     private boolean autoIncrement = true;
     private int mWaveColor = getResources().getColor(R.color.main_bg);
+    private boolean mStarted = false;
+    private Handler mHandler;
     public WaveView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -72,8 +77,25 @@ public class WaveView extends View {
         textPaint.setAntiAlias(true);
         textPaint.setTextSize(dip2px(context, 20));
         textPaint.setColor(Color.BLACK);
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(android.os.Message msg) {
+                if (msg.what == 0) {
+                    invalidate();
+                    if (mStarted) {
+                        // 不断发消息给自己，使自己不断被重绘
+                        mHandler.sendEmptyMessageDelayed(0, 160L);
+                    }
+                }
+            }
+        };
     }
-
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        // 关闭硬件加速，防止异常unsupported operation exception
+        this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+    }
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -126,9 +148,7 @@ public class WaveView extends View {
             }
         }
         path.reset();
-        if (!openAnimate) {
-            postInvalidateDelayed(150);
-        }
+        canvas.restore();
     }
 
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -260,4 +280,34 @@ public class WaveView extends View {
     public int getProgress() {
         return progress;
     }
+
+    /**
+     * @category 开始波动
+     */
+    public void startWave() {
+        if (!mStarted) {
+            mStarted = true;
+            this.mHandler.sendEmptyMessage(0);
+        }
+    }
+
+    /**
+     * @category 停止波动
+     */
+    public void stopWave() {
+        if (mStarted) {
+
+            mStarted = false;
+            this.mHandler.removeMessages(0);
+        }
+    }
+
+
+
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+    }
+
 }

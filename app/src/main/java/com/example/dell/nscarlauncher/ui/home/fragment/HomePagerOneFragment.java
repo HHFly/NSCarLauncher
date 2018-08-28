@@ -137,7 +137,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        circleView.stopWave();
     }
     @Override
     public void initView() {
@@ -145,6 +145,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         init_time();
         initLocation();
         circleView.setProgress(50);
+        circleView.startWave();
         setFmMHZ();
     }
     private void setFmMHZ(){

@@ -18,7 +18,7 @@
         android:orientation="vertical">
     <TextView style="@style/BaseText.Tv"
         android:id="@+id/call_number"
-        android:text="13777194480"
+        android:text=""
         android:textSize="48px"
         android:layout_gravity="center_horizontal"
         />
@@ -49,6 +49,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="68px"
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

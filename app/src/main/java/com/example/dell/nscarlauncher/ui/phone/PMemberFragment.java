@@ -15,10 +15,10 @@ import java.util.List;
 public class PMemberFragment extends BaseFragment{
     private PMemberAdapter mAdapter;
     private List<PhoneBookInfo> mData =new ArrayList<>();
-
+    RecyclerView rv ;
     public void setmData(List<PhoneBookInfo> mData) {
         this.mData = mData;
-        initRvAdapter(this.mData);
+
     }
 
     @Override
@@ -39,8 +39,11 @@ public class PMemberFragment extends BaseFragment{
     @Override
     public void initView() {
 
+        initRvAdapter(mData);
     }
-
+    public void  refresh(){
+        initRvAdapter(mData);
+    }
     @Override
     public void onClick(View v) {
 
@@ -50,9 +53,9 @@ public class PMemberFragment extends BaseFragment{
      *
      *
      */
-    private void initRvAdapter( List<PhoneBookInfo> data) {
+    public void initRvAdapter( List<PhoneBookInfo> data) {
         if (mAdapter == null) {
-            RecyclerView rv = getView(R.id.recyclerView1);
+             rv = getView(R.id.recyclerView2);
             mAdapter =new PMemberAdapter(data);
 
             if (rv != null) {
@@ -72,7 +75,15 @@ public class PMemberFragment extends BaseFragment{
             });
 
         }else {
-            mAdapter.notifyDataSetChanged();
+            if(rv==null){
+                rv = getView(R.id.recyclerView2);
+                if (rv != null) {
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                    rv.setLayoutManager(linearLayoutManager);
+                    rv.setAdapter(mAdapter);
+                }
+            }
+            mAdapter.notifyData(data,true);
         }
 
     }

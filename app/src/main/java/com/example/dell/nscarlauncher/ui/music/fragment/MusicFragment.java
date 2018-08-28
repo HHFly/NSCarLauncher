@@ -78,8 +78,8 @@ public class MusicFragment extends BaseFragment {
 
     @Override
     public void setListener() {
-        setClickListener(R.id.iv_fm_left);
-        setClickListener(R.id.iv_fm_right);
+        setClickListener(R.id.music_left);
+        setClickListener(R.id.music_ringt);
         setClickListener(R.id.music_play);
 
     }
@@ -109,11 +109,11 @@ public class MusicFragment extends BaseFragment {
             case R.id.music_play:
                 play();
                 break;
-            case R.id.iv_fm_left:
-                musicBack();
+            case R.id.music_left:
+
                 break;
-            case R.id.iv_fm_right:
-                musicNext();
+            case R.id.music_ringt:
+
                 break;
             case R.id.iv_music_mode:
                 setMode();
@@ -168,23 +168,8 @@ private  void  play(){
         }
     }
 }
-    /*上一首*/
-    private void musicBack(){
-        if (flag_play) {
-            bt_play.performClick();
-        }
-        myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
-        MusicModel.getPrevMusic(getActivity(), music_model);
-    }
-/*下一首*/
-private  void  musicNext(){
-    if (flag_play) {
-        bt_play.performClick();
-    }
 
-    myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
-    MusicModel.getNextMusic(getActivity(), music_model);
-}
+
     /*进度条*/
     private void initSeekBar(){
         music_progress_bar.setProgress(0);
@@ -247,36 +232,7 @@ private  void  musicNext(){
 
 
 
-    public Handler myHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            try {
-                switch (msg.what) {
-                    case MUSIC_CHANGE:
-                        getView(R.id.bt_gif).performClick();
-                        break;
-                    case MUSIC_BLUETOOTH_CLOSE:
 
-                        break;
-
-                    case MUSIC_BLUETOOTH_OPEN:
-
-                        break;
-                    case MUSCI_BACK:
-                        btservice.btAvrLast();
-                        break;
-                    case MUSIC_NEXT:
-                        btservice.btAvrNext();
-                        break;
-                    default:
-                        break;
-                }
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
-
-        ;
-    };
     /**
      * 本地音乐监听器
      */

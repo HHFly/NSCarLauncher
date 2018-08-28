@@ -31,7 +31,7 @@ import static com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment.tv_
 public class BTMusicFragment extends BaseFragment {
     private GifImageView mGifImageView;
     public static GifDrawable gifDrawable;
-    private static boolean isPlay;
+    public static boolean isPlay;
 
     private final static int DIRECTION_PREV = 1; // 向前切歌
     private final static int DIRECTION_NEXT = 2; // 向后切歌
@@ -114,6 +114,7 @@ public class BTMusicFragment extends BaseFragment {
                 break;
         }
     }
+
     /*暂停*/
     public void musicPause(){
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
@@ -283,7 +284,14 @@ public  void  musicNext(){
             gifDrawable.stop();
         }
     }
+    public  static  void gifPlayShow(){
+        if(isPlay){
+            gifDrawable.start();
 
+        }else {
+            gifDrawable.stop();
+        }
+    }
     public Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             try {
@@ -384,7 +392,8 @@ public  void  musicNext(){
         }
     }
     public static  void setNullViewGone(boolean isShow){
-        NullView.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        if(NullView!=null){
+        NullView.setVisibility(isShow ? View.VISIBLE : View.GONE);}
         if(isShow){
             stopGif();
         }
