@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.example.dell.nscarlauncher.ui.music.CursorMusicImage;
 import com.example.dell.nscarlauncher.ui.music.DialogLocalMusic;
@@ -55,7 +56,7 @@ public class PlayerService extends Service {
 
 			@Override
 			public void onCompletion(MediaPlayer mp) {
-				MusicFragment.bt_next.performClick();//��һ��
+				MusicFragment.bt_next.performClick();
 			}
 		});
 	}
@@ -103,6 +104,7 @@ public class PlayerService extends Service {
 					MusicFragment.flag_first = false;
 				}
 				mediaPlayer.reset();//把各项参数恢复到初始状态
+				DialogLocalMusic.playnow =new Mp3Info(DialogLocalMusic.data.get(DialogLocalMusic.musicID));
 				mediaPlayer.setDataSource(DialogLocalMusic.data.get(DialogLocalMusic.musicID).url);
 				mediaPlayer.prepare(); // 进行缓冲
 				mediaPlayer.setOnPreparedListener(new PreparedListener(currentTime));// 注册一个监听器
@@ -182,7 +184,7 @@ public class PlayerService extends Service {
 			//设置歌曲专辑内置图片
 			String albumArt = CursorMusicImage.getImage(PlayerService.this, ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).url);
 			if (albumArt == null) {
-//				MusicFragment.circle_image.setImageResource();
+				MusicFragment.circle_image.setImageResource(R.mipmap.one);
 			} else {
 				Bitmap bm = BitmapFactory.decodeFile(albumArt);
 				BitmapDrawable bmpDraw = new BitmapDrawable(bm);

@@ -23,7 +23,7 @@ public class PMemberAdapter extends BaseListRvAdapter<PhoneBookInfo> {
     public void bindBodyData(AutoViewHolder holder, int bodyPos,final PhoneBookInfo data) {
         holder.text(R.id.name,data.getName());
         holder.text(R.id.number,data.getNumber());
-        holder.get(R.id.number).setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

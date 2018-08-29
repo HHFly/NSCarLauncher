@@ -288,12 +288,12 @@ public class CircleImageView extends ImageView {
 		mShaderMatrix.setScale(scale, scale);
 		mShaderMatrix.postTranslate((int) (dx + 0.5f) + mBorderWidth,
 				(int) (dy + 0.5f) + mBorderWidth);
-		mShaderMatrix.preRotate(currentRoatate, mBitmapWidth / 2,// 实现图片的旋转
+		mShaderMatrix.preRotate(currentRoatate, mBitmapWidth / 2,// 实锟斤拷图片锟斤拷锟斤拷转
 				mBitmapHeight / 2);
 		mBitmapShader.setLocalMatrix(mShaderMatrix);
 	}
 
-	// 当前偏移角度
+
 	private int currentRoatate = 0;
 
 	public void setRoatate(int roateate) {
@@ -308,7 +308,7 @@ public class CircleImageView extends ImageView {
 	private CdTask task = null;
 
 	/**
-	 * 旋转重置
+
 	 */
 	public void resetRoatate() {
 		if (task != null) {
@@ -320,7 +320,7 @@ public class CircleImageView extends ImageView {
 	}
 	
 	/**
-	 * 旋转下一个（即换曲）
+
 	 */
 	public void nextRoatate(int DrawableId){
 		currentRoatate = 0;
@@ -328,7 +328,7 @@ public class CircleImageView extends ImageView {
 		setup();
 	}
 	/**
-	 * 旋转下一个（即换曲）
+	 *
 	 */
 	public void nextRoatateDrawable(Drawable drawable){
 		currentRoatate = 0;
@@ -337,7 +337,7 @@ public class CircleImageView extends ImageView {
 	}
 
 	/**
-	 * 旋转暂停
+	 *
 	 */
 	public void roatatePause() {
 		
@@ -348,7 +348,7 @@ public class CircleImageView extends ImageView {
 	}
 
 	/**
-	 * 旋转开始
+	 *
 	 */
 	public void roatateStart() {
 		flagPlay = true;
@@ -360,13 +360,13 @@ public class CircleImageView extends ImageView {
 	}
 
 	/**
-	 * 是否设置反转
+	 *
 	 */
 	public void setRoatateReversal(boolean reversal) {
 		this.isReversal = reversal;
 	}
 
-	private boolean isReversal = false;// 是否反转
+	private boolean isReversal = false;//
 
 	private class CdTask extends AsyncTask<Void, Integer, Void> {
 

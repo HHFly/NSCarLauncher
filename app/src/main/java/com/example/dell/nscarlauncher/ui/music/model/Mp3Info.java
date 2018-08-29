@@ -11,6 +11,15 @@ public class Mp3Info  extends BaseModel{
 	public String artist; //歌曲艺术家
 	
 	public Mp3Info() {
+
 	}
 
+	public Mp3Info(Mp3Info data) {
+		this.id = data.id;
+		this.displayName = data.displayName;
+		this.duration = data.duration;
+		this.url = data.url;
+		this.title = data.title;
+		this.artist = data.artist;
+	}
 }

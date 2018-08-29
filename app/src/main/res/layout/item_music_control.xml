@@ -8,39 +8,41 @@
     android:id="@+id/iv_music_mode"
     android:layout_width="36px"
     android:layout_height="34px"
-    android:src="@mipmap/ic_music_mode"
+    android:background="@mipmap/music_icon_cycle_off"
     android:layout_gravity="center_vertical"/>
   <ImageView
       android:id="@+id/music_left"
       android:layout_width="46px"
       android:layout_height="50px"
-      android:src="@mipmap/ic_fm_left"
+      android:background="@mipmap/ic_fm_left"
       android:layout_marginLeft="72px"
       android:layout_gravity="center_vertical"/>
     <ImageView
         android:id="@+id/music_play"
         android:layout_width="100px"
         android:layout_height="100px"
-        android:src="@mipmap/ic_music_stop"
+        android:background="@mipmap/ic_pause_white"
         android:layout_marginLeft="72px"
         android:layout_gravity="center_vertical"/>
     <ImageView
         android:id="@+id/music_ringt"
         android:layout_width="46px"
         android:layout_height="50px"
-        android:src="@mipmap/ic_fm_right"
+        android:background="@mipmap/ic_fm_right"
         android:layout_marginLeft="72px"
         android:layout_gravity="center_vertical"/>
     <ImageView
+        android:id="@+id/music_list"
     android:layout_width="30px"
     android:layout_height="34px"
-    android:src="@mipmap/ic_music_list"
+    android:background="@mipmap/ic_music_list"
     android:layout_marginLeft="72px"
     android:layout_gravity="center_vertical"/>
     <ImageView
+        android:visibility="gone"
         android:layout_width="31px"
         android:layout_height="27px"
-        android:src="@mipmap/ic_music_collect"
+        android:background="@mipmap/ic_music_collect"
         android:layout_marginLeft="72px"
         android:layout_gravity="center_vertical"/>
 </LinearLayout>

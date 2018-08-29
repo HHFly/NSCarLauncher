@@ -8,19 +8,19 @@
     <TextView style="@style/BaseText.Tv"
         android:id="@+id/current_time"
         android:textSize="24px"
-        android:text="03:50"
+        android:text="00:00"
         android:layout_gravity="center_vertical"
         />
     <SeekBar
         android:id="@+id/music_progress_bar"
         android:layout_width="560px"
         android:layout_height="wrap_content"
-        android:thumb="@null"
+        android:thumb="@mipmap/ic_volume"
         />
     <TextView style="@style/BaseText.Tv"
         android:id="@+id/music_total_time"
         android:textSize="24px"
-        android:text="03:50"
+        android:text="00:00"
         android:layout_gravity="center_vertical"
         />
 </LinearLayout>

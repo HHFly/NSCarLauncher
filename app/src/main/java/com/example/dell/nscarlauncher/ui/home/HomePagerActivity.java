@@ -158,7 +158,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         mFragments.add(homePagerTwoFragment);
         mFragments.add(homePagerThreeFragment);
         mCurFragment = FragmentUtils.selectFragment(this, mCurFragment, phoneFragment, R.id.frame_main);
-        new DialogLocalMusic(getApplicationContext());
+
+
     }
 
     /**

@@ -37,4 +37,7 @@
     <color name="color_line_border">#C7C7C7</color>
     <color name="colorBlack_Three">#333333</color>
     <color name="colorCircle">#1C1E2E</color>
+    <color name="colormusicblue">#B9D3FF</color>
+    <color name="colormusicwhiet">#EDEDED</color>
+    <color name="colormusic999999">#999999</color>
 </resources>
