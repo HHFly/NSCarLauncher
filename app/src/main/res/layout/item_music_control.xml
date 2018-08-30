@@ -6,8 +6,8 @@
     android:orientation="horizontal">
 <ImageView
     android:id="@+id/iv_music_mode"
-    android:layout_width="36px"
-    android:layout_height="34px"
+    android:layout_width="50px"
+    android:layout_height="50px"
     android:background="@mipmap/music_icon_cycle_off"
     android:layout_gravity="center_vertical"/>
   <ImageView

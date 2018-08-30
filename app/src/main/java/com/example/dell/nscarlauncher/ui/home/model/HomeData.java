@@ -1,4 +1,4 @@
-package com.example.dell.nscarlauncher.ui.home;
+package com.example.dell.nscarlauncher.ui.home.model;
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.ui.home.model.HomeModel;

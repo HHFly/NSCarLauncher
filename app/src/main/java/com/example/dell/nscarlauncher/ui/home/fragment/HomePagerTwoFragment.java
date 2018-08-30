@@ -1,9 +1,8 @@
 package com.example.dell.nscarlauncher.ui.home.fragment;
 
-import android.content.Intent;
-import android.content.pm.PackageManager;
+
 import android.view.View;
-import android.widget.Toast;
+
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
@@ -13,6 +12,7 @@ import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 
 public class HomePagerTwoFragment extends BaseFragment {
     private HomePagerActivity homePagerActivity;
+
     @Override
     public int getContentResId() {
         return R.layout.fragment_home2;
@@ -24,6 +24,12 @@ public class HomePagerTwoFragment extends BaseFragment {
 
     @Override
     public void findView() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
     }
 
@@ -75,4 +81,6 @@ public class HomePagerTwoFragment extends BaseFragment {
                 break;
         }
     }
+
+
 }

@@ -48,6 +48,7 @@
         android:layout_marginTop="444px">
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/music_refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

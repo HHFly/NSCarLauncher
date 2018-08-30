@@ -54,7 +54,8 @@ public class RadioRulerView extends View {
     public RadioRulerView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mDensity = context.getResources().getDisplayMetrics().density;
+//        mDensity = context.getResources().getDisplayMetrics().density/2;
+        mDensity =1.0f;
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RadioRulerView);
         mLineWidth = (int) a.getDimension(R.styleable.RadioRulerView_line_width,5*mDensity);
         mLineDivider = (int) a.getDimension(R.styleable.RadioRulerView_line_divider,15*mDensity);

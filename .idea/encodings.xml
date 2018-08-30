@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/local_music_refresh.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/music_model_listcycle.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/music_model_randomcycle.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/music_model_singlecycle.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/music_file_icon_new_off.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/music_file_icon_new_on.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/music_icon_cycle_1_off.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/music_icon_cycle_1_on.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/music_icon_cycle_n_off.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/music_icon_cycle_n_on.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/music_icon_cycle_off.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/music_icon_cycle_on.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/one.jpg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/home_top_btn6_00.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/home_top_btn6_01.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/home_top_btn6_02.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/home_top_btn6_03.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/home_top_gsm_2g.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/home_top_gsm_3g.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/home_top_gsm_null.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/set_wifi_01.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/set_wifi_02.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/set_wifi_03.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/set_wifi_04.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/status_bar_bluetooth_unuse.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/status_bar_bluetooth_use.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/status_bar_record_unuse.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/status_bar_record_use.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/status_bar_wifi_unuse.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/status_bar_wifi_use.png" charset="GBK" />
   </component>
 </project>

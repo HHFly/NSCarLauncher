@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.os.IKdBtService;
 import android.os.Message;
 import android.os.RemoteException;
-import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -39,7 +38,7 @@ import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerThreeFragment;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.example.dell.nscarlauncher.ui.home.model.HomeModel;
-import com.example.dell.nscarlauncher.ui.music.DialogLocalMusic;
+import com.example.dell.nscarlauncher.ui.home.receiver.USBBroadcastReceiver;
 import com.example.dell.nscarlauncher.ui.music.Service.PlayerService;
 import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.example.dell.nscarlauncher.ui.phone.PhoneFragment;
@@ -70,12 +69,13 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private ArrayList<HomeModel> mData;
     static Dialog alertDialog;//来电弹框
     public ComingReceiver comingReceiver;
+    public USBBroadcastReceiver usbBroadcastReceiver;
     static AudioManager audioManager;
     static IKdBtService btservice;
     @Override
     protected void onResume() {
         super.onResume();
-        DialogVolumeControl.volumeResume();
+            /*来电接受*/
         if (comingReceiver == null) {
             comingReceiver = new ComingReceiver();
             IntentFilter intentFilter = new IntentFilter();
@@ -83,6 +83,15 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             intentFilter.addAction("3gphone.iscoming");
             intentFilter.addAction("phone.isgone");
             registerReceiver(comingReceiver, intentFilter);
+        }
+        /*usb插拔接受*/
+        if(usbBroadcastReceiver==null){
+            usbBroadcastReceiver =new USBBroadcastReceiver();
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+            intentFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+            intentFilter.addDataScheme("file");
+            registerReceiver(usbBroadcastReceiver, intentFilter);
         }
     }
 
@@ -95,7 +104,6 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public void initView() {
         initDa();
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
-//        viewPager.setOffscreenPageLimit(PageCount-1);
         viewPager.setOffscreenPageLimit(mFragments.size());
         indicator.setViewPager(viewPager);
 
@@ -190,20 +198,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
 
 
-    @Override
-    public void onPageScrolled(int i, float v, int i1) {
 
-    }
-
-    @Override
-    public void onPageSelected(int i) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int i) {
-
-    }
     /**
      * 选择Fragment
      *
@@ -262,6 +257,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         try {
             if (comingReceiver!=null) {
                 this.unregisterReceiver(comingReceiver);
+            }
+            if(usbBroadcastReceiver!=null){
+                this.unregisterReceiver(usbBroadcastReceiver);
             }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -419,5 +417,19 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     @Override
     public void onBackPressed() {
        return;
+    }
+    @Override
+    public void onPageScrolled(int i, float v, int i1) {
+
+    }
+
+    @Override
+    public void onPageSelected(int i) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
+
     }
 }

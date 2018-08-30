@@ -143,7 +143,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     public void initView() {
 
         init_time();
-        initLocation();
+        init_Location();
         circleView.setProgress(50);
         circleView.startWave();
         setFmMHZ();
@@ -199,8 +199,19 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             }
         });
     }
-
-
+/*初始化定位*/
+    private void init_Location() {
+        ExecutorService timePool = Executors.newSingleThreadExecutor();  //采用线程池单一线程方式，防止被杀死
+        timePool.execute(new Runnable() {
+            @Override
+            public void run() {
+                initLocation();
+//                while (timeFlag) {
+//
+//                }
+            }
+        });
+    }
 
     public static class PagerOneHnadler extends Handler {
         @Override
@@ -249,7 +260,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         //设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
 
-        //mLocationClient.startLocation();//启动定位
+        mLocationClient.startLocation();//启动定位
     }
 
     public AMapLocationListener mLocationListener = new AMapLocationListener() {
@@ -307,7 +318,9 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         if (!TextUtils.isEmpty(city)) {
             String temp =SPUtil.getInstance(getContext(),AppConst.TEMPERATURE).getString(AppConst.TEMPERATURE,"20");
 
-            setTvText(R.id.tv_w_temperature,temp);
+            setTvText(R.id.tv_w_temperature,temp+"°");
+            String weatherstr =SPUtil.getInstance(getContext(),AppConst.WEATHER).getString(AppConst.WEATHER,"晴");
+            setTvText(R.id.tv_w_weather,weatherstr);
             @DrawableRes int weather = SPUtil.getInstance(getContext(),AppConst.WEATHER_ICON_ID).getInt(AppConst.WEATHER_ICON_ID, R.mipmap.weather_01);
             setIvImage(R.id.iv_w_weather,weather);
 
@@ -344,8 +357,9 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 String reportTime = weatherlive.getReportTime();// 发布时间
 
                 String temperature = weatherlive.getTemperature();//获取温度
-                setTvText(R.id.tv_w_temperature,temperature);
+                setTvText(R.id.tv_w_temperature,temperature+"°");
                 String weather = weatherlive.getWeather(); // 获取天气名称： 晴,多云,阴,阵雨,雷阵雨....
+                setTvText(R.id.tv_w_weather,weather);
                 Integer weatherImgResId = mWeatherMap.get(weather);//根据天气名称获取对应的图片资源的id
                 setIvImage(R.id.iv_w_weather,weatherImgResId);
 
@@ -357,7 +371,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 
                 //持久化存储
                 SPUtil.getInstance(getContext(),AppConst.TEMPERATURE).putString(AppConst.TEMPERATURE, temperature);
-                SPUtil.getInstance(getContext(),AppConst.WEATHER_ICON_ID).putInt(AppConst.WEATHER_ICON_ID, weatherImgResId);
+                SPUtil.getInstance(getContext(),AppConst.WEATHER).putString(AppConst.WEATHER, weather);
                 SPUtil.getInstance(getContext(),AppConst.WEATHER_HOUR).putInt(AppConst.WEATHER_HOUR, Calendar.getInstance(Locale.CHINA).get(Calendar.HOUR_OF_DAY)); // HOUR_OF_DAY 24小时制
 
                 if (mLocationClient != null) {

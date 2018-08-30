@@ -1,5 +1,6 @@
 package com.example.dell.nscarlauncher.ui.music.fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -35,6 +36,9 @@ import java.util.List;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
+import static com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty.PAUSE_MSG;
+import static com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty.STOP_MSG;
+
 public class MusicFragment extends BaseFragment {
 
     private final static int DIRECTION_PREV = 1; // 向前切歌
@@ -64,7 +68,7 @@ public class MusicFragment extends BaseFragment {
     private   List<Mp3Info> mLocalData = new ArrayList<>();//缓存数据源
     private MusicAdapter mAdapter;
     private MusicLocalAdapter musicLocalAdapter;
-    private    DialogLocalMusic dialogLocalMusic;
+    private static    DialogLocalMusic dialogLocalMusic;
     @Override
     public int getContentResId() {
         return R.layout.fragment_music;
@@ -108,7 +112,7 @@ public class MusicFragment extends BaseFragment {
                 myHandler.sendMessage(myHandler.obtainMessage(VIEWFRESH));
             }
         });
-        dialogLocalMusic.ScanMusic(getContext());
+        dialogLocalMusic.ScanMusic(getContext(),false);
         circle_image.nextRoatate(R.mipmap.one);
     }
 
@@ -151,7 +155,7 @@ public class MusicFragment extends BaseFragment {
                 getUsbMusicData();
                 break;
             case R.id.music_refresh:
-                dialogLocalMusic.ScanMusic(getContext());
+                dialogLocalMusic.ScanMusic(getContext(),false);
                 break;
 
         }
@@ -266,19 +270,14 @@ private  void  play(){
 
             circle_image.roatatePause();
             bt_play.setBackgroundResource(R.mipmap.ic_pause_white);
-            broadcastMusicInfo(getActivity(), FlagProperty.PAUSE_MSG);
+            broadcastMusicInfo(getActivity(), PAUSE_MSG);
             flag_play = false;
         }
     }
 }
 
 
-    public  void transportData(){
-        mLocalData.clear();
-        for (int i = 0; i < mData.size(); i++) {
-            mLocalData.add(mData.get(i));
-        }
-    }
+
     /*获取全局模块*/
     private void  getService(){
         audioservice=App.get().getAudioservice();
@@ -358,7 +357,7 @@ private  void  play(){
                 am_flag = false;
                 circle_image.roatatePause();
                 bt_play.setBackgroundResource(R.mipmap.ic_pause_white);
-                broadcastMusicInfo(context, FlagProperty.PAUSE_MSG);
+                broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
             }
 
@@ -375,7 +374,7 @@ private  void  play(){
                 system_flag = false;
                 circle_image.roatatePause();
                 bt_play.setBackgroundResource(R.mipmap.ic_pause_white);
-                broadcastMusicInfo(context, FlagProperty.PAUSE_MSG);
+                broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
             } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
                 Log.d("audioTest", "3 gain");
@@ -394,14 +393,14 @@ private  void  play(){
                 system_flag = false;
                 circle_image.roatatePause();
                 bt_play.setBackgroundResource(R.mipmap.ic_pause_white);
-                broadcastMusicInfo(context, FlagProperty.PAUSE_MSG);
+                broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
                 Log.d("audioTest", "3 loss transient can duck");
                 system_flag = false;
                 circle_image.roatatePause();
                 bt_play.setBackgroundResource(R.mipmap.ic_pause_white);
-                broadcastMusicInfo(context, FlagProperty.PAUSE_MSG);
+                broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
             }
 
@@ -471,11 +470,16 @@ private  void  play(){
                   selectMode(2);
               }
           }
-            transportData();
+
           initRvAdapter(mData);
           initRvLocalAdapter(mData);
 
   }
+    public  void transportData(){
+        for (int i = 0; i < mData.size(); i++) {
+            mLocalData.add(mData.get(i));
+        }
+    }
   /*获取本地音乐*/
   private  void getLocalMusicData(){
 //      if(flag_play){
@@ -483,7 +487,7 @@ private  void  play(){
 ////      }
 //      DialogLocalMusic.musicID=0;
       mData =DialogLocalMusic.SDData;
-      DialogLocalMusic.data =DialogLocalMusic.SDData;
+      DialogLocalMusic.transport(DialogLocalMusic.data ,DialogLocalMusic.SDData);
       setTvText(R.id.music_type,getString(R.string.本地音乐));
       selectMode(1);
       initRvAdapter(mData);
@@ -496,7 +500,7 @@ private  void  play(){
 //        }
 //        DialogLocalMusic.musicID=0;
         mData =DialogLocalMusic.USBData;
-        DialogLocalMusic.data =DialogLocalMusic.USBData;
+        DialogLocalMusic.transport(DialogLocalMusic.data ,DialogLocalMusic.SDData);
         setTvText(R.id.music_type,getString(R.string.usb));
         selectMode(2);
         initRvAdapter(mData);
@@ -547,8 +551,8 @@ private  void  play(){
         }else {
             mAdapter.notifyData(data,true);
         }
-        setViewVisibilityGone(R.id.item_music_null,data==null||data.size()==0);
-        setViewVisibilityGone(R.id.item_music_null,mLocalData==null||mLocalData.size()==0);
+//        setViewVisibilityGone(R.id.item_music_null,data==null||data.size()==0);
+        setViewVisibilityGone(R.id.item_music_null,DialogLocalMusic.SDData.size()==0&&DialogLocalMusic.USBData.size()==0);
         setViewVisibilityGone(R.id.rl_music_nodata,data==null||data.size()==0);
     }
     /**
@@ -595,4 +599,13 @@ private  void  play(){
             play();
         }
     }
+    public  static void  reSetMusic(boolean isLater){
+
+        if(context!=null) {
+//            broadcastMusicInfo(context,STOP_MSG);
+            DialogLocalMusic.ScanMusic(context ,isLater);
+
+        }
+    }
+
 }

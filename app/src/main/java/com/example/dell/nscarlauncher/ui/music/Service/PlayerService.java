@@ -60,7 +60,6 @@ public class PlayerService extends Service {
 			}
 		});
 	}
-
 	@Override
 	public IBinder onBind(Intent arg0) {
 		return null;
@@ -111,6 +110,8 @@ public class PlayerService extends Service {
 				handler.sendEmptyMessage(1);
 			} catch (Exception e) {
 				e.printStackTrace();
+				DialogLocalMusic.data.clear();
+
 			}
 		}
 	}

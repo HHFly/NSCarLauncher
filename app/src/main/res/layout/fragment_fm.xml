@@ -70,14 +70,14 @@
 <com.example.dell.nscarlauncher.widget.RadioRulerView
     android:id="@+id/rule"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="70px"
     android:layout_marginTop="79px"
     android:layout_marginLeft="320px"
     android:layout_marginRight="318px"
-    android:padding="8dp"
+    android:padding="8px"
     app:line_color="#F2F2F2"
-    app:line_divider="3dp"
-    app:line_width="2dp"
+    app:line_divider="3px"
+    app:line_width="2px"
     app:move_line_color="#E85945" />
 <LinearLayout
     android:layout_width="wrap_content"
@@ -99,7 +99,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_marginTop="30px"
-        android:layout_width="wrap_content"
+        android:layout_width="1300px"
+
         android:layout_height="120px">
 
     </android.support.v7.widget.RecyclerView>

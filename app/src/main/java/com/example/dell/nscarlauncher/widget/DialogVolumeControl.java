@@ -83,6 +83,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 		current = audiomanage.getStreamVolume( AudioManager.STREAM_MUSIC );
 		FlagProperty.STREAM_MUSIC = current;
 		FlagProperty.STREAM_MAX_MUSIC = max;
+		VerticalSeekBar.progress = Math.round(FlagProperty.STREAM_MUSIC * 100 / FlagProperty.STREAM_MAX_MUSIC);
 		Log.d("MUSIC", "max : " + max + " current : " + current);
 
 		//
@@ -94,7 +95,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 		//
 		thumb_volume = (SeekBar) window.findViewById(R.id.thumb_volume);
 
-		
+		thumb_volume.setProgress(VerticalSeekBar.progress);
 		thumb_volume.setOnSeekBarChangeListener(verticalSeekBarChangeListener);
 		imagebtn_volume = (ImageView) window.findViewById(R.id.imagebt_volume_show);
 		setVolumeImage(FlagProperty.STREAM_MUSIC);

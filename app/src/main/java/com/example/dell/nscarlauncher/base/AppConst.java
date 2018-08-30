@@ -10,7 +10,10 @@ public interface AppConst {
      * 天气图标
      */
     String WEATHER_ICON_ID = "weather_icon_id";
-
+    /**
+     * 天气图标
+     */
+    String WEATHER = "weather";
 
     /**
      * 温度

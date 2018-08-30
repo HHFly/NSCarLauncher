@@ -1,5 +1,8 @@
 package com.example.dell.nscarlauncher.ui.home.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import com.example.dell.nscarlauncher.R;
@@ -10,6 +13,7 @@ import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 
 public class HomePagerThreeFragment extends BaseFragment {
     private HomePagerActivity homePagerActivity;
+
     public void setHomePagerActivity(HomePagerActivity homePagerActivity) {
         this.homePagerActivity = homePagerActivity;
     }

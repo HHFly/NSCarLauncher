@@ -59,7 +59,13 @@ public class DialogLocalMusic  {
 	static ContentResolver mResolver;
 	public static int musicID;
 	Context context;
-	
+	public static void Clear(){
+		SDData.clear();
+		USBData.clear();
+		data.clear();
+		playnow=new Mp3Info();
+
+	}
 
 //	public DialogLocalMusic(final Context context) {
 //		dialog = new Dialog(context, R.style.nodarken_style);
@@ -334,15 +340,22 @@ public class DialogLocalMusic  {
 		}
 	}
 	public static void transport(List<Mp3Info> data,List<Mp3Info> newdata){
-
+		data.clear();
 		for (int i = 0; i < newdata.size(); i++) {
 			data.add(newdata.get(i));
 		}
 	}
-	public static void ScanMusic(final Context context){
+	public static void ScanMusic(final Context context ,final boolean isReSet){
 
 		new Thread(){
 			public void run() {
+				if(isReSet){
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 				getSDUSBData(context);
 				mThreadCallback.threadEndLisener();
 			}

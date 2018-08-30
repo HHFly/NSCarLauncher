@@ -44,6 +44,16 @@ android {
             path "CMakeLists.txt"
         }
     }
+    //打包apk，自动追加版本号和版本名称
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all  {
+
+               def newApkName = "KD_MCB-V3_0-v" + defaultConfig.versionName + "-" + new Date().format("yyyy-MM-dd") + ".apk"
+                outputFileName = newApkName;
+
+            }
+    }
 }
 
 dependencies {

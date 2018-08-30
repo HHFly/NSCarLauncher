@@ -56,20 +56,20 @@
             <TextView
                 android:id="@+id/tv_w_temperature"
                 style="@style/BaseText.Tv"
-                android:text="16°"
+                android:text=""
                 android:textSize="24px"
 
                 />
             <TextView style="@style/BaseText.Tv"
                 android:id="@+id/tv_w_weather"
-                android:text="多云"
+                android:text=""
                 android:textSize="24px"
                 />
         </LinearLayout>
 
         <TextView style="@style/BaseText.Tv"
             android:id="@+id/tv_w_location"
-            android:text="杭州"
+            android:text=""
             android:textSize="36px"
             android:layout_marginLeft="15px"
             android:layout_gravity="bottom"/>
@@ -84,12 +84,12 @@
         >
         <TextView style="@style/BaseText.Tv"
             android:id="@+id/tv_w_date"
-            android:text="2017/10/14"
+            android:text=""
             android:textSize="36px"
             />
         <TextView style="@style/BaseText.Tv"
             android:id="@+id/tv_w_week"
-            android:text="星期二"
+            android:text=""
             android:textSize="36px"
             android:layout_marginLeft="24px"
             />
