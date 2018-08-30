@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@mipmap/ic_f_fm_bg">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="96px"
+        android:layout_marginTop="82px"
+        android:layout_marginLeft="90px"
+        android:layout_marginRight="90px">
+        <ImageView
+            android:id="@+id/iv_return"
+            android:layout_width="40px"
+            android:layout_height="31px"
+            android:layout_marginLeft="30px"
+            android:src="@mipmap/set_button_return"
+            android:layout_centerVertical="true"
+            />
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="36px"
+            android:text="@string/WiFi"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="110px"/>
+        <android.support.v7.widget.SwitchCompat
+            android:visibility="visible"
+            android:id="@+id/isopen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:theme="@style/mySwitch"
+            android:layout_marginLeft="900px"/>
+        <View style="@style/BaseLine.Horizontal"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

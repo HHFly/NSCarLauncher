@@ -1,7 +1,6 @@
-package com.example.dell.nscarlauncher.ui.setting;
+package com.example.dell.nscarlauncher.ui.setting.activity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Handler;
 import android.os.IKdBtService;
 import android.os.Message;

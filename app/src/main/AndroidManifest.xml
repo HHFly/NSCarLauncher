@@ -78,7 +78,7 @@
 
             </intent-filter>
         </activity>
-        <activity android:name=".ui.setting.BlueToothSetActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".ui.setting.activity.BlueToothSetActivity" android:screenOrientation="landscape"/>
 
         <service android:name=".ui.music.Service.PlayerService"/>
     </application>
