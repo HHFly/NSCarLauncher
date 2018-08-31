@@ -373,7 +373,18 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             view.setVisibility(visibility ? View.VISIBLE : View.GONE);
         }
     }
-
+    /**
+     * 设置View的setVisibility
+     *
+     * @param id
+     * @param visibility
+     */
+    public void setViewVisibility(@IdRes int id, boolean visibility) {
+        View view = getView(id);
+        if (view != null) {
+            view.setVisibility(visibility ? View.VISIBLE : View.GONE);
+        }
+    }
     /**
      * 设置View的setSelected
      *

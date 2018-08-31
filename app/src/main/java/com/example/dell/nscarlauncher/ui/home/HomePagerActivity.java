@@ -1,6 +1,5 @@
 package com.example.dell.nscarlauncher.ui.home;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,7 +15,6 @@ import android.os.Handler;
 import android.os.IKdBtService;
 import android.os.Message;
 import android.os.RemoteException;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -89,11 +87,11 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     static AudioManager audioManager;
     static IKdBtService btservice;
 
-    private WifiManager mWifiManager;//wifi
+    private static WifiManager mWifiManager;//wifi
     private NetworkBroadcastReceiver mNetworkReceiver; // 接听网络状态发生改变的广播
     private TelephonyManager mTelephonyManager;//x信号
     private PhoneStateListener mPhoneStateListener; // 监听手机信号强度的改变
-    private static  ImageView mIvBluetooth,mIvPower,mIvVedio;
+    private static  ImageView mIvBluetooth,mIvPower,mIvVedio,mIvWifi;
     @Override
     protected void onResume() {
         super.onResume();
@@ -162,6 +160,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         viewPager=getView(R.id.viewPager);
         indicator =getView(R.id.indicator);
         mIvBluetooth=getView(R.id.iv_blueTooth);
+        mIvWifi=getView(R.id.iv_wifi);
 
     }
     /*获取全局模块*/
@@ -213,7 +212,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         mFragments.add(homePagerTwoFragment);
         mFragments.add(homePagerThreeFragment);
         mCurFragment = FragmentUtils.selectFragment(this, mCurFragment, phoneFragment, R.id.frame_main);
-
+        App.get().setmCurActivity(this);
 
     }
 
@@ -338,8 +337,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public void incomingShow(String number, final int index) {
         if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
                 AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-            alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.show();
+            alertDialog = new Dialog(this, R.style.nodarken_style);
+
             alertDialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
             Window window = alertDialog.getWindow();
             window.setContentView(R.layout.dialog_phone_incalling);
@@ -387,6 +386,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 }
             });
         }
+        alertDialog.show();
     }
 
 
@@ -575,18 +575,20 @@ public static void initCarRecord() {
         return result;
     }
     // 设置当前所连接wifi的强度
-    private void setWifiLevel() {
+    public static void setWifiLevel() {
 
         WifiInfo connectionInfo = mWifiManager.getConnectionInfo();
         if (connectionInfo != null) {
             int signalLevel = WifiManager.calculateSignalLevel(connectionInfo.getRssi(), 5);
-           setIvImage(R.id.iv_wifi,getSignalIntensity(signalLevel));
+            mIvWifi.setImageResource(getSignalIntensity(signalLevel));
+
         } else {
-            setIvImage(R.id.iv_wifi,R.mipmap.wifi_off);
+            mIvWifi.setImageResource(R.mipmap.wifi_off);
+
         }
     }
     // 获取不同信号强度wifi图片
-    public int getSignalIntensity(int num) {
+    public static int getSignalIntensity(int num) {
         if (num == 5) {
             return R.mipmap.home_top_btn5_05;
         } else if (num == 4) {

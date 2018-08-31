@@ -16,6 +16,7 @@ import android.os.ServiceManager;
 import android.support.multidex.MultiDexApplication;
 
 import com.example.dell.nscarlauncher.BuildConfig;
+import com.example.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.example.dell.nscarlauncher.common.util.FrescoUtils;
 import com.example.dell.nscarlauncher.common.util.NSLifecycleHandle;
 import com.example.dell.nscarlauncher.common.util.TimeUtils;
@@ -44,7 +45,7 @@ App extends MultiDexApplication {
             .asInterface(ServiceManager.getService("audioCtrl"));
     AudioManager audioManager;
     private IKdBtService btservice ;
-    private Activity mCurActivity;
+    private BaseActivity mCurActivity;
     private BlueMusicBroadcoast bluetoothReceiver; //蓝牙广播接受
     public  IFmService getRadio() {
         return radio;
@@ -160,44 +161,7 @@ App extends MultiDexApplication {
         registerReceiver(bluetoothReceiver, intentFilter);
     }
 
-    private void registerActivityListener() {
-        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
 
-            }
-
-            @Override
-            public void onActivityStarted(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityResumed(Activity activity) {
-                mCurActivity = activity;
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
-            }
-
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-
-            }
-        });
-    }
 
     /**
      * 获取当前Activity
@@ -208,17 +172,6 @@ App extends MultiDexApplication {
         return (T) mCurActivity;
     }
 
-    /**
-     * 获取当前Activity的fragmentManager
-     * @return
-     */
-    public FragmentManager getFragmentManager() {
-        if (mCurActivity == null) {
-            throw new NullPointerException("mCurActivity is null");
-        }
-        return mCurActivity.getFragmentManager();
-    }
-
 
 
 
@@ -227,8 +180,10 @@ App extends MultiDexApplication {
      *
      * @return
      */
-    public Activity getCurActivity() {
-        return NSLifecycleHandle.currentActivity();
+    public BaseActivity getCurActivity() {
+        return mCurActivity;
     }
-
+    public void  setmCurActivity(BaseActivity curActivity){
+        this.mCurActivity =curActivity;
+    }
 }

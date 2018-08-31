@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@mipmap/ic_f_fm_bg">
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -32,11 +33,75 @@
         <View style="@style/BaseLine.Horizontal"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView_wifi"
+    <LinearLayout
+        android:id="@+id/ll_wifi"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:layout_marginLeft="90px"
+        android:layout_marginRight="90px"
+        android:orientation="vertical">
 
-    </android.support.v7.widget.RecyclerView>
+        <RelativeLayout
+            android:id="@+id/ll_wifi_current"
+            android:layout_width="match_parent"
+            android:layout_height="96px">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40px"
+                android:layout_centerVertical="true"
+                android:text="当前连接网络"
+                android:textColor="#FFFFFF"
+                android:textSize="32px" />
+
+            <TextView
+                android:id="@+id/wifi_current_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               android:layout_centerVertical="true"
+                android:layout_marginLeft="300px"
+                android:textColor="@color/white"
+                android:textSize="32px" />
+
+            <TextView
+                android:id="@+id/wifi_info_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="200px"
+                android:text="连接"
+                android:textColor="@android:color/white"
+                android:textSize="32px" />
+
+            <ImageButton
+                android:id="@+id/wif_info_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="100px"
+                android:background="@drawable/set_wifi_current_info" />
+
+
+
+
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="附近网络"
+            android:layout_marginLeft="40px"
+            android:textColor="#FFFFFF"
+            android:textSize="32px" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_wifi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50px"
+            android:scrollbars="none">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
 </LinearLayout>

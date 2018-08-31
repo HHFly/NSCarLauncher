@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="96px">
+    <TextView
+        android:id="@+id/wifi_info_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40px"
+        android:layout_centerVertical="true"
+        android:textColor="@android:color/white"
+        android:textSize="32px"/>
+
+    <TextView
+        android:id="@+id/wifi_info_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="200px"
+        android:textColor="@android:color/white"
+        android:textSize="32px"
+        android:text="断开"/>
+
+    <ImageView
+        android:id="@+id/wif_info_intensity"
+        android:layout_width="50px"
+        android:layout_height="50px"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="100px"/>
+</RelativeLayout>

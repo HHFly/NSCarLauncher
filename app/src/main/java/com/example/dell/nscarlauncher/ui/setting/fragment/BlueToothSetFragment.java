@@ -1,4 +1,4 @@
-package com.example.dell.nscarlauncher.ui.setting.activity;
+package com.example.dell.nscarlauncher.ui.setting.fragment;
 
 import android.app.Dialog;
 import android.os.Handler;
@@ -17,15 +17,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.dell.nscarlauncher.R;
-import com.example.dell.nscarlauncher.base.Activity.BaseActivity;
+import com.example.dell.nscarlauncher.app.App;
+import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
+import com.example.dell.nscarlauncher.ui.setting.SetFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class BlueToothSetActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener{
+public class BlueToothSetFragment extends BaseFragment implements CompoundButton.OnCheckedChangeListener{
     private static final int BLUETOOTH_INFO_NAME = 1;
     private static final int BLUETOOTH_CHANGE_NAME = 2;
     private static final int BLUETOOTH_CHANGE_PASSWORD = 3;
@@ -39,15 +41,18 @@ public class BlueToothSetActivity extends BaseActivity implements CompoundButton
 
     static TextView tv_set_bluetooth_name;
     static TextView tv_set_bluetooth_password;
-    @Override
-    public int getContentViewResId() {
-        return R.layout.activity_btset;
-    }
+
 
     @Override
     public void initView() {
         myHandler.sendMessage(myHandler.obtainMessage(BLUETOOTH_INFO_NAME));
 
+    }
+
+    @Override
+    public int getContentResId() {
+
+            return R.layout.activity_btset;
     }
 
     @Override
@@ -70,7 +75,7 @@ public class BlueToothSetActivity extends BaseActivity implements CompoundButton
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_return:
-                finish();
+                SetFragment.hideFragment();
                 break;
             case R.id.ll_name:
                 ChangeName();
@@ -82,7 +87,7 @@ public class BlueToothSetActivity extends BaseActivity implements CompoundButton
     }
 /*蓝牙名称*/
     private void ChangeName() {
-        final Dialog dialog = new Dialog(BlueToothSetActivity.this, R.style.nodarken_style);
+        final Dialog dialog = new Dialog(getContext(), R.style.nodarken_style);
 
         Window window = dialog.getWindow();
         window.setContentView(R.layout.dialog_bluetooth_change_name);
@@ -114,7 +119,7 @@ public class BlueToothSetActivity extends BaseActivity implements CompoundButton
                         };
                     }.start();
                     dialog.dismiss();
-                    initImmersionBar();
+                    App.get().getCurActivity().initImmersionBar();
                 }
             }
         });
@@ -125,14 +130,14 @@ public class BlueToothSetActivity extends BaseActivity implements CompoundButton
             public void onClick(View v) {
 
                 dialog.dismiss();
-                initImmersionBar();
+                App.get().getCurActivity().initImmersionBar();
             }
         });
         dialog.show();
     }
         /*更改密码*/
     private void ChangePass() {
-        final Dialog dialog = new Dialog(BlueToothSetActivity.this, R.style.nodarken_style);
+        final Dialog dialog = new Dialog(getContext(), R.style.nodarken_style);
 
         Window window = dialog.getWindow();
         window.setContentView(R.layout.dialog_bluetooth_change_password);
@@ -159,7 +164,7 @@ public class BlueToothSetActivity extends BaseActivity implements CompoundButton
                         };
                     }.start();
                     dialog.dismiss();
-                    initImmersionBar();
+                    App.get().getCurActivity().initImmersionBar();
                 }
             }
         });
@@ -169,7 +174,7 @@ public class BlueToothSetActivity extends BaseActivity implements CompoundButton
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                initImmersionBar();
+                App.get().getCurActivity().initImmersionBar();
             }
         });
         dialog.show();

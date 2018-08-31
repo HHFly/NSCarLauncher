@@ -12,13 +12,16 @@ import android.support.annotation.StringRes;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
+import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.gyf.barlibrary.BarHide;
 import com.gyf.barlibrary.ImmersionBar;
 
@@ -47,6 +50,13 @@ public abstract class BaseDialogFragment extends DialogFragment implements View.
     }
     public void onStart() {
         super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            DisplayMetrics dm = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+            dialog.getWindow().setLayout((int) (dm.widthPixels * 0.5),(int) (dm.heightPixels * 0.5));
+
+        }
         if(this.getStartInBottom()) {
             this.startInBottom();
         }
@@ -122,6 +132,7 @@ public abstract class BaseDialogFragment extends DialogFragment implements View.
      */
     public void show(android.support.v4.app.FragmentManager manager) {
         try {
+
             show(manager, TAG);
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,15 +1,19 @@
 package com.example.dell.nscarlauncher.ui.setting;
 
 import android.provider.Settings;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.example.dell.nscarlauncher.common.util.FragmentUtils;
 import com.example.dell.nscarlauncher.common.util.JumpUtils;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
-import com.example.dell.nscarlauncher.ui.setting.activity.BlueToothSetActivity;
+import com.example.dell.nscarlauncher.ui.setting.fragment.BlueToothSetFragment;
+import com.example.dell.nscarlauncher.ui.setting.fragment.WifiFragment;
 import com.example.dell.nscarlauncher.ui.setting.adapter.SetAdapter;
 import com.example.dell.nscarlauncher.ui.setting.eumn.SetType;
 import com.example.dell.nscarlauncher.ui.setting.model.SetData;
@@ -17,9 +21,14 @@ import com.example.dell.nscarlauncher.ui.setting.model.SetModel;
 
 import java.util.List;
 
+
 public class SetFragment extends BaseFragment {
     private SetData  mData =new SetData();
     private SetAdapter mAdapter;
+    private BaseFragment mCurFragment;//当前页
+    private static RelativeLayout fragmentShow;
+    BlueToothSetFragment blueToothSetFragment;
+    WifiFragment wifiFragment;
 
     @Override
     public int getContentResId() {
@@ -28,7 +37,7 @@ public class SetFragment extends BaseFragment {
 
     @Override
     public void findView() {
-
+        fragmentShow=getView(R.id.rl_f_set);
     }
 
     @Override
@@ -38,6 +47,8 @@ public class SetFragment extends BaseFragment {
 
     @Override
     public void initView() {
+         blueToothSetFragment =new BlueToothSetFragment();
+         wifiFragment =new WifiFragment();
       initRvAdapter(mData.getData());
     }
 
@@ -74,6 +85,20 @@ public class SetFragment extends BaseFragment {
         }
 
     }
+    /**
+     * 选择Fragment
+     *
+     * @param fragment
+     */
+    private void switchFragment(Fragment fragment) {
+
+        mCurFragment = FragmentUtils.selectFragment(getActivity(), mCurFragment, fragment, R.id.frame_set);
+        mCurFragment.Resume();
+        setVisibilityGone(R.id.rl_f_set,true);
+    }
+    public  static void hideFragment(){
+        fragmentShow.setVisibility(View.GONE);
+    }
     private void Click(SetModel data){
             switch (data.getItem()){
                 case SetType.DISPLAY:
@@ -89,10 +114,12 @@ public class SetFragment extends BaseFragment {
                     JumpUtils.actActivity(getActivity(),Settings.ACTION_DEVICE_INFO_SETTINGS);
                     break;
                 case SetType.BT:
-                    JumpUtils.actActivity(getActivity(),BlueToothSetActivity.class);
+                    switchFragment(blueToothSetFragment);
+//                    JumpUtils.actActivity(getActivity(),BlueToothSetFragment.class);
                     break;
                  case  SetType.WIFI:
-                     JumpUtils.actActivity(getActivity(),Settings.ACTION_WIFI_SETTINGS);
+                     switchFragment(wifiFragment);
+//                     JumpUtils.actActivity(getActivity(), WifiFragment.class);
                      break;
                 case  SetType.CARSET:
                     JumpUtils.actAPK(getActivity(), FragmentType.CARSET);
