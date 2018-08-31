@@ -13,15 +13,15 @@ import static com.white.lib.utils.AppResUtil.getString;
  * Created by Administrator on 2016/1/15.
  */
 public class TimeUtils {
-    Calendar calendar;
+   static Calendar calendar;
 
-    public TimeUtils(){
-        this.calendar = Calendar.getInstance();
+    public static void getInstance(){
+        calendar = Calendar.getInstance();
 //        this.calendar.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
     }
 
     //获取星期几方法
-    public String getDayOfWeek(){
+    public static String getDayOfWeek(){
         String mWay = null;
         switch (calendar.get(Calendar.DAY_OF_WEEK)){
             case 1:
@@ -49,7 +49,7 @@ public class TimeUtils {
         return getString(R.string.星期)+mWay;
     }
 
-    public String getDate(){
+    public static String getDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");// HH:mm:ss
 //获取当前时间
         Date date = new Date(System.currentTimeMillis());
@@ -57,7 +57,7 @@ public class TimeUtils {
     }
     //获取十二进制 A/PM 时:分
 
-    public String getHour(){
+    public static String getHour(){
         String hour;
         String min ;
         hour =String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) ;

@@ -4,35 +4,34 @@
     android:layout_height="390px"
     android:background="@mipmap/ic_phone_num_bg">
 <RelativeLayout
-    android:layout_width="wrap_content"
+    android:layout_width="400px"
     android:layout_height="100px"
     android:layout_centerInParent="true">
 
-    <LinearLayout
-        android:id="@+id/ll_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerInParent="true">
+
         <TextView style="@style/BaseText.Tv"
             android:id="@+id/num"
             android:layout_marginLeft="40px"
             android:textSize="36px"
-            android:layout_gravity="center_vertical"
+           android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:layout_marginRight="100px"
             android:text=""/>
 
-        <ImageView
-            android:id="@+id/num_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="30px"
-            android:padding="30px"
-            android:src="@mipmap/ic_phone_delete" />
-    </LinearLayout>
+
+
+
+    <ImageView
+        android:id="@+id/num_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:padding="30px"
+        android:src="@mipmap/ic_phone_delete" />
     <View style="@style/BaseLine.Horizontal"
-        android:layout_alignLeft="@+id/ll_num"
-        android:layout_alignRight="@+id/ll_num"
+
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

@@ -367,8 +367,9 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
                         if(!"".equals(number)) {
                             btservice.btDial(number);
+                            rl_call.setVisibility(View.VISIBLE);
                         }
-                        rl_call.setVisibility(View.VISIBLE);
+
                         break;
                     case PHONE_END:
                         btservice.btHungupCall();

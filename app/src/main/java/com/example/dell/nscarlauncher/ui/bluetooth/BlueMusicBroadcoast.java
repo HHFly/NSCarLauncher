@@ -105,7 +105,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 //            if (HomePagerActivity.fragment_now instanceof FragmentPhone) {
 //                HomePagerActivity.changeFragment(MainKondi.FRAGMENT_PHONE);
 //            }
-//            HomeTitleLayout.setBluetooth(1);
+            HomePagerActivity.initBluetooth();
             PhoneFragment.setNullViewGone(false);
             PhoneFragment.getPhoneBook();
             PhoneFragment.getPhoneRecord();
@@ -123,7 +123,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             }*/
             PhoneFragment.setNullViewGone(true);
             FlagProperty.flag_bluetooth = false;
-//            HomeTitleLayout.setBluetooth(0);
+            HomePagerActivity.initBluetooth();
         }
         if (intent.getAction().equals(ACTION_CALLSTART)) {
             int index = intent.getIntExtra(KEY_CALLINDEX, 0);

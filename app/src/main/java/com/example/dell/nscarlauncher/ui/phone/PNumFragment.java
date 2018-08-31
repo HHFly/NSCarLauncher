@@ -30,6 +30,14 @@ public class PNumFragment extends BaseFragment {
     @Override
     public void setListener() {
         setClickListener(R.id.num_delete);
+        getView(R.id.num_delete).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                number="";
+                TvNum.setText(number);
+                return true;
+            }
+        });
     }
 
     @Override

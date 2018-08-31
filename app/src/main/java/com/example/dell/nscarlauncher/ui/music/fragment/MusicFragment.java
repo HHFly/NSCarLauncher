@@ -58,12 +58,12 @@ public class MusicFragment extends BaseFragment {
     static AudioManager audioManager;
     static IKdAudioControlService audioservice ;
     static IKdBtService btservice;
-    static boolean system_flag, am_flag,flag_play;
+    static boolean system_flag, am_flag,flag_play,flag_hachage;
     public static CircleImageView circle_image;
     static Context context;
     public static ImageView bt_open, bt_play, bt_back, bt_next, bt_u, bt_music_model;
     public static TextView tv_music_songname, tv_music_singer, music_current_time, music_total_time;
-
+    private  int dataMode ,currentMode ;
   private   List<Mp3Info> mData = new ArrayList<>();//数据源
     private   List<Mp3Info> mLocalData = new ArrayList<>();//缓存数据源
     private MusicAdapter mAdapter;
@@ -143,15 +143,19 @@ public class MusicFragment extends BaseFragment {
                 setMode();
                 break;
             case R.id.music_list:
+                currentMode =dataMode;
                 setViewVisibilityGone(R.id.music_local,true);
                 break;
             case R.id.music_local_return:
+                setMusic(dataMode);
                 setViewVisibilityGone(R.id.music_local,false);
                 break;
             case    R.id.music_local_1:
-                    getLocalMusicData();
+                dataMode=1;
+                getLocalMusicData();
                 break;
             case R.id.music_local_2:
+                dataMode=2;
                 getUsbMusicData();
                 break;
             case R.id.music_refresh:
@@ -167,7 +171,7 @@ public class MusicFragment extends BaseFragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                int totaltime = (int) Math.ceil(DialogLocalMusic.data.get(DialogLocalMusic.musicID).duration);
+                int totaltime = (int) Math.ceil(DialogLocalMusic.playnow.duration);
                 int num = (int) Math.ceil(Math.round((float) progress / 100.0 * totaltime));
 
                 if (PlayerService.is_start_speed) {
@@ -202,30 +206,34 @@ public class MusicFragment extends BaseFragment {
 
     /*上一首*/
     private void PreMusic(){
-        // 非蓝牙音乐播放上一曲
-        if (flag_play) {
-            bt_play.performClick();
+        if(DialogLocalMusic.data.size()>0) {
+            // 非蓝牙音乐播放上一曲
+            if (flag_play) {
+                bt_play.performClick();
+            }
+            if (music_model == 2) { // 单曲循环模式不变换音乐图片
+                circle_image.resetRoatate();
+            } else { // 其他模式
+                // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_PREV)));
+            }
+            myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
+            MusicModel.getPrevMusic(getActivity(), music_model);
         }
-        if (music_model == 2) { // 单曲循环模式不变换音乐图片
-            circle_image.resetRoatate();
-        } else { // 其他模式
-            // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_PREV)));
-        }
-        myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
-        MusicModel.getPrevMusic(getActivity(), music_model);
     }
     /*下一首*/
     private void NextMusic(){
-        if (flag_play) {
-            bt_play.performClick();
+        if(DialogLocalMusic.data.size()>0) {
+            if (flag_play) {
+                bt_play.performClick();
+            }
+            if (music_model == 2) { // 单曲循环模式不变换音乐图片
+                circle_image.resetRoatate();
+            } else { // 其他模式
+                // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
+            }
+            myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
+            MusicModel.getNextMusic(getActivity(), music_model);
         }
-        if (music_model == 2) { // 单曲循环模式不变换音乐图片
-            circle_image.resetRoatate();
-        } else { // 其他模式
-            // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
-        }
-        myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
-        MusicModel.getNextMusic(getActivity(), music_model);
     }
   /*音乐模式*/
   private  void setMode(){
@@ -462,11 +470,13 @@ private  void  play(){
 /*初始化本地音乐数据*/
   private  void getMusicData(){
           mData =DialogLocalMusic.SDData;
+          dataMode=1;
           selectMode(1);
           if(mData==null||mData.size()==0){
               mData =DialogLocalMusic.USBData;
               if(mData!=null||mData.size()!=0) {
                 setTvText(R.id.music_type,getString(R.string.usb));
+                dataMode=2;
                   selectMode(2);
               }
           }
@@ -486,25 +496,31 @@ private  void  play(){
 ////          play();
 ////      }
 //      DialogLocalMusic.musicID=0;
-      mData =DialogLocalMusic.SDData;
-      DialogLocalMusic.transport(DialogLocalMusic.data ,DialogLocalMusic.SDData);
-      setTvText(R.id.music_type,getString(R.string.本地音乐));
-      selectMode(1);
-      initRvAdapter(mData);
-      initRvLocalAdapter(mData);
+      selectMode(dataMode);
+      flag_hachage=true;
+      initRvLocalAdapter(DialogLocalMusic.SDData);
   }
     /*获取Usb音乐*/
     private  void getUsbMusicData(){
-//        if(flag_play){
-//            play();
-//        }
-//        DialogLocalMusic.musicID=0;
-        mData =DialogLocalMusic.USBData;
-        DialogLocalMusic.transport(DialogLocalMusic.data ,DialogLocalMusic.SDData);
-        setTvText(R.id.music_type,getString(R.string.usb));
-        selectMode(2);
+
+        selectMode(dataMode);
+        flag_hachage=true;
+        initRvLocalAdapter(DialogLocalMusic.USBData);
+    }
+    private void setMusic(int dataMode){
+        if(dataMode!=currentMode){
+            DialogLocalMusic.musicID=0;
+        }
+        if(dataMode==1) {
+            mData = DialogLocalMusic.SDData;
+            DialogLocalMusic.transport(DialogLocalMusic.data, DialogLocalMusic.SDData);
+        }else {
+            mData = DialogLocalMusic.USBData;
+            DialogLocalMusic.transport(DialogLocalMusic.data, DialogLocalMusic.USBData);
+        }
+        setTvText(R.id.music_type,dataMode==1?getString(R.string.本地音乐):getString(R.string.usb));
+
         initRvAdapter(mData);
-        initRvLocalAdapter(mData);
     }
     private void  selectMode(int type){
       setViewSelected(R.id.music_local_1,false);
@@ -586,7 +602,7 @@ private  void  play(){
             });
 
         }else {
-            mAdapter.notifyData(data,true);
+            musicLocalAdapter.notifyData(data,true);
         }
         setViewVisibilityGone(R.id.rl_music_local_nodata,data==null||data.size()==0);
     }

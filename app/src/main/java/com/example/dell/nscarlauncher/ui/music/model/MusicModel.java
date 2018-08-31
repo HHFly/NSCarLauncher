@@ -15,34 +15,38 @@ public class MusicModel {
  
 	// 获取下首歌曲
 	public static void getNextMusic(Context context, int model) {
-		if (model == LIST_LOOP) {
-			if (DialogLocalMusic.musicID == (DialogLocalMusic.data.size() - 1)) {
-				DialogLocalMusic.musicID = 0;
-			} else {
-				DialogLocalMusic.musicID++;
-			}
-		} else if (model == SINGLE_LOOP) {
+		if(DialogLocalMusic.data.size()>0) {
+			if (model == LIST_LOOP) {
+				if (DialogLocalMusic.musicID == (DialogLocalMusic.data.size() - 1)) {
+					DialogLocalMusic.musicID = 0;
+				} else {
+					DialogLocalMusic.musicID++;
+				}
+			} else if (model == SINGLE_LOOP) {
 
-		} else if (model == RANDOM_PLAY) {
-			getRandom(DialogLocalMusic.data.size());
+			} else if (model == RANDOM_PLAY) {
+				getRandom(DialogLocalMusic.data.size());
+			}
+			broadcastMusicInfo(context, FlagProperty.NEXT_MSG);
 		}
-		broadcastMusicInfo(context, FlagProperty.NEXT_MSG);
 	}
 
 //获取上首歌曲
 	public static void getPrevMusic(Context context, int model) {
-		if (model == LIST_LOOP) {
-			if (DialogLocalMusic.musicID == 0) {
-				DialogLocalMusic.musicID = DialogLocalMusic.data.size() - 1;
-			}else{
-				DialogLocalMusic.musicID --;
-			}
-		} else if (model == SINGLE_LOOP) {
+		if(DialogLocalMusic.data.size()>0) {
+			if (model == LIST_LOOP) {
+				if (DialogLocalMusic.musicID == 0) {
+					DialogLocalMusic.musicID = DialogLocalMusic.data.size() - 1;
+				} else {
+					DialogLocalMusic.musicID--;
+				}
+			} else if (model == SINGLE_LOOP) {
 
-		} else if (model == RANDOM_PLAY) {
-			getRandom(DialogLocalMusic.data.size());
+			} else if (model == RANDOM_PLAY) {
+				getRandom(DialogLocalMusic.data.size());
+			}
+			broadcastMusicInfo(context, FlagProperty.PRIVIOUS_MSG);
 		}
-		broadcastMusicInfo(context, FlagProperty.PRIVIOUS_MSG);
 	}
 
 	//发送音乐变更信息

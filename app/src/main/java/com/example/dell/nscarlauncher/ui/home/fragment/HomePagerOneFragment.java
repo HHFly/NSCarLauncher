@@ -53,7 +53,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private HomePagerActivity homePagerActivity;
     private HashMap<String, Integer> mWeatherMap; // 天气类型与对应的图标
     //定位客户端,以及参数
-    private AMapLocationClient mLocationClient;
+    public AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
     //thread flag
     private volatile boolean timeFlag = true;
@@ -216,12 +216,12 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     public static class PagerOneHnadler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            TimeUtils timeUtils =new TimeUtils();
+
             switch (msg.what){
                 case HandleKey.TIME:
-                    tv_w_time.setText(timeUtils.getHour());
-                    tv_w_date.setText(timeUtils.getDate());
-                    tv_w_week.setText(timeUtils.getDayOfWeek());
+                    tv_w_time.setText(TimeUtils.getHour());
+                    tv_w_date.setText(TimeUtils.getDate());
+                    tv_w_week.setText(TimeUtils.getDayOfWeek());
                     break;
                 case HandleKey.WEATHAER:
                     break;

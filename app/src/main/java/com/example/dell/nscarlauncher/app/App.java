@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.IFmService;
 import android.os.IKdAudioControlService;
@@ -17,6 +18,7 @@ import android.support.multidex.MultiDexApplication;
 import com.example.dell.nscarlauncher.BuildConfig;
 import com.example.dell.nscarlauncher.common.util.FrescoUtils;
 import com.example.dell.nscarlauncher.common.util.NSLifecycleHandle;
+import com.example.dell.nscarlauncher.common.util.TimeUtils;
 import com.example.dell.nscarlauncher.common.util.ToastUtils;
 import com.example.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
@@ -80,6 +82,8 @@ App extends MultiDexApplication {
                 .setLogOpen(BuildConfig.IS_OPEN_LOG);
         /*初始化Handle*/
         pagerOneHnadler = new HomePagerOneFragment.PagerOneHnadler();
+        /*时间工具*/
+        TimeUtils.getInstance();
         /*初始化驱动模块*/
         initService();
 
@@ -113,6 +117,8 @@ App extends MultiDexApplication {
             e.printStackTrace();
         }
     }
+
+
     /*反注册接收器*/
     public void  unregistMyReceiver(){
         try {

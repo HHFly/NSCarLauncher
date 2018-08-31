@@ -47,7 +47,7 @@ public class BlueToothSetActivity extends BaseActivity implements CompoundButton
     @Override
     public void initView() {
         myHandler.sendMessage(myHandler.obtainMessage(BLUETOOTH_INFO_NAME));
-        BluetoothInit();
+
     }
 
     @Override
@@ -114,6 +114,7 @@ public class BlueToothSetActivity extends BaseActivity implements CompoundButton
                         };
                     }.start();
                     dialog.dismiss();
+                    initImmersionBar();
                 }
             }
         });
@@ -124,6 +125,7 @@ public class BlueToothSetActivity extends BaseActivity implements CompoundButton
             public void onClick(View v) {
 
                 dialog.dismiss();
+                initImmersionBar();
             }
         });
         dialog.show();
@@ -157,7 +159,7 @@ public class BlueToothSetActivity extends BaseActivity implements CompoundButton
                         };
                     }.start();
                     dialog.dismiss();
-
+                    initImmersionBar();
                 }
             }
         });
@@ -167,6 +169,7 @@ public class BlueToothSetActivity extends BaseActivity implements CompoundButton
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                initImmersionBar();
             }
         });
         dialog.show();
