@@ -30,11 +30,11 @@ public class SetData {
         setModel3.setLogo(R.mipmap.ic_set_wifi);
         data.add(setModel3);
 
-        SetModel setModel4 =new SetModel();
-        setModel4.setName(getString(R.string.语言和输入法));
-        setModel4.setItem(SetType.LANGUAGE);
-        setModel4.setLogo(R.mipmap.ic_set_language);
-        data.add(setModel4);
+//        SetModel setModel4 =new SetModel();
+//        setModel4.setName(getString(R.string.语言和输入法));
+//        setModel4.setItem(SetType.LANGUAGE);
+//        setModel4.setLogo(R.mipmap.ic_set_language);
+//        data.add(setModel4);
 
 //        SetModel setModel5 =new SetModel();
 //        setModel5.setName(getString(R.string.均衡器));

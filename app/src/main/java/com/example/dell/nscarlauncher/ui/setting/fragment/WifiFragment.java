@@ -24,6 +24,7 @@ import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.common.util.WifiUtil;
+import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.ui.setting.SetFragment;
 import com.example.dell.nscarlauncher.ui.setting.adapter.WifiAdpter;
 import com.example.dell.nscarlauncher.ui.setting.model.Wifiinfo;
@@ -92,13 +93,13 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
             case R.id.isopen:
                 if(isChecked){
                     wifiManager.setWifiEnabled(true);
-                    setViewVisibility(R.id.recyclerView_wifi,true);
+                    setViewVisibility(R.id.ll_wifi,true);
                     isScan=true;
                     new ScanWifiThread().start();
                     new RefreshSsidThread().start();
                 }else {
                     wifiManager.setWifiEnabled(false);
-                    setViewVisibility(R.id.recyclerView_wifi,false);
+                    setViewVisibility(R.id.ll_wifi,false);
                     isScan =false;
                 }
                 break;
@@ -134,6 +135,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
                 wifiManager.removeNetwork(currentWifiInfo.getNetworkId());       //断开网络并忘记密码
                 //wifiManager.disableNetwork(currentWifiInfo.getNetworkId());       //断开网络但不忘记密码
                 wifiManager.disconnect();
+                setViewVisibility(R.id.ll_wifi_current,false);
                 dialog.dismiss();
                 App.get().getCurActivity().initImmersionBar();
             }
@@ -314,7 +316,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
                     if(currentWifiInfo!=null&&currentWifiInfo.getSSID().length()>2) {
                         setTvText(R.id.wifi_current_name, currentWifiInfo.getSSID().substring(1, currentWifiInfo.getSSID().length() - 1));
 
-//                        HomeTitleLayout.setWifi(getSignalIntensity(WifiManager.calculateSignalLevel(currentWifiInfo.getRssi(), 4)));
+                        HomePagerActivity.setWifiLevel();
                        setViewVisibility(R.id.ll_wifi_current,true);
                     }
                     break;
@@ -323,11 +325,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
 //                    wifi_current_name.setText("");
 //                    wifi_current_state.setVisibility(View.INVISIBLE);
 //                    wifi_current_info.setVisibility(View.INVISIBLE);
-//                    if (wifiManager.isWifiEnabled()) {
-//                        HomePagerActivity.setWifi(R.drawable.status_bar_wifi_use);
-//                    }else{
-//                        HomePagerActivity.setWifi(R.drawable.status_bar_wifi_unuse);
-//                    }
+                    HomePagerActivity.setWifiLevel();
 
                     break;
 

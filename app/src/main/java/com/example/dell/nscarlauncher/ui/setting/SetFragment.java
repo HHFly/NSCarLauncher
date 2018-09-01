@@ -13,6 +13,8 @@ import com.example.dell.nscarlauncher.common.util.FragmentUtils;
 import com.example.dell.nscarlauncher.common.util.JumpUtils;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.setting.fragment.BlueToothSetFragment;
+import com.example.dell.nscarlauncher.ui.setting.fragment.DateFragment;
+import com.example.dell.nscarlauncher.ui.setting.fragment.DisplayFragment;
 import com.example.dell.nscarlauncher.ui.setting.fragment.WifiFragment;
 import com.example.dell.nscarlauncher.ui.setting.adapter.SetAdapter;
 import com.example.dell.nscarlauncher.ui.setting.eumn.SetType;
@@ -29,7 +31,8 @@ public class SetFragment extends BaseFragment {
     private static RelativeLayout fragmentShow;
     BlueToothSetFragment blueToothSetFragment;
     WifiFragment wifiFragment;
-
+    DisplayFragment displayFragment;
+    DateFragment dateFragment;
     @Override
     public int getContentResId() {
         return R.layout.fragment_set;
@@ -49,7 +52,9 @@ public class SetFragment extends BaseFragment {
     public void initView() {
          blueToothSetFragment =new BlueToothSetFragment();
          wifiFragment =new WifiFragment();
-      initRvAdapter(mData.getData());
+        displayFragment =new DisplayFragment();
+        dateFragment =new DateFragment();
+         initRvAdapter(mData.getData());
     }
 
     @Override
@@ -102,10 +107,10 @@ public class SetFragment extends BaseFragment {
     private void Click(SetModel data){
             switch (data.getItem()){
                 case SetType.DISPLAY:
-                    JumpUtils.actActivity(getActivity(),Settings.ACTION_DISPLAY_SETTINGS);
+                    switchFragment(displayFragment);
                     break;
                 case  SetType.DATE:
-                    JumpUtils.actActivity(getActivity(),Settings.ACTION_DATE_SETTINGS);
+                    switchFragment(dateFragment);
                     break;
                 case  SetType.LANGUAGE:
                     JumpUtils.actActivity(getActivity(),Settings.ACTION_INPUT_METHOD_SETTINGS);

@@ -8,7 +8,9 @@
         android:id="@+id/thumb_volume"
         android:layout_width="300px"
         android:layout_height="wrap_content"
-
+        android:maxHeight="3.4dp"
+        android:minHeight="3.4dp"
+        android:progressDrawable="@drawable/seekbar_style"
         android:thumb="@mipmap/ic_volume"
 
 

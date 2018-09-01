@@ -43,6 +43,15 @@
     <string name="usb">USB音乐</string>
     <string name="刷新列表">刷新列表</string>
     <string name="暂无本地音乐">暂无本地音乐</string>
+    <string name="新密码">新密码：</string>
+    <string name="请输入蓝牙密码">请输入蓝牙密码</string>
+    <string name="请输入无线密码">请输入无线密码</string>
+    <string name="亮度">亮度</string>
+    <string name="语言和输入法">语言和输入法</string>
+    <string name="语言">语言</string>
+    <string name="键盘和输入法">键盘和输入法</string>
+    <string name="日期和时间">日期和时间</string>
+    <string name="使用24小时制">使用24小时制</string>
 
 
 </resources>

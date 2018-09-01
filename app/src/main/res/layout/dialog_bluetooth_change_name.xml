@@ -43,12 +43,12 @@
 
     <EditText
         android:id="@+id/bluetooth_input_new_name"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginLeft="120px"
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="130px"
         android:layout_marginRight="40px"
-        android:layout_marginTop="149px"
-        android:background="@mipmap/bg_input_password"
+        android:layout_marginTop="160px"
+        android:background="@null"
         android:hint="请输入蓝牙名称"
         android:inputType="textNoSuggestions"
         android:textColor="@android:color/white"

@@ -83,7 +83,8 @@
                 android:layout_marginRight="100px"
                 android:background="@drawable/set_wifi_current_info" />
 
-
+            <View style="@style/BaseLine.Horizontal"
+                android:layout_alignParentBottom="true"/>
 
 
         </RelativeLayout>

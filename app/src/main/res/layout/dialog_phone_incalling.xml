@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
+    android:layout_width="500px"
+    android:layout_height="300px"
     android:orientation="vertical" 
     android:background="@drawable/phone_dialog_bg">
     
@@ -9,30 +9,29 @@
         android:id="@+id/dialog_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:textSize="20sp"
-        android:lineSpacingMultiplier="1.2"
+        android:layout_marginTop="30px"
+        android:textSize="20px"
         android:gravity="center_horizontal"
         android:textColor="@android:color/white"/>
     
     <RelativeLayout 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="120px">
         
         <Button 
             android:id="@+id/dialog_btn_answer"
-            android:layout_width="145dp"
-            android:layout_height="45dp"
-            android:layout_marginLeft="120dp"
+            android:layout_width="145px"
+            android:layout_height="45px"
+            android:layout_marginLeft="60px"
             android:background="@drawable/dialog_phone_answer"/>
         
         <Button 
             android:id="@+id/dialog_btn_refuse"
-            android:layout_width="145dp"
-            android:layout_height="45dp"
+            android:layout_width="145px"
+            android:layout_height="45px"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="120dp"
+            android:layout_marginRight="60px"
             android:background="@drawable/dialog_phone_refuse"/>
     </RelativeLayout>
     
