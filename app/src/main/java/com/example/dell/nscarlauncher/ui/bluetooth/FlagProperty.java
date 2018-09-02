@@ -18,7 +18,7 @@ public class FlagProperty {
 	public static boolean is_callindex_two = false;                //2线是否通话中
 	public static String phone_number_one = "";                    //蓝牙电话1电话显示
 	public static String phone_number_two = "";                    //蓝牙电话2电话显示
-
+	public  static  boolean isHourdate =true;     //时间设置
 	public static final int PLAY_MSG = 1;		//播放
 	public static final int PAUSE_MSG = 2;		//暂停
 	public static final int STOP_MSG = 3;		//停止

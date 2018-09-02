@@ -28,6 +28,7 @@ import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.common.util.JumpUtils;
 import com.example.dell.nscarlauncher.common.util.SPUtil;
 import com.example.dell.nscarlauncher.common.util.TimeUtils;
+import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.example.dell.nscarlauncher.ui.fm.FMFragment;
 import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
@@ -219,7 +220,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 
             switch (msg.what){
                 case HandleKey.TIME:
-                    tv_w_time.setText(TimeUtils.getHour());
+                    tv_w_time.setText(FlagProperty.isHourdate?TimeUtils.getHour():TimeUtils.getHour_Min12());
                     tv_w_date.setText(TimeUtils.getDate());
                     tv_w_week.setText(TimeUtils.getDayOfWeek());
                     break;

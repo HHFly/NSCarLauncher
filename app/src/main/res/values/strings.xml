@@ -27,9 +27,8 @@
     <string name="显示">显示</string>
     <string name="蓝牙">蓝牙</string>
     <string name="WiFi">WiFi</string>
-    <string name="语言和输入法">语言和输入法</string>
+
     <string name="均衡器">均衡器</string>
-    <string name="日期和时间">日期和时间</string>
     <string name="车辆设置">车辆设置</string>
     <string name="能量回收">能量回收</string>
     <string name="升级">升级</string>
@@ -52,6 +51,9 @@
     <string name="键盘和输入法">键盘和输入法</string>
     <string name="日期和时间">日期和时间</string>
     <string name="使用24小时制">使用24小时制</string>
+    <string name="设备基板名称">设备基板名称</string>
+    <string name="设备名称">设备名称</string>
+    <string name="版本号">版本号</string>
 
 
 </resources>

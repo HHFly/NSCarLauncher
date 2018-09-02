@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/ic_f_fm_bg">
     <RelativeLayout
@@ -20,7 +19,7 @@
             />
         <TextView style="@style/BaseText.Tv"
             android:textSize="36px"
-            android:text="@string/语言和输入法"
+            android:text="@string/关于"
             android:layout_centerVertical="true"
             android:layout_marginLeft="110px"/>
 
@@ -28,7 +27,7 @@
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
     <RelativeLayout
-        android:visibility="gone"
+
         android:layout_width="wrap_content"
         android:layout_height="96px"
         android:layout_marginLeft="90px"
@@ -36,64 +35,65 @@
 
         <TextView style="@style/BaseText.Tv"
             android:textSize="36px"
-            android:text="@string/语言"
-            android:layout_centerVertical="true"
+            android:text="@string/设备名称"
+            android:layout_marginTop="16px"
             android:layout_marginLeft="110px"/>
-
-        <View style="@style/BaseLine.Horizontal"
-            android:background="#3C3C3C"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="96px"
-        android:layout_marginLeft="90px"
-        android:layout_marginRight="90px">
-
         <TextView style="@style/BaseText.Tv"
+            android:id="@+id/about_2"
             android:textSize="24px"
-            android:textColor="#989898"
-            android:text="@string/语言"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="110px"/>
-
-        <View style="@style/BaseLine.Horizontal"
-            android:background="#3C3C3C"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="96px"
-        android:layout_marginLeft="90px"
-        android:layout_marginRight="90px">
-
-        <TextView style="@style/BaseText.Tv"
-            android:textSize="36px"
-            android:text="@string/键盘和输入法"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="110px"/>
-
-        <View style="@style/BaseLine.Horizontal"
-            android:background="#3C3C3C"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:id="@+id/rl_set_inputmethod"
-        android:layout_height="96px"
-        android:layout_marginLeft="90px"
-        android:layout_marginRight="90px">
-
-        <TextView style="@style/BaseText.Tv"
-            android:id="@+id/set_inputmethod"
-            android:textSize="24px"
-            android:textColor="#989898"
             android:text=""
-            android:layout_centerVertical="true"
+            android:textColor="#989898"
+            android:layout_marginTop="59px"
+            android:layout_marginLeft="110px"/>
+
+        <View style="@style/BaseLine.Horizontal"
+            android:background="#3C3C3C"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout
+        >
+
+    <RelativeLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="96px"
+        android:layout_marginLeft="90px"
+        android:layout_marginRight="90px">
+
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="36px"
+            android:text="@string/设备基板名称"
+            android:layout_marginTop="16px"
+            android:layout_marginLeft="110px"/>
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/about_1"
+            android:textSize="24px"
+            android:text=""
+            android:textColor="#989898"
+            android:layout_marginTop="59px"
+            android:layout_marginLeft="110px"/>
+
+        <View style="@style/BaseLine.Horizontal"
+            android:background="#3C3C3C"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="96px"
+        android:layout_marginLeft="90px"
+        android:layout_marginRight="90px">
+
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="36px"
+            android:text="@string/版本号"
+            android:layout_marginTop="16px"
+            android:layout_marginLeft="110px"/>
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/about_3"
+            android:textSize="24px"
+            android:text=""
+            android:textColor="#989898"
+            android:layout_marginTop="59px"
             android:layout_marginLeft="110px"/>
 
         <View style="@style/BaseLine.Horizontal"

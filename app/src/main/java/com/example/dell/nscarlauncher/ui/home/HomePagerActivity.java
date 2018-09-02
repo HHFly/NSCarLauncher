@@ -402,7 +402,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                         btservice.btHungupCall();
                         break;
                     case HandleKey.TIME:
-                        setTvText(R.id.tv_title_date,TimeUtils.getHour());
+                        setTvText(R.id.tv_title_date,FlagProperty.isHourdate?TimeUtils.getHour():TimeUtils.getHour_Min12());
                         break;
                     default:
                         break;

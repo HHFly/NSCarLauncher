@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name=" android.permission.WRITE_SECURE_SETTINGS"/>
 
     <!-- WIFI and Net -->
     <uses-permission android:name="android.permission.INTERNET" />

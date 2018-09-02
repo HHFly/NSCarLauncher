@@ -69,18 +69,18 @@ public class TimeUtils {
         return hour_Min12;
     }
     //获取十二进制 A/PM 时:分
-    public String getHour_Min12(){
+    public static String getHour_Min12(){
 
         String hour;
         String min ;
         String dayFlag;
         if (calendar.get(Calendar.HOUR_OF_DAY)>13) {
             hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY) - 12);
-            dayFlag = "PM ";
+            dayFlag = "下午 ";
         }
         else {
             hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
-            dayFlag = "AM ";
+            dayFlag = "上午 ";
         }
 
         if (calendar.get(Calendar.MINUTE) < 10)

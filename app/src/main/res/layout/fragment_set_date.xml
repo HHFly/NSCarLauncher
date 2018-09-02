@@ -28,6 +28,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_date"
         android:layout_width="wrap_content"
         android:layout_height="96px"
         android:layout_marginLeft="90px"
@@ -40,10 +41,18 @@
             android:layout_marginLeft="110px"/>
         <TextView style="@style/BaseText.Tv"
             android:textSize="24px"
-            android:text=""
+            android:text="下午1:00"
             android:textColor="#989898"
             android:layout_marginTop="59px"
             android:layout_marginLeft="110px"/>
+
+        <CheckBox
+            android:id="@+id/cb_date"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="100px"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <View style="@style/BaseLine.Horizontal"
             android:background="#3C3C3C"
             android:layout_alignParentBottom="true"/>

@@ -12,9 +12,11 @@ import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.common.util.FragmentUtils;
 import com.example.dell.nscarlauncher.common.util.JumpUtils;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
+import com.example.dell.nscarlauncher.ui.setting.fragment.AboutFragment;
 import com.example.dell.nscarlauncher.ui.setting.fragment.BlueToothSetFragment;
 import com.example.dell.nscarlauncher.ui.setting.fragment.DateFragment;
 import com.example.dell.nscarlauncher.ui.setting.fragment.DisplayFragment;
+import com.example.dell.nscarlauncher.ui.setting.fragment.LanguageFragment;
 import com.example.dell.nscarlauncher.ui.setting.fragment.WifiFragment;
 import com.example.dell.nscarlauncher.ui.setting.adapter.SetAdapter;
 import com.example.dell.nscarlauncher.ui.setting.eumn.SetType;
@@ -33,6 +35,8 @@ public class SetFragment extends BaseFragment {
     WifiFragment wifiFragment;
     DisplayFragment displayFragment;
     DateFragment dateFragment;
+    LanguageFragment languageFragment;
+    AboutFragment aboutFragment;
     @Override
     public int getContentResId() {
         return R.layout.fragment_set;
@@ -54,6 +58,8 @@ public class SetFragment extends BaseFragment {
          wifiFragment =new WifiFragment();
         displayFragment =new DisplayFragment();
         dateFragment =new DateFragment();
+        languageFragment =new LanguageFragment();
+        aboutFragment =new AboutFragment();
          initRvAdapter(mData.getData());
     }
 
@@ -98,7 +104,6 @@ public class SetFragment extends BaseFragment {
     private void switchFragment(Fragment fragment) {
 
         mCurFragment = FragmentUtils.selectFragment(getActivity(), mCurFragment, fragment, R.id.frame_set);
-        mCurFragment.Resume();
         setVisibilityGone(R.id.rl_f_set,true);
     }
     public  static void hideFragment(){
@@ -113,10 +118,12 @@ public class SetFragment extends BaseFragment {
                     switchFragment(dateFragment);
                     break;
                 case  SetType.LANGUAGE:
-                    JumpUtils.actActivity(getActivity(),Settings.ACTION_INPUT_METHOD_SETTINGS);
+//                    JumpUtils.actActivity(getActivity(),Settings.ACTION_INPUT_METHOD_SETTINGS);
+                    switchFragment(languageFragment);
                     break;
                 case  SetType.ABOUT:
-                    JumpUtils.actActivity(getActivity(),Settings.ACTION_DEVICE_INFO_SETTINGS);
+                    switchFragment(aboutFragment);
+//                    JumpUtils.actActivity(getActivity(),Settings.ACTION_DEVICE_INFO_SETTINGS);
                     break;
                 case SetType.BT:
                     switchFragment(blueToothSetFragment);
