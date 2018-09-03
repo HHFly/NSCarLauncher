@@ -23,6 +23,7 @@ import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
+import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.phone.model.PhoneBookInfo;
 import com.example.dell.nscarlauncher.ui.phone.model.PhoneRecordInfo;
 
@@ -61,6 +62,11 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
     public static RelativeLayout NullView ;//空界面
     private int callIndex;
+
+    @Override
+    public void setmType(int mType) {
+        super.setmType(FragmentType.PHONE);
+    }
 
     @Override
     public void onResume() {

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.example.dell.nscarlauncher.base.ShowLoadingDialogListener;
 import com.example.dell.nscarlauncher.common.util.FrescoUtils;
+import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import com.white.lib.utils.location.LocationManagerUtil;
@@ -48,6 +49,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      * 定位管理工具类
      */
     private LocationManagerUtil mLocationManagerUtil;
+    private @FragmentType int mType;
 
     @Nullable
     @Override
@@ -58,6 +60,14 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         initView();
         isSecondResume = false;
         return mRootView;
+    }
+
+    public int getmType() {
+        return mType;
+    }
+
+    public void setmType(int mType) {
+        this.mType = mType;
     }
 
     @Override

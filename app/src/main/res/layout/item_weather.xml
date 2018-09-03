@@ -30,10 +30,10 @@
     <TextView style="@style/BaseText.Tv"
         android:id="@+id/tv_w_authorize"
         android:layout_gravity="center_horizontal"
-        android:text="@string/车辆未授权"
+        android:text=""
         android:textSize="24px"
         android:textColor="#78A9FC"
-        android:visibility="gone"
+        android:visibility="visible"
         />
     <LinearLayout
         android:layout_width="wrap_content"
@@ -141,12 +141,13 @@
         </LinearLayout>
 
         <TextView
-            android:visibility="gone"
+            android:id="@+id/tv_work"
+            android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#EEEEEE"
             android:textSize="24px"
-            android:text="Sport"
+            android:text=""
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/ll_speed"
             android:layout_marginTop="24px"

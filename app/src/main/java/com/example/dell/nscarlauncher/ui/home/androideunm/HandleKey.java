@@ -4,7 +4,9 @@ import android.support.annotation.IntDef;
 
 @IntDef({
         HandleKey.TIME,
-        HandleKey.WEATHAER
+        HandleKey.WEATHAER,
+        HandleKey.POWER,
+        HandleKey.SPEED
 })
 public @interface HandleKey  {
 //    时间
@@ -12,4 +14,8 @@ public @interface HandleKey  {
 
     /*天气*/
     int WEATHAER=2;
+    /*电量*/
+    int POWER =3;
+//    速度
+    int SPEED =4;
 }

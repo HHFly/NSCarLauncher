@@ -11,3 +11,4 @@
 .idea/runConfigurations.xml
 .idea/gradle.xml
 .idea/caches/build_file_checksums.ser
+*.apk

@@ -27,5 +27,6 @@ public class FlagProperty {
 	public static final int NEXT_MSG = 6;		//下一首
 	public static final int PROGRESS_CHANGE = 7;//进度改变
 	public static final int PLAYING_MSG = 8;	//正在播放
-
+	public static  int  CarMode =0; //0默认 1 已授权 2 未授权
+	public static  int  CarWork =0; // 1:运动模式,0:经济模式；
 }

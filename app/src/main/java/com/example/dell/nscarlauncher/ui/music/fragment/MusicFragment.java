@@ -22,6 +22,7 @@ import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.example.dell.nscarlauncher.ui.fm.FMAdapter;
+import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.example.dell.nscarlauncher.ui.music.adapter.MusicAdapter;
 import com.example.dell.nscarlauncher.ui.music.adapter.MusicLocalAdapter;
@@ -72,6 +73,11 @@ public class MusicFragment extends BaseFragment {
     @Override
     public int getContentResId() {
         return R.layout.fragment_music;
+    }
+
+    @Override
+    public void setmType(int mType) {
+        super.setmType(FragmentType.MUSIC);
     }
 
     @Override
@@ -203,9 +209,23 @@ public class MusicFragment extends BaseFragment {
         });
 
     }
+    public static  void  sPreMusic(){
+        if(DialogLocalMusic.data.size()>0) {
+            // 非蓝牙音乐播放上一曲
+            if (flag_play) {
+                bt_play.performClick();
+            }
+            if (music_model == 2) { // 单曲循环模式不变换音乐图片
+                circle_image.resetRoatate();
+            } else { // 其他模式
+                // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_PREV)));
+            }
+            MusicModel.getPrevMusic(context, music_model);
+        }
+    }
 
     /*上一首*/
-    private void PreMusic(){
+    public  void PreMusic(){
         if(DialogLocalMusic.data.size()>0) {
             // 非蓝牙音乐播放上一曲
             if (flag_play) {
@@ -217,11 +237,24 @@ public class MusicFragment extends BaseFragment {
                 // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_PREV)));
             }
             myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
-            MusicModel.getPrevMusic(getActivity(), music_model);
+            MusicModel.getPrevMusic(context, music_model);
         }
     }
     /*下一首*/
-    private void NextMusic(){
+    public static  void sNextMusic(){
+        if(DialogLocalMusic.data.size()>0) {
+            if (flag_play) {
+                bt_play.performClick();
+            }
+            if (music_model == 2) { // 单曲循环模式不变换音乐图片
+                circle_image.resetRoatate();
+            } else { // 其他模式
+                // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
+            }
+            MusicModel.getNextMusic(context, music_model);
+        }
+    }
+    public  void NextMusic(){
         if(DialogLocalMusic.data.size()>0) {
             if (flag_play) {
                 bt_play.performClick();
@@ -232,11 +265,11 @@ public class MusicFragment extends BaseFragment {
                 // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
             }
             myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
-            MusicModel.getNextMusic(getActivity(), music_model);
+            MusicModel.getNextMusic(context, music_model);
         }
     }
   /*音乐模式*/
-  private  void setMode(){
+  public  static   void setMode(){
       try {
           if (music_model == 1) {
               bt_music_model.setBackgroundResource(R.drawable.music_model_singlecycle);
@@ -306,34 +339,24 @@ private  void  play(){
             }
         }
     }
-    public Handler myHandler = new Handler() {
+    public  Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
-            try {
-                switch (msg.what) {
-                    case MUSIC_CHANGE:
-                        bt_play.performClick();
-                        break;
-                    case MUSIC_BLUETOOTH_CLOSE:
+            switch (msg.what) {
+                case MUSIC_CHANGE:
+                    bt_play.performClick();
+                    break;
+                case MUSIC_BLUETOOTH_CLOSE:
 
-                        break;
+                    break;
 
-                    case MUSIC_BLUETOOTH_OPEN:
+                case MUSIC_BLUETOOTH_OPEN:
 
-                        break;
-                    case MUSCI_BACK:
-                        btservice.btAvrLast();
-                        break;
-                    case MUSIC_NEXT:
-                        btservice.btAvrNext();
-                        break;
-                    case VIEWFRESH:
-                       getMusicData();
-                        break;
-                    default:
-                        break;
-                }
-            } catch (RemoteException e) {
-                e.printStackTrace();
+                    break;
+                case VIEWFRESH:
+                   getMusicData();
+                    break;
+                default:
+                    break;
             }
         };
     };

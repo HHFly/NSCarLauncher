@@ -48,7 +48,7 @@ public class BTMusicFragment extends BaseFragment {
     public static boolean flag_first = false;
     static AudioManager audioManager;
     static IKdAudioControlService audioservice ;
-    static IKdBtService btservice;
+    public static IKdBtService btservice;
     public static TextView  music_current_time,tv_bt_music_songname,tv_bt_music_singer;
     public static RelativeLayout NullView ;//空界面
     @Override

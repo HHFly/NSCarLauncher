@@ -1,17 +1,26 @@
 package com.example.dell.nscarlauncher.ui.home.fragment;
 
 
+import android.os.RemoteException;
 import android.view.View;
 
 
 import com.example.dell.nscarlauncher.R;
+import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.common.util.JumpUtils;
+import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
+import com.example.dell.nscarlauncher.widget.PlayControllView;
+
+import static com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty.PAUSE_MSG;
+import static com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment.broadcastMusicInfo;
 
 public class HomePagerTwoFragment extends BaseFragment {
     private HomePagerActivity homePagerActivity;
+    // 播发控制
+    public static PlayControllView musicPaly;
 
     @Override
     public int getContentResId() {
@@ -24,7 +33,7 @@ public class HomePagerTwoFragment extends BaseFragment {
 
     @Override
     public void findView() {
-
+        musicPaly=getView(R.id.music_playcontroll);
     }
 
     @Override
@@ -32,7 +41,62 @@ public class HomePagerTwoFragment extends BaseFragment {
         super.onDestroy();
 
     }
+    private void setPalyListen(){
+        musicPaly.setOnItemClickListener(new PlayControllView.OnItemClickListener() {
+            @Override
+            public void onClickLeft() {
+                App.get().PauseService();
+                isMusicFragment();
+                HomePagerActivity.musicFragment.PreMusic();
+            }
 
+            @Override
+            public void onClickCenter(boolean isPlay) {
+                isMusicFragment();
+                MusicPaly(isPlay);
+            }
+
+            @Override
+            public void onClickRight() {
+                App.get().PauseService();
+                isMusicFragment();
+                HomePagerActivity.musicFragment.NextMusic();
+            }
+        });
+    }
+
+    private void  MusicPaly(boolean isPlay){
+        if(isPlay){
+            App.get().PauseService();
+            broadcastMusicInfo(getActivity(), FlagProperty.PLAY_MSG);
+
+        }else {
+            broadcastMusicInfo(getActivity(), PAUSE_MSG);
+
+
+        }
+        setPlayControll(isPlay,2);
+    }
+    public void setPlayControll(boolean isPlay,int mode){
+        HomePagerOneFragment.btPaly.setPlay(false);
+        HomePagerOneFragment.fmPaly.setPlay(false);
+        musicPaly.setPlay(false);
+
+        switch (mode){
+            case 1:
+                musicPaly.setPlay(isPlay);
+                break;
+            case 2:
+                musicPaly.setPlay(isPlay);
+                break;
+            default:
+        }
+    }
+    private  void isMusicFragment(){
+        if(FragmentType.MUSIC!=homePagerActivity.mCurFragment.getmType()){
+            homePagerActivity.switchFragmenthide(HomePagerActivity.musicFragment);
+        }
+    }
     @Override
     public void setListener() {
         setClickListener(R.id.rl_phone);
@@ -40,6 +104,7 @@ public class HomePagerTwoFragment extends BaseFragment {
         setClickListener(R.id.rl_navigation);
         setClickListener(R.id.rl_carcontroll);
         setClickListener(R.id.music);
+        setPalyListen();
     }
 
     @Override

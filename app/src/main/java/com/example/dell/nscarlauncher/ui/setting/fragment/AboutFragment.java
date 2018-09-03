@@ -26,7 +26,7 @@ public class AboutFragment extends BaseFragment {
     public void initView() {
         setTvText(R.id.about_1,android.os.Build.BOARD);
         setTvText(R.id.about_2,android.os.Build.MODEL );
-        setTvText(R.id.about_1,android.os.Build.DISPLAY);
+        setTvText(R.id.about_3,android.os.Build.DISPLAY);
     }
 
     @Override

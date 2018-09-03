@@ -13,6 +13,7 @@ import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.common.util.FilterAppUtils;
+import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,6 +41,11 @@ public class AppFragment extends BaseFragment {
     @Override
     public void setListener() {
 
+    }
+
+    @Override
+    public void setmType(int mType) {
+        super.setmType(FragmentType.APPLICATION);
     }
 
     @Override

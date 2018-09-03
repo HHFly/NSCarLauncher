@@ -12,6 +12,7 @@ import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.common.util.SPUtil;
 import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
+import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.widget.RadioRulerView;
 
 
@@ -29,6 +30,11 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
     AudioManager audioManager;
    public static String FMCHANNEL ="channel";
    private  boolean mIsAuto =true; //是否自动搜索
+
+    @Override
+    public void setmType(int mType) {
+        super.setmType(FragmentType.FM);
+    }
 
     public void setHomePagerActivity(HomePagerActivity homePagerActivity) {
         this.homePagerActivity = homePagerActivity;
@@ -80,6 +86,7 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
 
     @Override
     public void initView() {
+        getService();
         initData();
         openFm();
         changeChannel(channel);
@@ -182,11 +189,11 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
 //    打开收音机
 public void openFm(){
 
-            if (audioManager.requestAudioFocus(afChangeListener, 14, AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            if (App.get().getAudioManager().requestAudioFocus(afChangeListener, 14, AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                 new Thread() {
                     public void run() {
                         try {
-                            System.out.println("radio.OpenLocalRadio():" + radio.OpenLocalRadio());
+                            System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
 //                        System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 开机初始化为频道93.0
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -200,11 +207,11 @@ public void openFm(){
     }
 //    关闭收音机
     public void closeFm(){
-        if (audioManager.abandonAudioFocus(afChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+        if (App.get().getAudioManager().abandonAudioFocus(afChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             new Thread() {
                 public void run() {
                     try {
-                        System.out.println("radio.CloseLocalRadio():" + radio.CloseLocalRadio());
+                        System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -231,7 +238,7 @@ public void openFm(){
         channel=value;
         setTvText(R.id.tv_fm_Hz,String.format("%.1f",value));
         try {
-            System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 变换广播频道
+            System.out.println("App.get().getRadio().SetRadioFreq():" + channel + "----" + App.get().getRadio().SetRadioFreq(channel)); // 变换广播频道
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -247,7 +254,7 @@ public void  changeChannel(float value){
         mRule.setChannel(channel);
     }
     try {
-        System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 变换广播频道
+        System.out.println("radio.SetRadioFreq():" + channel + "----" + App.get().getRadio().SetRadioFreq(channel)); // 变换广播频道
     } catch (RemoteException e) {
         e.printStackTrace();
     }
@@ -262,7 +269,7 @@ public void  changeChannel(float value){
                     new Thread() {
                         public void run() {
                             try {
-                                System.out.println("radio.CloseLocalRadio():" + radio.CloseLocalRadio());
+                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -273,8 +280,8 @@ public void  changeChannel(float value){
                     new Thread() {
                         public void run() {
                             try {
-                                System.out.println("radio.OpenLocalRadio():" + radio.OpenLocalRadio());
-                                System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 开机初始化为频道93.0
+                                System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
+                                System.out.println("radio.SetRadioFreq():" + channel + "----" + App.get().getRadio().SetRadioFreq(channel)); // 开机初始化为频道93.0
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -285,7 +292,7 @@ public void  changeChannel(float value){
                     new Thread() {
                         public void run() {
                             try {
-                                System.out.println("radio.CloseLocalRadio():" + radio.CloseLocalRadio());
+                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -296,7 +303,7 @@ public void  changeChannel(float value){
                     new Thread() {
                         public void run() {
                             try {
-                                System.out.println("radio.CloseLocalRadio():" + radio.CloseLocalRadio());
+                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

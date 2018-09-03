@@ -5,7 +5,9 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.provider.Settings;
 import android.support.annotation.DrawableRes;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.AppConst;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.common.util.JumpUtils;
+import com.example.dell.nscarlauncher.common.util.NumParseUtils;
 import com.example.dell.nscarlauncher.common.util.SPUtil;
 import com.example.dell.nscarlauncher.common.util.TimeUtils;
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
@@ -34,6 +37,7 @@ import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.example.dell.nscarlauncher.ui.home.model.WeatherData;
+import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.example.dell.nscarlauncher.widget.PlayControllView;
 import com.example.dell.nscarlauncher.widget.WaveView;
 import com.white.lib.utils.ToastUtil;
@@ -51,6 +55,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private static TextView tv_w_time;
     private static TextView tv_w_date;
     private static TextView tv_w_week;
+    public static TextView tv_w_speed,tv_w_authorize,tv_work;
     private HomePagerActivity homePagerActivity;
     private HashMap<String, Integer> mWeatherMap; // 天气类型与对应的图标
     //定位客户端,以及参数
@@ -60,9 +65,10 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private volatile boolean timeFlag = true;
     private volatile boolean weatherFlag = true;
   // 播发控制
-    private PlayControllView fmPaly ;
+    public static PlayControllView fmPaly ,btPaly;
     //fragment
     private  FMFragment fmFragment;
+
     private float channel;
 
     public void setFragment(HomePagerActivity homePagerActivity,FMFragment fmFragment) {
@@ -77,12 +83,16 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 
     @Override
     public void findView() {
+
         circleView =getView(R.id.wave_view);
-//        fmPaly=getView(R.id.fm_playcontroll);
+        fmPaly=getView(R.id.fm_playcontroll);
+        btPaly= getView(R.id.bt_playcontroll);
         tv_w_time =getView(R.id.tv_w_time);
         tv_w_date =getView(R.id.tv_w_date);
         tv_w_week=getView(R.id.tv_w_week);
-
+        tv_w_speed =getView(R.id.tv_w_speed);
+        tv_w_authorize =getView(R.id.tv_w_authorize);
+        tv_work =getView(R.id.tv_work);
     }
 
     @Override
@@ -91,35 +101,116 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         setClickListener(R.id.bt_music);
         setClickListener(R.id.music);
         setClickListener(R.id.rl_air);
+        setPalyListen();
+        tv_w_speed.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String speed = tv_w_speed.getText().toString();
+                int progeress = NumParseUtils.parseInt(speed)*100/180;
+                circleView.setProgress(progeress);
+            }
+        });
 
     }
-    private void setFmPalyListen(){
+    private void setPalyListen(){
+        //fm
         fmPaly.setOnItemClickListener(new PlayControllView.OnItemClickListener() {
             @Override
             public void onClickLeft() {
+                isFmFragment();
                 if(fmFragment!=null){
                     fmFragment.leftFm();
+                    setFmMHZ();
                 }
             }
 
             @Override
             public void onClickCenter(boolean isPlay) {
+                isFmFragment();
                 FmPaly(isPlay);
 
             }
 
             @Override
             public void onClickRight() {
+                isFmFragment();
                 if(fmFragment!=null){
                     fmFragment.rightFm();
+                    setFmMHZ();
+                }
+            }
+        });
 
+        //蓝牙音乐
+        btPaly.setOnItemClickListener(new PlayControllView.OnItemClickListener() {
+            @Override
+            public void onClickLeft() {
+                isBtFragment();
+                if(!FlagProperty.flag_bluetooth){
+                    Toast.makeText(getActivity(), "蓝牙未连接", Toast.LENGTH_SHORT).show();
+                }else {
+                    try {
+                        App.get().getBtservice().btAvrLast();
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onClickCenter(boolean isPlay) {
+                isBtFragment();
+                if(!FlagProperty.flag_bluetooth){
+                    btPaly.isPlay=!isPlay;
+                    Toast.makeText(getActivity(), "蓝牙未连接", Toast.LENGTH_SHORT).show();
+                    return;
+                }else {
+
+                    BtMusicPaly(isPlay);
+                }
+            }
+
+            @Override
+            public void onClickRight() {
+                isBtFragment();
+                if(!FlagProperty.flag_bluetooth){
+                    Toast.makeText(getActivity(), "蓝牙未连接", Toast.LENGTH_SHORT).show();
+                }else {
+                    try {
+                        App.get().getBtservice().btAvrNext();
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
     }
+
+    private  void isFmFragment(){
+            if(FragmentType.FM!=homePagerActivity.mCurFragment.getmType()){
+                homePagerActivity.switchFragmenthide(homePagerActivity.fmFragment);
+            }
+    }
+
+    private  void isBtFragment(){
+        if(FragmentType.BTMUSIC!=homePagerActivity.mCurFragment.getmType()){
+            homePagerActivity.switchFragmenthide(homePagerActivity.btMusicFragment);
+        }
+    }
     private void  FmPaly(boolean isPlay){
         if(isPlay){
             if(fmFragment!=null){
+                App.get().PauseService();
                 fmFragment.openFm();
 
             }
@@ -128,6 +219,46 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 fmFragment.closeFm();
 
             }
+        }
+        setPlayControll(isPlay,1);
+    }
+
+    private void  BtMusicPaly(boolean isPlay){
+        if(isPlay){
+            try {
+                App.get().PauseService();
+                App.get().getBtservice().btAvrPlay();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+        }else {
+            try {
+                App.get().getBtservice().btAvrPause();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+        setPlayControll(isPlay,2);
+    }
+    public void setPlayControll(boolean isPlay,int mode){
+        fmPaly.setPlay(false);
+        fmPaly.isPlay =false;
+        btPaly.setPlay(false);
+        btPaly.isPlay =false;
+        HomePagerTwoFragment.musicPaly.setPlay(false);
+        switch (mode){
+            case 1:
+                fmPaly.setPlay(isPlay);
+                fmPaly.isPlay=true;
+                break;
+            case 2:
+                btPaly.setPlay(isPlay);
+                btPaly.isPlay=true;
+                break;
+            default:
         }
     }
     @Override
@@ -200,6 +331,8 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             }
         });
     }
+
+
 /*初始化定位*/
     private void init_Location() {
         ExecutorService timePool = Executors.newSingleThreadExecutor();  //采用线程池单一线程方式，防止被杀死
@@ -226,11 +359,15 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                     break;
                 case HandleKey.WEATHAER:
                     break;
+                case HandleKey.SPEED:
+
+                    break;
             }
             super.handleMessage(msg);
 
         }
     }
+
     /*刷新布局*/
     public void  freshlayout(FMFragment fmFragment){
         setFmMHZ();

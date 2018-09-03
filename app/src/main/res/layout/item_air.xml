@@ -83,6 +83,7 @@
         android:textColor="#EEEEEE"
         />
     <ImageView
+        android:visibility="invisible"
         android:layout_width="80px"
         android:layout_height="80px"
         android:layout_gravity="center_horizontal"

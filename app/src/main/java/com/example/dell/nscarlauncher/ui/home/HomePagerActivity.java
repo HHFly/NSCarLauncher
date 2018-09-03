@@ -1,17 +1,22 @@
 package com.example.dell.nscarlauncher.ui.home;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.IKdBtService;
 import android.os.Message;
 import android.os.RemoteException;
@@ -55,6 +60,7 @@ import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.example.dell.nscarlauncher.ui.phone.PhoneFragment;
 import com.example.dell.nscarlauncher.ui.setting.SetFragment;
 import com.example.dell.nscarlauncher.widget.DialogVolumeControl;
+import com.kandi.nscarlauncher.IECarDriver;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -66,32 +72,38 @@ import me.relex.circleindicator.CircleIndicator;
 public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
     public static final int CALL_ANSWER = 4; // 接听来电
     public static final int CALL_HUNGUP = 5; // 挂断来电
-    HomePagerOneFragment homePagerOneFragment;
+
+   static HomePagerOneFragment homePagerOneFragment;
     HomePagerTwoFragment homePagerTwoFragment;
     HomePagerThreeFragment homePagerThreeFragment;
     private DialogVolumeControl dialogVolumeControl ;
     private ArrayList<Fragment> mFragments;
     private ViewPager viewPager;
-    private CircleIndicator indicator;//viewpager指示器
-    private BaseFragment mCurFragment;//当前页
-    private FMFragment fmFragment ;//收音机
-    private BTMusicFragment btMusicFragment;//蓝牙音乐
-    private MusicFragment musicFragment;//本地音乐
-    private PhoneFragment phoneFragment;//电话
-    private SetFragment setFragment;//设置
-    private AppFragment appFragment;//应用
+    private  CircleIndicator indicator;//viewpager指示器
+    public static BaseFragment mCurFragment;//当前页
+    public static FMFragment fmFragment ;//收音机
+    public static  BTMusicFragment btMusicFragment;//蓝牙音乐
+    public static MusicFragment musicFragment;//本地音乐
+    public static PhoneFragment phoneFragment;//电话
+    public static SetFragment setFragment;//设置
+    public  static AppFragment appFragment;//应用
+    private  static  BaseActivity context;
     private ArrayList<HomeModel> mData;
     static Dialog alertDialog;//来电弹框
     public ComingReceiver comingReceiver;
     public USBBroadcastReceiver usbBroadcastReceiver;
     static AudioManager audioManager;
     static IKdBtService btservice;
-
+    private static final  String ACTION ="com.driverlayer.kdos_driverServer.RemoteService";
+    private static final  String PACKAGE ="com.driverlayer.kd_vwcsserver";
     private static WifiManager mWifiManager;//wifi
     private NetworkBroadcastReceiver mNetworkReceiver; // 接听网络状态发生改变的广播
     private TelephonyManager mTelephonyManager;//x信号
     private PhoneStateListener mPhoneStateListener; // 监听手机信号强度的改变
     private static  ImageView mIvBluetooth,mIvPower,mIvVedio,mIvWifi;
+    public  static IECarDriver ieCarDriver;//车辆aidl服务
+    public static  TextView tv_speed,tv_power;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -140,13 +152,16 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
     @Override
     public void initView() {
-        initDa();
-        getService();
-        initNetwork();
-        init4G();
-        setWifiLevel();
-        initBluetooth();
-        init_time();
+        initDa();//fragment
+        getService();//底层服务
+        bindIeCarService();//aidl服务
+        initNetwork();//网络
+        init4G();//4g
+        setWifiLevel();//状态栏wifi
+        initBluetooth();//蓝牙
+        init_time();//状态栏时间
+
+        context =this;
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         viewPager.setOffscreenPageLimit(mFragments.size());
         indicator.setViewPager(viewPager);
@@ -161,7 +176,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         indicator =getView(R.id.indicator);
         mIvBluetooth=getView(R.id.iv_blueTooth);
         mIvWifi=getView(R.id.iv_wifi);
-
+        tv_speed=getView(R.id.tv_w_speed);
+        tv_power= getView(R.id.tv_t_power);
     }
     /*获取全局模块*/
     private void  getService(){
@@ -173,6 +189,18 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             btservice = App.get().getBtservice();
         }
 
+
+    }
+    private void bindIeCarService() {
+
+        Intent intent = new Intent(ACTION);
+        intent.setPackage(PACKAGE);
+
+        try {
+            getApplicationContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+        }catch (Exception e){
+//            LogUtils.log("绑定aidl服务失败");
+        }
 
     }
     @Override
@@ -250,13 +278,19 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
      *
      * @param fragment
      */
+
     private void switchFragment(Fragment fragment) {
 
         mCurFragment = FragmentUtils.selectFragment(this, mCurFragment, fragment, R.id.frame_main);
         mCurFragment.Resume();
         showFragemnt();
     }
-    public void  jumpFragment(@FragmentType int type ){
+
+    public static   void   switchFragmenthide(Fragment fragment) {
+        mCurFragment = FragmentUtils.selectFragment(context, mCurFragment, fragment, R.id.frame_main);
+
+    }
+    public  void  jumpFragment(@FragmentType int type ){
         switch (type){
             case  FragmentType.FM:
                 switchFragment(fmFragment);
@@ -299,6 +333,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     protected void onDestroy() {
         super.onDestroy();
         App.get().unregistMyReceiver();
+        App.get().PauseService();
 
         try {
             if (comingReceiver!=null) {
@@ -309,6 +344,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             }
             if(mNetworkReceiver!=null){
                 this.unregisterReceiver(mNetworkReceiver);
+            }
+            if(serviceConnection!=null){
+                getApplicationContext().unbindService(serviceConnection);
             }
             //取消信号强度监听
             mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
@@ -324,6 +362,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
         dialogVolumeControl=null;
         stopService(new Intent(this, PlayerService.class));
+
     }
 
 
@@ -404,6 +443,10 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                     case HandleKey.TIME:
                         setTvText(R.id.tv_title_date,FlagProperty.isHourdate?TimeUtils.getHour():TimeUtils.getHour_Min12());
                         break;
+                     case  HandleKey.POWER:
+                         setCarPoewr();
+                         break;
+
                     default:
                         break;
                 }
@@ -433,6 +476,28 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             }
         });
     }
+    //电量模块初始化
+    private void init_power() {
+        ExecutorService timePool = Executors.newSingleThreadExecutor();  //采用线程池单一线程方式，防止被杀死
+        timePool.execute(new Runnable() {
+            @Override
+            public void run() {
+
+                while (true) {
+                    try {
+                        //延时5秒作用
+                        Message msgtimedata = new Message();
+                        msgtimedata.what = HandleKey.POWER;
+                        myHandler.sendMessage(msgtimedata);
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
     /*
      * 显示音量*/
     private  void  showVolumeDialog(){
@@ -623,19 +688,19 @@ public int getSim(int num) {
 }
     //    获取不同电量图片
     public int getPower(int num) {
-        if (num == 6) {
+        if (num == 100) {
             return R.mipmap.home_top_btn1_00;
-        } else if (num == 5) {
+        } else if (num>80&&num < 100) {
             return R.mipmap.home_top_btn1_06;
-        }else if (num == 4 ){
+        }else if (num > 60&&num<=80 ){
             return R.mipmap.home_top_btn1_05;
-        }else if (num == 3) {
+        }else if (num > 40&&num<=60) {
             return R.mipmap.home_top_btn1_04;
         }
-        else if (num == 2) {
+        else if (num>20&& num<=40) {
             return R.mipmap.home_top_btn1_03;
         }
-        else if (num == 1) {
+        else if (num >5&&num<=20) {
             return R.mipmap.home_top_btn1_02;
         }
         else {
@@ -768,6 +833,129 @@ public int getSim(int num) {
             } else if (intent.getAction() == "3gphone.iscoming") {
 //                incoming3gShow(intent.getStringExtra("number"));
             }
+        }
+    }
+    /*aidl服务*/
+    private ServiceConnection serviceConnection =new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            ieCarDriver=IECarDriver.Stub.asInterface(service);
+            init_power();//状态栏电量
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            ieCarDriver=null;
+        }
+    };
+    /*电量车速*/
+    private void setCarPoewr(){
+        setCarWork();
+        setCarMode();
+        int[] power =new int[10];
+        try {
+            if(ieCarDriver!=null) {
+                ieCarDriver.Ecoc_getGeneral_Car(power);
+                if (!tv_power.getText().equals(String.valueOf(power[0]))) {
+                    setTvText(R.id.tv_t_power, String.valueOf(power[0]));
+                    setIvImage(R.id.iv_t_power, getPower(power[0]));
+                }
+
+                if (homePagerOneFragment != null) {
+                    if (homePagerOneFragment.tv_w_speed.getText().toString().equals(String.valueOf(power[7]))) {
+                        return;
+                    }
+                    if (0 == power[7]) {
+                        homePagerOneFragment.tv_w_speed.setTextColor(Color.parseColor("#F03A53"));
+                    } else {
+                        homePagerOneFragment.tv_w_speed.setTextColor(Color.parseColor("#FFFFFF"));
+                    }
+
+                    homePagerOneFragment.tv_w_speed.setText(String.valueOf(power[7]));
+                }
+            }else {
+
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    /*车辆模式*/
+    public static void setCarMode(){
+        int[] mode =new int[2];
+        try {
+            if(ieCarDriver!=null){
+            ieCarDriver.GetTBoxStatus(mode);
+            if(FlagProperty.CarMode!=mode[1]){
+                if(homePagerOneFragment!=null){
+                    switch (mode[1]){
+                        case 0:
+                            homePagerOneFragment.tv_w_authorize.setText(R.string.默认状态);
+                            break;
+                        case 1:
+                            homePagerOneFragment.tv_w_authorize.setText(R.string.车辆已授权);
+                            break;
+                        case 2:
+                            homePagerOneFragment.tv_w_authorize.setText(R.string.车辆未授权);
+                            break;
+                    }
+                }
+            }
+            }else {
+
+            }
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*车辆模式*/
+    public static void setCarWork(){
+        int work;
+        try {
+            if(ieCarDriver!=null) {
+                work = ieCarDriver.getCar_WorkMode();
+                if (FlagProperty.CarWork != work) {
+                    if (homePagerOneFragment != null) {
+                        switch (work) {
+                            case 1:
+                                homePagerOneFragment.tv_work.setText(R.string.Sport);
+                                break;
+                            case 0:
+                                homePagerOneFragment.tv_work.setText("");
+                                break;
+
+                        }
+                    }
+                }
+            }
+            else {
+
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    /*空调*/
+    public static void setAir(){
+        int[] air=new int[8];
+        int staus ;//	1空调离线,0空调正常；
+        try {
+            if(ieCarDriver!=null) {
+                staus = ieCarDriver.GetAirCon_Status(air);
+
+                    if (homePagerOneFragment != null&&staus!=1) {
+                        homePagerOneFragment.setTvText(R.id.tv_air,String.valueOf(air[0])+"°");
+                    }
+
+            }
+            else {
+
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 }

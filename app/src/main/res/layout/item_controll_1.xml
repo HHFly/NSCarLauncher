@@ -14,7 +14,7 @@
     android:id="@+id/ctl_iv_center"
     android:layout_width="80px"
     android:layout_height="80px"
-    android:src="@mipmap/ic_pause"
+    android:src="@mipmap/ic_play"
     android:layout_marginLeft="40px"/>
     <ImageView
         android:id="@+id/ctl_iv_right"

@@ -13,6 +13,7 @@ import android.os.IKdAudioControlService;
 import android.os.IKdBtService;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.support.multidex.MultiDexApplication;
 
 import com.example.dell.nscarlauncher.BuildConfig;
@@ -24,6 +25,9 @@ import com.example.dell.nscarlauncher.common.util.ToastUtils;
 import com.example.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.white.lib.utils.UtilsConfig;
+
+import static com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty.PAUSE_MSG;
+import static com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment.broadcastMusicInfo;
 
 
 /**
@@ -72,6 +76,7 @@ App extends MultiDexApplication {
 
         s_app = this;
         //初始化服务
+        SystemProperties.set("sys.nushine.k28_application", BuildConfig.VERSION_NAME);
 
         ToastUtils.init(this);
         registerActivityLifecycleCallbacks(new NSLifecycleHandle());
@@ -186,4 +191,16 @@ App extends MultiDexApplication {
     public void  setmCurActivity(BaseActivity curActivity){
         this.mCurActivity =curActivity;
     }
+
+    public void PauseService(){
+        try {
+            radio.CloseLocalRadio();
+            btservice.btAvrPause();
+            broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

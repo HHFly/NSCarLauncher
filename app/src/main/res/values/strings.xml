@@ -54,6 +54,9 @@
     <string name="设备基板名称">设备基板名称</string>
     <string name="设备名称">设备名称</string>
     <string name="版本号">版本号</string>
+    <string name="默认状态">默认状态</string>
+    <string name="车辆已授权">车辆已授权</string>
+    <string name="Sport">Sport</string>
 
 
 </resources>

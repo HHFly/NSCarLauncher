@@ -53,6 +53,11 @@ public class SetFragment extends BaseFragment {
     }
 
     @Override
+    public void setmType(int mType) {
+        super.setmType(FragmentType.SET);
+    }
+
+    @Override
     public void initView() {
          blueToothSetFragment =new BlueToothSetFragment();
          wifiFragment =new WifiFragment();

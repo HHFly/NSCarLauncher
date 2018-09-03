@@ -79,7 +79,7 @@
             android:background="@mipmap/home_top_btn1_01"
             />
         <TextView
-            android:id="@+id/tv__t_power"
+            android:id="@+id/tv_t_power"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
