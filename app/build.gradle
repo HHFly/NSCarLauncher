@@ -93,4 +93,6 @@ dependencies {
     //高德地图 定位功能
     implementation 'com.amap.api:location:3.4.1'
     implementation 'com.amap.api:search:5.2.1'
+    //jiecaoplay
+    implementation 'fm.jiecao:jiecaovideoplayer:3.6.1'
 }

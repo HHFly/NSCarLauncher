@@ -118,7 +118,12 @@ public class MusicFragment extends BaseFragment {
             public void threadEndLisener() {
                 myHandler.sendMessage(myHandler.obtainMessage(VIEWFRESH));
             }
-        });
+
+             @Override
+             public void videoEndListener() {
+
+             }
+         });
         dialogLocalMusic.ScanMusic(getContext(),false);
         circle_image.nextRoatate(R.mipmap.one);
         bt_play.setBackgroundResource(flag_play?R.mipmap.ic_pause_white:R.mipmap.ic_music_stop);
@@ -158,7 +163,7 @@ public class MusicFragment extends BaseFragment {
                 setMusic(dataMode);
                 setViewVisibilityGone(R.id.music_local,false);
                 break;
-            case    R.id.music_local_1:
+            case  R.id.music_local_1:
                 dataMode=1;
                 getLocalMusicData();
                 break;

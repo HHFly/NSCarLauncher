@@ -51,12 +51,20 @@
     <string name="键盘和输入法">键盘和输入法</string>
     <string name="日期和时间">日期和时间</string>
     <string name="使用24小时制">使用24小时制</string>
-    <string name="设备基板名称">设备基板名称</string>
+    <string name="设备基板名称">基带版本</string>
     <string name="设备名称">设备名称</string>
     <string name="版本号">版本号</string>
     <string name="默认状态">默认状态</string>
     <string name="车辆已授权">车辆已授权</string>
     <string name="Sport">Sport</string>
+    <string name="android">Android版本</string>
+    <string name="固件版本">固件版本</string>
+    <string name="驱动名">驱动名</string>
+    <string name="视频列表">视频列表</string>
+    <string name="本地视频">本地视频</string>
+    <string name="USB视频">USB视频</string>
+    <string name="暂无视频">暂无视频</string>
+    <string name="视频">视频</string>
 
 
 </resources>

@@ -324,6 +324,8 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         if(0==result){
             setIvImage(R.id.controll_air,isON?R.mipmap.ic_pause:R.mipmap.ic_play);
             isON=!isON;
+        }else {
+            Toast.makeText(getActivity(), "空调未连接", Toast.LENGTH_SHORT).show();
         }
 
     }

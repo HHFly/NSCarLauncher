@@ -49,7 +49,7 @@ public class BTMusicFragment extends BaseFragment {
     static AudioManager audioManager;
     static IKdAudioControlService audioservice ;
     public static IKdBtService btservice;
-    public static TextView  music_current_time,tv_bt_music_songname,tv_bt_music_singer;
+    public static TextView  music_current_time,tv_bt_music_songname,tv_bt_music_singer,music_total_time;
     public static RelativeLayout NullView ;//空界面
     @Override
     public int getContentResId() {
@@ -63,6 +63,7 @@ public class BTMusicFragment extends BaseFragment {
         music_current_time =getView(R.id.bt_music_current_time);
         tv_bt_music_singer=getView(R.id.tv_bt_singer);
         tv_bt_music_songname=getView(R.id.tv_bt_songname);
+        music_total_time=getView(R.id.btmusic_total_time);
         NullView =getView(R.id.bt_mic_null);
     }
 
@@ -165,43 +166,11 @@ public  void  musicNext(){
     /*进度条*/
     private void initSeekBar(){
         music_progress_bar.setProgress(0);
-        music_progress_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-//                int totaltime = (int) Math.ceil(DialogLocalMusic.data.get(DialogLocalMusic.musicID).duration);
-//                int num = (int) Math.ceil(Math.round((float) progress / 100.0 * totaltime));
-//
-//                if (PlayerService.is_start_speed) {
-//                    circle_image.roatateStart();
-//                    bt_play.setBackgroundResource(R.drawable.fragment_music_pause);
-//                    flag_play = true;
-//                }
-//
-//                Intent i = new Intent(getActivity(), PlayerService.class);
-//                i.putExtra("progress", num);
-//                i.putExtra("MSG", FlagProperty.PROGRESS_CHANGE);
-//                getActivity().startService(i);
-//                flag_drag = false;
-//                flag_first = true;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                flag_drag = true;
-
-            }
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                FragmentMusic.progress = progress;
-
-            }
-        });
+        music_progress_bar.setEnabled(false);
     }
     // 设置蓝牙音乐进度条信息
     public static void setBlueMusicProgress(int time) {
-        time /= 1000;
+//        time /= 1000;
         int total_time = BlueMusicBroadcoast.music_total_time;
         if (time > total_time) {
             time = total_time;
@@ -209,6 +178,8 @@ public  void  musicNext(){
         int progress = (int) Math.ceil(time * 100 / total_time);
          music_progress_bar.setProgress(progress);
          music_current_time.setText("" + getTime(time / 60) + ":" + getTime(time % 60));
+        music_total_time.setText(getTime(total_time / 60) + ":" + getTime(total_time % 60));
+
     }
     // 时间格式化为00
     public static String getTime(int time) {

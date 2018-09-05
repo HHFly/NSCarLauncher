@@ -54,6 +54,9 @@ public class DialogLocalMusic  {
 	public static List<Mp3Info> newdata = new ArrayList<Mp3Info>();
 	public static  List<Mp3Info> SDData = new ArrayList<Mp3Info>();
 	public static List<Mp3Info> USBData = new ArrayList<Mp3Info>();
+	public static  List<Mp3Info> SDVideoData = new ArrayList<Mp3Info>();
+	public static List<Mp3Info> USBVideoData = new ArrayList<Mp3Info>();
+
 	public static MusicListAdapter adapter;
 	static String url;
 	static ContentResolver mResolver;
@@ -324,6 +327,59 @@ public class DialogLocalMusic  {
 		}
 		mResolver = null;
 	}
+
+	/*获取usb sd */
+	private static  void getSDUSBViedoData(Context context) {
+
+
+		SDVideoData.clear();
+		USBVideoData.clear();
+		mResolver = context.getContentResolver();
+		System.out.println("mResolver:" + mResolver);
+		Cursor cursor = mResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null, null,
+				MediaStore.Video.Media.DEFAULT_SORT_ORDER);
+		int i = 0, j = 0;
+		int cursorCount = cursor.getCount();
+		System.out.println("cursorCount" + cursorCount);
+		if (cursorCount > 0) {
+			cursor.moveToFirst();
+			while (i < cursorCount) {
+				// 歌曲文件的路径 ：MediaStore.Audio.Media.DATA
+				url = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
+				if (url.toLowerCase().indexOf(PATH_SDCARD) > -1) {
+					Mp3Info info = new Mp3Info();
+					info.id = j++;
+					info.displayName = cursor
+							.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME));
+					System.out.println("歌曲名:" + info.displayName);
+					info.duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
+					info.title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
+					info.artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.ARTIST));
+					info.url = url;
+					SDVideoData.add(info);
+				}
+				if (url.toLowerCase().indexOf(PATH_USB) > -1) {
+					Mp3Info info = new Mp3Info();
+					info.id = j++;
+					info.displayName = cursor
+							.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME));
+					System.out.println("歌曲名:" + info.displayName);
+					info.duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
+					info.title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
+					info.artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
+					info.url = url;
+					USBVideoData.add(info);
+				}
+				i++;
+				cursor.moveToNext();
+			}
+			cursor.close();
+
+
+
+		}
+		mResolver = null;
+	}
 	public static void transportData(){
 		data.clear();
 		if(SDData!=null&&SDData.size()!=0) {
@@ -351,13 +407,30 @@ public class DialogLocalMusic  {
 			public void run() {
 				if(isReSet){
 					try {
-						Thread.sleep(3000);
+						Thread.sleep(5000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
 				getSDUSBData(context);
 				mThreadCallback.threadEndLisener();
+			}
+		}.start();  //开启一个线程
+	}
+
+	public static void ScanVideo(final Context context ,final boolean isReSet){
+
+		new Thread(){
+			public void run() {
+				if(isReSet){
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				getSDUSBViedoData(context);
+				mThreadCallback.videoEndListener();
 			}
 		}.start();  //开启一个线程
 	}
@@ -437,5 +510,7 @@ public class DialogLocalMusic  {
 	public interface ThreadCallback {
 
 		void threadEndLisener();
+
+		void videoEndListener();
 	}
 }

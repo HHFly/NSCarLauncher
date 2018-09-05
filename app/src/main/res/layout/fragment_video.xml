@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@mipmap/ic_f_fm_bg"
+    android:id="@+id/music_local">
+
+    <ImageView
+        android:visibility="visible"
+        android:id="@+id/video_local_return"
+        android:layout_width="40px"
+        android:layout_height="30px"
+        android:layout_marginLeft="120px"
+        android:layout_marginTop="148px"
+        android:src="@mipmap/set_button_return"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/视频列表"
+        android:layout_marginLeft="200px"
+        android:layout_marginTop="146px"
+        android:textColor="#EDEDED"
+        android:textSize="36px" />
+
+    <TextView
+        android:id="@+id/video_local_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/本地视频"
+        android:layout_marginLeft="200px"
+        android:layout_marginTop="243px"
+        android:textColor="@drawable/select_music_local_text_bg"
+        android:textSize="36px" />
+
+    <TextView
+        android:id="@+id/video_local_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/USB视频"
+        android:layout_marginLeft="200px"
+        android:layout_marginTop="347px"
+        android:textColor="@drawable/select_music_local_text_bg"
+        android:textSize="36px" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="200px"
+        android:layout_marginTop="444px">
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/music_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/local_music_refresh"
+
+            />
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_videolocoal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="220px"
+        android:layout_marginLeft="450px"
+        android:layout_marginRight="95px"
+        android:scrollbars="none">
+
+    </android.support.v7.widget.RecyclerView>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rl_video_local_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="220px"
+        android:layout_marginLeft="450px"
+        android:layout_marginRight="95px"
+        android:background="@mipmap/ic_f_fm_bg">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="48px"
+            android:textColor="@color/colorText"
+            android:text="@string/暂无视频"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

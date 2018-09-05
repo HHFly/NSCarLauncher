@@ -49,7 +49,8 @@
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="68px"
-            android:visibility="invisible"
+            android:id="@+id/ll_calling_controll"
+            android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

@@ -33,6 +33,7 @@ public class HomePagerThreeFragment extends BaseFragment {
     public void setListener() {
             setClickListener(R.id.rl_set);
             setClickListener(R.id.rl_app);
+            setClickListener(R.id.rl_video);
     }
 
     @Override
@@ -58,7 +59,11 @@ public class HomePagerThreeFragment extends BaseFragment {
                     homePagerActivity.jumpFragment(FragmentType.APPLICATION);
                 }
                 break;
-
+            case R.id.rl_video:
+                if(homePagerActivity!=null){
+                    homePagerActivity.jumpFragment(FragmentType.VIDEO);
+                }
+                break;
         }
     }
 

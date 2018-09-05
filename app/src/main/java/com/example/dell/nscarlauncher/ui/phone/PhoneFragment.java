@@ -40,6 +40,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     public final static int                    PHONE_START    = 3;
     public final static int                    PHONE_END      = 4;
     public final static int                    DELETE_CLIKE   = 5;
+    public final static int                    DTMF   = 6;
     public static boolean flag_phone; //是否通话
     private static int phone_call_time;//通话时间
     static String phone_continue_show = "";//通话时间
@@ -103,6 +104,8 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         setClickListener(R.id.iv_call);
         setClickListener(R.id.ll_other);
         setClickListener(R.id.call_start);
+        setClickListener(R.id.call_key);
+        setClickListener(R.id.tv_calling_key_hide);
         setClickListener(R.id.rl_1);
         setClickListener(R.id.rl_2);
         setClickListener(R.id.rl_3);
@@ -118,6 +121,18 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         setClickListener(R.id.ll_10);
         setClickListener(R.id.ll_11);
         setClickListener(R.id.ll_12);
+        setClickListener(R.id.ll2_1);
+        setClickListener(R.id.ll2_2);
+        setClickListener(R.id.ll2_3);
+        setClickListener(R.id.ll2_4);
+        setClickListener(R.id.ll2_5);
+        setClickListener(R.id.ll2_6);
+        setClickListener(R.id.ll2_7);
+        setClickListener(R.id.ll2_8);
+        setClickListener(R.id.ll2_9);
+        setClickListener(R.id.ll2_10);
+        setClickListener(R.id.ll2_11);
+        setClickListener(R.id.ll2_12);
         viewPager.addOnPageChangeListener(this);
     }
 
@@ -165,7 +180,17 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     }
     /*添加电话号码*/
     private void addphone(String num){
+        viewPager.setCurrentItem(0);
         pNumFragment.setNumber(num);
+    }
+    /*电话DTMF*/
+    private void addphoneDtmf(String num){
+        try {
+
+            btservice.btSendDtmf(num);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
     /*选择tab*/
     private void tabSelected(int i){
@@ -379,14 +404,16 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                         break;
                     case PHONE_END:
                         btservice.btHungupCall();
-
+                        
                         break;
                     case DELETE_CLIKE:
                         if(pNumFragment!=null){
                             pNumFragment.subString();
                         }
                         break;
-
+                    case DTMF:
+                        
+                        break;
                     default:
                         break;
                 }
@@ -525,6 +552,14 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.call_key:
+                setViewVisibility(R.id.ll_calling_key,true);
+                setViewInVisibility(R.id.ll_calling_controll,false);
+                break;
+            case R.id.tv_calling_key_hide:
+                setViewVisibility(R.id.ll_calling_key,false);
+                setViewVisibility(R.id.ll_calling_controll,true);
+                break;
             case R.id.rl_1:
                 tabSelected(1);
                 viewPager.setCurrentItem(0);
@@ -585,6 +620,43 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
             case R.id.ll_12:
                 addphone("#");
                 break;
+            case R.id.ll2_1:
+                addphoneDtmf("1");
+                break;
+            case R.id.ll2_2:
+                addphoneDtmf("2");
+                break;
+            case R.id.ll2_3:
+                addphoneDtmf("3");
+                break;
+            case R.id.ll2_4:
+                addphoneDtmf("4");
+                break;
+            case R.id.ll2_5:
+                addphoneDtmf("5");
+                break;
+            case R.id.ll2_6:
+                addphoneDtmf("6");
+                break;
+            case R.id.ll2_7:
+                addphoneDtmf("7");
+                break;
+            case R.id.ll2_8:
+                addphoneDtmf("8");
+                break;
+            case R.id.ll2_9:
+                addphoneDtmf("9");
+                break;
+            case R.id.ll2_10:
+                addphoneDtmf("*");
+                break;
+            case R.id.ll2_11:
+                addphoneDtmf("0");
+                break;
+            case R.id.ll2_12:
+                addphoneDtmf("#");
+                break;
+                
         }
     }
 

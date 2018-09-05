@@ -64,6 +64,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
     public final static String ACTION_AC_MEDIA_STATUS_CHANGED = "com.kangdi.BroadCast.AcMediaStatusChanged";//蓝牙音乐开关广播
     public final static String   ACTION_BT_STREAM_SUSPEND= "com.kangdi.BroadCast.BtStreamSusppend"; //蓝牙音乐开广播
     public final static String   ACTION_BT_STREAM_START= "com.kangdi.BroadCast.BtStreamStart";//蓝牙音乐关广播
+    public final static String   ACTION_MUSIC_CURRENT_POSITION = "com.kangdi.BroadCast.MusicCurrentPosition";//蓝牙音乐进度条
 
     static IKdBtService btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
 
@@ -76,6 +77,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         Log.d(TAG, intent.getAction());
+
         if (intent.getAction().equals(ACTION_REQUEST_PINCODE)) {
             new Thread() {
                 public void run() {
@@ -318,6 +320,12 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 
 			}
 		} */
+        if(intent.getAction().equals(ACTION_MUSIC_CURRENT_POSITION)){
+            int current = intent.getIntExtra("current",0);
+            music_total_time =intent.getIntExtra("total",0);
+            BTMusicFragment.setBlueMusicProgress(current);
+        }
+
         if (intent.getAction().equals("com.kangdi.BroadCast.PhoneState")) {
             if (FlagProperty.is_3g) {
                 FlagProperty.is_3g = false;

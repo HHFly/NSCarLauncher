@@ -71,7 +71,7 @@ public class HomePagerTwoFragment extends BaseFragment {
     private void  MusicPaly(boolean isPlay){
         if(isPlay){
             App.get().PauseService();
-            broadcastMusicInfo(getActivity(), FlagProperty.PLAY_MSG);
+
            HomePagerActivity.musicFragment.system_flag = true;
             HomePagerActivity.musicFragment.am_flag = true;
             if (DialogLocalMusic.data.size() > 0) {
@@ -82,7 +82,6 @@ public class HomePagerTwoFragment extends BaseFragment {
             }
 
         }else {
-            broadcastMusicInfo(getActivity(), PAUSE_MSG);
 
             HomePagerActivity.musicFragment.system_flag = false;
             HomePagerActivity.musicFragment.am_flag = false;

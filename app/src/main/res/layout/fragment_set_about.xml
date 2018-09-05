@@ -3,6 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/ic_f_fm_bg">
+
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="96px"
@@ -26,6 +28,7 @@
         <View style="@style/BaseLine.Horizontal"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
+
     <RelativeLayout
 
         android:layout_width="wrap_content"
@@ -35,11 +38,11 @@
 
         <TextView style="@style/BaseText.Tv"
             android:textSize="36px"
-            android:text="@string/设备名称"
+            android:text="@string/android"
             android:layout_marginTop="16px"
             android:layout_marginLeft="110px"/>
         <TextView style="@style/BaseText.Tv"
-            android:id="@+id/about_2"
+            android:id="@+id/about_4"
             android:textSize="24px"
             android:text=""
             android:textColor="#989898"
@@ -49,8 +52,8 @@
         <View style="@style/BaseLine.Horizontal"
             android:background="#3C3C3C"
             android:layout_alignParentBottom="true"/>
-    </RelativeLayout
-        >
+    </RelativeLayout>
+
 
     <RelativeLayout
 
@@ -76,6 +79,7 @@
             android:background="#3C3C3C"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
+
     <RelativeLayout
 
         android:layout_width="wrap_content"
@@ -85,7 +89,33 @@
 
         <TextView style="@style/BaseText.Tv"
             android:textSize="36px"
-            android:text="@string/版本号"
+            android:text="@string/固件版本"
+            android:layout_marginTop="16px"
+            android:layout_marginLeft="110px"/>
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/about_2"
+            android:textSize="24px"
+            android:text=""
+            android:textColor="#989898"
+            android:layout_marginTop="59px"
+            android:layout_marginLeft="110px"/>
+
+        <View style="@style/BaseLine.Horizontal"
+            android:background="#3C3C3C"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout
+        >
+
+    <RelativeLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="96px"
+        android:layout_marginLeft="90px"
+        android:layout_marginRight="90px">
+
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="36px"
+            android:text="@string/驱动名"
             android:layout_marginTop="16px"
             android:layout_marginLeft="110px"/>
         <TextView style="@style/BaseText.Tv"
@@ -99,5 +129,9 @@
         <View style="@style/BaseLine.Horizontal"
             android:background="#3C3C3C"
             android:layout_alignParentBottom="true"/>
+
+
     </RelativeLayout>
+
+
 </LinearLayout>

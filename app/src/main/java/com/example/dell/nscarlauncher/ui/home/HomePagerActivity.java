@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +61,7 @@ import com.example.dell.nscarlauncher.ui.music.Service.PlayerService;
 import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.example.dell.nscarlauncher.ui.phone.PhoneFragment;
 import com.example.dell.nscarlauncher.ui.setting.SetFragment;
+import com.example.dell.nscarlauncher.ui.video.VideoFragment;
 import com.example.dell.nscarlauncher.widget.DialogVolumeControl;
 
 
@@ -73,7 +75,7 @@ import me.relex.circleindicator.CircleIndicator;
 public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
     public static final int CALL_ANSWER = 4; // 接听来电
     public static final int CALL_HUNGUP = 5; // 挂断来电
-
+    private static FrameLayout frameLayout;//主界面
    static HomePagerOneFragment homePagerOneFragment;
     public static int staus; //	1空调离线,0空调正常；
     HomePagerTwoFragment homePagerTwoFragment;
@@ -89,6 +91,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public static PhoneFragment phoneFragment;//电话
     public static SetFragment setFragment;//设置
     public  static AppFragment appFragment;//应用
+    public  static VideoFragment videoFragment;//视频
     private  static  BaseActivity context;
     private ArrayList<HomeModel> mData;
     static Dialog alertDialog;//来电弹框
@@ -180,6 +183,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         mIvWifi=getView(R.id.iv_wifi);
         tv_speed=getView(R.id.tv_w_speed);
         tv_power= getView(R.id.tv_t_power);
+        frameLayout =getView(R.id.frame_main);
     }
     /*获取全局模块*/
     private void  getService(){
@@ -257,14 +261,16 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
       phoneFragment= new PhoneFragment();
       setFragment =new SetFragment();
       appFragment=new AppFragment();
+      videoFragment =new VideoFragment();
     }
     /*隐藏fragemt*/
-    public  void  hideFragment(){
-        setViewVisibility(R.id.frame_main,false);
+    public static void  hideFragment(){
+        frameLayout.setVisibility(View.GONE);
+
         freshlayout();
     }
 
-    private void freshlayout() {
+    private static void freshlayout() {
         homePagerOneFragment.freshlayout(fmFragment);
     }
     /*显示fragment*/
@@ -311,6 +317,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 break;
             case  FragmentType.APPLICATION:
                 switchFragment(appFragment);
+                break;
+            case  FragmentType.VIDEO:
+                switchFragment(videoFragment);
                 break;
         }
     }
