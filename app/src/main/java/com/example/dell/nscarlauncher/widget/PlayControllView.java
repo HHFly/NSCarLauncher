@@ -63,7 +63,7 @@ public class PlayControllView extends LinearLayout {
     }
     public void setPlay(boolean isPlay){
         center.setImageResource(isPlay?R.mipmap.ic_pause:R.mipmap.ic_play);
-        this.isPlay= isPlay;
+        this.isPlay =isPlay;
     }
 
 

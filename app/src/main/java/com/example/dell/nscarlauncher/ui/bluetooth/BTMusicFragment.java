@@ -76,9 +76,8 @@ public class BTMusicFragment extends BaseFragment {
     @Override
     public void initView() {
         initGif();
-
         initSeekBar();
-
+        setVisibilityGone(R.id.bt_mic_null,!FlagProperty.flag_bluetooth);
     }
 
     @Override
@@ -286,10 +285,13 @@ public  void  musicNext(){
     }
     public  static  void gifPlayShow(){
         if(isPlay){
-            gifDrawable.start();
-
+            if(gifDrawable!=null) {
+                gifDrawable.start();
+            }
         }else {
-            gifDrawable.stop();
+            if(gifDrawable!=null) {
+                gifDrawable.stop();
+            }
         }
     }
     public Handler myHandler = new Handler() {

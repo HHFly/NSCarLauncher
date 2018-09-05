@@ -35,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.driverlayer.kdos_driverServer.IECarDriver;
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.Activity.BaseActivity;
@@ -60,7 +61,7 @@ import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.example.dell.nscarlauncher.ui.phone.PhoneFragment;
 import com.example.dell.nscarlauncher.ui.setting.SetFragment;
 import com.example.dell.nscarlauncher.widget.DialogVolumeControl;
-import com.kandi.nscarlauncher.IECarDriver;
+
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -74,6 +75,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public static final int CALL_HUNGUP = 5; // 挂断来电
 
    static HomePagerOneFragment homePagerOneFragment;
+    public static int staus; //	1空调离线,0空调正常；
     HomePagerTwoFragment homePagerTwoFragment;
     HomePagerThreeFragment homePagerThreeFragment;
     private DialogVolumeControl dialogVolumeControl ;
@@ -444,7 +446,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                         setTvText(R.id.tv_title_date,FlagProperty.isHourdate?TimeUtils.getHour():TimeUtils.getHour_Min12());
                         break;
                      case  HandleKey.POWER:
-                         setCarPoewr();
+                         aidlService();
                          break;
 
                     default:
@@ -849,16 +851,23 @@ public int getSim(int num) {
             ieCarDriver=null;
         }
     };
-    /*电量车速*/
-    private void setCarPoewr(){
+    /*车辆服务*/
+    private  void  aidlService(){
+
         setCarWork();
         setCarMode();
+        setAir();
+        setCarPoewr();
+    }
+    /*电量车速*/
+    private void setCarPoewr(){
+
         int[] power =new int[10];
         try {
             if(ieCarDriver!=null) {
                 ieCarDriver.Ecoc_getGeneral_Car(power);
                 if (!tv_power.getText().equals(String.valueOf(power[0]))) {
-                    setTvText(R.id.tv_t_power, String.valueOf(power[0]));
+                    setTvText(R.id.tv_t_power, String.valueOf(power[0])+"%");
                     setIvImage(R.id.iv_t_power, getPower(power[0]));
                 }
 
@@ -941,15 +950,14 @@ public int getSim(int num) {
     /*空调*/
     public static void setAir(){
         int[] air=new int[8];
-        int staus ;//	1空调离线,0空调正常；
+
         try {
             if(ieCarDriver!=null) {
                 staus = ieCarDriver.GetAirCon_Status(air);
 
-                    if (homePagerOneFragment != null&&staus!=1) {
+                    if (homePagerOneFragment != null&&staus==0) {
                         homePagerOneFragment.setTvText(R.id.tv_air,String.valueOf(air[0])+"°");
                     }
-
             }
             else {
 
@@ -958,4 +966,27 @@ public int getSim(int num) {
             e.printStackTrace();
         }
     }
+    /*空调操作成功返回0*/
+    public static  int controllAir(boolean isON){
+        try {
+            if(ieCarDriver!=null) {
+                if(staus==1){
+                    return  -1;
+                }
+                if(isON) {
+                  return   ieCarDriver.setAirCon_Para(0xffff, 0xffff, 0xffff, 0xffff, 1);//
+                }
+                return   ieCarDriver.setAirCon_Para(0xffff, 0xffff, 0xffff, 0xffff, 9);
+            }
+            else {
+
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+
+            return -1;
+        }
+        return 0;
+    }
+
 }

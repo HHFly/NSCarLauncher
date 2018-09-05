@@ -260,18 +260,20 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         }
         if (intent.getAction().equals(ACTION_MUSIC_INFO_CHANGED)) {
             String music_info = intent.getStringExtra(KEY_MUSICINFO);
+            String songinfo =intent.getStringExtra("SongIsPlay");
+            if(songinfo!=null&&!"".equals(songinfo)) {
+                if (!getBtPlayStaus(BTMusicFragment.isPlay).equals(songinfo)) {
+                    BTMusicFragment.isPlay = !BTMusicFragment.isPlay;
+                    BTMusicFragment.gifPlayShow();
+                }
+            }
             try {
                 JSONArray jsonArr = new JSONArray(music_info);
                 JSONObject obj = (JSONObject) jsonArr.get(0);
                 //if (FragmentMusic.flag_bluetooth_music) {
 //                    MusicFragment.setMusicInfo(obj.getString("SongName"), obj.getString("SingerName"));
                     BTMusicFragment.setMusicInfo(obj.getString("SongName"), obj.getString("SingerName"));
-                    if(obj.getString("SongIsPlay")!=null) {
-                        if (!getBtPlayStaus(BTMusicFragment.isPlay).equals(obj.getString("SongIsPlay"))) {
-                            BTMusicFragment.isPlay = !BTMusicFragment.isPlay;
-                            BTMusicFragment.gifPlayShow();
-                        }
-                    }
+
                     if (obj.getString("SongTotalTime").compareTo("") == 0) {
 
                     } else {

@@ -12,10 +12,13 @@ import com.example.dell.nscarlauncher.common.util.JumpUtils;
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
+import com.example.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.example.dell.nscarlauncher.widget.PlayControllView;
 
 import static com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty.PAUSE_MSG;
 import static com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment.broadcastMusicInfo;
+import static com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment.bt_play;
+import static com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment.circle_image;
 
 public class HomePagerTwoFragment extends BaseFragment {
     private HomePagerActivity homePagerActivity;
@@ -69,11 +72,25 @@ public class HomePagerTwoFragment extends BaseFragment {
         if(isPlay){
             App.get().PauseService();
             broadcastMusicInfo(getActivity(), FlagProperty.PLAY_MSG);
+           HomePagerActivity.musicFragment.system_flag = true;
+            HomePagerActivity.musicFragment.am_flag = true;
+            if (DialogLocalMusic.data.size() > 0) {
+                circle_image.roatateStart();
+                bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                broadcastMusicInfo(getActivity(), FlagProperty.PLAY_MSG);
+                HomePagerActivity.musicFragment.flag_play = true;
+            }
 
         }else {
             broadcastMusicInfo(getActivity(), PAUSE_MSG);
 
+            HomePagerActivity.musicFragment.system_flag = false;
+            HomePagerActivity.musicFragment.am_flag = false;
 
+            circle_image.roatatePause();
+            bt_play.setBackgroundResource(R.mipmap.ic_pause_white);
+            broadcastMusicInfo(getActivity(), PAUSE_MSG);
+            HomePagerActivity.musicFragment.flag_play = false;
         }
         setPlayControll(isPlay,2);
     }
@@ -84,7 +101,7 @@ public class HomePagerTwoFragment extends BaseFragment {
 
         switch (mode){
             case 1:
-                musicPaly.setPlay(isPlay);
+
                 break;
             case 2:
                 musicPaly.setPlay(isPlay);

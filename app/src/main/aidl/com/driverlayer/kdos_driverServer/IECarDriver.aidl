@@ -1,5 +1,5 @@
 // IECarDriver.aidl
-package com.kandi.nscarlauncher;
+package com.driverlayer.kdos_driverServer;
 
 // Declare any non-default types here with import statements
 interface IECarDriver{

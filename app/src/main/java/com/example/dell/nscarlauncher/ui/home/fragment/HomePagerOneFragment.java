@@ -70,6 +70,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private  FMFragment fmFragment;
 
     private float channel;
+    private boolean isON=true;// 空调
 
     public void setFragment(HomePagerActivity homePagerActivity,FMFragment fmFragment) {
         this.homePagerActivity = homePagerActivity;
@@ -101,25 +102,9 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         setClickListener(R.id.bt_music);
         setClickListener(R.id.music);
         setClickListener(R.id.rl_air);
+        setClickListener(R.id.controll_air);
         setPalyListen();
-        tv_w_speed.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String speed = tv_w_speed.getText().toString();
-                int progeress = NumParseUtils.parseInt(speed)*100/180;
-                circleView.setProgress(progeress);
-            }
-        });
 
     }
     private void setPalyListen(){
@@ -194,19 +179,39 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 }
             }
         });
-    }
 
+        tv_w_speed.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String speed = tv_w_speed.getText().toString();
+                int progeress = NumParseUtils.parseInt(speed)*100/180;
+                circleView.setProgress(progeress);
+            }
+        });
+    }
+// 加载电台
     private  void isFmFragment(){
             if(FragmentType.FM!=homePagerActivity.mCurFragment.getmType()){
                 homePagerActivity.switchFragmenthide(homePagerActivity.fmFragment);
             }
     }
-
+//  加载蓝牙
     private  void isBtFragment(){
         if(FragmentType.BTMUSIC!=homePagerActivity.mCurFragment.getmType()){
             homePagerActivity.switchFragmenthide(homePagerActivity.btMusicFragment);
         }
     }
+//    电台播放
     private void  FmPaly(boolean isPlay){
         if(isPlay){
             if(fmFragment!=null){
@@ -222,7 +227,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         }
         setPlayControll(isPlay,1);
     }
-
+//蓝牙音乐播放
     private void  BtMusicPaly(boolean isPlay){
         if(isPlay){
             try {
@@ -243,20 +248,22 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         }
         setPlayControll(isPlay,2);
     }
+
+//    暂停开启设置
     public void setPlayControll(boolean isPlay,int mode){
         fmPaly.setPlay(false);
-        fmPaly.isPlay =false;
+
         btPaly.setPlay(false);
-        btPaly.isPlay =false;
+
         HomePagerTwoFragment.musicPaly.setPlay(false);
         switch (mode){
             case 1:
                 fmPaly.setPlay(isPlay);
-                fmPaly.isPlay=true;
+
                 break;
             case 2:
                 btPaly.setPlay(isPlay);
-                btPaly.isPlay=true;
+
                 break;
             default:
         }
@@ -305,10 +312,21 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             case R.id.rl_air:
                 JumpUtils.actAPK(getActivity(),FragmentType.AIRCONTROLL);
                     break;
+            case  R.id.controll_air:
+                aircontroll();
+                break;
         }
     }
 
+/*操控空调*/
+    private  void  aircontroll(){
+        int result =HomePagerActivity.controllAir(isON);
+        if(0==result){
+            setIvImage(R.id.controll_air,isON?R.mipmap.ic_pause:R.mipmap.ic_play);
+            isON=!isON;
+        }
 
+    }
 
     //日期 时间模块初始化
     private void init_time() {

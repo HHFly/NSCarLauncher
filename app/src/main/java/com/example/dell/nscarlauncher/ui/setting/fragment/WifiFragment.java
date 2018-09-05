@@ -119,7 +119,9 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
         TextView wifi_ipAddress = (TextView) window.findViewById(R.id.current_wifi_ip);
         TextView wifi_netmask = (TextView) window.findViewById(R.id.current_wifi_submask);
         TextView wifi_gateway = (TextView) window.findViewById(R.id.current_wifi_gateway);
-        wifi_name.setText(currentWifiInfo.getSSID().substring(1, currentWifiInfo.getSSID().length() - 1));
+        if(currentWifiInfo!=null&&currentWifiInfo.getSSID()!=null) {
+            wifi_name.setText(currentWifiInfo.getSSID().substring(1, currentWifiInfo.getSSID().length() - 1));
+        }
         wifi_ipAddress.setText(WifiUtil.intToIp(wifiManager.getDhcpInfo().ipAddress));
         wifi_netmask.setText(WifiUtil.intToIp(wifiManager.getDhcpInfo().netmask));
         wifi_gateway.setText(WifiUtil.intToIp(wifiManager.getDhcpInfo().gateway));

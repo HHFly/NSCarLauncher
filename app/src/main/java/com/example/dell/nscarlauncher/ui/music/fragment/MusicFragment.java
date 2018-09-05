@@ -23,6 +23,7 @@ import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.example.dell.nscarlauncher.ui.fm.FMAdapter;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
+import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.example.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.example.dell.nscarlauncher.ui.music.adapter.MusicAdapter;
 import com.example.dell.nscarlauncher.ui.music.adapter.MusicLocalAdapter;
@@ -59,7 +60,7 @@ public class MusicFragment extends BaseFragment {
     static AudioManager audioManager;
     static IKdAudioControlService audioservice ;
     static IKdBtService btservice;
-    static boolean system_flag, am_flag,flag_play,flag_hachage;
+  public   static boolean system_flag, am_flag,flag_play,flag_hachage;
     public static CircleImageView circle_image;
     static Context context;
     public static ImageView bt_open, bt_play, bt_back, bt_next, bt_u, bt_music_model;
@@ -120,6 +121,7 @@ public class MusicFragment extends BaseFragment {
         });
         dialogLocalMusic.ScanMusic(getContext(),false);
         circle_image.nextRoatate(R.mipmap.one);
+        bt_play.setBackgroundResource(flag_play?R.mipmap.ic_pause_white:R.mipmap.ic_music_stop);
     }
 
     @Override
@@ -209,20 +211,7 @@ public class MusicFragment extends BaseFragment {
         });
 
     }
-    public static  void  sPreMusic(){
-        if(DialogLocalMusic.data.size()>0) {
-            // 非蓝牙音乐播放上一曲
-            if (flag_play) {
-                bt_play.performClick();
-            }
-            if (music_model == 2) { // 单曲循环模式不变换音乐图片
-                circle_image.resetRoatate();
-            } else { // 其他模式
-                // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_PREV)));
-            }
-            MusicModel.getPrevMusic(context, music_model);
-        }
-    }
+
 
     /*上一首*/
     public  void PreMusic(){
@@ -241,19 +230,7 @@ public class MusicFragment extends BaseFragment {
         }
     }
     /*下一首*/
-    public static  void sNextMusic(){
-        if(DialogLocalMusic.data.size()>0) {
-            if (flag_play) {
-                bt_play.performClick();
-            }
-            if (music_model == 2) { // 单曲循环模式不变换音乐图片
-                circle_image.resetRoatate();
-            } else { // 其他模式
-                // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
-            }
-            MusicModel.getNextMusic(context, music_model);
-        }
-    }
+
     public  void NextMusic(){
         if(DialogLocalMusic.data.size()>0) {
             if (flag_play) {
@@ -287,7 +264,7 @@ public class MusicFragment extends BaseFragment {
   }
 
 /*音乐播放*/
-private  void  play(){
+public   void  play(){
     if (!flag_play) {
         if (audioManager.requestAudioFocus(afChangeListener, 12,
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
@@ -300,6 +277,7 @@ private  void  play(){
                 bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
                 broadcastMusicInfo(getActivity(), FlagProperty.PLAY_MSG);
                 flag_play = true;
+                HomePagerTwoFragment.musicPaly.setPlay(true);
             }
         }
     } else {
@@ -313,6 +291,7 @@ private  void  play(){
             bt_play.setBackgroundResource(R.mipmap.ic_pause_white);
             broadcastMusicInfo(getActivity(), PAUSE_MSG);
             flag_play = false;
+            HomePagerTwoFragment.musicPaly.setPlay(false);
         }
     }
 }

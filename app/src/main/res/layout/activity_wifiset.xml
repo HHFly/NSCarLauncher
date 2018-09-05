@@ -34,6 +34,7 @@
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_wifi"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
