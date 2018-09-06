@@ -105,9 +105,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private NetworkBroadcastReceiver mNetworkReceiver; // 接听网络状态发生改变的广播
     private TelephonyManager mTelephonyManager;//x信号
     private PhoneStateListener mPhoneStateListener; // 监听手机信号强度的改变
-    private static  ImageView mIvBluetooth,mIvPower,mIvVedio,mIvWifi;
+    private static  ImageView mIvBluetooth,mIvPower,mIvVedio,mIvWifi,iv_t_power;
     public  static IECarDriver ieCarDriver;//车辆aidl服务
-    public static  TextView tv_speed,tv_power;
+    public static  TextView tv_speed,tv_power,tv_title_date,tv_t_power;
 
     @Override
     protected void onResume() {
@@ -184,6 +184,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         tv_speed=getView(R.id.tv_w_speed);
         tv_power= getView(R.id.tv_t_power);
         frameLayout =getView(R.id.frame_main);
+        tv_title_date=getView(R.id.tv_title_date);
+        tv_t_power=getView(R.id.tv_t_power);
+        iv_t_power=getView(R.id.iv_t_power);
     }
     /*获取全局模块*/
     private void  getService(){
@@ -275,8 +278,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
     /*显示fragment*/
 
-    public void showFragemnt(){
-        setViewVisibility(R.id.frame_main,true);
+    public static void showFragemnt(){
+        frameLayout.setVisibility(View.VISIBLE);
     }
 
 
@@ -287,18 +290,18 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
      * @param fragment
      */
 
-    private void switchFragment(Fragment fragment) {
+    private  static void switchFragment(Fragment fragment) {
 
-        mCurFragment = FragmentUtils.selectFragment(this, mCurFragment, fragment, R.id.frame_main);
+        mCurFragment = FragmentUtils.selectFragment(context, mCurFragment, fragment, R.id.frame_main);
         mCurFragment.Resume();
-        showFragemnt();
+        myHandler.sendMessage(myHandler.obtainMessage(HandleKey.FRAME));
     }
 
     public static   void   switchFragmenthide(Fragment fragment) {
         mCurFragment = FragmentUtils.selectFragment(context, mCurFragment, fragment, R.id.frame_main);
 
     }
-    public  void  jumpFragment(@FragmentType int type ){
+    public  static void  jumpFragment(@FragmentType int type ){
         switch (type){
             case  FragmentType.FM:
                 switchFragment(fmFragment);
@@ -415,6 +418,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
                 @Override
                 public void onClick(View v) {
+                    FlagProperty.flag_phone_ringcall = false;
                     new Thread() {
                         public void run() {
                             if (index == 1) {
@@ -440,7 +444,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
 
 
-    public Handler myHandler = new Handler() {
+    public static Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
 
             try {
@@ -452,12 +456,15 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                         btservice.btHungupCall();
                         break;
                     case HandleKey.TIME:
-                        setTvText(R.id.tv_title_date,FlagProperty.isHourdate?TimeUtils.getHour():TimeUtils.getHour_Min12());
+                        tv_title_date.setText(FlagProperty.isHourdate?TimeUtils.getHour():TimeUtils.getHour_Min12());
+//                        setTvText(R.id.tv_title_date,FlagProperty.isHourdate?TimeUtils.getHour():TimeUtils.getHour_Min12());
                         break;
                      case  HandleKey.POWER:
                          aidlService();
                          break;
-
+                    case HandleKey.FRAME:
+                        showFragemnt();
+                        break;
                     default:
                         break;
                 }
@@ -698,7 +705,7 @@ public int getSim(int num) {
     }
 }
     //    获取不同电量图片
-    public int getPower(int num) {
+    public static int getPower(int num) {
         if (num == 100) {
             return R.mipmap.home_top_btn1_00;
         } else if (num>80&&num < 100) {
@@ -861,7 +868,7 @@ public int getSim(int num) {
         }
     };
     /*车辆服务*/
-    private  void  aidlService(){
+    private static void  aidlService(){
 
         setCarWork();
         setCarMode();
@@ -869,15 +876,17 @@ public int getSim(int num) {
         setCarPoewr();
     }
     /*电量车速*/
-    private void setCarPoewr(){
+    private  static void setCarPoewr(){
 
         int[] power =new int[10];
         try {
             if(ieCarDriver!=null) {
                 ieCarDriver.Ecoc_getGeneral_Car(power);
                 if (!tv_power.getText().equals(String.valueOf(power[0]))) {
-                    setTvText(R.id.tv_t_power, String.valueOf(power[0])+"%");
-                    setIvImage(R.id.iv_t_power, getPower(power[0]));
+//                    setTvText(R.id.tv_t_power, String.valueOf(power[0])+"%");
+                    tv_t_power.setText(String.valueOf(power[0])+"%");
+                    iv_t_power.setImageResource( getPower(power[0]));
+//                    setIvImage(R.id.iv_t_power, getPower(power[0]));
                 }
 
                 if (homePagerOneFragment != null) {
@@ -965,7 +974,7 @@ public int getSim(int num) {
                 staus = ieCarDriver.GetAirCon_Status(air);
 
                     if (homePagerOneFragment != null&&staus==0) {
-                        homePagerOneFragment.setTvText(R.id.tv_air,String.valueOf(air[0])+"°");
+                        homePagerOneFragment.setTvText(R.id.tv_air,String.valueOf(air[0])+"℃");
                     }
             }
             else {

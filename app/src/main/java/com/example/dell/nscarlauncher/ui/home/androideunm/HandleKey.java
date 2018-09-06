@@ -6,7 +6,8 @@ import android.support.annotation.IntDef;
         HandleKey.TIME,
         HandleKey.WEATHAER,
         HandleKey.POWER,
-        HandleKey.SPEED
+        HandleKey.SPEED,
+        HandleKey.FRAME
 })
 public @interface HandleKey  {
 //    时间
@@ -18,4 +19,6 @@ public @interface HandleKey  {
     int POWER =3;
 //    速度
     int SPEED =4;
+    /*显示主界面*/
+    int FRAME =6;
 }

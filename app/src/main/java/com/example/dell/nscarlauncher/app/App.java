@@ -158,10 +158,12 @@ App extends MultiDexApplication {
         intentFilter.addAction("android.intent.action.PHONE_STATE");
         intentFilter.addAction("com.kangdi.BroadCast.TrackProgress");
         intentFilter.addAction("com.kangdi.BroadCast.CallActive");
-
+        intentFilter.addAction("com.kangdi.BroadCast.BtStreamSusppend");
+        intentFilter.addAction("com.kangdi.BroadCast.MusicCurrentPosition");
         intentFilter.addAction("com.kangdi.BroadCast.open4GAduioPath");
         intentFilter.addAction("com.kangdi.BroadCast.AcMediaStatusChanged");
         intentFilter.addAction("com.kangdi.BroadCast.PhoneState");
+        intentFilter.addAction("com.kangdi.BroadCast.BtStreamStart");
 
         registerReceiver(bluetoothReceiver, intentFilter);
     }
@@ -202,5 +204,22 @@ App extends MultiDexApplication {
             e.printStackTrace();
         }
     }
+    public void PauseServiceFMMUSic(){
+        try {
+            radio.CloseLocalRadio();
+            broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
 
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    public void PauseServiceFMBTMUSic(){
+        try {
+            radio.CloseLocalRadio();
+            btservice.btAvrPause();
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 }

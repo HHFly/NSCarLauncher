@@ -10,12 +10,16 @@ import android.os.IKdBtService;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.SystemClock;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
 
+import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.common.util.LogUtils;
 import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
+import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
+import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.example.dell.nscarlauncher.ui.phone.PhoneFragment;
 import com.white.lib.utils.log.LogUtil;
@@ -24,6 +28,8 @@ import com.white.lib.utils.log.LogUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static com.example.dell.nscarlauncher.ui.home.HomePagerActivity.jumpFragment;
 
 public class BlueMusicBroadcoast extends BroadcastReceiver {
     public final static int    PHONE_START               = 1;
@@ -62,8 +68,8 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
     public final static String ACTION_4G_OUT_GOING = "com.kangdi.BroadCast.open4GAduioPath"; // 4g电话拨通
 
     public final static String ACTION_AC_MEDIA_STATUS_CHANGED = "com.kangdi.BroadCast.AcMediaStatusChanged";//蓝牙音乐开关广播
-    public final static String   ACTION_BT_STREAM_SUSPEND= "com.kangdi.BroadCast.BtStreamSusppend"; //蓝牙音乐开广播
-    public final static String   ACTION_BT_STREAM_START= "com.kangdi.BroadCast.BtStreamStart";//蓝牙音乐关广播
+    public final static String   ACTION_BT_STREAM_SUSPEND= "com.kangdi.BroadCast.BtStreamSusppend"; //蓝牙音乐开关广播
+    public final static String   ACTION_BT_STREAM_START= "com.kangdi.BroadCast.BtStreamStart";//蓝牙音乐kai广播
     public final static String   ACTION_MUSIC_CURRENT_POSITION = "com.kangdi.BroadCast.MusicCurrentPosition";//蓝牙音乐进度条
 
     static IKdBtService btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
@@ -203,6 +209,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 FlagProperty.flag_phone_ringcall = false; // 拨打电话结束情况
                 if (!FlagProperty.is_callindex_one && !FlagProperty.is_callindex_two) {
                     Log.d("kondi", "BtPhone abandon audioFocus");
+                    PhoneFragment.phoneStop(context);
                     if (audioManager.abandonAudioFocus(PhoneFragment.afChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
 
                     }
@@ -244,6 +251,8 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                             AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                         Log.d("kondi", "BtPhone get AudioFocus");
                         //MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 拨打时时进入电话页面
+                        jumpFragment(FragmentType.PHONE);
+                        FlagProperty.flag_phone_incall_click = true;
                         myHandler.sendMessage(myHandler.obtainMessage(PHONE_OUT));
                         Log.d("kondi", "BtPhone change to PhonePage");
                     }
@@ -264,10 +273,11 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             String music_info = intent.getStringExtra(KEY_MUSICINFO);
             String songinfo =intent.getStringExtra("SongIsPlay");
             if(songinfo!=null&&!"".equals(songinfo)) {
-                if (!getBtPlayStaus(BTMusicFragment.isPlay).equals(songinfo)) {
-                    BTMusicFragment.isPlay = !BTMusicFragment.isPlay;
-                    BTMusicFragment.gifPlayShow();
-                }
+//                if (!getBtPlayStaus(BTMusicFragment.isPlay).equals(songinfo)) {
+//                    BTMusicFragment.isPlay = !BTMusicFragment.isPlay;
+//                    BTMusicFragment.gifPlayShow();
+//                    HomePagerOneFragment.btPaly.setPlay(BTMusicFragment.isPlay);
+//                }
             }
             try {
                 JSONArray jsonArr = new JSONArray(music_info);
@@ -293,11 +303,18 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         }
         if (intent.getAction().equals(ACTION_BT_STREAM_START)) {
 //            int  intent.getStringExtra(KEY_MEDIA_STATUS)
-            int a = 1;
+            App.get().PauseServiceFMMUSic();
+            BTMusicFragment.isPlay=true;
+            BTMusicFragment.gifPlayShow();
+            HomePagerOneFragment.btPaly.setPlay(true);
+
         }
         if (intent.getAction().equals(ACTION_BT_STREAM_SUSPEND)) {
 //            int  intent.getStringExtra(KEY_MEDIA_STATUS)
-            int a = 1;
+            LogUtils.log("BT:"+ SystemClock.currentThreadTimeMillis());
+            BTMusicFragment.isPlay=false;
+            BTMusicFragment.gifPlayShow();
+            HomePagerOneFragment.btPaly.setPlay(false);
         }
         if (intent.getAction().equals(ACTION_TRACK_PROGRESS)) {
                 int time = intent.getIntExtra(KEY_TRACK_POSITON, 0);

@@ -34,7 +34,7 @@
             android:id="@+id/iv_fm_left"
             android:layout_width="43px"
             android:layout_height="50px"
-            android:src="@mipmap/ic_fm_left"
+           android:background="@drawable/select_controll_last"
             android:layout_centerVertical="true"
 
             />
@@ -43,7 +43,7 @@
             android:id="@+id/iv_fm_right"
             android:layout_width="43px"
             android:layout_height="50px"
-            android:src="@mipmap/ic_fm_right"
+           android:background="@drawable/select_controll_next"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/rl_gif"
             android:layout_marginLeft="186px"
@@ -82,7 +82,7 @@
     android:layout_marginTop="145px">
 
     <include layout="@layout/item_bt_music_seekbar"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
 </LinearLayout>
     <include layout="@layout/item_btmic_null"

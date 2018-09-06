@@ -126,7 +126,7 @@ public class MusicFragment extends BaseFragment {
          });
         dialogLocalMusic.ScanMusic(getContext(),false);
         circle_image.nextRoatate(R.mipmap.one);
-        bt_play.setBackgroundResource(flag_play?R.mipmap.ic_pause_white:R.mipmap.ic_music_stop);
+        bt_play.setBackgroundResource(flag_play?R.mipmap.ic_play_big:R.mipmap.ic_music_stop);
     }
 
     @Override
@@ -189,7 +189,7 @@ public class MusicFragment extends BaseFragment {
 
                 if (PlayerService.is_start_speed) {
                     circle_image.roatateStart();
-                    bt_play.setBackgroundResource(R.mipmap.ic_pause);
+                    bt_play.setBackgroundResource(R.mipmap.ic_play_big);
                     flag_play = true;
                 }
 
@@ -271,6 +271,7 @@ public class MusicFragment extends BaseFragment {
 /*音乐播放*/
 public   void  play(){
     if (!flag_play) {
+        App.get().PauseServiceFMBTMUSic();
         if (audioManager.requestAudioFocus(afChangeListener, 12,
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
                 && audioManager.requestAudioFocus(afSystemChangeListener, AudioManager.STREAM_MUSIC,
@@ -279,7 +280,7 @@ public   void  play(){
             am_flag = true;
             if (DialogLocalMusic.data.size() > 0) {
                 circle_image.roatateStart();
-                bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                bt_play.setBackgroundResource(R.mipmap.ic_play_big);
                 broadcastMusicInfo(getActivity(), FlagProperty.PLAY_MSG);
                 flag_play = true;
                 HomePagerTwoFragment.musicPaly.setPlay(true);
@@ -293,7 +294,7 @@ public   void  play(){
             am_flag = false;
 
             circle_image.roatatePause();
-            bt_play.setBackgroundResource(R.mipmap.ic_pause_white);
+            bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
             broadcastMusicInfo(getActivity(), PAUSE_MSG);
             flag_play = false;
             HomePagerTwoFragment.musicPaly.setPlay(false);
@@ -362,7 +363,7 @@ public   void  play(){
                     Log.d("audioTest", "play music");
                     if (DialogLocalMusic.data.size() > 0) {
                         circle_image.roatateStart();
-                        bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                        bt_play.setBackgroundResource(R.mipmap.ic_play_big);
                         broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
                         flag_play = true;
                     }
@@ -371,7 +372,7 @@ public   void  play(){
                 Log.d("audioTest", "12 loss");
                 am_flag = false;
                 circle_image.roatatePause();
-                bt_play.setBackgroundResource(R.mipmap.ic_pause_white);
+                bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
                 broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
             }
@@ -388,7 +389,7 @@ public   void  play(){
                 Log.d("audioTest", "3 loss transient");
                 system_flag = false;
                 circle_image.roatatePause();
-                bt_play.setBackgroundResource(R.mipmap.ic_pause_white);
+                bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
                 broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
             } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
@@ -398,7 +399,7 @@ public   void  play(){
                     Log.d("audioTest", "playmusic");
                     if (DialogLocalMusic.data.size() > 0) {
                         circle_image.roatateStart();
-                        bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                        bt_play.setBackgroundResource(R.mipmap.ic_play_big);
                         broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
                         flag_play = true;
                     }
@@ -407,14 +408,14 @@ public   void  play(){
                 Log.d("audioTest", "3 loss");
                 system_flag = false;
                 circle_image.roatatePause();
-                bt_play.setBackgroundResource(R.mipmap.ic_pause_white);
+                bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
                 broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
                 Log.d("audioTest", "3 loss transient can duck");
                 system_flag = false;
                 circle_image.roatatePause();
-                bt_play.setBackgroundResource(R.mipmap.ic_pause_white);
+                bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
                 broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
             }
@@ -429,6 +430,7 @@ public   void  play(){
     }
     // 开始播放音乐
     public static void listStartPlayMusic() {
+        App.get().PauseService();
         if (audioManager.requestAudioFocus(afChangeListener, 12,
                 AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
                 && audioManager.requestAudioFocus(afSystemChangeListener, AudioManager.STREAM_MUSIC,
@@ -436,7 +438,7 @@ public   void  play(){
             system_flag = true;
             am_flag = true;
             circle_image.roatateStart();
-            bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+            bt_play.setBackgroundResource(R.mipmap.ic_play_big);
             flag_play = true;
         }
     }

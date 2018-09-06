@@ -95,15 +95,16 @@ public class BTMusicFragment extends BaseFragment {
     @Override
     public void Resume() {
         getService();
-        requestAudioFocus();
+//        requestAudioFocus();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.bt_gif:
-                gifPlay(isPlay);
                 isPlay=!isPlay;
+                gifPlay(isPlay);
+
 
                 break;
             case R.id.iv_fm_left:
@@ -133,6 +134,7 @@ public class BTMusicFragment extends BaseFragment {
             new Thread() {
                 public void run() {
                     myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
+
                 }
 
 
@@ -175,10 +177,14 @@ public  void  musicNext(){
         if (time > total_time) {
             time = total_time;
         }
-        int progress = (int) Math.ceil(time * 100 / total_time);
-         music_progress_bar.setProgress(progress);
-         music_current_time.setText("" + getTime(time / 60) + ":" + getTime(time % 60));
-        music_total_time.setText(getTime(total_time / 60) + ":" + getTime(total_time % 60));
+        if(total_time!=0) {
+            progress = (int) Math.ceil(time * 100 / total_time);
+        }
+        if(music_progress_bar!=null) {
+            music_progress_bar.setProgress(progress);
+            music_current_time.setText("" + getTime(time / 60) + ":" + getTime(time % 60));
+            music_total_time.setText(getTime(total_time / 60) + ":" + getTime(total_time % 60));
+        }
 
     }
     // 时间格式化为00
@@ -247,11 +253,8 @@ public  void  musicNext(){
     private void gifPlay(boolean isPlay){
         if(isPlay){
              musicPlay();
-            gifDrawable.start();
-
         }else {
             musicPause();
-            gifDrawable.stop();
         }
     }
     public  static  void gifPlayShow(){
@@ -271,13 +274,18 @@ public  void  musicNext(){
                 switch (msg.what) {
                     case MUSIC_CHANGE:
                         getView(R.id.bt_gif).performClick();
+
                         break;
                     case MUSIC_BLUETOOTH_CLOSE:
+                        gifDrawable.stop();
                         btservice.btAvrPause();
+
                         break;
 
                     case MUSIC_BLUETOOTH_OPEN:
+                        gifDrawable.start();
                         btservice.btAvrPlay();
+
                         break;
                     case MUSCI_BACK:
                         btservice.btAvrLast();

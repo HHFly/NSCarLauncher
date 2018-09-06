@@ -13,6 +13,9 @@
         android:id="@+id/bt_music_progress_bar"
         android:layout_width="1000px"
         android:layout_height="wrap_content"
+        android:maxHeight="3.4dp"
+        android:minHeight="3.4dp"
+        android:progressDrawable="@drawable/seekbar_style"
         android:thumb="@mipmap/ic_volume"
         android:layout_gravity="center_vertical"
         />

@@ -250,7 +250,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
         Collections.sort(datas, new ComparatorValues()); // 对获得的文件进行排序
     }
     public static boolean isWifiConnected(Context context)
-    {
+    {   try {
         ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if(wifiNetworkInfo.isConnected())
@@ -259,6 +259,10 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
         }
 
         return false ;
+    }catch (Exception e){
+        return false ;
+    }
+
     }
     public static final class ComparatorValues implements Comparator<Wifiinfo> {
 

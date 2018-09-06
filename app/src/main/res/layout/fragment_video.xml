@@ -5,7 +5,7 @@
     android:id="@+id/music_local">
 
     <ImageView
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/video_local_return"
         android:layout_width="40px"
         android:layout_height="30px"
@@ -14,6 +14,7 @@
         android:src="@mipmap/set_button_return"/>
 
     <TextView
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/视频列表"
@@ -22,25 +23,23 @@
         android:textColor="#EDEDED"
         android:textSize="36px" />
 
-    <TextView
+    <ImageView
         android:id="@+id/video_local_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/本地视频"
         android:layout_marginLeft="200px"
         android:layout_marginTop="243px"
-        android:textColor="@drawable/select_music_local_text_bg"
-        android:textSize="36px" />
+        android:src="@drawable/select_video_hd" />
 
-    <TextView
+    <ImageView
         android:id="@+id/video_local_2"
+        android:layout_below="@+id/video_local_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/USB视频"
+        android:src="@drawable/select_video_usb"
         android:layout_marginLeft="200px"
-        android:layout_marginTop="347px"
-        android:textColor="@drawable/select_music_local_text_bg"
-        android:textSize="36px" />
+        android:layout_marginTop="95px"
+      />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,12 +56,17 @@
 
             />
     </LinearLayout>
+    <View style="@style/BaseLine.Vertical"
+        android:layout_toRightOf="@+id/video_local_1"
+        android:layout_alignTop="@+id/video_local_1"
+        android:layout_marginBottom="62px"
+        android:layout_marginLeft="50px"></View>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_videolocoal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="220px"
-        android:layout_marginLeft="450px"
+        android:layout_marginLeft="500px"
         android:layout_marginRight="95px"
         android:scrollbars="none">
 
@@ -73,7 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="220px"
-        android:layout_marginLeft="450px"
+        android:layout_marginLeft="500px"
         android:layout_marginRight="95px"
         android:background="@mipmap/ic_f_fm_bg">
         <TextView

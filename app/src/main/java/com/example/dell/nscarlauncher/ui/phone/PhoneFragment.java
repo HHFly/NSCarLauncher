@@ -89,7 +89,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     public void findView() {
         tv_phone_number=getView(R.id.call_number);
         tv_phone_info=getView(R.id.call_time);
-        ll_other=getView(R.id.ll_other);
+        ll_other=getView(R.id.ll_other_phone);
         tv_keep_calltext= getView(R.id.fragment_phone_keep_calltext);
         bt_call=getView(R.id.call_start);
         bt_stop=getView(R.id.call_stop);
@@ -102,7 +102,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     public void setListener() {
         setClickListener(R.id.call_stop);
         setClickListener(R.id.iv_call);
-        setClickListener(R.id.ll_other);
+        setClickListener(R.id.ll_other_phone);
         setClickListener(R.id.call_start);
         setClickListener(R.id.call_key);
         setClickListener(R.id.tv_calling_key_hide);
@@ -334,7 +334,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     // 电话接通开始
     public static void phoneStart() {
         if (FlagProperty.flag_phone_ringcall) { // 来电显示电话号码
-//            tv_phone_number.setText(getName(FlagProperty.phone_number));
+            tv_phone_number.setText(getName(FlagProperty.phone_number));
 //            bt_call.setVisibility(View.INVISIBLE);
 //            bt_back.setVisibility(View.INVISIBLE);
 //            bt_stop.setVisibility(View.VISIBLE);
@@ -457,7 +457,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         @Override
         public void run() {
             try {
-                sleep(2000);
+                sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -477,11 +477,12 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     // 当三方通话中断掉其中一方时
     public static void hideThirdCallShow(int index) {
         if (index == 1) {
+
             tv_phone_number.setText(FlagProperty.phone_number_one);
         } else if (index == 2) {
             tv_phone_number.setText(FlagProperty.phone_number_two);
         }
-        ll_other.setVisibility(View.GONE);
+        ll_other.setVisibility(View.INVISIBLE);
     }
     // 根据号码显示电话薄中姓名
     public static String getName(String number) {
@@ -572,7 +573,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                 tabSelected(3);
                 viewPager.setCurrentItem(2);
                 break;
-            case  R.id.ll_other:
+            case  R.id.ll_other_phone:
                 changeCall();
                 break;
             case R.id.iv_call:

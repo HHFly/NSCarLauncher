@@ -38,6 +38,7 @@ import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.example.dell.nscarlauncher.ui.home.model.WeatherData;
 import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
+import com.example.dell.nscarlauncher.widget.PlayControllFMView;
 import com.example.dell.nscarlauncher.widget.PlayControllView;
 import com.example.dell.nscarlauncher.widget.WaveView;
 import com.white.lib.utils.ToastUtil;
@@ -65,7 +66,8 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private volatile boolean timeFlag = true;
     private volatile boolean weatherFlag = true;
   // 播发控制
-    public static PlayControllView fmPaly ,btPaly;
+    public static PlayControllView  btPaly;
+    public static PlayControllFMView fmPaly ;
     //fragment
     private  FMFragment fmFragment;
 
@@ -109,7 +111,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     }
     private void setPalyListen(){
         //fm
-        fmPaly.setOnItemClickListener(new PlayControllView.OnItemClickListener() {
+        fmPaly.setOnItemClickListener(new PlayControllFMView.OnItemClickListener() {
             @Override
             public void onClickLeft() {
                 isFmFragment();
@@ -322,7 +324,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private  void  aircontroll(){
         int result =HomePagerActivity.controllAir(isON);
         if(0==result){
-            setIvImage(R.id.controll_air,isON?R.mipmap.ic_pause:R.mipmap.ic_play);
+            setIvImage(R.id.controll_air,isON?R.mipmap.ic_play:R.mipmap.ic_off);
             isON=!isON;
         }else {
             Toast.makeText(getActivity(), "空调未连接", Toast.LENGTH_SHORT).show();

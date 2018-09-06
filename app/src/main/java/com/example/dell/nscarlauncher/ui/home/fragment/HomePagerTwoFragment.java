@@ -76,7 +76,7 @@ public class HomePagerTwoFragment extends BaseFragment {
             HomePagerActivity.musicFragment.am_flag = true;
             if (DialogLocalMusic.data.size() > 0) {
                 circle_image.roatateStart();
-                bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                bt_play.setBackgroundResource(R.mipmap.ic_play_big);
                 broadcastMusicInfo(getActivity(), FlagProperty.PLAY_MSG);
                 HomePagerActivity.musicFragment.flag_play = true;
             }
@@ -87,7 +87,7 @@ public class HomePagerTwoFragment extends BaseFragment {
             HomePagerActivity.musicFragment.am_flag = false;
 
             circle_image.roatatePause();
-            bt_play.setBackgroundResource(R.mipmap.ic_pause_white);
+            bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
             broadcastMusicInfo(getActivity(), PAUSE_MSG);
             HomePagerActivity.musicFragment.flag_play = false;
         }

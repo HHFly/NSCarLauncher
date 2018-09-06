@@ -5,32 +5,31 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.dell.nscarlauncher.R;
 
-public class PlayControllView extends LinearLayout {
-    private final String TAG = "PlayControllView";
+public class PlayControllFMView extends LinearLayout {
+    private final String TAG = "PlayControllFMView";
 
     private ImageView left;
     private ImageView center;
     private ImageView right;
     public boolean isPlay;
 
-    public PlayControllView(Context context) {
+    public PlayControllFMView(Context context) {
         super(context);
     }
 
-    public PlayControllView(Context context, @Nullable AttributeSet attrs) {
+    public PlayControllFMView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.item_controll_1, this);
+        inflater.inflate(R.layout.item_controll_fm, this);
         left=(ImageView) findViewById(R.id.ctl_iv_left);
         center=(ImageView) findViewById(R.id.ctl_iv_center);
         right=(ImageView) findViewById(R.id.ctl_iv_right);
-        left.setOnClickListener(new OnClickListener() {
+        left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(onItemClickListener!=null){
@@ -38,7 +37,7 @@ public class PlayControllView extends LinearLayout {
                 }
             }
         });
-        center.setOnClickListener(new OnClickListener() {
+        center.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isPlay=!isPlay;
@@ -47,7 +46,7 @@ public class PlayControllView extends LinearLayout {
                 }
             }
         });
-        right.setOnClickListener(new OnClickListener() {
+        right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(onItemClickListener!=null){
@@ -61,7 +60,7 @@ public class PlayControllView extends LinearLayout {
         right.setVisibility(isShow?View.VISIBLE : View.GONE);
     }
     public void setPlay(boolean isPlay){
-        center.setImageResource(isPlay?R.mipmap.ic_pause:R.mipmap.ic_music_home_stop);
+        center.setImageResource(isPlay?R.mipmap.ic_play:R.mipmap.ic_off);
         this.isPlay =isPlay;
     }
 
@@ -82,5 +81,4 @@ public class PlayControllView extends LinearLayout {
         void onClickCenter(boolean isPlay);
         void onClickRight();
     }
-
 }

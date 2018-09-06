@@ -14,7 +14,7 @@
       android:id="@+id/music_left"
       android:layout_width="46px"
       android:layout_height="50px"
-      android:background="@mipmap/ic_fm_left"
+      android:background="@drawable/select_controll_last"
       android:layout_marginLeft="72px"
       android:layout_gravity="center_vertical"/>
     <ImageView
@@ -28,7 +28,7 @@
         android:id="@+id/music_ringt"
         android:layout_width="46px"
         android:layout_height="50px"
-        android:background="@mipmap/ic_fm_right"
+        android:background="@drawable/select_controll_next"
         android:layout_marginLeft="72px"
         android:layout_gravity="center_vertical"/>
     <ImageView

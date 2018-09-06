@@ -32,7 +32,7 @@
         android:layout_height="50px"
         android:layout_marginLeft="224px"
         android:layout_marginTop="59px"
-        android:src="@mipmap/ic_fm_left"
+       android:background="@drawable/select_controll_last"
         />
 
     <ImageView
@@ -42,7 +42,7 @@
         android:layout_marginRight="224px"
         android:layout_marginTop="59px"
         android:layout_alignParentRight="true"
-        android:src="@mipmap/ic_fm_right"
+        android:background="@drawable/select_controll_next"
         />
     <TextView
         android:id="@+id/tv_fm_Hz"

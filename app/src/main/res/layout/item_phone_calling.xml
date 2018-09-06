@@ -32,16 +32,18 @@
         android:text="00:00"
         />
         <LinearLayout
-            android:id="@+id/ll_other"
+            android:id="@+id/ll_other_phone"
             android:layout_marginTop="20px"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal">
+
             <TextView
                 style="@style/BaseText.Tv"
-                android:textSize="18px"
-                android:text="@string/保持通话"/>
+                android:layout_height="match_parent"
+                android:text="@string/保持通话"
+                android:textSize="18px" />
             <TextView style="@style/BaseText.Tv"
                 android:id="@+id/fragment_phone_keep_calltext"
                 android:layout_marginLeft="10px"
