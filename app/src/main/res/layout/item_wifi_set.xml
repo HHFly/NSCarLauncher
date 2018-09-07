@@ -20,7 +20,7 @@
         android:layout_marginRight="200px"
         android:textColor="@android:color/white"
         android:textSize="32px"
-        android:text="断开"/>
+        android:text="@string/连接"/>
 
     <ImageView
         android:id="@+id/wif_info_intensity"

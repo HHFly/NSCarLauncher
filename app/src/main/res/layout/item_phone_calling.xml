@@ -41,13 +41,14 @@
 
             <TextView
                 style="@style/BaseText.Tv"
+                android:id="@+id/tv_other_phine"
                 android:layout_height="match_parent"
                 android:text="@string/保持通话"
-                android:textSize="18px" />
+                android:textSize="24px" />
             <TextView style="@style/BaseText.Tv"
                 android:id="@+id/fragment_phone_keep_calltext"
                 android:layout_marginLeft="10px"
-                android:textSize="18px" />
+                android:textSize="24px" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="68px"

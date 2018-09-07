@@ -8,8 +8,8 @@ import com.example.dell.nscarlauncher.base.adapter.BaseListRvAdapter;
 
 import java.util.List;
 
-public class FMAdapter extends BaseListRvAdapter<String> {
-    public FMAdapter(List<String> data) {
+public class FMAdapter extends BaseListRvAdapter<Float> {
+    public FMAdapter(List<Float> data) {
         super(data);
     }
 
@@ -19,8 +19,8 @@ public class FMAdapter extends BaseListRvAdapter<String> {
     }
 
     @Override
-    public void bindBodyData(AutoViewHolder holder, int bodyPos, final  String data) {
-        holder.text(R.id.tv_fm_re_hz,data);
+    public void bindBodyData(AutoViewHolder holder, int bodyPos, final  Float data) {
+        holder.text(R.id.tv_fm_re_hz,data.toString());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +44,7 @@ public class FMAdapter extends BaseListRvAdapter<String> {
          *
          *
          */
-        void onClickFM(String data);
+        void onClickFM(Float data);
 
 
     }

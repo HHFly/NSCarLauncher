@@ -361,7 +361,16 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         timePool.execute(new Runnable() {
             @Override
             public void run() {
+
                 initLocation();
+                while (true){
+                    mLocationClient.startLocation();//启动定位
+                    try {
+                        Thread.sleep(60*60*1000);//一小时查询天气
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
 //                while (timeFlag) {
 //
 //                }
@@ -420,7 +429,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         //设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
 
-        mLocationClient.startLocation();//启动定位
+//        mLocationClient.startLocation();//启动定位
     }
 
     public AMapLocationListener mLocationListener = new AMapLocationListener() {
@@ -493,6 +502,8 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             weatherSearch.searchWeatherAsyn(); //异步搜索
 
             Log.d("Liu_Weather", "开始请求天气信息");
+        }else {
+
         }
     }
 

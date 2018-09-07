@@ -71,7 +71,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="200px"
-                android:text="连接"
+                android:text="@string/断开"
                 android:textColor="@android:color/white"
                 android:textSize="32px" />
 

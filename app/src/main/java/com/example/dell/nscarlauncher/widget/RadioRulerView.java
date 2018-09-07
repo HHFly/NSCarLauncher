@@ -26,9 +26,11 @@ public class RadioRulerView extends View {
     private int mHeight;    //view的高度
     private int mWidth;     //view的宽度
     private Paint mLinePaint;   //固定的尺子画笔
+    private Paint mLinePaintTen; //固定的尺子画笔 10倍线
     private int mLineWidth;//尺子刻度线的宽
     private int mLineColor;//固定尺子刻度线的颜色
     private int mMoveLineColor;//移动尺子刻度线的颜色
+    private int mLinePaintTenColor;//固定尺子刻度线的颜色
     private float mDensity;
     private int mLineDivider;    //两条刻度线间的距离
     private float mLeftWidth=141.0f;  //尺子离view左边的距离
@@ -59,7 +61,7 @@ public class RadioRulerView extends View {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RadioRulerView);
         mLineWidth = (int) a.getDimension(R.styleable.RadioRulerView_line_width,5*mDensity);
         mLineDivider = (int) a.getDimension(R.styleable.RadioRulerView_line_divider,15*mDensity);
-
+        mLinePaintTenColor =a.getColor(R.styleable.RadioRulerView_line_color, 0xff0000ff);
         mLineColor = a.getColor(R.styleable.RadioRulerView_line_color,0xff888888);
         mMoveLineColor = a.getColor(R.styleable.RadioRulerView_move_line_color,0xffff0000);
         a.recycle();
@@ -80,6 +82,13 @@ public class RadioRulerView extends View {
         mLinePaint.setColor(mLineColor);
         mLinePaint.setStrokeWidth(mLineWidth);
         mLinePaint.setStyle(Paint.Style.STROKE);
+
+        mLinePaintTen= new Paint();
+        mLinePaintTen.setAntiAlias(true);
+        mLinePaintTen.setColor(mLinePaintTenColor);
+        mLinePaintTen.setStrokeWidth(mLineWidth);
+        mLinePaintTen.setStyle(Paint.Style.STROKE);
+
 
         mMoveLinePaint = new Paint();
         mMoveLinePaint.setAntiAlias(true);

@@ -40,7 +40,8 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     public final static int                    PHONE_START    = 3;
     public final static int                    PHONE_END      = 4;
     public final static int                    DELETE_CLIKE   = 5;
-    public final static int                    DTMF   = 6;
+    public final static int                    BOOKREFRESH   = 6;
+    public final static int                    RECORDREFRESH  =7;
     public static boolean flag_phone; //是否通话
     private static int phone_call_time;//通话时间
     static String phone_continue_show = "";//通话时间
@@ -53,9 +54,9 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     private static ArrayList<PhoneBookInfo> phoneBookInfos =new ArrayList<>();//通讯录
     private static ArrayList<PhoneRecordInfo> phoneRecordInfos =new ArrayList<>();//通讯记录
     private static  String number;
-    static TextView tv_phone_number,tv_phone_info,tv_keep_calltext;
+    static TextView tv_phone_number,tv_phone_info,tv_keep_calltext,tv_other_phine;
     static ImageView bt_call,bt_stop;
-    static LinearLayout ll_other;
+    static LinearLayout ll_other,ll_calling_key,ll_calling_controll;
     static RelativeLayout rl_call;
     static AudioManager audioManager;
     static IKdAudioControlService audioservice ;
@@ -87,6 +88,9 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
     @Override
     public void findView() {
+        tv_other_phine=getView(R.id.tv_other_phine);
+        ll_calling_controll =getView(R.id.ll_calling_controll);
+        ll_calling_key =getView(R.id.ll_calling_key);
         tv_phone_number=getView(R.id.call_number);
         tv_phone_info=getView(R.id.call_time);
         ll_other=getView(R.id.ll_other_phone);
@@ -265,6 +269,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                 }
                 if(pRecordFragment!=null) {
                     pRecordFragment.setmData(phoneRecordInfos);
+                    myHandler.sendMessage(myHandler.obtainMessage(RECORDREFRESH));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -312,6 +317,8 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                 }
                 if(pMemberFragment!=null) {
                     pMemberFragment.setmData(phoneBookInfos);
+                    myHandler.sendMessage(myHandler.obtainMessage(BOOKREFRESH));
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -334,7 +341,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     // 电话接通开始
     public static void phoneStart() {
         if (FlagProperty.flag_phone_ringcall) { // 来电显示电话号码
-            tv_phone_number.setText(getName(FlagProperty.phone_number));
+
 //            bt_call.setVisibility(View.INVISIBLE);
 //            bt_back.setVisibility(View.INVISIBLE);
 //            bt_stop.setVisibility(View.VISIBLE);
@@ -345,10 +352,16 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 //            bt_back.setVisibility(View.INVISIBLE);
 //            bt_stop.setVisibility(View.VISIBLE);
         }
+        if(tv_phone_number!=null) {
+            tv_phone_number.setText(getName(FlagProperty.phone_number));
+        }
         phone_call_time = 0;
         flag_phone = true;
         if(rl_call!=null) {
             rl_call.setVisibility(View.VISIBLE);//显示界面
+        }
+        if(ll_other!=null){
+            ll_other.setVisibility(View.INVISIBLE);
         }
         new CountThread().start();
     }
@@ -390,6 +403,9 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                     case PHONE_OVER:
                         tv_phone_info.setText("");
                         rl_call.setVisibility(View.GONE);
+                        ll_calling_controll.setVisibility(View.VISIBLE);
+                        ll_calling_key.setVisibility(View.GONE);
+
                         break;
                     case PHONE_CONTINUE:
                         tv_phone_info.setText(phone_continue_show);
@@ -411,8 +427,15 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                             pNumFragment.subString();
                         }
                         break;
-                    case DTMF:
-                        
+                    case BOOKREFRESH:
+                        if(pMemberFragment!=null) {
+                            pMemberFragment.refresh();
+                        }
+                        break;
+                    case RECORDREFRESH:
+                        if(pRecordFragment!=null) {
+                            pRecordFragment.refresh();
+                        }
                         break;
                     default:
                         break;
@@ -464,23 +487,51 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
             myHandler.sendMessage(myHandler.obtainMessage(PHONE_OVER));
         }
     }
-    // 显示第三方通话
+    // 显示第三方通话来电
     public static void showKeepCall(String number) {
         // number = getName(number);
-        FlagProperty.phone_number_one = tv_phone_number.getText().toString().trim();
-        FlagProperty.phone_number_two = number;
-        tv_keep_calltext.setText(tv_phone_number.getText().toString().trim());
-        tv_phone_number.setText(number);
-
+//        FlagProperty.phone_number_one = tv_phone_number.getText().toString().trim();
+//        FlagProperty.phone_number_two = number;
+//        tv_keep_calltext.setText(tv_phone_number.getText().toString().trim());
+//        tv_phone_number.setText(number);
+//
+//        ll_other.setVisibility(View.VISIBLE);
+    }
+    // 显示第三方通话来电
+    public static void showCalling(String number) {
+        String phone = getName(number);
+        tv_keep_calltext.setText(phone);
+        tv_other_phine.setText(R.string.电话接入);
         ll_other.setVisibility(View.VISIBLE);
+    }
+    // 挂断第三方通话来电
+    public static void showCallhangup() {
+        ll_other.setVisibility(View.INVISIBLE);
+    }
+    // 接听第三方通话来电
+    public static void showCallhAnswer() {
+        String phone = getName(FlagProperty.phone_number_one);
+        String phonetwo =getName(FlagProperty.phone_number_two);
+        tv_phone_number.setText(phonetwo);
+        tv_keep_calltext.setText(phone);
+        tv_other_phine.setText(R.string.保持通话);
+    }
+    //保留第三方通话
+
+    public static void showCallhKeep() {
+        String phone = getName(FlagProperty.phone_number_one);
+        String phonetwo =getName(FlagProperty.phone_number_two);
+        tv_phone_number.setText(phone);
+        tv_keep_calltext.setText(phonetwo);
+        tv_other_phine.setText(R.string.保持通话);
     }
     // 当三方通话中断掉其中一方时
     public static void hideThirdCallShow(int index) {
         if (index == 1) {
 
-            tv_phone_number.setText(FlagProperty.phone_number_one);
-        } else if (index == 2) {
             tv_phone_number.setText(FlagProperty.phone_number_two);
+        } else if (index == 2) {
+            tv_phone_number.setText(FlagProperty.phone_number_one);
         }
         ll_other.setVisibility(View.INVISIBLE);
     }
@@ -559,7 +610,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                 break;
             case R.id.tv_calling_key_hide:
                 setViewVisibility(R.id.ll_calling_key,false);
-                setViewVisibility(R.id.ll_calling_controll,true);
+                setViewInVisibility(R.id.ll_calling_controll,true);
                 break;
             case R.id.rl_1:
                 tabSelected(1);
@@ -574,7 +625,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                 viewPager.setCurrentItem(2);
                 break;
             case  R.id.ll_other_phone:
-                changeCall();
+//                changeCall();
                 break;
             case R.id.iv_call:
                 callphone(pNumFragment.getNumber());
@@ -701,5 +752,6 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         if(NullView!=null) {
             NullView.setVisibility(isShow ? View.VISIBLE : View.GONE);
         }
+
     }
 }

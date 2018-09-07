@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="1000px" android:layout_height="80px" android:background="@mipmap/title_bg"
+
     android:layout_centerHorizontal="true">
+    <RelativeLayout
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ImageView
         android:id="@+id/center_img"
     android:layout_width="72px"
@@ -16,13 +21,15 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="230px"
         android:layout_toLeftOf="@+id/center_img"/>
+
     <ImageView
         android:id="@+id/title_iv_sound"
         android:layout_width="48px"
         android:layout_height="48px"
         android:layout_centerVertical="true"
-        android:src="@mipmap/title_sound"
+        android:src="@drawable/select_sound"
         android:layout_toRightOf="@+id/center_img"
         android:layout_marginLeft="230px"
         />
+    </RelativeLayout>
 </RelativeLayout>

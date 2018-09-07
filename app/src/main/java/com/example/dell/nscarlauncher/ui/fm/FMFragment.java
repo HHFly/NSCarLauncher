@@ -1,7 +1,10 @@
 package com.example.dell.nscarlauncher.ui.fm;
 
+import android.graphics.PointF;
 import android.media.AudioManager;
+import android.os.Handler;
 import android.os.IKdAudioControlService;
+import android.os.Message;
 import android.os.RemoteException;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,18 +13,23 @@ import android.os.IFmService;
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.example.dell.nscarlauncher.common.util.NumParseUtils;
 import com.example.dell.nscarlauncher.common.util.SPUtil;
 import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.widget.RadioRulerView;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class FMFragment extends BaseFragment implements RadioRulerView.OnValueChangeListener{
     private FMAdapter mAdapter ;
     private RadioRulerView mRule;
-    public static ArrayList<String> fm_list = new ArrayList<String>();
+    public static ArrayList<Float> fm_list = new ArrayList<>();
+    private  ArrayList<Float> mData =new ArrayList<>();
     private HomePagerActivity homePagerActivity;
 
     private IFmService radio;  //收音机
@@ -29,7 +37,8 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
     private IKdAudioControlService audioservice ;
     AudioManager audioManager;
    public static String FMCHANNEL ="channel";
-   private  boolean mIsAuto =true; //是否自动搜索
+    public static String FMCHANNELLIST ="channellist";
+   private  boolean mIsAuto =false; //是否处于自动搜索
 
     @Override
     public void setmType(int mType) {
@@ -101,11 +110,13 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
                SPUtil.getInstance(getContext(),FMCHANNEL).putFloat(FMCHANNEL,channel);
                 break;
             case R.id.iv_search:
-                if(mIsAuto) {
-                    mRule.setAutoSearchFM(mIsAuto);
-                    mRule.startAutoSeachFM();
+                if(!mIsAuto) {
+                    mIsAuto=true;
+                    mData.clear();
+                    changeChannel(88.0f);
+                    showLoadingDialog();
+                    new Thread(new SeachThread()).start();
                 }
-                mIsAuto=!mIsAuto;
                 break;
             case R.id.iv_fm_left:
                 leftFm();
@@ -115,6 +126,44 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
                 break;
         }
     }
+
+    /**
+     * 搜台要在开启子线程
+     */
+    private class SeachThread implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+            while(true){
+                if(radio.RadioFreqSeekUp()<0){
+                    hideLoadingDialog();
+                    myHandler.sendMessage(myHandler.obtainMessage(REFRESH));
+                    mIsAuto =false;
+                       break;
+                   }else {
+                    float seek =radio.GetRadioFreq();
+                    if(channel>seek){
+                        hideLoadingDialog();
+                        myHandler.sendMessage(myHandler.obtainMessage(REFRESH));
+                        mIsAuto =false;
+                        break;
+                    }
+                    channel =seek;
+                    mData.add(channel);
+                    myHandler.sendMessage(myHandler.obtainMessage(VIEWFRESH));
+                    Thread.sleep(1000);
+                }
+
+            }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     /*左调频*/
     public  void  leftFm(){
 
@@ -162,7 +211,7 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
      *
      *
      */
-    private void initRvAdapter( ArrayList<String> data) {
+    private void initRvAdapter( ArrayList<Float> data) {
         if (mAdapter == null) {
             RecyclerView rv = getView(R.id.recyclerView);
             mAdapter =new FMAdapter(data);
@@ -175,15 +224,15 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
             }
             mAdapter.setOnItemClickListener(new FMAdapter.OnItemClickListener() {
                 @Override
-                public void onClickFM(String data) {
-                  changeChannel(Float.valueOf(data));
+                public void onClickFM(Float data) {
+                  changeChannel(data);
 
                 }
 
             });
 
         }else {
-            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyData(data,true);
         }
     }
 //    打开收音机
@@ -224,13 +273,14 @@ public void openFm(){
 
     // 初始化一些音乐频道
     public void initFMList() {
-        fm_list.add("89.0");
-        fm_list.add("91.8");
-        fm_list.add("93.0");
-        fm_list.add("95.0");
-        fm_list.add("96.8");
-        fm_list.add("98.8");
-        fm_list.add("103.2");
+        String list=  SPUtil.getInstance(getContext(),FMCHANNELLIST).getString(FMCHANNELLIST,"").replace("[","").replace("]","");
+        if(!"".equals(list)){
+            String[] arr = list.split(",");
+
+            for(int i =0;i<arr.length;i++){
+                fm_list.add(NumParseUtils.parseFloat(arr[i]));
+            }
+        }
     }
         /*滑动监听回调*/
     @Override
@@ -244,7 +294,29 @@ public void openFm(){
         }
         SPUtil.getInstance(getContext(),FMCHANNEL).putFloat(FMCHANNEL,channel);
     }
-
+    /*变换频道
+     **/
+    public void  changeChannelView(){
+        setTvText(R.id.tv_fm_Hz,String.format("%.1f",channel));
+        if(mRule!=null) {
+            mRule.setChannel(channel);
+        }
+        SPUtil.getInstance(getContext(),FMCHANNEL).putFloat(FMCHANNEL,channel);
+    }
+    /*变换频道
+     **/
+    public void  changeChannel(){
+        setTvText(R.id.tv_fm_Hz,String.format("%.1f",channel));
+        if(mRule!=null) {
+            mRule.setChannel(channel);
+        }
+        try {
+            System.out.println("radio.SetRadioFreq():" + channel + "----" + App.get().getRadio().SetRadioFreq(channel)); // 变换广播频道
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        SPUtil.getInstance(getContext(),FMCHANNEL).putFloat(FMCHANNEL,channel);
+    }
     /*变换频道
     **/
 public void  changeChannel(float value){
@@ -313,7 +385,29 @@ public void  changeChannel(float value){
             }
         }
     };
-
+    private final  int VIEWFRESH =0;
+    private final  int VIEWCHANGE =1;
+    private final  int REFRESH =2;
+    public Handler myHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case VIEWCHANGE:
+                    changeChannel();
+                    break;
+                case VIEWFRESH:
+                    changeChannelView();
+                    break;
+                case REFRESH:
+                    initRvAdapter(mData);
+                   String data = mData.toString();
+                    SPUtil.getInstance(getContext(),FMCHANNELLIST).putString(FMCHANNELLIST,mData.toString());
+                    changeChannel();
+                    break;
+                default:
+                    break;
+            }
+        };
+    };
     @Override
     public void onDestroy() {
         super.onDestroy();

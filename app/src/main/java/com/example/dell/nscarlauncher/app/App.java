@@ -88,8 +88,8 @@ App extends MultiDexApplication {
                 .setLogOpen(BuildConfig.IS_OPEN_LOG);
         /*初始化Handle*/
         pagerOneHnadler = new HomePagerOneFragment.PagerOneHnadler();
-        /*时间工具*/
-        TimeUtils.getInstance();
+
+
         /*初始化驱动模块*/
         initService();
 
@@ -164,7 +164,11 @@ App extends MultiDexApplication {
         intentFilter.addAction("com.kangdi.BroadCast.AcMediaStatusChanged");
         intentFilter.addAction("com.kangdi.BroadCast.PhoneState");
         intentFilter.addAction("com.kangdi.BroadCast.BtStreamStart");
-
+//        三方通话
+        intentFilter.addAction("com.kangdi.BroadCast.tripartite.hangon");
+        intentFilter.addAction("com.kangdi.BroadCast.tripartite.talking");
+        intentFilter.addAction("com.kangdi.BroadCast.tripartite.hangup");
+        intentFilter.addAction("com.kangdi.BroadCast.tripartite.comming");
         registerReceiver(bluetoothReceiver, intentFilter);
     }
 

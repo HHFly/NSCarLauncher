@@ -440,6 +440,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 }
             });
         }
+
         alertDialog.show();
     }
 
@@ -684,7 +685,7 @@ public static void initCarRecord() {
             return R.mipmap.home_top_btn5_01;
         }
         else {
-            return R.mipmap.home_top_btn5_01;
+            return R.mipmap.home_top_btn5_00;
         }
     }
 //    获取不同信号强度图片
@@ -845,7 +846,10 @@ public int getSim(int num) {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction() == "phone.iscoming") {
-                incomingShow(intent.getStringExtra("number"), intent.getIntExtra("index", 0));
+                int  index =intent.getIntExtra("index", 0);
+                if(2!=index) {
+                    incomingShow(intent.getStringExtra("number"), intent.getIntExtra("index", 0));
+                }
             } else if (intent.getAction() == "phone.isgone") {
                 dimissShow();
             } else if (intent.getAction() == "3gphone.iscoming") {

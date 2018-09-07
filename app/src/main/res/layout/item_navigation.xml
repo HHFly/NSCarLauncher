@@ -90,13 +90,13 @@
         <ImageView
             android:layout_width="52px"
             android:layout_height="50px"
-            android:src="@mipmap/ic_na_1"
+            android:src="@drawable/select_na"
             />
         <ImageView
             android:layout_width="60px"
             android:layout_height="50px"
             android:layout_marginLeft="100px"
-            android:src="@mipmap/ic_na_2"
+            android:src="@drawable/select_na_2"
             />
 
 

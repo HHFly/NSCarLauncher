@@ -65,6 +65,9 @@
     <string name="USB视频">USB视频</string>
     <string name="暂无视频">暂无视频</string>
     <string name="视频">视频</string>
+    <string name="断开">断开</string>
+    <string name="连接">连接</string>
+    <string name="电话接入">电话接入：</string>
 
 
 </resources>

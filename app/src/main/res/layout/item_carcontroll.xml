@@ -82,6 +82,7 @@
         android:textColor="#EEEEEE"
         />
     <LinearLayout
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -90,20 +91,20 @@
         <ImageView
             android:layout_width="52px"
             android:layout_height="50px"
-            android:src="@mipmap/ic_car_1"
+            android:src="@drawable/select_car_1"
             />
         <ImageView
             android:layout_width="60px"
             android:layout_height="50px"
             android:layout_marginLeft="60px"
-            android:src="@mipmap/ic_car_2"
+            android:src="@drawable/select_car_2"
            />
 
         <ImageView
             android:layout_width="50px"
             android:layout_height="50px"
             android:layout_marginLeft="60px"
-            android:src="@mipmap/ic_car_3"
+            android:src="@drawable/select_car_3"
            />
     </LinearLayout>
 

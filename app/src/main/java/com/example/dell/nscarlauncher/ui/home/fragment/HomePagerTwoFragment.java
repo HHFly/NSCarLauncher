@@ -13,6 +13,8 @@ import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.music.DialogLocalMusic;
+import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
+import com.example.dell.nscarlauncher.ui.music.model.MusicModel;
 import com.example.dell.nscarlauncher.widget.PlayControllView;
 
 import static com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty.PAUSE_MSG;
@@ -50,7 +52,23 @@ public class HomePagerTwoFragment extends BaseFragment {
             public void onClickLeft() {
                 App.get().PauseService();
                 isMusicFragment();
-                HomePagerActivity.musicFragment.PreMusic();
+                if(DialogLocalMusic.data.size()>0) {
+                    if ( MusicFragment.flag_play) {
+
+                        musicPaly.center.performClick();
+                        MusicPaly(MusicFragment.flag_play);
+                    }
+                    if ( MusicFragment.music_model == 2) { // 单曲循环模式不变换音乐图片
+                        if(circle_image!=null)
+                            circle_image.resetRoatate();
+                    } else { // 其他模式
+                        // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
+                    }
+                    musicPaly.center.performClick();
+                    MusicModel.getPrevMusic(getContext(), MusicFragment.music_model);
+                }
+
+//                HomePagerActivity.musicFragment.PreMusic();
             }
 
             @Override
@@ -63,7 +81,21 @@ public class HomePagerTwoFragment extends BaseFragment {
             public void onClickRight() {
                 App.get().PauseService();
                 isMusicFragment();
-                HomePagerActivity.musicFragment.NextMusic();
+//                HomePagerActivity.musicFragment.NextMusic();
+                if(DialogLocalMusic.data.size()>0) {
+                    if ( MusicFragment.flag_play) {
+                        musicPaly.center.performClick();
+                    }
+                    if ( MusicFragment.music_model == 2) { // 单曲循环模式不变换音乐图片
+                        if(circle_image!=null)
+                        circle_image.resetRoatate();
+                    } else { // 其他模式
+                        // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
+                    }
+                    musicPaly.center.performClick();
+                    MusicModel.getNextMusic(getContext(),  MusicFragment.music_model);
+                }
+
             }
         });
     }
@@ -75,8 +107,13 @@ public class HomePagerTwoFragment extends BaseFragment {
            HomePagerActivity.musicFragment.system_flag = true;
             HomePagerActivity.musicFragment.am_flag = true;
             if (DialogLocalMusic.data.size() > 0) {
-                circle_image.roatateStart();
-                bt_play.setBackgroundResource(R.mipmap.ic_play_big);
+                if(circle_image!=null) {
+                    circle_image.roatateStart();
+                }
+                if(bt_play!=null){
+                    bt_play.setBackgroundResource(R.mipmap.ic_play_big);
+                }
+
                 broadcastMusicInfo(getActivity(), FlagProperty.PLAY_MSG);
                 HomePagerActivity.musicFragment.flag_play = true;
             }
@@ -85,9 +122,12 @@ public class HomePagerTwoFragment extends BaseFragment {
 
             HomePagerActivity.musicFragment.system_flag = false;
             HomePagerActivity.musicFragment.am_flag = false;
-
-            circle_image.roatatePause();
-            bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+            if(circle_image!=null) {
+                circle_image.roatatePause();
+            }
+           if(bt_play!=null){
+               bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+           }
             broadcastMusicInfo(getActivity(), PAUSE_MSG);
             HomePagerActivity.musicFragment.flag_play = false;
         }
@@ -125,8 +165,7 @@ public class HomePagerTwoFragment extends BaseFragment {
 
     @Override
     public void initView() {
-
-
+        MusicFragment.dialogLocalMusic.ScanMusic(getContext(),false);
     }
 
     @Override

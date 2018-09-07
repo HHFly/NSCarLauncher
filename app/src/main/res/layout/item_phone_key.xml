@@ -20,13 +20,13 @@
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:orientation="vertical"
+    android:background="?android:attr/selectableItemBackground"
     >
     <TextView style="@style/BaseText.Tv"
         android:textSize="48px"
         android:text="1"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="-15px"
-       
         />
     <TextView style="@style/BaseText.Tv"
         android:textSize="24px"
@@ -39,7 +39,8 @@
         android:layout_width="0px"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="?android:attr/selectableItemBackground">
         <TextView style="@style/BaseText.Tv"
             android:textSize="48px"
             android:text="2"
@@ -57,6 +58,7 @@
         android:layout_width="0px"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackground"
         android:orientation="vertical">
         <TextView style="@style/BaseText.Tv"
             android:textSize="48px"
@@ -74,15 +76,18 @@
 </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_4"
+
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0px"
+
         android:layout_weight="1">
         <LinearLayout
+            android:id="@+id/ll_4"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="vertical">
             <TextView style="@style/BaseText.Tv"
                 android:textSize="48px"
@@ -101,6 +106,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="vertical">
             <TextView style="@style/BaseText.Tv"
                 android:textSize="48px"
@@ -119,6 +125,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="vertical">
             <TextView style="@style/BaseText.Tv"
                 android:textSize="48px"
@@ -145,6 +152,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="vertical">
             <TextView style="@style/BaseText.Tv"
                 android:textSize="48px"
@@ -163,6 +171,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="vertical">
             <TextView style="@style/BaseText.Tv"
                 android:textSize="48px"
@@ -181,6 +190,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="vertical">
             <TextView style="@style/BaseText.Tv"
                 android:textSize="48px"
@@ -207,6 +217,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="vertical">
             <TextView style="@style/BaseText.Tv"
                 android:text="*"
@@ -219,6 +230,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="vertical">
             <TextView style="@style/BaseText.Tv"
                 android:text="0"
@@ -231,6 +243,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="vertical">
             <TextView style="@style/BaseText.Tv"
                 android:text="#"

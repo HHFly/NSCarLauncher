@@ -72,6 +72,11 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
     public final static String   ACTION_BT_STREAM_START= "com.kangdi.BroadCast.BtStreamStart";//蓝牙音乐kai广播
     public final static String   ACTION_MUSIC_CURRENT_POSITION = "com.kangdi.BroadCast.MusicCurrentPosition";//蓝牙音乐进度条
 
+    public final static String   ACTION_CALL_TRIPARTITE_COMMING = "com.kangdi.BroadCast.tripartite.comming"; //三方来电ieonSecondTalking
+    public final static String   ACTION_CALL_TRIPARTITE_HANGUP = "com.kangdi.BroadCast.tripartite.hangup";  //挂断
+    public final static String   ACTION_CALL_TRIPARTITE_TALKING = "com.kangdi.BroadCast.tripartite.talking"; //接听
+    public final static String   ACTION_CALL_TRIPARTITE_HANGON = "com.kangdi.BroadCast.tripartite.hangon"; //保持
+    public final static String   KEY_PHONENUM_TRIPARTITE = "com.kangdi.key.tripartite.phonenum";//电话
     static IKdBtService btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
 
     static AudioManager audioManager;
@@ -129,6 +134,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 }
 
             }*/
+
             PhoneFragment.setNullViewGone(true);
             FlagProperty.flag_bluetooth = false;
             HomePagerActivity.initBluetooth();
@@ -169,17 +175,17 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 }
             } else if (index == 2) {
                 FlagProperty.is_callindex_two = true;
-                PhoneFragment.showKeepCall(FlagProperty.phone_number);
-                if (FlagProperty.flag_phone_ringcall) { // 来电
-                    if (FlagProperty.flag_phone_incall_click) { // 板接
-                        FlagProperty.flag_phone_incall_click = false;
-                    } else { // 手接
-                        Intent i = new Intent();
-                        i.setAction("phone.isgone");// 发出自定义广播
-                        context.sendBroadcast(i);
-                        new CallThread().start(); // 电话页面转换
-                    }
-                }
+//                PhoneFragment.showKeepCall(FlagProperty.phone_number);
+//                if (FlagProperty.flag_phone_ringcall) { // 来电
+//                    if (FlagProperty.flag_phone_incall_click) { // 板接
+//                        FlagProperty.flag_phone_incall_click = false;
+//                    } else { // 手接
+//                        Intent i = new Intent();
+//                        i.setAction("phone.isgone");// 发出自定义广播
+//                        context.sendBroadcast(i);
+//                        new CallThread().start(); // 电话页面转换
+//                    }
+//                }
             }
 
         }
@@ -225,13 +231,18 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
             FlagProperty.is_one_oper = true;
             if (!FlagProperty.flag_phone_ringcall) {
+               String num = intent.getStringExtra(KEY_PHONENUM).trim();
+               int index =intent.getIntExtra(KEY_CALLINDEX, 0);
                 Intent i = new Intent();
                 i.setAction("phone.iscoming");// 发出自定义广播
-                i.putExtra("number", intent.getStringExtra(KEY_PHONENUM).trim());
-                i.putExtra("index", intent.getIntExtra(KEY_CALLINDEX, 0));
+                i.putExtra("number", num);
+                i.putExtra("index", index);
                 context.sendBroadcast(i);
-                FlagProperty.flag_phone_ringcall = true;
-                FlagProperty.phone_number = intent.getStringExtra(KEY_PHONENUM).trim(); // 记录电话号码
+                if(2!=index) {
+                    FlagProperty.flag_phone_ringcall = true;
+                    FlagProperty.phone_number = num; // 记录电话号码
+                    FlagProperty.phone_number_one = num;
+                }
             }
 
         }
@@ -245,6 +256,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_CALLOUT)) {
             FlagProperty.is_one_oper = true;
             FlagProperty.phone_number = intent.getStringExtra(KEY_PHONENUM).trim(); // 记录电话号码
+            FlagProperty.phone_number_one = FlagProperty.phone_number;
             new Thread() {
                 public void run() {
                     if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
@@ -289,8 +301,8 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                     if (obj.getString("SongTotalTime").compareTo("") == 0) {
 
                     } else {
-                        music_total_time = Integer.parseInt(obj.getString("SongTotalTime"));
-                        music_total_time /= 1000;
+//                        music_total_time = Integer.parseInt(obj.getString("SongTotalTime"));
+//                        music_total_time /= 1000;
                         // FragmentMusic.music_total_time1
                         // .setText(getTime(music_total_time / 60) + ":" +
                         // getTime(music_total_time % 60));
@@ -375,6 +387,24 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 
                     break;
             }
+        }
+//       三方来电
+        if(intent.getAction().equals(ACTION_CALL_TRIPARTITE_COMMING)){
+            String numtwo  = intent.getStringExtra(KEY_PHONENUM_TRIPARTITE);
+            FlagProperty.phone_number_two =numtwo;
+            PhoneFragment.showCalling(numtwo);
+        }
+    // 挂断
+        if(intent.getAction().equals(ACTION_CALL_TRIPARTITE_HANGUP)){
+            PhoneFragment.showCallhangup();
+        }
+        //接听
+        if(intent.getAction().equals(ACTION_CALL_TRIPARTITE_TALKING)){
+//            PhoneFragment.showCallhAnswer();
+        }
+//        保持
+        if(intent.getAction().equals(ACTION_CALL_TRIPARTITE_HANGON)){
+//            PhoneFragment.showCallhKeep();
         }
 
     }

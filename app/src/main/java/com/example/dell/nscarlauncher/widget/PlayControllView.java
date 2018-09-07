@@ -15,7 +15,7 @@ public class PlayControllView extends LinearLayout {
     private final String TAG = "PlayControllView";
 
     private ImageView left;
-    private ImageView center;
+    public ImageView center;
     private ImageView right;
     public boolean isPlay;
 

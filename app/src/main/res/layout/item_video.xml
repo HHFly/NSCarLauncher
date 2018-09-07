@@ -17,7 +17,7 @@
             android:id="@+id/iv_fm"
             android:layout_width="250px"
             android:layout_height="250px"
-            android:src="@mipmap/ic_app" />
+            android:src="@mipmap/ic_video" />
 
         <LinearLayout
             android:visibility="gone"

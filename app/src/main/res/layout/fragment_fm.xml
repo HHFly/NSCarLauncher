@@ -18,11 +18,12 @@
     android:layout_height="71px"
     android:src="@mipmap/ic_fm_back_btn"/>
 <ImageView
-    android:visibility="gone"
+    android:visibility="visible"
     android:id="@+id/iv_search"
     android:layout_width="46px"
     android:layout_height="46px"
     android:src="@mipmap/ic_f_fm_search"
+    android:background="?android:attr/selectableItemBackground"
     android:layout_alignParentRight="true"
    android:layout_marginTop="13px"/>
 

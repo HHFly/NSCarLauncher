@@ -3,6 +3,9 @@ package com.example.dell.nscarlauncher.ui.music.fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.IKdAudioControlService;
@@ -24,6 +27,7 @@ import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.example.dell.nscarlauncher.ui.fm.FMAdapter;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
+import com.example.dell.nscarlauncher.ui.music.CursorMusicImage;
 import com.example.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.example.dell.nscarlauncher.ui.music.adapter.MusicAdapter;
 import com.example.dell.nscarlauncher.ui.music.adapter.MusicLocalAdapter;
@@ -51,7 +55,7 @@ public class MusicFragment extends BaseFragment {
     private final static int MUSCI_BACK = 6; // 蓝牙音乐上一首
     private final static int MUSIC_NEXT = 7; // 蓝牙音乐下一首
     private final static int  VIEWFRESH =8;//刷新界面
-    static int music_model = 1; // 音乐播放循环模式
+    public static int music_model = 1; // 音乐播放循环模式
     static SeekBar music_progress_bar; // 音乐播放进度条
     static int progress = 0; // 记录进度
     static int music_time = 0; // 记录歌曲时间，若无变化，则不更新界面
@@ -70,7 +74,7 @@ public class MusicFragment extends BaseFragment {
     private   List<Mp3Info> mLocalData = new ArrayList<>();//缓存数据源
     private MusicAdapter mAdapter;
     private MusicLocalAdapter musicLocalAdapter;
-    private static    DialogLocalMusic dialogLocalMusic;
+    public static    DialogLocalMusic dialogLocalMusic;
     @Override
     public int getContentResId() {
         return R.layout.fragment_music;
@@ -124,9 +128,27 @@ public class MusicFragment extends BaseFragment {
 
              }
          });
-        dialogLocalMusic.ScanMusic(getContext(),false);
-        circle_image.nextRoatate(R.mipmap.one);
+        getMusicData();
+//        dialogLocalMusic.ScanMusic(getContext(),false);
+        if(flag_play){
+            String albumArt = CursorMusicImage.getImage(getContext(), ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).url);
+            if (albumArt == null) {
+                if(MusicFragment.circle_image!=null) {
+                    circle_image.setImageResource(R.mipmap.one);
+                }
+            } else {
+                Bitmap bm = BitmapFactory.decodeFile(albumArt);
+                BitmapDrawable bmpDraw = new BitmapDrawable(bm);
+                if(MusicFragment.circle_image!=null) {
+                    MusicFragment.circle_image.setImageDrawable(bmpDraw);
+                }
+            }
+        }else{
+            circle_image.nextRoatate(R.mipmap.one);
+        }
+
         bt_play.setBackgroundResource(flag_play?R.mipmap.ic_play_big:R.mipmap.ic_music_stop);
+
     }
 
     @Override
@@ -620,9 +642,9 @@ public   void  play(){
     @Override
     public void onPause() {
         super.onPause();
-        if(flag_play){
-            play();
-        }
+//        if(flag_play){
+//            play();
+//        }
     }
     public  static void  reSetMusic(boolean isLater){
 

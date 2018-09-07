@@ -413,7 +413,9 @@ public class DialogLocalMusic  {
 					}
 				}
 				getSDUSBData(context);
-				mThreadCallback.threadEndLisener();
+				if(mThreadCallback!=null){
+					mThreadCallback.videoEndListener();
+				}
 			}
 		}.start();  //开启一个线程
 	}
@@ -429,8 +431,13 @@ public class DialogLocalMusic  {
 						e.printStackTrace();
 					}
 				}
-				getSDUSBViedoData(context);
-				mThreadCallback.videoEndListener();
+				if(context!=null) {
+					getSDUSBViedoData(context);
+				}
+				if(mThreadCallback!=null){
+					mThreadCallback.videoEndListener();
+				}
+
 			}
 		}.start();  //开启一个线程
 	}

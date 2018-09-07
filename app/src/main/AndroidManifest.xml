@@ -73,6 +73,8 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="32fcdcb767b3ccca061e62934491e4bb"/>
+        <service android:name="com.amap.api.location.APSService">
+        </service>
         <activity android:name=".ui.home.HomePagerActivity" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

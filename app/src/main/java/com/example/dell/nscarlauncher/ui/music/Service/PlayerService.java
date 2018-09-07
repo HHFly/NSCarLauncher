@@ -159,7 +159,9 @@ public class PlayerService extends Service {
 	@Override
 	public void onDestroy() {
 		if (mediaPlayer != null) {
-			mediaPlayer.stop();
+			if(mediaPlayer.isPlaying()){
+				mediaPlayer.stop();
+			}
 			mediaPlayer.release();
 			mediaPlayer = null;
 		}
@@ -185,11 +187,15 @@ public class PlayerService extends Service {
 			//设置歌曲专辑内置图片
 			String albumArt = CursorMusicImage.getImage(PlayerService.this, ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).url);
 			if (albumArt == null) {
-				MusicFragment.circle_image.setImageResource(R.mipmap.one);
+				if(MusicFragment.circle_image!=null) {
+					MusicFragment.circle_image.setImageResource(R.mipmap.one);
+				}
 			} else {
 				Bitmap bm = BitmapFactory.decodeFile(albumArt);
 				BitmapDrawable bmpDraw = new BitmapDrawable(bm);
-				MusicFragment.circle_image.setImageDrawable(bmpDraw);
+				if(MusicFragment.circle_image!=null) {
+					MusicFragment.circle_image.setImageDrawable(bmpDraw);
+				}
 			}
 					
 			MusicFragment.setMusicInfo(musicName, artist);
