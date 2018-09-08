@@ -685,7 +685,7 @@ public static void initCarRecord() {
             return R.mipmap.home_top_btn5_01;
         }
         else {
-            return R.mipmap.home_top_btn5_00;
+            return R.mipmap.home_top_btn5_01;
         }
     }
 //    获取不同信号强度图片

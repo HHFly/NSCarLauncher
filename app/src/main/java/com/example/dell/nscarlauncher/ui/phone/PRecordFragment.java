@@ -76,7 +76,7 @@ public class PRecordFragment extends BaseFragment {
 
         }else {
             if(rv==null){
-                rv = getView(R.id.recyclerView2);
+                rv = getView(R.id.recyclerView1);
                 if (rv != null) {
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                     rv.setLayoutManager(linearLayoutManager);

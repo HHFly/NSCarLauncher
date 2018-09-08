@@ -226,4 +226,13 @@ App extends MultiDexApplication {
             e.printStackTrace();
         }
     }
+    public void PauseServiceMUSic(){
+        try {
+            broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
+            btservice.btAvrPause();
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 }

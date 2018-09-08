@@ -654,5 +654,14 @@ public   void  play(){
 
         }
     }
+    public static  void  stopView(){
+        if(bt_play!=null){
+            bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+        }
+        if(circle_image!=null){
+            circle_image.roatatePause();
+        }
+        HomePagerTwoFragment.musicPaly.setPlay(false);
+    }
 
 }

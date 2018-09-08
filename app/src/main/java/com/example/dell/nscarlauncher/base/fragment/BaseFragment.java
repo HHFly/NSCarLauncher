@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.example.dell.nscarlauncher.base.ShowLoadingDialogListener;
 import com.example.dell.nscarlauncher.common.util.FrescoUtils;

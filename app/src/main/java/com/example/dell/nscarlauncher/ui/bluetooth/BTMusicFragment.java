@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 
 import java.io.IOException;
 
@@ -134,6 +135,7 @@ public class BTMusicFragment extends BaseFragment {
             new Thread() {
                 public void run() {
                     myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
+                    MusicFragment.stopView();
 
                 }
 

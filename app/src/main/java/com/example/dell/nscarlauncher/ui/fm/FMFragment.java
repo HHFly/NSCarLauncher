@@ -61,6 +61,7 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
 
     @Override
     public void Resume() {
+        App.get().PauseServiceMUSic();
         if (isSecondResume) {
             if(radio!=null&&audioservice!=null&&audioManager!=null){
                 openFm();

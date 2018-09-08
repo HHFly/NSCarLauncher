@@ -103,6 +103,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 public void run() {
                     try {
                         PhoneFragment.getPhoneBookStr(btservice.getContactsJsonString());
+                        PhoneFragment.getPhoneRecord();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -319,6 +320,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             BTMusicFragment.isPlay=true;
             BTMusicFragment.gifPlayShow();
             HomePagerOneFragment.btPaly.setPlay(true);
+            MusicFragment.stopView();
 
         }
         if (intent.getAction().equals(ACTION_BT_STREAM_SUSPEND)) {
