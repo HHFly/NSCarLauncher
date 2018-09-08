@@ -414,7 +414,7 @@ public class DialogLocalMusic  {
 				}
 				getSDUSBData(context);
 				if(mThreadCallback!=null){
-					mThreadCallback.videoEndListener();
+					mThreadCallback.threadEndLisener();
 				}
 			}
 		}.start();  //开启一个线程

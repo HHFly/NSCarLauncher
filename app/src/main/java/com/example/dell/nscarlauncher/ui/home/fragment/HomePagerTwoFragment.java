@@ -1,6 +1,8 @@
 package com.example.dell.nscarlauncher.ui.home.fragment;
 
 
+import android.os.Handler;
+import android.os.Message;
 import android.os.RemoteException;
 import android.view.View;
 
@@ -202,5 +204,24 @@ public class HomePagerTwoFragment extends BaseFragment {
         }
     }
 
+    public static final  int MUSIC_CLOSE =1;
+    private static final  int MUSIC_OPEN =2;
+    public static Handler myHandler = new Handler() {
+
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MUSIC_CLOSE:
+                    musicPaly.setPlay(false);
+                    break;
+
+                case MUSIC_OPEN:
+                    musicPaly.setPlay(true);
+                    break;
+
+                default:
+                    break;
+            }
+        };
+    };
 
 }

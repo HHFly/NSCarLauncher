@@ -506,7 +506,7 @@ public   void  play(){
           if(mData==null||mData.size()==0){
               mData =DialogLocalMusic.USBData;
               if(mData!=null||mData.size()!=0) {
-                setTvText(R.id.music_type,getString(R.string.usb));
+
                 dataMode=2;
                   selectMode(2);
               }
@@ -559,9 +559,11 @@ public   void  play(){
         switch (type){
             case 1:
                 setViewSelected(R.id.music_local_1,true);
+                setTvText(R.id.music_type,getString(R.string.本地音乐));
                 break;
             case 2 :
                 setViewSelected(R.id.music_local_2,true);
+                setTvText(R.id.music_type,getString(R.string.usb));
                 break;
         }
     }
@@ -650,7 +652,7 @@ public   void  play(){
 
         if(context!=null) {
 //            broadcastMusicInfo(context,STOP_MSG);
-            DialogLocalMusic.ScanMusic(context ,isLater);
+            dialogLocalMusic.ScanMusic(context ,isLater);
 
         }
     }
@@ -661,7 +663,7 @@ public   void  play(){
         if(circle_image!=null){
             circle_image.roatatePause();
         }
-        HomePagerTwoFragment.musicPaly.setPlay(false);
+        HomePagerTwoFragment.myHandler.sendEmptyMessage(1);
     }
 
 }
