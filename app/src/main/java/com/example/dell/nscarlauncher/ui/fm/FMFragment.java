@@ -17,6 +17,7 @@ import com.example.dell.nscarlauncher.common.util.NumParseUtils;
 import com.example.dell.nscarlauncher.common.util.SPUtil;
 import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
+import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.example.dell.nscarlauncher.widget.RadioRulerView;
 
 
@@ -65,6 +66,7 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
         if (isSecondResume) {
             if(radio!=null&&audioservice!=null&&audioManager!=null){
                 openFm();
+                HomePagerOneFragment.fmPaly.setPlay(true);
                 changeChannel(channel);
             }else {
                 getService();
@@ -108,6 +110,7 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
             case R.id.iv_back:
                 homePagerActivity.hideFragment();
                 closeFm();
+                HomePagerOneFragment.fmPaly.setPlay(false);
                SPUtil.getInstance(getContext(),FMCHANNEL).putFloat(FMCHANNEL,channel);
                 break;
             case R.id.iv_search:
