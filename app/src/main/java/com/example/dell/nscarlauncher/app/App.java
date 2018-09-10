@@ -23,7 +23,9 @@ import com.example.dell.nscarlauncher.common.util.NSLifecycleHandle;
 import com.example.dell.nscarlauncher.common.util.TimeUtils;
 import com.example.dell.nscarlauncher.common.util.ToastUtils;
 import com.example.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast;
+import com.example.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
+import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.white.lib.utils.UtilsConfig;
 
 import static com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty.PAUSE_MSG;
@@ -203,6 +205,9 @@ App extends MultiDexApplication {
             radio.CloseLocalRadio();
             btservice.btAvrPause();
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
+            HomePagerTwoFragment.myHandler.sendEmptyMessage(1);
+            pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
+            pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -212,6 +217,9 @@ App extends MultiDexApplication {
         try {
             radio.CloseLocalRadio();
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
+            HomePagerTwoFragment.myHandler.sendEmptyMessage(1);
+            pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
+//            pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSIC);
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -221,6 +229,8 @@ App extends MultiDexApplication {
         try {
             radio.CloseLocalRadio();
             btservice.btAvrPause();
+            pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
+            pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -230,6 +240,8 @@ App extends MultiDexApplication {
         try {
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
             btservice.btAvrPause();
+            HomePagerTwoFragment.myHandler.sendEmptyMessage(1);
+            pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
 
         } catch (RemoteException e) {
             e.printStackTrace();

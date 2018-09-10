@@ -53,7 +53,7 @@ public class HomePagerTwoFragment extends BaseFragment {
         musicPaly.setOnItemClickListener(new PlayControllView.OnItemClickListener() {
             @Override
             public void onClickLeft() {
-                App.get().PauseService();
+                App.get().PauseServiceFMBTMUSic();
                 isMusicFragment();
                 if(DialogLocalMusic.data.size()>0) {
                     if ( MusicFragment.flag_play) {
@@ -82,7 +82,7 @@ public class HomePagerTwoFragment extends BaseFragment {
 
             @Override
             public void onClickRight() {
-                App.get().PauseService();
+                App.get().PauseServiceFMBTMUSic();
                 isMusicFragment();
 //                HomePagerActivity.musicFragment.NextMusic();
                 if(DialogLocalMusic.data.size()>0) {
@@ -105,7 +105,7 @@ public class HomePagerTwoFragment extends BaseFragment {
 
     private void  MusicPaly(boolean isPlay){
         if(isPlay){
-            App.get().PauseService();
+            App.get().PauseServiceFMBTMUSic();
 
            HomePagerActivity.musicFragment.system_flag = true;
             HomePagerActivity.musicFragment.am_flag = true;

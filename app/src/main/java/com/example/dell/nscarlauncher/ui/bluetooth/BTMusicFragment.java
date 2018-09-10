@@ -12,6 +12,7 @@ import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -51,6 +52,7 @@ public class BTMusicFragment extends BaseFragment {
     static IKdAudioControlService audioservice ;
     public static IKdBtService btservice;
     public static TextView  music_current_time,tv_bt_music_songname,tv_bt_music_singer,music_total_time;
+    public  static ImageView iv_bt_stop;
     public static RelativeLayout NullView ;//空界面
     @Override
     public int getContentResId() {
@@ -66,6 +68,7 @@ public class BTMusicFragment extends BaseFragment {
         tv_bt_music_songname=getView(R.id.tv_bt_songname);
         music_total_time=getView(R.id.btmusic_total_time);
         NullView =getView(R.id.bt_mic_null);
+        iv_bt_stop= getView(R.id.iv_bt_stop);
     }
 
     @Override
@@ -73,12 +76,14 @@ public class BTMusicFragment extends BaseFragment {
         setClickListener(R.id.bt_gif);
         setClickListener(R.id.iv_fm_left);
         setClickListener(R.id.iv_fm_right);
+        setClickListener(R.id.iv_bt_stop);
     }
 
     @Override
     public void initView() {
         initGif();
         initSeekBar();
+
         setVisibilityGone(R.id.bt_mic_null,!FlagProperty.flag_bluetooth);
     }
 
@@ -103,7 +108,6 @@ public class BTMusicFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.bt_gif:
-                isPlay=!isPlay;
                 gifPlay(isPlay);
 
 
@@ -113,6 +117,9 @@ public class BTMusicFragment extends BaseFragment {
                 break;
             case R.id.iv_fm_right:
                 musicNext();
+                break;
+            case R.id.iv_bt_stop:
+                musicPlay();
                 break;
         }
     }
@@ -135,6 +142,7 @@ public class BTMusicFragment extends BaseFragment {
             new Thread() {
                 public void run() {
                     myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
+
                     MusicFragment.stopView();
 
                 }
@@ -230,7 +238,13 @@ public  void  musicNext(){
     private void initGif(){
         try {
             gifDrawable = new GifDrawable(getResources(), R.mipmap.bt_music);
-            gifDrawable.stop();
+            if (isPlay) {
+                gifDrawable.start();
+                iv_bt_stop.setVisibility(View.GONE);
+            } else {
+                gifDrawable.stop();
+                iv_bt_stop.setVisibility(View.VISIBLE);
+            }
             mGifImageView.setImageDrawable(gifDrawable);
 
 
@@ -242,58 +256,97 @@ public  void  musicNext(){
     public  static  void startGif(){
         if(gifDrawable!=null) {
             gifDrawable.start();
-            isPlay=false;
+            isPlay=true;
+            iv_bt_stop.setVisibility(View.GONE);
         }
     }
     /*关闭gif*/
     public  static  void stopGif(){
         if(gifDrawable!=null) {
             gifDrawable.stop();
-            isPlay=true;
+            isPlay=false;
+            iv_bt_stop.setVisibility(View.VISIBLE);
         }
+
     }
     private void gifPlay(boolean isPlay){
         if(isPlay){
-             musicPlay();
-        }else {
             musicPause();
+        }else {
+
+            musicPlay();
         }
     }
     public  static  void gifPlayShow(){
         if(isPlay){
             if(gifDrawable!=null) {
                 gifDrawable.start();
+                iv_bt_stop.setVisibility(View.GONE);
             }
         }else {
             if(gifDrawable!=null) {
                 gifDrawable.stop();
+                iv_bt_stop.setVisibility(View.VISIBLE);
             }
         }
     }
-    public Handler myHandler = new Handler() {
+    public  static  Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             try {
                 switch (msg.what) {
                     case MUSIC_CHANGE:
-                        getView(R.id.bt_gif).performClick();
+//                        getView(R.id.bt_gif).performClick();
 
                         break;
                     case MUSIC_BLUETOOTH_CLOSE:
-                        gifDrawable.stop();
-                        btservice.btAvrPause();
-
+                        if(gifDrawable!=null) {
+                            gifDrawable.stop();
+                        }
+                        if(btservice!=null) {
+                            btservice.btAvrPause();
+                        }
+                        if(iv_bt_stop!=null) {
+                            iv_bt_stop.setVisibility(View.VISIBLE);
+                        }
+                        isPlay=false;
                         break;
 
                     case MUSIC_BLUETOOTH_OPEN:
-                        gifDrawable.start();
-                        btservice.btAvrPlay();
-
+                        if(gifDrawable!=null) {
+                            gifDrawable.start();
+                        }
+                        if(btservice!=null){
+                        btservice.btAvrPlay();}
+                        if(iv_bt_stop!=null) {
+                            iv_bt_stop.setVisibility(View.GONE);
+                        }
+                        isPlay=true;
                         break;
                     case MUSCI_BACK:
                         btservice.btAvrLast();
                         break;
                     case MUSIC_NEXT:
                         btservice.btAvrNext();
+                        break;
+                    case 11:
+                        if(gifDrawable!=null) {
+                            gifDrawable.start();
+                        }
+
+                        if(iv_bt_stop!=null) {
+                            iv_bt_stop.setVisibility(View.GONE);
+                        }
+                        isPlay=true;
+                        break;
+                    case  12:
+                        if(gifDrawable!=null) {
+                            gifDrawable.stop();
+                        }
+
+                        if(iv_bt_stop!=null) {
+                            iv_bt_stop.setVisibility(View.VISIBLE);
+                        }
+                        isPlay=false;
                         break;
                     default:
                         break;

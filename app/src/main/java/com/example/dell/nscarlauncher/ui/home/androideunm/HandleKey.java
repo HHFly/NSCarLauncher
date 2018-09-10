@@ -7,7 +7,10 @@ import android.support.annotation.IntDef;
         HandleKey.WEATHAER,
         HandleKey.POWER,
         HandleKey.SPEED,
-        HandleKey.FRAME
+        HandleKey.FRAME,
+        HandleKey.FM,
+        HandleKey.BTMUSICCOLSE,
+        HandleKey.BTMUSICOPEN,
 })
 public @interface HandleKey  {
 //    时间
@@ -21,4 +24,10 @@ public @interface HandleKey  {
     int SPEED =4;
     /*显示主界面*/
     int FRAME =6;
+    /*fm*/
+    int  FM =7;
+    /*btmusic*/
+    int BTMUSICCOLSE=8;
+
+    int BTMUSICOPEN=9;
 }

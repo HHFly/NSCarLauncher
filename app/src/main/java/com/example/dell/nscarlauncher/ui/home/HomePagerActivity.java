@@ -1,6 +1,5 @@
 package com.example.dell.nscarlauncher.ui.home;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -20,6 +19,7 @@ import android.os.IBinder;
 import android.os.IKdBtService;
 import android.os.Message;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -46,6 +46,7 @@ import com.example.dell.nscarlauncher.common.util.JumpUtils;
 import com.example.dell.nscarlauncher.common.util.LogUtils;
 import com.example.dell.nscarlauncher.common.util.NetUtils;
 import com.example.dell.nscarlauncher.common.util.TimeUtils;
+import com.example.dell.nscarlauncher.receiver.CarMFLReceiver;
 import com.example.dell.nscarlauncher.ui.application.AppFragment;
 import com.example.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
@@ -99,6 +100,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     static Dialog alertDialog;//来电弹框
     public ComingReceiver comingReceiver;
     public USBBroadcastReceiver usbBroadcastReceiver;
+    public CarMFLReceiver  carMFLReceiver;
     static AudioManager audioManager;
     static IKdBtService btservice;
     private static final  String ACTION ="com.driverlayer.kdos_driverServer.RemoteService";
@@ -132,7 +134,22 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             intentFilter.addDataScheme("file");
             registerReceiver(usbBroadcastReceiver, intentFilter);
         }
-
+        /*车辆方向盘*/
+        if(carMFLReceiver ==null){
+            carMFLReceiver =new CarMFLReceiver();
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction("com.kangdi.BroadCast.WheelVolumeAdd");
+            intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_VOLUMEADD);
+            intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_VOLUMEREDUCE);
+            intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_MODE);
+            intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_VOICE);
+            intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_MUTE);
+            intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_MUSIC_PREV);
+            intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_MUSIC_NEXT);
+            intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_CALL);
+            intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_HANGUP);
+            registerReceiver(carMFLReceiver, intentFilter);
+        }
         if(mNetworkReceiver==null){
             IntentFilter filter = new IntentFilter();
             //WiFi相关的过滤
@@ -214,6 +231,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         }
 
     }
+
+
+
     @Override
     public void setListener() {
         super.setListener();
@@ -358,6 +378,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             if(usbBroadcastReceiver!=null){
                 this.unregisterReceiver(usbBroadcastReceiver);
             }
+            if(carMFLReceiver!=null){
+                this.unregisterReceiver(carMFLReceiver);
+            }
             if(mNetworkReceiver!=null){
                 this.unregisterReceiver(mNetworkReceiver);
             }
@@ -382,10 +405,10 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
 
 
-    public void dimissShow() {
+    public static void dimissShow() {
         if (alertDialog != null) {
             alertDialog.dismiss();
-            initImmersionBar();
+
         }
     }
     // 来电显示弹出框
@@ -414,6 +437,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                     jumpFragment(FragmentType.PHONE);
                     FlagProperty.flag_phone_incall_click = true;
                    dimissShow();
+                   initImmersionBar();
                 }
             });
             bt_refuse.setOnClickListener(new View.OnClickListener() {
@@ -439,6 +463,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                         };
                     }.start();
                   dimissShow();
+                  initImmersionBar();
                 }
             });
         }
@@ -535,10 +560,12 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
         String packageName = "com.autonavi.amapauto";//高德地图
         Intent launchIntentForPackage = packageManager.getLaunchIntentForPackage(packageName);
-        if (launchIntentForPackage != null)
+        if (launchIntentForPackage != null) {
             startActivity(launchIntentForPackage);
-        else
+        }
+        else {
             Toast.makeText(this, "未安装该应用", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -550,7 +577,13 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
 //    蓝牙状态
     public static void initBluetooth() {
+
+        if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
+
+            FlagProperty.flag_bluetooth = true;
+        }
         int bluetooth_state =FlagProperty.flag_bluetooth? 1:0;
+
 //        int bluetooth_state = Settings.System.getInt(getContentResolver(), "bluetooth_state", 1); // 默认为1, 开启
         if (bluetooth_state == 1) {
 //            setIvImage(R.id.iv_blueTooth,R.mipmap.home_top_btn4_on);

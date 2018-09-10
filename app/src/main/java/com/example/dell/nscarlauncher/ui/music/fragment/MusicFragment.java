@@ -244,15 +244,16 @@ public class MusicFragment extends BaseFragment {
     public  void PreMusic(){
         if(DialogLocalMusic.data.size()>0) {
             // 非蓝牙音乐播放上一曲
-            if (flag_play) {
-                bt_play.performClick();
-            }
+//            if (flag_play) {
+//                bt_play.performClick();
+//            }
             if (music_model == 2) { // 单曲循环模式不变换音乐图片
                 circle_image.resetRoatate();
             } else { // 其他模式
-                // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_PREV)));
+//                 circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_PREV)));
             }
-            myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
+            circle_image.roatateStart();
+//            myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
             MusicModel.getPrevMusic(context, music_model);
         }
     }
@@ -260,15 +261,16 @@ public class MusicFragment extends BaseFragment {
 
     public  void NextMusic(){
         if(DialogLocalMusic.data.size()>0) {
-            if (flag_play) {
-                bt_play.performClick();
-            }
+//            if (flag_play) {
+//                bt_play.performClick();
+//            }
             if (music_model == 2) { // 单曲循环模式不变换音乐图片
                 circle_image.resetRoatate();
             } else { // 其他模式
                 // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
             }
-            myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
+            circle_image.roatateStart();
+//            myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
             MusicModel.getNextMusic(context, music_model);
         }
     }
@@ -473,7 +475,7 @@ public   void  play(){
     }
     // 开始播放音乐
     public static void listStartPlayMusic() {
-        App.get().PauseService();
+        App.get().PauseServiceFMBTMUSic();
         if (audioManager.requestAudioFocus(afChangeListener, 12,
                 AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
                 && audioManager.requestAudioFocus(afSystemChangeListener, AudioManager.STREAM_MUSIC,
@@ -614,6 +616,7 @@ public   void  play(){
                     i.putExtra("MSG", FlagProperty.PLAY_MSG);
                     context.startService(i);
                     listStartPlayMusic();
+                    HomePagerTwoFragment.myHandler.sendEmptyMessage(2);
                 }
 
 
@@ -680,7 +683,6 @@ public   void  play(){
     }
     public static  void  stopView(){
         ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
-        HomePagerTwoFragment.myHandler.sendEmptyMessage(1);
     }
 
 }

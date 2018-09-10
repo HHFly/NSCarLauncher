@@ -31,6 +31,7 @@ import com.example.dell.nscarlauncher.common.util.JumpUtils;
 import com.example.dell.nscarlauncher.common.util.NumParseUtils;
 import com.example.dell.nscarlauncher.common.util.SPUtil;
 import com.example.dell.nscarlauncher.common.util.TimeUtils;
+import com.example.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.example.dell.nscarlauncher.ui.fm.FMFragment;
 import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
@@ -217,7 +218,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private void  FmPaly(boolean isPlay){
         if(isPlay){
             if(fmFragment!=null){
-                App.get().PauseService();
+                App.get().PauseServiceMUSic();
                 fmFragment.openFm();
 
             }
@@ -233,7 +234,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private void  BtMusicPaly(boolean isPlay){
         if(isPlay){
             try {
-                App.get().PauseService();
+                App.get().PauseServiceFMMUSic();
                 App.get().getBtservice().btAvrPlay();
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -288,10 +289,16 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         circleView.setProgress(50);
         circleView.startWave();
         setFmMHZ();
+        setBT();
     }
+    /*初始化fm*/
     private void setFmMHZ(){
         channel= SPUtil.getInstance(getContext(),FMCHANNEL).getFloat(FMCHANNEL,93.0f);
         setTvText(R.id.tv_fm_hz,String.valueOf(channel));
+    }
+    /*初始化蓝牙*/
+    private void setBT(){
+        btPaly.setPlay(BTMusicFragment.isPlay);
     }
     @Override
     public void onClick(View view) {
@@ -396,6 +403,15 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                     break;
                 case HandleKey.SPEED:
 
+                    break;
+                case  HandleKey.FM:
+                    fmPaly.setPlay(false);
+                    break;
+                case  HandleKey.BTMUSICCOLSE:
+                    btPaly.setPlay(false);
+                    break;
+                case  HandleKey.BTMUSICOPEN:
+                    btPaly.setPlay(true);
                     break;
             }
             super.handleMessage(msg);

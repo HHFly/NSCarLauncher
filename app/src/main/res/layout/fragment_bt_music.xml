@@ -29,6 +29,11 @@
             android:layout_height="match_parent"
 
             />
+            <ImageView
+                android:id="@+id/iv_bt_stop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_bt_music_stop"/>
         </RelativeLayout>
         <ImageView
             android:id="@+id/iv_fm_left"

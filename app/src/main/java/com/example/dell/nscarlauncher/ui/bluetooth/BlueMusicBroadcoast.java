@@ -19,6 +19,7 @@ import com.example.dell.nscarlauncher.app.App;
 import com.example.dell.nscarlauncher.common.util.LogUtils;
 import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.example.dell.nscarlauncher.ui.home.androideunm.FragmentType;
+import com.example.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.example.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.example.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.example.dell.nscarlauncher.ui.phone.PhoneFragment;
@@ -317,20 +318,25 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_BT_STREAM_START)) {
 //            int  intent.getStringExtra(KEY_MEDIA_STATUS)
             App.get().PauseServiceFMMUSic();
-            BTMusicFragment.isPlay=true;
-            BTMusicFragment.gifPlayShow();
-            HomePagerOneFragment.btPaly.setPlay(true);
+            App.pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICOPEN);
+            BTMusicFragment.myHandler.sendEmptyMessage(11);
+//            BTMusicFragment.isPlay=true;
+//            BTMusicFragment.gifPlayShow();
+//            HomePagerOneFragment.btPaly.setPlay(true);
             MusicFragment.stopView();
 
         }
         if (intent.getAction().equals(ACTION_BT_STREAM_SUSPEND)) {
 //            int  intent.getStringExtra(KEY_MEDIA_STATUS)
             LogUtils.log("BT:"+ SystemClock.currentThreadTimeMillis());
-            BTMusicFragment.isPlay=false;
-            BTMusicFragment.gifPlayShow();
-            HomePagerOneFragment.btPaly.setPlay(false);
+//            BTMusicFragment.isPlay=false;
+//            BTMusicFragment.gifPlayShow();
+//            HomePagerOneFragment.btPaly.setPlay(false);
+            BTMusicFragment.myHandler.sendEmptyMessage(12);
+            App.pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
         }
         if (intent.getAction().equals(ACTION_TRACK_PROGRESS)) {
+
                 int time = intent.getIntExtra(KEY_TRACK_POSITON, 0);
                 BTMusicFragment.setBlueMusicProgress(time);
 
@@ -355,6 +361,11 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             int current = intent.getIntExtra("current",0);
             music_total_time =intent.getIntExtra("total",0);
             BTMusicFragment.setBlueMusicProgress(current);
+            if(!BTMusicFragment.isPlay){
+                BTMusicFragment.isPlay=true;
+//                App.pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICOPEN);
+//                BTMusicFragment.myHandler.sendEmptyMessage(5);
+            }
         }
 
         if (intent.getAction().equals("com.kangdi.BroadCast.PhoneState")) {
