@@ -1,6 +1,8 @@
 package com.example.dell.nscarlauncher.base.Activity;
 
 import android.app.Activity;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
@@ -35,6 +37,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.gyf.barlibrary.BarHide;
 import com.gyf.barlibrary.ImmersionBar;
 import com.white.lib.utils.location.LocationManagerUtil;
+
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 //import com.zhy.autolayout.AutoLayoutActivity;
 
 
@@ -104,6 +108,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         } else {
             isSecondResume = true;
         }
+
     }
 
     /**
@@ -136,6 +141,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
     }
 
     /**

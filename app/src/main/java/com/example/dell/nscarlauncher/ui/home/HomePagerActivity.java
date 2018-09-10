@@ -709,19 +709,19 @@ public int getSim(int num) {
 }
     //    获取不同电量图片
     public static int getPower(int num) {
-        if (num == 100) {
+        if (num == 1000) {
             return R.mipmap.home_top_btn1_00;
-        } else if (num>80&&num < 100) {
+        } else if (num>800&&num < 1000) {
             return R.mipmap.home_top_btn1_06;
-        }else if (num > 60&&num<=80 ){
+        }else if (num > 600&&num<=800 ){
             return R.mipmap.home_top_btn1_05;
-        }else if (num > 40&&num<=60) {
+        }else if (num > 400&&num<=600) {
             return R.mipmap.home_top_btn1_04;
         }
-        else if (num>20&& num<=40) {
+        else if (num>200&& num<=400) {
             return R.mipmap.home_top_btn1_03;
         }
-        else if (num >5&&num<=20) {
+        else if (num >50&&num<=200) {
             return R.mipmap.home_top_btn1_02;
         }
         else {
@@ -890,8 +890,10 @@ public int getSim(int num) {
             if(ieCarDriver!=null) {
                ieCarDriver.Ecoc_getGeneral_Car(power);
                 if (!tv_power.getText().equals(String.valueOf(power[0]))) {
+                    int i =power[0]%10;
+                    int j =power[0]/10;
 //                    setTvText(R.id.tv_t_power, String.valueOf(power[0])+"%");
-                    tv_t_power.setText(String.valueOf(power[0])+"%");
+                    tv_t_power.setText(j +"%");
                     iv_t_power.setImageResource( getPower(power[0]));
 //                    setIvImage(R.id.iv_t_power, getPower(power[0]));
                 }

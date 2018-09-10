@@ -20,6 +20,7 @@ import com.example.dell.nscarlauncher.ui.music.model.Mp3Info;
 import java.util.List;
 
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 public class VideoFragment extends BaseFragment {
@@ -147,6 +148,7 @@ public class VideoFragment extends BaseFragment {
 
                 @Override
                 public void onClickMusic(Mp3Info data, int Pos) {
+                    JCVideoPlayer.WIFI_TIP_DIALOG_SHOWED =true;//关闭网络播放提示
                     JCFullScreenActivity.startActivity(getContext(),
                             data.url,
                             JCVideoPlayerStandard.class,

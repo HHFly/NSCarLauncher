@@ -86,7 +86,10 @@
         </activity>
         <activity android:name=".ui.video.JCPlayerActivity" android:screenOrientation="landscape"/>
         <service android:name=".ui.music.Service.PlayerService"/>
-
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="landscape" /> <!-- or android:screenOrientation="landscape"-->
     </application>
 
 </manifest>
