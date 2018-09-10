@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.RemoteException;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.example.dell.nscarlauncher.R;
@@ -189,7 +190,11 @@ public class HomePagerTwoFragment extends BaseFragment {
                 }
                 break;
             case R.id.rl_carcontroll:
-                JumpUtils.actAPK(getActivity(),FragmentType.CARCONTROLL);
+                if(FlagProperty.BCMStaus==0) {
+                    JumpUtils.actAPK(getActivity(), FragmentType.CARCONTROLL);
+                }else {
+                    Toast.makeText(getActivity(), "BCM未连接", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.rl_navigation:
                 if(homePagerActivity!=null){

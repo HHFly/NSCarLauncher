@@ -71,13 +71,15 @@ import java.util.concurrent.Executors;
 
 import me.relex.circleindicator.CircleIndicator;
 
+import static com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty.staus;
+
 
 public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
     public static final int CALL_ANSWER = 4; // 接听来电
     public static final int CALL_HUNGUP = 5; // 挂断来电
     private static FrameLayout frameLayout;//主界面
    static HomePagerOneFragment homePagerOneFragment;
-    public static int staus; //	1空调离线,0空调正常；
+
     HomePagerTwoFragment homePagerTwoFragment;
     HomePagerThreeFragment homePagerThreeFragment;
     private DialogVolumeControl dialogVolumeControl ;
@@ -878,6 +880,7 @@ public int getSim(int num) {
         setCarMode();
         setAir();
         setCarPoewr();
+        getCarState();
     }
     /*电量车速*/
     private  static void setCarPoewr(){
@@ -885,7 +888,7 @@ public int getSim(int num) {
         int[] power =new int[10];
         try {
             if(ieCarDriver!=null) {
-                ieCarDriver.Ecoc_getGeneral_Car(power);
+               ieCarDriver.Ecoc_getGeneral_Car(power);
                 if (!tv_power.getText().equals(String.valueOf(power[0]))) {
 //                    setTvText(R.id.tv_t_power, String.valueOf(power[0])+"%");
                     tv_t_power.setText(String.valueOf(power[0])+"%");
@@ -1010,5 +1013,16 @@ public int getSim(int num) {
         }
         return 0;
     }
+    /*整车控制状态*/
+    public static  void  getCarState(){
+        int [] carState =new int[16];
+        try {
+        if(ieCarDriver!=null) {
+            FlagProperty.BCMStaus= ieCarDriver.getCarState(carState);
+        }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 
+    }
 }

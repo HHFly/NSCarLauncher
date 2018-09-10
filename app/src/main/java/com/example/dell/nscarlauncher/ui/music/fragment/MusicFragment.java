@@ -346,19 +346,40 @@ public   void  play(){
             }
         }
     }
+    public static Handler  ViewHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+           switch (msg.what){
+               case MUSIC_BLUETOOTH_CLOSE:
+                   if(bt_play!=null){
+                       bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                   }
+                   if(circle_image!=null){
+
+                       circle_image.roatatePause();
+                   }
+                   break;
+
+               case MUSIC_BLUETOOTH_OPEN:
+                   if(bt_play!=null){
+                       bt_play.setBackgroundResource(R.mipmap.ic_play_big);
+                   }
+                   if(circle_image!=null){
+
+                       circle_image.roatateStart();
+                   }
+                   break;
+           }
+        }
+    };
+
     public  Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MUSIC_CHANGE:
                     bt_play.performClick();
                     break;
-                case MUSIC_BLUETOOTH_CLOSE:
 
-                    break;
-
-                case MUSIC_BLUETOOTH_OPEN:
-
-                    break;
                 case VIEWFRESH:
                    getMusicData();
                     break;
@@ -462,6 +483,7 @@ public   void  play(){
             circle_image.roatateStart();
             bt_play.setBackgroundResource(R.mipmap.ic_play_big);
             flag_play = true;
+            HomePagerTwoFragment.myHandler.sendEmptyMessage(1);
         }
     }
     // 设置歌曲进度条信息
@@ -657,12 +679,7 @@ public   void  play(){
         }
     }
     public static  void  stopView(){
-        if(bt_play!=null){
-            bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
-        }
-        if(circle_image!=null){
-            circle_image.roatatePause();
-        }
+        ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
         HomePagerTwoFragment.myHandler.sendEmptyMessage(1);
     }
 

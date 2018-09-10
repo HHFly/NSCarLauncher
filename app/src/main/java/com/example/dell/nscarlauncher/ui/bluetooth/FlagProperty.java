@@ -29,4 +29,6 @@ public class FlagProperty {
 	public static final int PLAYING_MSG = 8;	//正在播放
 	public static  int  CarMode =0; //0默认 1 已授权 2 未授权
 	public static  int  CarWork =0; // 1:运动模式,0:经济模式；
+	public static int staus =1; //	1空调离线,0空调正常；
+    public static int BCMStaus =1; //	0表示BCM正常;1表示BCM掉线
 }

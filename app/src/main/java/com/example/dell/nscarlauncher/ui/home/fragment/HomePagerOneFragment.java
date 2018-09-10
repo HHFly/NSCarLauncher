@@ -312,7 +312,11 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 }
                 break;
             case R.id.rl_air:
-                JumpUtils.actAPK(getActivity(),FragmentType.AIRCONTROLL);
+                if(FlagProperty.staus==0) {
+                    JumpUtils.actAPK(getActivity(), FragmentType.AIRCONTROLL);
+                }else {
+                    Toast.makeText(getActivity(), "空调未连接", Toast.LENGTH_SHORT).show();
+                }
                     break;
             case  R.id.controll_air:
                 aircontroll();
