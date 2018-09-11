@@ -46,6 +46,7 @@ import com.example.dell.nscarlauncher.common.util.JumpUtils;
 import com.example.dell.nscarlauncher.common.util.LogUtils;
 import com.example.dell.nscarlauncher.common.util.NetUtils;
 import com.example.dell.nscarlauncher.common.util.TimeUtils;
+import com.example.dell.nscarlauncher.common.util.ToastUtils;
 import com.example.dell.nscarlauncher.receiver.CarMFLReceiver;
 import com.example.dell.nscarlauncher.ui.application.AppFragment;
 import com.example.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
@@ -522,8 +523,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             }
         });
     }
-    //电量模块初始化
-    private void init_power() {
+    //车辆服务模块初始化
+    private void init_carservice() {
         ExecutorService timePool = Executors.newSingleThreadExecutor();  //采用线程池单一线程方式，防止被杀死
         timePool.execute(new Runnable() {
             @Override
@@ -898,7 +899,8 @@ public int getSim(int num) {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             ieCarDriver=IECarDriver.Stub.asInterface(service);
-            init_power();//状态栏电量
+            init_carservice();//iecar 服务
+
         }
 
         @Override
@@ -915,33 +917,34 @@ public int getSim(int num) {
         setCarPoewr();
         getCarState();
     }
-    /*电量车速*/
+    /*电量车程*/
     private  static void setCarPoewr(){
 
-        int[] power =new int[10];
+        int[] power =new int[12];
         try {
             if(ieCarDriver!=null) {
-               ieCarDriver.Ecoc_getGeneral_Car(power);
-                if (!tv_power.getText().equals(String.valueOf(power[0]))) {
-                    int i =power[0]%10;
-                    int j =power[0]/10;
+               ieCarDriver.getPowerManager(power);
+                if (!tv_power.getText().equals(String.valueOf(power[10]))) {
+                    int i =power[10]%10;
+                    FlagProperty.CarPower =power[10]/10;
 //                    setTvText(R.id.tv_t_power, String.valueOf(power[0])+"%");
-                    tv_t_power.setText(j +"%");
-                    iv_t_power.setImageResource( getPower(power[0]));
+                    tv_t_power.setText(FlagProperty.CarPower +"%");
+                    iv_t_power.setImageResource(getPower(power[10]));
 //                    setIvImage(R.id.iv_t_power, getPower(power[0]));
                 }
-
+                    FlagProperty.Speed =power[7];
+                    /*剩余里程*/
                 if (homePagerOneFragment != null) {
-                    if (homePagerOneFragment.tv_w_speed.getText().toString().equals(String.valueOf(power[7]))) {
+                    if (homePagerOneFragment.tv_w_speed.getText().toString().equals(String.valueOf(power[11]))) {
                         return;
                     }
-                    if (0 == power[7]) {
+                    if (0 == power[11]) {
                         homePagerOneFragment.tv_w_speed.setTextColor(Color.parseColor("#F03A53"));
                     } else {
                         homePagerOneFragment.tv_w_speed.setTextColor(Color.parseColor("#FFFFFF"));
                     }
 
-                    homePagerOneFragment.tv_w_speed.setText(String.valueOf(power[7]));
+                    homePagerOneFragment.tv_w_speed.setText(String.valueOf(power[11]));
                 }
             }else {
 
@@ -993,9 +996,14 @@ public int getSim(int num) {
                                 homePagerOneFragment.tv_work.setText(R.string.Sport);
                                 break;
                             case 0:
-                                homePagerOneFragment.tv_work.setText("");
+                                homePagerOneFragment.tv_work.setText(R.string.Economic);
                                 break;
-
+                            case 3:
+                                homePagerOneFragment.tv_work.setText(R.string.Irascible);
+                                break;
+                            case 4:
+                                homePagerOneFragment.tv_work.setText(R.string.NEDC);
+                                break;
                         }
                     }
                 }
@@ -1017,7 +1025,20 @@ public int getSim(int num) {
 
                     if (homePagerOneFragment != null&&staus==0) {
                         homePagerOneFragment.setTvText(R.id.tv_air,String.valueOf(air[0])+"℃");
+
                     }
+                if(0x10==(air[4]&0x30)){
+                        if(1!=HomePagerOneFragment.isAirOpen){
+                            HomePagerOneFragment.isAirOpen=1;
+                            App.pagerOneHnadler.sendEmptyMessage(HandleKey.AIROPEN);
+                        }
+
+                }else {
+                    if(0!=HomePagerOneFragment.isAirOpen){
+                        HomePagerOneFragment.isAirOpen=0;
+                        App.pagerOneHnadler.sendEmptyMessage(HandleKey.AIRCLOSE);
+                    }
+                }
             }
             else {
 
@@ -1054,10 +1075,52 @@ public int getSim(int num) {
         try {
         if(ieCarDriver!=null) {
             FlagProperty.BCMStaus= ieCarDriver.getCarState(carState);
+            if(HomePagerTwoFragment.backbox!=carState[8]){
+                HomePagerTwoFragment.backbox=carState[8];
+                HomePagerTwoFragment.myHandler.sendEmptyMessage(3);
+            }
+            if (HomePagerTwoFragment.centerlock!=carState[7]){
+                HomePagerTwoFragment.centerlock=carState[7];
+                HomePagerTwoFragment.myHandler.sendEmptyMessage(4);
+            }
         }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
 
+    }
+    /*设置后备箱状态*/
+    public static  void setBackBox(boolean isOpen){
+        try {
+            if(FlagProperty.Speed<5) {
+
+                ieCarDriver.setCar_Action(0x03, 1, isOpen ? 0x01 : 0x02);
+            }else {
+             ToastUtils.show(R.string.safetip);
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    /*设置中控门锁*/
+    public static void  setDoorLock(boolean isOpen){
+        try {
+            if(FlagProperty.Speed<5) {
+
+                ieCarDriver.setCar_Action(0x01, 1, isOpen ? 0x01 : 0x02);
+            }else {
+                ToastUtils.show(R.string.safetip);
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    /*一件下窗*/
+    public static void  OneKeyWindowOpen(){
+        try {
+          ieCarDriver.set_OneKeyOpenWindow(0);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

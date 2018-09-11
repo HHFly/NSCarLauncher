@@ -360,6 +360,7 @@ public   void  play(){
 
                        circle_image.roatatePause();
                    }
+                   flag_play=false;
                    break;
 
                case MUSIC_BLUETOOTH_OPEN:
@@ -370,6 +371,7 @@ public   void  play(){
 
                        circle_image.roatateStart();
                    }
+                   flag_play=true;
                    break;
            }
         }

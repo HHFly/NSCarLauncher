@@ -31,4 +31,6 @@ public class FlagProperty {
 	public static  int  CarWork =0; // 1:运动模式,0:经济模式；
 	public static int staus =1; //	1空调离线,0空调正常；
     public static int BCMStaus =1; //	0表示BCM正常;1表示BCM掉线
+	public static  int CarPower =0;//汽车电量
+	public static  int  Speed =0; //车速
 }

@@ -11,11 +11,12 @@ import android.support.annotation.IntDef;
         HandleKey.FM,
         HandleKey.BTMUSICCOLSE,
         HandleKey.BTMUSICOPEN,
+        HandleKey.AIROPEN,
+        HandleKey.AIRCLOSE
 })
 public @interface HandleKey  {
 //    时间
     int TIME    =1;
-
     /*天气*/
     int WEATHAER=2;
     /*电量*/
@@ -30,4 +31,8 @@ public @interface HandleKey  {
     int BTMUSICCOLSE=8;
 
     int BTMUSICOPEN=9;
+    /*空调开*/
+    int AIROPEN=10;
+    /*空调关*/
+    int AIRCLOSE=11;
 }

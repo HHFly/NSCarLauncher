@@ -68,6 +68,10 @@
     <string name="断开">断开</string>
     <string name="连接">连接</string>
     <string name="电话接入">电话接入：</string>
+    <string name="Economic">Economic</string>
+    <string name="NEDC">NEDC</string>
+    <string name="Irascible">Irascible</string>
+    <string name="safetip">车辆在高速运行，为确保安全，暂时无法进行操作</string>
 
 
 </resources>

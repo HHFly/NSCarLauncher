@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,7 @@ import static com.example.dell.nscarlauncher.ui.fm.FMFragment.FMCHANNEL;
 
 public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch.OnWeatherSearchListener {
     private WaveView circleView;
+    private static ImageView controll_air;
     private static TextView tv_w_time;
     private static TextView tv_w_date;
     private static TextView tv_w_week;
@@ -74,7 +76,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 
     private float channel;
     private boolean isON=true;// 空调
-
+    public static int isAirOpen =0  ;
     public void setFragment(HomePagerActivity homePagerActivity,FMFragment fmFragment) {
         this.homePagerActivity = homePagerActivity;
         this.fmFragment =fmFragment;
@@ -97,6 +99,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         tv_w_speed =getView(R.id.tv_w_speed);
         tv_w_authorize =getView(R.id.tv_w_authorize);
         tv_work =getView(R.id.tv_work);
+        controll_air= getView(R.id.controll_air);
     }
 
     @Override
@@ -106,6 +109,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         setClickListener(R.id.music);
         setClickListener(R.id.rl_air);
         setClickListener(R.id.controll_air);
+
         setPalyListen();
 
 
@@ -196,8 +200,13 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 
             @Override
             public void afterTextChanged(Editable s) {
-                String speed = tv_w_speed.getText().toString();
-                int progeress = NumParseUtils.parseInt(speed)*100/180;
+//                String speed = tv_w_speed.getText().toString();
+                int progeress =FlagProperty.CarPower;
+                if(progeress>100){
+                    progeress=100;
+                }if(progeress<0){
+                    progeress=0;
+                }
                 circleView.setProgress(progeress);
             }
         });
@@ -412,6 +421,12 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                     break;
                 case  HandleKey.BTMUSICOPEN:
                     btPaly.setPlay(true);
+                    break;
+                case  HandleKey.AIROPEN:
+                    controll_air.setImageResource(R.mipmap.ic_play);
+                    break;
+                case  HandleKey.AIRCLOSE:
+                    controll_air.setImageResource(R.mipmap.ic_off);
                     break;
             }
             super.handleMessage(msg);

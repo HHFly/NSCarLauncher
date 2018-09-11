@@ -7,6 +7,7 @@ import android.media.AudioManager;
 import android.os.SystemProperties;
 
 import com.example.dell.nscarlauncher.app.App;
+import com.example.dell.nscarlauncher.common.util.LogUtils;
 import com.example.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
 import com.example.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.example.dell.nscarlauncher.ui.home.HomePagerActivity;
@@ -34,6 +35,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
           /*音量+*/
         if (intent.getAction().equals(ACTION_WHEEL_VOLUMEADD)) {
+            LogUtils.log(ACTION_WHEEL_CALL);
             if( SystemProperties.getInt("sys.kd.revers",0)==0) { // 1 倒车
                 App.get().getAudioManager().adjustStreamVolume(AudioManager.STREAM_VOICE_CALL, AudioManager.ADJUST_RAISE, 0);
                 App.get().getAudioManager().adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1);
@@ -44,6 +46,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
         }
         //音量-
         if (intent.getAction().equals(ACTION_WHEEL_VOLUMEREDUCE)) {
+            LogUtils.log(ACTION_WHEEL_VOLUMEREDUCE);
             if( SystemProperties.getInt("sys.kd.revers",0)==0) {
             App.get().getAudioManager().adjustStreamVolume(AudioManager.STREAM_VOICE_CALL,AudioManager.ADJUST_LOWER,0);
             App.get().getAudioManager().adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 1);
@@ -52,6 +55,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
         }
         //多功能模式切换
         if (intent.getAction().equals(ACTION_WHEEL_MODE)) {
+            LogUtils.log(ACTION_WHEEL_MODE);
             if( SystemProperties.getInt("sys.kd.revers",0)==0) {
                 HomePagerActivity.jumpFragment(nowFragment);
               switch (nowFragment){
@@ -65,7 +69,9 @@ public class CarMFLReceiver extends BroadcastReceiver {
                       nowFragment=FragmentType.PHONE;
                       break;
                   case FragmentType.PHONE:
-                      nowFragment=FragmentType.FM;
+                      nowFragment=FragmentType.VIDEO;
+                  case FragmentType.VIDEO:
+                      nowFragment =FragmentType.FM;
                       break;
               }
 
@@ -73,12 +79,14 @@ public class CarMFLReceiver extends BroadcastReceiver {
         }
         //语音
         if (intent.getAction().equals(ACTION_WHEEL_VOICE)) {
+            LogUtils.log(ACTION_WHEEL_VOICE);
             if( SystemProperties.getInt("sys.kd.revers",0)==0) {
 
             }
         }
         //静音
         if (intent.getAction().equals(ACTION_WHEEL_MUTE)) {
+            LogUtils.log(ACTION_WHEEL_MUTE);
             if( SystemProperties.getInt("sys.kd.revers",0)==0) {
                 isMute=!isMute;
                 App.get().getAudioManager().setStreamMute(AudioManager.STREAM_MUSIC, isMute);
@@ -89,6 +97,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
         }
         //上一首
         if (intent.getAction().equals(ACTION_WHEEL_MUSIC_PREV)) {
+            LogUtils.log(ACTION_WHEEL_MUSIC_PREV);
             if( SystemProperties.getInt("sys.kd.revers",0)==0) {
                if(BTMusicFragment.isPlay){
                    BTMusicFragment.myHandler.sendEmptyMessage(6);
@@ -111,6 +120,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
         }
         //下一首
         if (intent.getAction().equals(ACTION_WHEEL_MUSIC_NEXT)) {
+            LogUtils.log(ACTION_WHEEL_MUSIC_NEXT);
             if( SystemProperties.getInt("sys.kd.revers",0)==0) {
                 if(BTMusicFragment.isPlay){
                     BTMusicFragment.myHandler.sendEmptyMessage(7);
@@ -132,7 +142,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
         }
         //接听
         if (intent.getAction().equals(ACTION_WHEEL_CALL)) {
-
+            LogUtils.log(ACTION_WHEEL_CALL);
                 HomePagerActivity.myHandler.sendEmptyMessage(4);
                 HomePagerActivity.jumpFragment(FragmentType.PHONE);
                 FlagProperty.flag_phone_incall_click = true;
@@ -141,6 +151,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
         }
         //挂断
         if (intent.getAction().equals(ACTION_WHEEL_HANGUP)) {
+            LogUtils.log(ACTION_WHEEL_HANGUP);
             FlagProperty.flag_phone_ringcall = false;
             HomePagerActivity.myHandler.sendEmptyMessage(5);
             HomePagerActivity.dimissShow();

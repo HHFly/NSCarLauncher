@@ -5,9 +5,9 @@
     android:layout_marginLeft="50px"
     android:layout_marginRight="50px"
     android:background="@mipmap/item_bg"
-    android:id="@+id/rl_carcontroll">
+   >
     <RelativeLayout
-
+        android:id="@+id/rl_carcontroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -89,11 +89,13 @@
         android:layout_marginTop="70px"
         android:layout_marginBottom="40px">
         <ImageView
+            android:id="@+id/iv_backbox"
             android:layout_width="52px"
             android:layout_height="50px"
             android:src="@drawable/select_car_1"
             />
         <ImageView
+            android:id="@+id/iv_cenlock"
             android:layout_width="60px"
             android:layout_height="50px"
             android:layout_marginLeft="60px"
@@ -101,6 +103,7 @@
            />
 
         <ImageView
+            android:id="@+id/iv_window"
             android:layout_width="50px"
             android:layout_height="50px"
             android:layout_marginLeft="60px"

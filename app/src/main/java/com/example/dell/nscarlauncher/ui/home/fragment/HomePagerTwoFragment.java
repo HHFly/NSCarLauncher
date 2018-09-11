@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.RemoteException;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -29,7 +30,10 @@ public class HomePagerTwoFragment extends BaseFragment {
     private HomePagerActivity homePagerActivity;
     // 播发控制
     public static PlayControllView musicPaly;
-
+    public static  int backbox =0x02;//0x01为开启状态，0x02为关闭状态。
+    public static int  centerlock =0x02;//0x01为开启状态，0x02为关闭状态。
+    private static ImageView iv_backbox,iv_cenlock;
+    public static  boolean isBackboxOpen,isCenterlockOpen;
     @Override
     public int getContentResId() {
         return R.layout.fragment_home2;
@@ -42,12 +46,70 @@ public class HomePagerTwoFragment extends BaseFragment {
     @Override
     public void findView() {
         musicPaly=getView(R.id.music_playcontroll);
+        iv_backbox=getView(R.id.iv_backbox);
+        iv_cenlock =getView(R.id.iv_cenlock);
     }
-
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void setListener() {
+        setClickListener(R.id.rl_phone);
+        setClickListener(R.id.rl_set);
+        setClickListener(R.id.rl_navigation);
+        setClickListener(R.id.rl_carcontroll);
+        setClickListener(R.id.music);
+        setClickListener(R.id.iv_backbox);
+        setClickListener(R.id.iv_cenlock);
+        setClickListener(R.id.iv_window);
+        setPalyListen();
+    }
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.iv_backbox:
+//                后备箱要注意只控制开锁，关锁不需要控制。
+                HomePagerActivity.setBackBox(true);
+                    break;
+            case R.id.iv_cenlock:
+//
+                isCenterlockOpen=!isCenterlockOpen;
+                HomePagerActivity.setDoorLock(isCenterlockOpen);
+                break;
+            case R.id.iv_window:
+                HomePagerActivity.OneKeyWindowOpen();
+                break;
+            case R.id.rl_phone:
+                if(homePagerActivity!=null){
+                    homePagerActivity.jumpFragment(FragmentType.PHONE);
+                }
+                break;
+            case R.id.rl_set:
+                if(homePagerActivity!=null){
+                    homePagerActivity.jumpFragment(FragmentType.SET);
+                }
+                break;
+            case R.id.rl_app:
+                if(homePagerActivity!=null){
+                    homePagerActivity.jumpFragment(FragmentType.APPLICATION);
+                }
+                break;
+            case R.id.rl_carcontroll:
+                if(FlagProperty.BCMStaus==0) {
+                    JumpUtils.actAPK(getActivity(), FragmentType.CARCONTROLL);
+                }else {
+                    Toast.makeText(getActivity(), "BCM未连接", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.rl_navigation:
+                if(homePagerActivity!=null){
+                    homePagerActivity.openNavi();
+                }
+                break;
+            case R.id.music:
+                if(homePagerActivity!=null){
+                    homePagerActivity.jumpFragment(FragmentType.MUSIC);
+                }
+                break;
 
+        }
     }
     private void setPalyListen(){
         musicPaly.setOnItemClickListener(new PlayControllView.OnItemClickListener() {
@@ -156,61 +218,40 @@ public class HomePagerTwoFragment extends BaseFragment {
             homePagerActivity.switchFragmenthide(HomePagerActivity.musicFragment);
         }
     }
-    @Override
-    public void setListener() {
-        setClickListener(R.id.rl_phone);
-        setClickListener(R.id.rl_set);
-        setClickListener(R.id.rl_navigation);
-        setClickListener(R.id.rl_carcontroll);
-        setClickListener(R.id.music);
-        setPalyListen();
-    }
+
 
     @Override
     public void initView() {
         MusicFragment.dialogLocalMusic.ScanMusic(getContext(),false);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.rl_phone:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.PHONE);
-                }
+
+    private static  void setBackbox(){
+        switch (backbox){
+            case 0x01:
+                iv_backbox.setImageResource(R.mipmap.ic_car_1);
                 break;
-            case R.id.rl_set:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.SET);
-                }
+            case 0x02:
+                iv_backbox.setImageResource(R.mipmap.ic_car_1_white);
                 break;
-            case R.id.rl_app:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.APPLICATION);
-                }
-                break;
-            case R.id.rl_carcontroll:
-                if(FlagProperty.BCMStaus==0) {
-                    JumpUtils.actAPK(getActivity(), FragmentType.CARCONTROLL);
-                }else {
-                    Toast.makeText(getActivity(), "BCM未连接", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.rl_navigation:
-                if(homePagerActivity!=null){
-                    homePagerActivity.openNavi();
-                }
-                break;
-            case R.id.music:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.MUSIC);
-                }
-                break;
+
         }
     }
+    private static  void  setIv_cenlock(){
+        switch (centerlock){
+            case 0x01:
+                iv_cenlock.setImageResource(R.mipmap.ic_car_2);
+                break;
+            case 0x02:
+                iv_cenlock.setImageResource(R.mipmap.ic_car_1_white);
+                break;
 
+        }
+    }
     public static final  int MUSIC_CLOSE =1;
-    private static final  int MUSIC_OPEN =2;
+    public static final  int MUSIC_OPEN =2;
+    public static final  int BACKBOX =3;
+    public static final  int CENTERLOCK=4;
     public static Handler myHandler = new Handler() {
 
         public void handleMessage(Message msg) {
@@ -222,7 +263,12 @@ public class HomePagerTwoFragment extends BaseFragment {
                 case MUSIC_OPEN:
                     musicPaly.setPlay(true);
                     break;
-
+                case  BACKBOX:
+                    setBackbox();
+                    break;
+                case  CENTERLOCK:
+                    setIv_cenlock();
+                    break;
                 default:
                     break;
             }

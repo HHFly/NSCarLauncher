@@ -54,7 +54,7 @@ public abstract class BaseDialogFragment extends DialogFragment implements View.
         if (dialog != null) {
             DisplayMetrics dm = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-            dialog.getWindow().setLayout((int) (dm.widthPixels * 0.5),(int) (dm.heightPixels * 0.5));
+            dialog.getWindow().setLayout((int) (dm.widthPixels * 0.3),(int) (dm.heightPixels * 0.4));
 
         }
         if(this.getStartInBottom()) {

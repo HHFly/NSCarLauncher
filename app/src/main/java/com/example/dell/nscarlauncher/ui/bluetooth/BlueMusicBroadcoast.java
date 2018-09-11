@@ -361,6 +361,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             int current = intent.getIntExtra("current",0);
             music_total_time =intent.getIntExtra("total",0);
             BTMusicFragment.setBlueMusicProgress(current);
+            LogUtils.log("BT:"+"current:"+current+"total"+ music_total_time);
             if(!BTMusicFragment.isPlay){
                 BTMusicFragment.isPlay=true;
 //                App.pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICOPEN);
