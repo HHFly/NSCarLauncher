@@ -5,8 +5,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -37,6 +39,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 	ImageView imagebtn_volume;
 	public static boolean flag_quiet;
 	int last_volume = 0;
+	private int dismisstime =0;
 	public void setContent(Context content ,HomePagerActivity homePagerActivity) {
 		this.content = content;
 		this.homePagerActivity= homePagerActivity;
@@ -126,6 +129,24 @@ public class DialogVolumeControl extends BaseDialogFragment {
 
 			}
 		});
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					while (true) {
+						if (dismisstime > 3) {
+							dismiss();
+							break;
+						} else {
+							dismisstime++;
+						}
+						Thread.sleep(1000);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
 
 	}
 
@@ -163,10 +184,17 @@ public class DialogVolumeControl extends BaseDialogFragment {
             	FlagProperty.STREAM_MUSIC = volume;
             	setVolumeImage(volume);
 			}
+			dismisstime=0;
         }
     };
-	
-    //
+
+	@Override
+	public void show(FragmentManager manager) {
+		dismisstime=0;
+		super.show(manager);
+	}
+
+	//
     public void setVolumeImage(int volume){
     	if (volume == 0) {
     		imagebtn_volume.setBackgroundResource(R.mipmap.volume_03_off);

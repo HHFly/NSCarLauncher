@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.dell.nscarlauncher.R;
 import com.example.dell.nscarlauncher.base.fragment.BaseFragment;
@@ -17,6 +18,7 @@ import com.example.dell.nscarlauncher.ui.music.Service.PlayerService;
 import com.example.dell.nscarlauncher.ui.music.adapter.MusicAdapter;
 import com.example.dell.nscarlauncher.ui.music.model.Mp3Info;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
@@ -149,10 +151,17 @@ public class VideoFragment extends BaseFragment {
                 @Override
                 public void onClickMusic(Mp3Info data, int Pos) {
                     JCVideoPlayer.WIFI_TIP_DIALOG_SHOWED =true;//关闭网络播放提示
+//                   int viewid =getResources().getIdentifier("fullscreen", "id", "fm.jiecao.jcvideoplayer_lib.JCVideoPlayer");
+//                    ImageView imageView =(ImageView) getActivity().findViewById(getResources().getIdentifier("fullscreen", "id", "fm.jiecao.jcvideoplayer_lib.JCVideoPlayer"));
+//                    ImageView imageView =  (ImageView) getActivity().findViewById(getResourceId("fm.jiecao.jcvideoplayer_lib.JCVideoPlayer", "id", "fullscreenButton"));
+//                    if(imageView!=null){
+//                        imageView.setVisibility(View.GONE);
+//                    }
                     JCFullScreenActivity.startActivity(getContext(),
                             data.url,
                             JCVideoPlayerStandard.class,
                             data.title);
+
 
                 }
 
@@ -166,4 +175,32 @@ public class VideoFragment extends BaseFragment {
 
         setViewVisibilityGone(R.id.rl_video_local_nodata,data==null||data.size()==0);
     }
+    /**
+     * 得到资源文件.
+     *
+     * @param packageName
+     *            包名
+     * @param typeName
+     *            资源类型
+     * @param instenceName
+     *            资源名
+     * @return int
+     */
+    public static int getResourceId(String packageName, String typeName, String instenceName) {
+        if (packageName != null && typeName != null && instenceName != null) {
+            try {
+//                Class<?> cl = Class.forName(packageName + "$" + typeName);
+                Class<?> cl = Class.forName(packageName);
+
+                Field field = cl.getField(instenceName);
+                field.setAccessible(true);//开放权限
+                Object obj = field.get(cl.newInstance());
+                return Integer.parseInt(obj.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return -1;
+    }
+
 }

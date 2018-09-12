@@ -57,5 +57,8 @@ public class ViewPagerScroller extends Scroller {
             e.printStackTrace();
         }
     }
+
+
+
 }
 

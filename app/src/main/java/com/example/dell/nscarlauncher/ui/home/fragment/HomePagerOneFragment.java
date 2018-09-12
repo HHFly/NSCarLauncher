@@ -151,11 +151,12 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 if(!FlagProperty.flag_bluetooth){
                     Toast.makeText(getActivity(), "蓝牙未连接", Toast.LENGTH_SHORT).show();
                 }else {
-                    try {
-                        App.get().getBtservice().btAvrLast();
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+                    BTMusicFragment.musicBack();
+//                    try {
+//                        App.get().getBtservice().btAvrLast();
+//                    } catch (RemoteException e) {
+//                        e.printStackTrace();
+//                    }
                 }
             }
 
@@ -178,11 +179,12 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 if(!FlagProperty.flag_bluetooth){
                     Toast.makeText(getActivity(), "蓝牙未连接", Toast.LENGTH_SHORT).show();
                 }else {
-                    try {
-                        App.get().getBtservice().btAvrNext();
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+                    BTMusicFragment.musicNext();
+//                    try {
+//                        App.get().getBtservice().btAvrNext();
+//                    } catch (RemoteException e) {
+//                        e.printStackTrace();
+//                    }
                 }
             }
         });
@@ -242,20 +244,23 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 //蓝牙音乐播放
     private void  BtMusicPaly(boolean isPlay){
         if(isPlay){
-            try {
-                App.get().PauseServiceFMMUSic();
-                App.get().getBtservice().btAvrPlay();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+            App.get().PauseServiceFMMUSic();
+                BTMusicFragment.musicPlay();
+//            try {
+//                App.get().PauseServiceFMMUSic();
+//                BTMusicFragment.musicPlay();
+////                App.get().getBtservice().btAvrPlay();
+//            } catch (RemoteException e) {
+//                e.printStackTrace();
+//            }
 
         }else {
-            try {
-                App.get().getBtservice().btAvrPause();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-
+//            try {
+//                App.get().getBtservice().btAvrPause();
+//            } catch (RemoteException e) {
+//                e.printStackTrace();
+//            }
+            BTMusicFragment.musicPause();
 
         }
         setPlayControll(isPlay,2);

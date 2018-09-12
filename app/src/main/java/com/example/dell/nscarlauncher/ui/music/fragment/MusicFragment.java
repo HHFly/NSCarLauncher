@@ -296,39 +296,46 @@ public class MusicFragment extends BaseFragment {
 /*音乐播放*/
 public   void  play(){
     if (!flag_play) {
-        App.get().PauseServiceFMBTMUSic();
-        if (audioManager.requestAudioFocus(afChangeListener, 12,
-                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
-                && audioManager.requestAudioFocus(afSystemChangeListener, AudioManager.STREAM_MUSIC,
-                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-            system_flag = true;
-            am_flag = true;
-            if (DialogLocalMusic.data.size() > 0) {
-                circle_image.roatateStart();
-                bt_play.setBackgroundResource(R.mipmap.ic_play_big);
-                broadcastMusicInfo(getActivity(), FlagProperty.PLAY_MSG);
-                flag_play = true;
-                HomePagerTwoFragment.musicPaly.setPlay(true);
-            }
-        }
+        musicPlay(getActivity());
     } else {
-        if (audioManager.abandonAudioFocus(afChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
-                && audioManager.abandonAudioFocus(
+       musicPause(getActivity());
+    }
+}
+/*播发音乐*/
+public static void musicPlay(Context context){
+    if (App.get().getAudioManager().requestAudioFocus(afChangeListener, 12,
+            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
+            && App.get().getAudioManager().requestAudioFocus(afSystemChangeListener, AudioManager.STREAM_MUSIC,
+            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+        system_flag = true;
+        am_flag = true;
+        if (DialogLocalMusic.data.size() > 0) {
+            if(circle_image!=null) {
+                circle_image.roatateStart();
+            }
+            if(bt_play!=null) {
+                bt_play.setBackgroundResource(R.mipmap.ic_play_big);
+            }
+            broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
+            flag_play = true;
+            HomePagerTwoFragment.musicPaly.setPlay(true);
+        }
+    }
+}
+    public  static void musicPause(Context context){
+        if (App.get().getAudioManager().abandonAudioFocus(afChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
+                && App.get().getAudioManager().abandonAudioFocus(
                 afSystemChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             system_flag = false;
             am_flag = false;
 
             circle_image.roatatePause();
             bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
-            broadcastMusicInfo(getActivity(), PAUSE_MSG);
+            broadcastMusicInfo(context, PAUSE_MSG);
             flag_play = false;
             HomePagerTwoFragment.musicPaly.setPlay(false);
         }
     }
-}
-
-
-
     /*获取全局模块*/
     private void  getService(){
         audioservice=App.get().getAudioservice();
@@ -410,8 +417,12 @@ public   void  play(){
                 if (system_flag) {
                     Log.d("audioTest", "play music");
                     if (DialogLocalMusic.data.size() > 0) {
-                        circle_image.roatateStart();
-                        bt_play.setBackgroundResource(R.mipmap.ic_play_big);
+                        if(circle_image!=null) {
+                            circle_image.roatateStart();
+                        }
+                        if(bt_play!=null) {
+                            bt_play.setBackgroundResource(R.mipmap.ic_play_big);
+                        }
                         broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
                         flag_play = true;
                     }
@@ -419,8 +430,12 @@ public   void  play(){
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
                 Log.d("audioTest", "12 loss");
                 am_flag = false;
-                circle_image.roatatePause();
-                bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                if(circle_image!=null) {
+                    circle_image.roatatePause();
+                }
+                if(bt_play!=null) {
+                    bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                }
                 broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
             }
@@ -436,8 +451,12 @@ public   void  play(){
             if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
                 Log.d("audioTest", "3 loss transient");
                 system_flag = false;
-                circle_image.roatatePause();
-                bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                if(circle_image!=null) {
+                    circle_image.roatatePause();
+                }
+                if(bt_play!=null) {
+                    bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                }
                 broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
             } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
@@ -446,8 +465,12 @@ public   void  play(){
                 if (am_flag) {
                     Log.d("audioTest", "playmusic");
                     if (DialogLocalMusic.data.size() > 0) {
-                        circle_image.roatateStart();
-                        bt_play.setBackgroundResource(R.mipmap.ic_play_big);
+                        if(circle_image!=null) {
+                            circle_image.roatateStart();
+                        }
+                        if(bt_play!=null) {
+                            bt_play.setBackgroundResource(R.mipmap.ic_play_big);
+                        }
                         broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
                         flag_play = true;
                     }
@@ -455,15 +478,23 @@ public   void  play(){
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
                 Log.d("audioTest", "3 loss");
                 system_flag = false;
-                circle_image.roatatePause();
-                bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                if(circle_image!=null){
+                    circle_image.roatatePause();
+                }
+                if(bt_play!=null) {
+                    bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                }
                 broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
                 Log.d("audioTest", "3 loss transient can duck");
                 system_flag = false;
-                circle_image.roatatePause();
-                bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                if(circle_image!=null) {
+                    circle_image.roatatePause();
+                }
+                if(bt_play!=null) {
+                    bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                }
                 broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
             }

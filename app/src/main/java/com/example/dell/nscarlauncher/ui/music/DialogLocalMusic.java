@@ -188,7 +188,7 @@ public class DialogLocalMusic  {
 
 		newdata.clear();
 
-		mResolver = context.getContentResolver();
+		ContentResolver	mResolver = context.getContentResolver();
 		System.out.println("mResolver:" + mResolver);
 		Cursor cursor = mResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null,
 				MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
@@ -238,7 +238,7 @@ public class DialogLocalMusic  {
 
 		newdata.clear();
 
-		mResolver = context.getContentResolver();
+		ContentResolver mResolver = context.getContentResolver();
 		System.out.println("mResolver:" + mResolver);
 		Cursor cursor = mResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null,
 				MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
@@ -280,7 +280,7 @@ public class DialogLocalMusic  {
 
 		SDData.clear();
 		USBData.clear();
-		mResolver = context.getContentResolver();
+		ContentResolver mResolver = context.getContentResolver();
 		System.out.println("mResolver:" + mResolver);
 		Cursor cursor = mResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null,
 				MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
@@ -334,18 +334,19 @@ public class DialogLocalMusic  {
 
 		SDVideoData.clear();
 		USBVideoData.clear();
-		mResolver = context.getContentResolver();
+		ContentResolver mResolver = context.getContentResolver();
 		System.out.println("mResolver:" + mResolver);
 		Cursor cursor = mResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null, null,
 				MediaStore.Video.Media.DEFAULT_SORT_ORDER);
 		int i = 0, j = 0;
 		int cursorCount = cursor.getCount();
+		String url;
 		System.out.println("cursorCount" + cursorCount);
 		if (cursorCount > 0) {
 			cursor.moveToFirst();
 			while (i < cursorCount) {
 				// 歌曲文件的路径 ：MediaStore.Audio.Media.DATA
-				url = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
+				 url = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
 				if (url.toLowerCase().indexOf(PATH_SDCARD) > -1) {
 					Mp3Info info = new Mp3Info();
 					info.id = j++;
@@ -374,8 +375,6 @@ public class DialogLocalMusic  {
 				cursor.moveToNext();
 			}
 			cursor.close();
-
-
 
 		}
 		mResolver = null;

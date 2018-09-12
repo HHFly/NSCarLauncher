@@ -125,54 +125,64 @@ public class BTMusicFragment extends BaseFragment {
     }
 
     /*暂停*/
-    public void musicPause(){
+    public  static void musicPause(){
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
-            new Thread() {
-                public void run() {
-                    myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
-                }
+            if (App.get().getAudioManager().abandonAudioFocus(afBTChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                new Thread() {
+                    public void run() {
+                        myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
+                    }
 
 
-            }.start();
+                }.start();
+            }
         }
     }
     /*播放*/
-    public void musicPlay(){
+    public static void musicPlay(){
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
-            new Thread() {
-                public void run() {
-                    myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
+            if (App.get().getAudioManager().requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                new Thread() {
+                    public void run() {
+                        myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
 
-                    MusicFragment.stopView();
+                        MusicFragment.stopView();
 
-                }
+                    }
 
 
-            }.start();
+                }.start();
+            }
         }
     }
     /*上一首*/
-    public void musicBack(){
+    public static void musicBack(){
+
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
-            new Thread() {
-                public void run() {
-                    myHandler.sendMessage(myHandler.obtainMessage(MUSCI_BACK));
-                }
+            if (App.get().getAudioManager().requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                new Thread() {
+                    public void run() {
+                        myHandler.sendMessage(myHandler.obtainMessage(MUSCI_BACK));
+                    }
 
 
-            }.start();
+                }.start();
+
+            }
         }
     }
 /*下一首*/
-public  void  musicNext(){
+public static void  musicNext(){
     if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
-        new Thread() {
-            public void run() {
-                myHandler.sendMessage(myHandler.obtainMessage(MUSIC_NEXT));
-            }
+        if (App.get().getAudioManager().requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            new Thread() {
+                public void run() {
+                    myHandler.sendMessage(myHandler.obtainMessage(MUSIC_NEXT));
+                }
 
-            ;
-        }.start();
+                ;
+            }.start();
+        }
     }
 }
     /*进度条*/
@@ -369,7 +379,7 @@ public  void  musicNext(){
                     Log.d("audioTest", "btmusic loss transient");
 
                     try {
-                        btservice.btAvrPause();
+                        App.get().getBtservice().btAvrPause();
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -378,23 +388,23 @@ public  void  musicNext(){
                 case  AudioManager.AUDIOFOCUS_GAIN:
                     Log.d("audioTest", "btmusic gain");
                     try {
-                        if (!audioservice.isDuringNavi()) {
-                            btservice.btAvrPlay();
-                        }
+//                        if (!audioservice.isDuringNavi()) {
+                            App.get().getBtservice().btAvrPlay();
+//                        }
                     }catch (RemoteException e) {
                         e.printStackTrace();
                     }
                     break;
                 case  AudioManager.AUDIOFOCUS_LOSS:
                     try {
-                        btservice.btAvrStop();
+                        App.get().getBtservice().btAvrStop();
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
                     break;
                 case   AudioManager.AUDIOFOCUS_REQUEST_FAILED:
                     try {
-                        btservice.btAvrStop();
+                        App.get().getBtservice().btAvrStop();
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }

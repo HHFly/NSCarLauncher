@@ -849,8 +849,10 @@ public int getSim(int num) {
                     if(info != null && info.isConnected()) {
 //                        KLog.d("发现已建立网络链接");
                         if(homePagerOneFragment!=null){
-                            homePagerOneFragment.mLocationClient.stopLocation();
-                            homePagerOneFragment.mLocationClient.startLocation();
+                            if( homePagerOneFragment.mLocationClient!=null) {
+                                homePagerOneFragment.mLocationClient.stopLocation();
+                                homePagerOneFragment.mLocationClient.startLocation();
+                            }
                         }
 
                     }

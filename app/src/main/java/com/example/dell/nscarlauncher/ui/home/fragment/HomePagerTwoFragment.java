@@ -169,32 +169,11 @@ public class HomePagerTwoFragment extends BaseFragment {
         if(isPlay){
             App.get().PauseServiceFMBTMUSic();
 
-           HomePagerActivity.musicFragment.system_flag = true;
-            HomePagerActivity.musicFragment.am_flag = true;
-            if (DialogLocalMusic.data.size() > 0) {
-                if(circle_image!=null) {
-                    circle_image.roatateStart();
-                }
-                if(bt_play!=null){
-                    bt_play.setBackgroundResource(R.mipmap.ic_play_big);
-                }
-
-                broadcastMusicInfo(getActivity(), FlagProperty.PLAY_MSG);
-                HomePagerActivity.musicFragment.flag_play = true;
-            }
+            MusicFragment.musicPlay(getActivity());
 
         }else {
 
-            HomePagerActivity.musicFragment.system_flag = false;
-            HomePagerActivity.musicFragment.am_flag = false;
-            if(circle_image!=null) {
-                circle_image.roatatePause();
-            }
-           if(bt_play!=null){
-               bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
-           }
-            broadcastMusicInfo(getActivity(), PAUSE_MSG);
-            HomePagerActivity.musicFragment.flag_play = false;
+          MusicFragment.musicPause(getActivity());
         }
         setPlayControll(isPlay,2);
     }
@@ -232,7 +211,7 @@ public class HomePagerTwoFragment extends BaseFragment {
                 iv_backbox.setImageResource(R.mipmap.ic_car_1);
                 break;
             case 0x02:
-                iv_backbox.setImageResource(R.mipmap.ic_car_1_white);
+                iv_backbox.setImageResource(R.mipmap.ic_car_1_close);
                 break;
 
         }

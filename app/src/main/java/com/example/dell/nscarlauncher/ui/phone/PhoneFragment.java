@@ -32,7 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import static com.example.dell.nscarlauncher.ui.bluetooth.BTMusicFragment.afBTChangeListener;
+
 
 public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
     public final static int                    PHONE_OVER     = 1;//结束
