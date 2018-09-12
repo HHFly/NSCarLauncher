@@ -252,8 +252,8 @@ public class MusicFragment extends BaseFragment {
             } else { // 其他模式
 //                 circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_PREV)));
             }
-            circle_image.roatateStart();
-//            myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
+//            circle_image.roatateStart();
+            ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
             MusicModel.getPrevMusic(context, music_model);
         }
     }
@@ -269,8 +269,9 @@ public class MusicFragment extends BaseFragment {
             } else { // 其他模式
                 // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
             }
-            circle_image.roatateStart();
-//            myHandler.sendMessage(myHandler.obtainMessage(MUSIC_CHANGE));
+//            circle_image.roatateStart();
+
+            ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
             MusicModel.getNextMusic(context, music_model);
         }
     }

@@ -65,6 +65,7 @@ import com.example.dell.nscarlauncher.ui.phone.PhoneFragment;
 import com.example.dell.nscarlauncher.ui.setting.SetFragment;
 import com.example.dell.nscarlauncher.ui.video.VideoFragment;
 import com.example.dell.nscarlauncher.widget.DialogVolumeControl;
+import com.example.dell.nscarlauncher.widget.ViewPagerScroller;
 
 
 import java.util.ArrayList;
@@ -189,6 +190,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         context =this;
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         viewPager.setOffscreenPageLimit(mFragments.size());
+        ViewPagerScroller pagerScroller = new ViewPagerScroller(getActivity());
+        pagerScroller.setScrollDuration(100);//设置时间，时间越长，速度越慢
+        pagerScroller.initViewPagerScroll(viewPager);
         indicator.setViewPager(viewPager);
 
     }
