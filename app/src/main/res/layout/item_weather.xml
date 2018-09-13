@@ -112,7 +112,7 @@
             android:background="@mipmap/ic_w_bg"
             android:layout_centerInParent="true"/>
 
-            <com.example.dell.nscarlauncher.widget.WaveView
+            <com.kandi.dell.nscarlauncher.widget.WaveView
                 android:id="@+id/wave_view"
                 android:layout_width="240px"
                 android:layout_height="240px"

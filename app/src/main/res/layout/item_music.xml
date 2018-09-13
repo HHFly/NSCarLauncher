@@ -79,7 +79,7 @@
         android:textSize="48px"
         android:textColor="#EEEEEE"
         />
-    <com.example.dell.nscarlauncher.widget.PlayControllView
+    <com.kandi.dell.nscarlauncher.widget.PlayControllView
         android:id="@+id/music_playcontroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

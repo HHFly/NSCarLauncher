@@ -78,7 +78,7 @@
         android:textSize="48px"
         android:textColor="#EEEEEE"
         />
-    <com.example.dell.nscarlauncher.widget.PlayControllFMView
+    <com.kandi.dell.nscarlauncher.widget.PlayControllFMView
         android:id="@+id/fm_playcontroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
