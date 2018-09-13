@@ -13,18 +13,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="107px"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="10px"
         android:orientation="vertical"
         >
-        <TextView style="@style/BaseText.Tv"
+
+        <TextView
             android:id="@+id/name"
-            android:textSize="18px"
-           />
+            style="@style/BaseText.Tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18px" />
 
         <TextView style="@style/BaseText.Tv"
             android:id="@+id/number"
             android:textSize="24px"
-            android:layout_marginTop="8px"
+            android:layout_marginBottom="8px"
             />
     </LinearLayout>
 
@@ -34,7 +37,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_alignParentRight="true"
-    android:layout_marginTop="30px"
+    android:layout_marginTop="10px"
     android:layout_marginRight="78px"
     >
     <TextView style="@style/BaseText.Tv"
@@ -45,7 +48,7 @@
     <TextView style="@style/BaseText.Tv"
         android:id="@+id/call_time"
         android:textSize="18px"
-        android:layout_marginTop="10px"
+        android:layout_marginBottom="10px"
         />
 </LinearLayout>
     <View style="@style/BaseLine.Horizontal"

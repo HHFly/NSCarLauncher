@@ -78,7 +78,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
     @Override
     public void Resume() {
-
+        requestAudioFocus();
     }
 
     @Override
@@ -148,7 +148,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 //        viewPager.setOffscreenPageLimit(PageCount-1);
         viewPager.setOffscreenPageLimit(3);
         setViewSelected(R.id.rl_1,true);
-        requestAudioFocus();
+
     }
     /*获取全局模块*/
     private void  getService(){
@@ -479,11 +479,11 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     public static class CallOverThread extends Thread {
         @Override
         public void run() {
-            try {
-                sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                sleep(500);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             myHandler.sendMessage(myHandler.obtainMessage(PHONE_OVER));
         }
     }
@@ -740,11 +740,10 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
 
             FlagProperty.flag_bluetooth = true;
-
             getPhoneRecord();
             getPhoneBook();
         } else {
-            setVisibilityGone(R.id.bt_phone_null,true);
+            setNullViewGone(true);
         }
     }
 

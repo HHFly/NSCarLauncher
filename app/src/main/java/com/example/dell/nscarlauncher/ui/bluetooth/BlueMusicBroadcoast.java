@@ -121,6 +121,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 //                HomePagerActivity.changeFragment(MainKondi.FRAGMENT_PHONE);
 //            }
             HomePagerActivity.initBluetooth();
+
             PhoneFragment.setNullViewGone(false);
             PhoneFragment.getPhoneBook();
             PhoneFragment.getPhoneRecord();

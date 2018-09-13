@@ -101,7 +101,7 @@ public class BTMusicFragment extends BaseFragment {
     @Override
     public void Resume() {
         getService();
-//        requestAudioFocus();
+        requestAudioFocus();
     }
 
     @Override
@@ -424,17 +424,17 @@ public static void  musicNext(){
 
             //if (!flag_bluetooth_music) {//打开开关按钮
 
-            if (audioManager.requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN) != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                return;
-            }
+//            if (audioManager.requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN) != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+//                return;
+//            }
 
-            setMusicInfo("", "");
+//            setMusicInfo("", "");
 
-            Log.d("musictest", "btmusic open");
+//            Log.d("musictest", "btmusic open");
             //}
 
         } else {
-           setVisibilityGone(R.id.bt_mic_null,true);
+            setNullViewGone(true);
         }
     }
     public static  void setNullViewGone(boolean isShow){
