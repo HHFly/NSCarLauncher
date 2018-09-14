@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
+import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.video.VideoFragment;
 
@@ -24,6 +26,12 @@ public class USBBroadcastReceiver extends BroadcastReceiver {
             MusicFragment.reSetMusic(false);
             VideoFragment.dialogLocalMusic.ScanVideo(context,false);
         }
+        else  if(action.equals("android.intent.action.PACKAGE_ADDED")){
+                if(FragmentType.APPLICATION== HomePagerActivity.mCurFragment.getmType()){
+
+                }
+        }
+
     }
 
     }

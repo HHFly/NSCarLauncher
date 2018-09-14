@@ -1,27 +1,22 @@
 package com.kandi.systemui.service;
 
-import android.app.Activity;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
-import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +51,7 @@ public class KandiSystemUiService extends Service {
         super.onCreate();
         DriverServiceManger.getInstance().startService(this);
         mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+
         createView();
         setListen();
         initHeader();
@@ -85,7 +81,7 @@ public class KandiSystemUiService extends Service {
     }
     private void createView() {
         wmParams=  new LayoutParams();
-        mWindowManager = (WindowManager) getApplication().getSystemService(Context.WINDOW_SERVICE);
+//        mWindowManager = (WindowManager) getApplication().getSystemService(Context.WINDOW_SERVICE);
         wmParams.type = LayoutParams.TYPE_STATUS_BAR;
         wmParams.format = PixelFormat.RGBA_8888;
         wmParams.flags = LayoutParams.FLAG_NOT_FOCUSABLE;
@@ -96,7 +92,7 @@ public class KandiSystemUiService extends Service {
         wmParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
         LayoutInflater inflater = LayoutInflater.from(this);
-        mFloatLayout = (FrameLayout) inflater.inflate(R.layout.home_titlebar, null);
+        mFloatLayout = (FrameLayout) inflater.inflate(R.layout.framelayout_home_titlebar, null);
         mWindowManager.addView(mFloatLayout, wmParams);
         //wifi
         status_bar_wifi_btn = (ImageView) mFloatLayout.findViewById(R.id.iv_wifi);
@@ -123,12 +119,7 @@ public class KandiSystemUiService extends Service {
             @Override
             public void onClick(View v) {
                 gotoHome();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        GoHomeBrsend();
-                    }
-                }).start();
+
             }
         });
         iv_power.setOnClickListener(new View.OnClickListener() {
@@ -148,15 +139,13 @@ public class KandiSystemUiService extends Service {
     }
 //返回首页
     void gotoHome() {
-        Intent homeIntent = new Intent();
-        homeIntent = new Intent();
-        homeIntent.setComponent(new ComponentName("com.kandi.nscarlauncher", "com.kandi.nscarlauncher.ui.home.HomePagerActivity"));
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        try {
-            startActivity(homeIntent);
-        } catch (Exception e) {
-            Log.e("KandiSystemUiService", e.toString());
-        }
+        Intent mHomeIntent = new Intent(Intent.ACTION_MAIN);
+
+        mHomeIntent.addCategory(Intent.CATEGORY_HOME);
+        mHomeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        startActivity(mHomeIntent);
+
 
     }
     /*打开应用*/
@@ -178,17 +167,13 @@ public class KandiSystemUiService extends Service {
     private  void  showVolumeDialog(){
         if(dialogVolumeControl ==null){
             dialogVolumeControl =new DialogVolumeControl();
+            dialogVolumeControl.setContent(this);
+            dialogVolumeControl.incomingShow();
         }
+          dialogVolumeControl.show();
 
-        dialogVolumeControl.setContent(this);
-        dialogVolumeControl.ShowDialog();
     }
-    /*发出首页广播*/
-    private  void  GoHomeBrsend(){
-        Intent intent = new Intent();
-        intent.setAction(ACTION);
-        sendBroadcast(intent);
-    }
+
     public void TopRefreshNetworkEvent(int asu, int type) {
         // int asu = event.data; //getGsmSignalStrength();
         if (asu <= 2 || asu == 99) {

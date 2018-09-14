@@ -72,7 +72,7 @@ public class BatteryAndTimeController {
                 mHandler.sendEmptyMessage(0);
             }
         };
-        mTime.schedule(mTimerTask, 0, 1000);
+        mTime.schedule(mTimerTask, 5000, 1000);
     }
     public void removeBatteryAndTimeObserve(){
         mTime.cancel();

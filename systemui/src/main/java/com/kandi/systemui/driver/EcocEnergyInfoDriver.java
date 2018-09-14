@@ -46,8 +46,11 @@ public class EcocEnergyInfoDriver {
 	 * @throws RemoteException
 	 */
 	public int retreveGeneralInfo() throws RemoteException {
-		int ret = R_service.Ecoc_getGeneral_Car(array_info);
-		return ret;
+		if(R_service!=null) {
+			int ret = R_service.Ecoc_getGeneral_Car(array_info);
+			return ret;
+		}
+		return -1;
 	}
 	
 	/**

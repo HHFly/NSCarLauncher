@@ -286,14 +286,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         }
         if (intent.getAction().equals(ACTION_MUSIC_INFO_CHANGED)) {
             String music_info = intent.getStringExtra(KEY_MUSICINFO);
-            String songinfo =intent.getStringExtra("SongIsPlay");
-            if(songinfo!=null&&!"".equals(songinfo)) {
-//                if (!getBtPlayStaus(BTMusicFragment.isPlay).equals(songinfo)) {
-//                    BTMusicFragment.isPlay = !BTMusicFragment.isPlay;
-//                    BTMusicFragment.gifPlayShow();
-//                    HomePagerOneFragment.btPaly.setPlay(BTMusicFragment.isPlay);
-//                }
-            }
+
             try {
                 JSONArray jsonArr = new JSONArray(music_info);
                 JSONObject obj = (JSONObject) jsonArr.get(0);

@@ -35,4 +35,6 @@ dependencies {
     implementation files('libs/libframework.jar')
     //fa
     implementation 'com.android.support:multidex:1.0.3'
+    //沉浸式实现
+    implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
 }

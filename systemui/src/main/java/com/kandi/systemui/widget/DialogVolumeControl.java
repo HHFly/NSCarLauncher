@@ -3,29 +3,28 @@ package com.kandi.systemui.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.media.AudioManager;
-import android.os.Bundle;
+
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
+
 import android.view.Window;
+import android.view.WindowManager;
+
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-
+import android.widget.TextView;
 import com.kandi.systemui.R;
-import com.kandi.systemui.base.BaseDialogFragment;
 
 
-public class DialogVolumeControl extends BaseDialogFragment {
+public class DialogVolumeControl {
 	//
 	View mRootView;
 	Context content ;
-	static Dialog dialog;
+	static Dialog alertDialog;
 	static SeekBar thumb_volume;
 int STREAM_MUSIC,STREAM_MAX_MUSIC,progress;
 	static AudioManager audiomanage;
@@ -33,29 +32,36 @@ int STREAM_MUSIC,STREAM_MAX_MUSIC,progress;
 	public static boolean flag_quiet;
 	int last_volume = 0;
 	private int dismisstime =0;
+
+
 	public void setContent(Context content){
 		this.content = content;
 
 	}
+	// 来电显示弹出框
+	public void incomingShow() {
 
-	@Nullable
-	@Override
-	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.dialog_volume_control, container, false);
+			alertDialog = new Dialog(content, R.style.nodarken_style);
 
+			alertDialog.setCanceledOnTouchOutside(true);// 设置点击屏幕Dialog不消失
+			Window window = alertDialog.getWindow();
+			window.setContentView(R.layout.dialog_volume_control);
+			window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+			initView(content,window);
 
-		Window window = getDialog().getWindow();
-		window.setWindowAnimations(R.style.mystyle);
-		initView(content,rootView);
-		return rootView;
 	}
+public void  show(){
+    alertDialog.show();
+}
+
+
 	/**
 	 *
 	 *
 	 * @param
 	 */
 
-	public void initView (Context context,View window) {
+	public void initView (Context context,Window window) {
 		
 		audiomanage = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 		
@@ -96,9 +102,7 @@ int STREAM_MUSIC,STREAM_MAX_MUSIC,progress;
 		imagebtn_volume = (ImageView) window.findViewById(R.id.imagebt_volume_show);
 		setVolumeImage(STREAM_MUSIC);
 
-		
-		imagebtn_volume.setOnClickListener(new OnClickListener() {
-
+		imagebtn_volume.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (!flag_quiet) {
@@ -106,29 +110,29 @@ int STREAM_MUSIC,STREAM_MAX_MUSIC,progress;
 					STREAM_MUSIC = 0;
 					progress = Math.round(STREAM_MUSIC * 100 / STREAM_MAX_MUSIC);
 					thumb_volume.setProgress(progress);
-	            	setVolumeImage(STREAM_MUSIC);
-	            	audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, STREAM_MUSIC, 0);
-	            	flag_quiet = true;
+					setVolumeImage(STREAM_MUSIC);
+					audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, STREAM_MUSIC, 0);
+					flag_quiet = true;
 //
 				}else{
 					STREAM_MUSIC = last_volume;
 					progress = Math.round(STREAM_MUSIC * 100 / STREAM_MAX_MUSIC);
 					thumb_volume.setProgress(progress);
-	            	setVolumeImage(STREAM_MUSIC);
-	            	audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, STREAM_MUSIC, 0);
-	            	flag_quiet = false;
+					setVolumeImage(STREAM_MUSIC);
+					audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, STREAM_MUSIC, 0);
+					flag_quiet = false;
 //
 				}
-
 			}
 		});
+
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
 					while (true) {
 						if (dismisstime > 3) {
-							dismiss();
+							alertDialog.dismiss();
 							break;
 						} else {
 							dismisstime++;
@@ -181,16 +185,7 @@ int STREAM_MUSIC,STREAM_MAX_MUSIC,progress;
         }
     };
 
-	@Override
-	public void show(FragmentManager manager) {
-		dismisstime=0;
-		super.show(manager);
-	}
 
-
-	public void ShowDialog() {
-		dialog.show();
-	}
 
 	//
     public void setVolumeImage(int volume){
@@ -205,8 +200,5 @@ int STREAM_MUSIC,STREAM_MAX_MUSIC,progress;
 		}
     }
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-	}
+
 }

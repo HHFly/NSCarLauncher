@@ -134,6 +134,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
             intentFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+            intentFilter.addAction("android.intent.action.PACKAGE_ADDED"); //应用安装
             intentFilter.addDataScheme("file");
             registerReceiver(usbBroadcastReceiver, intentFilter);
         }
