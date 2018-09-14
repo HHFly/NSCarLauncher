@@ -69,6 +69,8 @@ public class DialogVolumeControl extends BaseDialogFragment {
 		//
 		int max = audiomanage.getStreamMaxVolume( AudioManager.STREAM_VOICE_CALL );
 		int current = audiomanage.getStreamVolume( AudioManager.STREAM_VOICE_CALL );
+		FlagProperty.VOCIE_CALL=current;
+		FlagProperty.VOCIE_MAX_CALL =max;
 		Log.d("VIOCE_CALL", "max : " + max + " current : " + current);
 		
 		//
@@ -115,6 +117,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 					thumb_volume.setProgress(VerticalSeekBar.progress);
 	            	setVolumeImage(FlagProperty.STREAM_MUSIC);
 	            	audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, FlagProperty.STREAM_MUSIC, 0);
+					audiomanage.setStreamVolume(AudioManager.STREAM_VOICE_CALL, FlagProperty.VOCIE_CALL, 0);
 	            	flag_quiet = true;
 //
 				}else{
@@ -123,6 +126,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 					thumb_volume.setProgress(VerticalSeekBar.progress);
 	            	setVolumeImage(FlagProperty.STREAM_MUSIC);
 	            	audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, FlagProperty.STREAM_MUSIC, 0);
+					audiomanage.setStreamVolume(AudioManager.STREAM_VOICE_CALL, FlagProperty.VOCIE_CALL, 0);
 	            	flag_quiet = false;
 //
 				}
@@ -179,10 +183,17 @@ public class DialogVolumeControl extends BaseDialogFragment {
         {	
         	//System.out.println("progress: " + progress);
             int volume = (int) Math.round((float)progress/100.0  * FlagProperty.STREAM_MAX_MUSIC);
+            int volumeCall = (int) Math.round((float)progress/100.0  * FlagProperty.VOCIE_MAX_CALL);
             if (volume != FlagProperty.STREAM_MUSIC) {
             	audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
             	FlagProperty.STREAM_MUSIC = volume;
             	setVolumeImage(volume);
+			}
+			if (volumeCall != FlagProperty.VOCIE_CALL) {
+
+				audiomanage.setStreamVolume(AudioManager.STREAM_VOICE_CALL, volumeCall, 0);
+				FlagProperty.VOCIE_CALL = volumeCall;
+//				setVolumeImage(volume);
 			}
 			dismisstime=0;
         }

@@ -3,10 +3,7 @@
     android:layout_width="1000px" android:layout_height="80px" android:background="@mipmap/title_bg"
 
     android:layout_centerHorizontal="true">
-    <RelativeLayout
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
     <ImageView
         android:id="@+id/center_img"
     android:layout_width="72px"
@@ -32,4 +29,3 @@
         android:layout_marginLeft="230px"
         />
     </RelativeLayout>
-</RelativeLayout>

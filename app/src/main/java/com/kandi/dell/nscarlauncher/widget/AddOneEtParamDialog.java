@@ -53,10 +53,11 @@ public class AddOneEtParamDialog extends BaseDialogFragment {
         }
         return dialog;
     }
-    public static AddOneEtParamDialog getInstance(boolean isNumber,String text) {
+    public static AddOneEtParamDialog getInstance(boolean isNumber,String text,int type) {
         AddOneEtParamDialog dialog = new AddOneEtParamDialog();
         dialog.isnumber =isNumber;
         dialog.mData=text;
+        dialog.type=type;
         return dialog;
     }
     public static AddOneEtParamDialog getInstance(int  type) {
@@ -74,7 +75,7 @@ public class AddOneEtParamDialog extends BaseDialogFragment {
 
                 break;
             case 1:
-                rootView = inflater.inflate(R.layout.dialog_wifi_input_password, container, false);
+                rootView = inflater.inflate(R.layout.dialog_wifi_input, container, false);
                 break;
             case 2:
                 rootView = inflater.inflate(R.layout.dialog_wifi_input_password, container, false);
@@ -118,6 +119,7 @@ public class AddOneEtParamDialog extends BaseDialogFragment {
         View viewCommit = getView(rootView, R.id.wifi_input_confirm);
         setListener(viewCancel, this);
         setListener(viewCommit, this);
+        setShowlisten();
     }
 /*
 *设置输入数字
@@ -126,6 +128,30 @@ public  AddOneEtParamDialog InputType(int inputtype){
     setETIputType(mRootView, R.id.wifi_input_password,inputtype);
     return this;
 }
+
+    /*
+     *设置输入数字
+     * s*/
+    public  AddOneEtParamDialog setPassWordShow(boolean isShow){
+        setETIputShowPassWord(mRootView, R.id.wifi_input_password,isShow);
+        return this;
+    }
+
+    private void setShowlisten(){
+        final View viewpsas =getView(mRootView,R.id.iv_input_see);
+        viewpsas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            if( viewpsas.isSelected()){
+                setETIputShowPassWord(mRootView, R.id.wifi_input_password,false);
+                viewpsas.setSelected(false);
+            }else {
+                setETIputShowPassWord(mRootView, R.id.wifi_input_password,true);
+                viewpsas.setSelected(true);
+            }
+            }
+        });
+    }
     /**
      * 设置参数名称
      *

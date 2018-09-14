@@ -427,7 +427,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             Window window = alertDialog.getWindow();
             window.setContentView(R.layout.dialog_phone_incalling);
             TextView tv_info = (TextView) window.findViewById(R.id.dialog_text);
-            tv_info.setText(PhoneFragment.getName(number) + "\n来电是否接听");
+            tv_info.setText(PhoneFragment.getName(number));
             Button bt_answer = (Button) window.findViewById(R.id.dialog_btn_answer);
             Button bt_refuse = (Button) window.findViewById(R.id.dialog_btn_refuse);
             bt_answer.setOnClickListener(new View.OnClickListener() {

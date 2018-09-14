@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -54,7 +55,7 @@ public abstract class BaseDialogFragment extends DialogFragment implements View.
         if (dialog != null) {
             DisplayMetrics dm = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-            dialog.getWindow().setLayout((int) (dm.widthPixels * 0.3),(int) (dm.heightPixels * 0.4));
+            dialog.getWindow().setLayout((int) (dm.widthPixels * 0.3),(int) (dm.heightPixels * 0.5));
 
         }
         if(this.getStartInBottom()) {
@@ -292,6 +293,27 @@ public abstract class BaseDialogFragment extends DialogFragment implements View.
             if (view != null && view instanceof EditText) {
                 EditText tv = (EditText) view;
                 tv.setInputType(type);
+            }
+        }
+    }
+
+    /**
+     * 设置Edit
+     *
+     * @param rootView
+     * @param id
+     * @param
+     */
+    public void setETIputShowPassWord(View rootView, @IdRes int id, Boolean isShow) {
+        if (rootView != null) {
+            View view = getView(rootView, id);
+            if (view != null && view instanceof EditText) {
+                EditText tv = (EditText) view;
+                if(isShow){
+                    tv.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                }else {
+                    tv.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
             }
         }
     }

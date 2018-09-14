@@ -371,7 +371,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
     }
     //    填写信息dialog
     private  void  ShowDialog(final Wifiinfo text){
-        AddOneEtParamDialog mAddOneEtParamDialog = AddOneEtParamDialog.getInstance(false,text.name);
+        AddOneEtParamDialog mAddOneEtParamDialog = AddOneEtParamDialog.getInstance(false,text.name,1);
 
         mAddOneEtParamDialog.setOnDialogClickListener(new AddOneEtParamDialog.DefOnDialogClickListener() {
             @Override

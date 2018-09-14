@@ -4,6 +4,8 @@ public class FlagProperty {
 	public static String BtCode = "0000";                          //蓝牙密码
 	public static int STREAM_MAX_MUSIC = 0;                        //音乐最大音量
 	public static int STREAM_MUSIC = 0;                            //音乐音量
+	public static int VOCIE_CALL = 0;									//通话音量
+	public  static  int VOCIE_MAX_CALL =0;							//通话最大音量
 	public static String phone_number = "";                        //来电时电话号码
 	public static boolean flag_phone_ringcall = false;             //是否来电过程中
 	public static boolean flag_bluetooth = false;                 //蓝牙的打开与关闭

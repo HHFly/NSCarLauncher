@@ -72,6 +72,9 @@
     <string name="NEDC">NEDC</string>
     <string name="Irascible">Irascible</string>
     <string name="safetip">车辆在高速运行，为确保安全，暂时无法进行操作</string>
+    <string name="密码">密码</string>
+    <string name="取消">取消</string>
+    <string name="确认">确认</string>
 
 
 </resources>
