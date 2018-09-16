@@ -1,5 +1,6 @@
 package com.kandi.systemui.service;
 
+import android.app.Dialog;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -21,12 +22,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.kandi.systemui.R;
 import com.kandi.systemui.driver.DriverServiceManger;
 import com.kandi.systemui.listen.MyPhoneStateListener;
 import com.kandi.systemui.widget.DialogVolumeControl;
 
 public class KandiSystemUiService extends Service {
+    Window window;
+
     WindowManager mWindowManager;
     LayoutParams wmParams; // WindowManager.LayoutParams
     FrameLayout mFloatLayout;
@@ -51,6 +55,9 @@ public class KandiSystemUiService extends Service {
         super.onCreate();
         DriverServiceManger.getInstance().startService(this);
         mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        window = new Dialog(this, R.style.nodarken_style).getWindow();
+        //设置Window为全透明
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         createView();
         setListen();
