@@ -11,7 +11,6 @@
     <string name="四">四</string>
     <string name="五">五</string>
     <string name="六">六</string>
-    <string name="星期">星期</string>
     <string name="蓝牙音乐">蓝牙音乐</string>
     <string name="bt_tip">蓝牙未连接，请先连接蓝牙</string>
     <string name="暂无音乐">暂无音乐</string>
@@ -75,6 +74,24 @@
     <string name="密码">密码</string>
     <string name="取消">取消</string>
     <string name="确认">确认</string>
+    <string name="定位失败">定位失败，由于手机没插sim卡且WIFI功能被关闭</string>
+    <string name="未安装该应用">未安装该应用</string>
+    <string name="蓝牙未连接">蓝牙未连接</string>
+    <string name="空调未连接">空调未连接</string>
+    <string name="BCM未连接">BCM未连接</string>
+    <string name="USB接入">USB接入</string>
+    <string name="USB拔出">USB拔出</string>
+    <string name="星期日">星期日</string>
+    <string name="星期一">星期一</string>
+    <string name="星期二">星期二</string>
+    <string name="星期三">星期三</string>
+    <string name="星期四">星期四</string>
+    <string name="星期五">星期五</string>
+    <string name="星期六">星期六</string>
+    <string name="更改蓝牙密码">更改蓝牙密码</string>
+    <string name="旧密码">旧密码</string>
+    <string name="附近网络">附近网络</string>
+    <string name="当前连接网络">当前连接网络</string>
 
 
 </resources>

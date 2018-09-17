@@ -31,7 +31,8 @@
             android:theme="@style/mySwitch"
             android:layout_marginLeft="900px"/>
         <View style="@style/BaseLine.Horizontal"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:background="#989898"/>
     </RelativeLayout>
     <LinearLayout
         android:visibility="gone"
@@ -51,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40px"
                 android:layout_centerVertical="true"
-                android:text="当前连接网络"
+                android:text="@string/当前连接网络"
                 android:textColor="#FFFFFF"
                 android:textSize="32px" />
 
@@ -85,18 +86,20 @@
                 android:background="@drawable/set_wifi_current_info" />
 
             <View style="@style/BaseLine.Horizontal"
-                android:layout_alignParentBottom="true"/>
+                android:layout_alignParentBottom="true"
+                android:background="#989898"/>
 
 
         </RelativeLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="附近网络"
+            android:text="@string/附近网络"
             android:layout_marginLeft="40px"
             android:textColor="#FFFFFF"
             android:textSize="32px" />
         <android.support.v7.widget.RecyclerView
+            android:layout_marginTop=""
             android:id="@+id/recyclerView_wifi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

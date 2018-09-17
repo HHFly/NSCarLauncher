@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 
 public class JumpUtils {
@@ -45,7 +46,7 @@ public class JumpUtils {
             act.startActivity(intent);
             act.overridePendingTransition(0,0);
         }catch (Exception e){
-            Toast.makeText(act, "未安装该应用", Toast.LENGTH_SHORT).show();
+            Toast.makeText(act, R.string.未安装该应用, Toast.LENGTH_SHORT).show();
         }
 
     }

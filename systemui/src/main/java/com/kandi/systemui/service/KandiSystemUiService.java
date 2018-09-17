@@ -224,6 +224,7 @@ public class KandiSystemUiService extends Service {
                 status_bar_3g_type_btn.setImageResource(R.mipmap.home_top_gsm_g4icon);
                 break;
             default:
+
                 status_bar_3g_type_btn.setImageResource(R.mipmap.home_top_btn6_00);
         }
     }

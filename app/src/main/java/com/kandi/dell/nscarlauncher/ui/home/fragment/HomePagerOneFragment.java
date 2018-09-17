@@ -149,7 +149,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             public void onClickLeft() {
                 isBtFragment();
                 if(!FlagProperty.flag_bluetooth){
-                    Toast.makeText(getActivity(), "蓝牙未连接", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.蓝牙未连接, Toast.LENGTH_SHORT).show();
                 }else {
                     BTMusicFragment.musicBack();
 //                    try {
@@ -165,7 +165,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 isBtFragment();
                 if(!FlagProperty.flag_bluetooth){
                     btPaly.isPlay=!isPlay;
-                    Toast.makeText(getActivity(), "蓝牙未连接", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "R.string.蓝牙未连接", Toast.LENGTH_SHORT).show();
                     return;
                 }else {
 
@@ -177,7 +177,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             public void onClickRight() {
                 isBtFragment();
                 if(!FlagProperty.flag_bluetooth){
-                    Toast.makeText(getActivity(), "蓝牙未连接", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "R.string.蓝牙未连接", Toast.LENGTH_SHORT).show();
                 }else {
                     BTMusicFragment.musicNext();
 //                    try {
@@ -336,7 +336,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 if(FlagProperty.staus==0) {
                     JumpUtils.actAPK(getActivity(), FragmentType.AIRCONTROLL);
                 }else {
-                    Toast.makeText(getActivity(), "空调未连接", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.空调未连接, Toast.LENGTH_SHORT).show();
                 }
                     break;
             case  R.id.controll_air:
@@ -352,7 +352,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             setIvImage(R.id.controll_air,isON?R.mipmap.ic_play:R.mipmap.ic_off);
             isON=!isON;
         }else {
-            Toast.makeText(getActivity(), "空调未连接", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.空调未连接, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -494,7 +494,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                     //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                     Log.e("Liu", "location Error, ErrCode:" + aMapLocation.getErrorCode() + ", errInfo:" + aMapLocation.getErrorInfo());
                     if (aMapLocation.getErrorCode() == 19) {
-                        Toast.makeText(getActivity(), "定位失败，由于手机没插sim卡且WIFI功能被关闭", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.定位失败, Toast.LENGTH_SHORT).show();
                     }
 
 

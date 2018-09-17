@@ -106,9 +106,9 @@ public class DriverServiceManger {
 	public void stopService() {
 		if (isServiceRunning()) {
 			this.context.unbindService(this.serviceConnection);
-			Toast.makeText(this.context, "停止后台服务ֹ", Toast.LENGTH_LONG).show();
+//			Toast.makeText(this.context, "停止后台服务ֹ", Toast.LENGTH_LONG).show();
 		} else {
-			Toast.makeText(this.context, "服务未运行", Toast.LENGTH_LONG).show();
+//			Toast.makeText(this.context, "服务未运行", Toast.LENGTH_LONG).show();
 		}
 	}
 

@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_signal"
-            android:background="@mipmap/home_top_btn6_00"
             />
         <ImageView
             android:id="@+id/iv_wifi"

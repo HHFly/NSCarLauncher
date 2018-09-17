@@ -25,28 +25,28 @@ public class TimeUtils {
         String mWay = null;
         switch (calendar.get(Calendar.DAY_OF_WEEK)){
             case 1:
-                mWay =getString(R.string.天);
+                mWay =  getString(R.string.星期日);
                 break;
             case 2:
-                mWay =getString(R.string.一);
+                mWay =getString(R.string.星期一);
                 break;
             case 3:
-                mWay =getString(R.string.二);
+                mWay =getString(R.string.星期二);
                 break;
             case 4:
-                mWay =getString(R.string.三);
+                mWay =getString(R.string.星期三);
                 break;
             case 5:
-                mWay =getString(R.string.四);
+                mWay =getString(R.string.星期四);
                 break;
             case 6:
-                mWay =getString(R.string.五);
+                mWay =getString(R.string.星期五);
                 break;
             case 7:
-                mWay =getString(R.string.六);
+                mWay =getString(R.string.星期六);
                 break;
         }
-        return getString(R.string.星期)+mWay;
+        return  mWay;
     }
 
     public static String getDate(){

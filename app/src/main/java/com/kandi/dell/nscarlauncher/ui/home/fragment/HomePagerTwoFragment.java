@@ -95,7 +95,7 @@ public class HomePagerTwoFragment extends BaseFragment {
                 if(FlagProperty.BCMStaus==0) {
                     JumpUtils.actAPK(getActivity(), FragmentType.CARCONTROLL);
                 }else {
-                    Toast.makeText(getActivity(), "BCM未连接", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.BCM未连接, Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.rl_navigation:

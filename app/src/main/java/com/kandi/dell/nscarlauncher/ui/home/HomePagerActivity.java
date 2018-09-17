@@ -572,7 +572,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             startActivity(launchIntentForPackage);
         }
         else {
-            Toast.makeText(this, "未安装该应用", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.未安装该应用, Toast.LENGTH_SHORT).show();
         }
     }
 
