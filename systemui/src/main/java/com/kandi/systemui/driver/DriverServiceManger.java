@@ -74,9 +74,9 @@ public class DriverServiceManger {
 				R_service = null;
 			}
 			if(R_service!=null){
-				Toast.makeText(context, "服务启动成功", Toast.LENGTH_LONG).show();
+//				Toast.makeText(context, "服务启动成功", Toast.LENGTH_LONG).show();
 			}else{
-				Toast.makeText(context, "服务启动失败", Toast.LENGTH_LONG).show();
+//				Toast.makeText(context, "服务启动失败", Toast.LENGTH_LONG).show();
 			}
 			Log.i("ServiceConnection","###Service Connected. Ver=" + sDrvSvrVersion);
 			initDrivers(R_service);

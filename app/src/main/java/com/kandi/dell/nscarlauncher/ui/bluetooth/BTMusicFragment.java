@@ -252,10 +252,10 @@ public static void  musicNext(){
                 gifDrawable.start();
                 iv_bt_stop.setVisibility(View.GONE);
             } else {
-                gifDrawable.stop();
+//                gifDrawable.stop();
                 iv_bt_stop.setVisibility(View.VISIBLE);
             }
-            mGifImageView.setImageDrawable(gifDrawable);
+//            mGifImageView.setImageDrawable(gifDrawable);
 
 
         } catch (IOException e) {
@@ -273,7 +273,7 @@ public static void  musicNext(){
     /*关闭gif*/
     public  static  void stopGif(){
         if(gifDrawable!=null) {
-            gifDrawable.stop();
+//            gifDrawable.stop();
             isPlay=false;
             iv_bt_stop.setVisibility(View.VISIBLE);
         }
@@ -295,7 +295,7 @@ public static void  musicNext(){
             }
         }else {
             if(gifDrawable!=null) {
-                gifDrawable.stop();
+//                gifDrawable.stop();
                 iv_bt_stop.setVisibility(View.VISIBLE);
             }
         }
@@ -310,7 +310,7 @@ public static void  musicNext(){
                         break;
                     case MUSIC_BLUETOOTH_CLOSE:
                         if(gifDrawable!=null) {
-                            gifDrawable.stop();
+//                            gifDrawable.stop();
                         }
                         if(btservice!=null) {
                             btservice.btAvrPause();
@@ -350,7 +350,7 @@ public static void  musicNext(){
                         break;
                     case  12:
                         if(gifDrawable!=null) {
-                            gifDrawable.stop();
+//                            gifDrawable.stop();
                         }
 
                         if(iv_bt_stop!=null) {

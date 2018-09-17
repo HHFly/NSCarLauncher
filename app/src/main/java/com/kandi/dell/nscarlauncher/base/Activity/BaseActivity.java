@@ -231,7 +231,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     }
     public static  void  initBarAll(){
-        mImmersionBar.hideBar(BarHide.FLAG_HIDE_BAR).init();
+        mImmersionBar.init();
     }
     /**
      * 是否可以使用沉浸式

@@ -86,7 +86,7 @@ public abstract class BaseDialogFragment extends DialogFragment implements View.
      */
     protected void initImmersionBar() {
         mImmersionBar = ImmersionBar.with(this, getDialog());
-        mImmersionBar.hideBar(BarHide.FLAG_HIDE_BAR).init();
+        mImmersionBar.init();
     }
     protected boolean getStartInBottom() {
         return false;

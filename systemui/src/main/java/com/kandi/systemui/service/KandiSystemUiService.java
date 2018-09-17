@@ -152,7 +152,9 @@ public class KandiSystemUiService extends Service {
         mHomeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         startActivity(mHomeIntent);
-
+        Intent intent  =new Intent();
+        intent.setAction("com.kangdi.home.hide");
+        sendBroadcast(intent);
 
     }
     /*打开应用*/
@@ -254,7 +256,7 @@ public class KandiSystemUiService extends Service {
 
     public void setWifiLevel(int level) {
 
-        Log.d("huachao", "wifi level:" + level);
+        Log.d("wifi", "wifi level:" + level);
         switch (level) {
             // 如果收到正确的消息就获取WifiInfo，改变图片并显示信号强度
             case 4:

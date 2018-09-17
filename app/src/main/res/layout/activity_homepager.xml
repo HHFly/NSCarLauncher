@@ -28,7 +28,8 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></FrameLayout>
-    <include layout="@layout/home_titlebar" />
+    <include layout="@layout/home_titlebar"
+        android:visibility="gone"/>
 
 
 

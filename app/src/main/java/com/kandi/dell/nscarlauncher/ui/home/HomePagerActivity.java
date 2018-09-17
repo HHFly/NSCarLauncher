@@ -107,7 +107,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     static IKdBtService btservice;
     private static final  String ACTION ="com.driverlayer.kdos_driverServer.RemoteService";
     private static final  String PACKAGE ="com.driverlayer.kd_vwcsserver";
-    private static final  String ACTIONHOME ="com.kangdi.systemui.SystemUIService";
+    private static final  String ACTIONHOME ="com.kangdi.home.hide";
     private static WifiManager mWifiManager;//wifi
     private NetworkBroadcastReceiver mNetworkReceiver; // 接听网络状态发生改变的广播
     private TelephonyManager mTelephonyManager;//x信号
@@ -135,6 +135,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             intentFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
             intentFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
             intentFilter.addAction("android.intent.action.PACKAGE_ADDED"); //应用安装
+            intentFilter.addAction("com.kangdi.home.hide");
             intentFilter.addDataScheme("file");
             registerReceiver(usbBroadcastReceiver, intentFilter);
         }
@@ -184,10 +185,10 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         getService();//底层服务
         bindIeCarService();//aidl服务
         initNetwork();//网络
-        init4G();//4g
-        setWifiLevel();//状态栏wifi
-        initBluetooth();//蓝牙
-        init_time();//状态栏时间
+//        init4G();//4g
+//        setWifiLevel();//状态栏wifi
+//        initBluetooth();//蓝牙
+//        init_time();//状态栏时间
 
         context =this;
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));

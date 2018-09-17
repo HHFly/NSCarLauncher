@@ -286,7 +286,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         }
         if (intent.getAction().equals(ACTION_MUSIC_INFO_CHANGED)) {
             String music_info = intent.getStringExtra(KEY_MUSICINFO);
-
+            LogUtils.log("BT:"+ACTION_MUSIC_INFO_CHANGED+":     "+music_info);
             try {
                 JSONArray jsonArr = new JSONArray(music_info);
                 JSONObject obj = (JSONObject) jsonArr.get(0);
@@ -310,6 +310,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             }
         }
         if (intent.getAction().equals(ACTION_BT_STREAM_START)) {
+            LogUtils.log("BT:"+ACTION_BT_STREAM_START);
 //            int  intent.getStringExtra(KEY_MEDIA_STATUS)
             App.get().PauseServiceFMMUSic();
             App.pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICOPEN);
@@ -322,7 +323,8 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         }
         if (intent.getAction().equals(ACTION_BT_STREAM_SUSPEND)) {
 //            int  intent.getStringExtra(KEY_MEDIA_STATUS)
-            LogUtils.log("BT:"+ SystemClock.currentThreadTimeMillis());
+
+            LogUtils.log("BT:"+ ACTION_BT_STREAM_SUSPEND);
 //            BTMusicFragment.isPlay=false;
 //            BTMusicFragment.gifPlayShow();
 //            HomePagerOneFragment.btPaly.setPlay(false);
@@ -331,8 +333,8 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         }
         if (intent.getAction().equals(ACTION_TRACK_PROGRESS)) {
 
-                int time = intent.getIntExtra(KEY_TRACK_POSITON, 0);
-                BTMusicFragment.setBlueMusicProgress(time);
+//                int time = intent.getIntExtra(KEY_TRACK_POSITON, 0);
+//                BTMusicFragment.setBlueMusicProgress(time);
 
         }
         if (intent.getAction().equals(ACTION_SIM_CALL_START)) {

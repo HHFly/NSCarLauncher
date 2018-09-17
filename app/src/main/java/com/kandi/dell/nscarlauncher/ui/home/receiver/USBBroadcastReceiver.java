@@ -30,6 +30,8 @@ public class USBBroadcastReceiver extends BroadcastReceiver {
                 if(FragmentType.APPLICATION== HomePagerActivity.mCurFragment.getmType()){
 
                 }
+        }else if(action.equals("com.kangdi.home.hide")){
+            HomePagerActivity.hideFragment();
         }
 
     }
