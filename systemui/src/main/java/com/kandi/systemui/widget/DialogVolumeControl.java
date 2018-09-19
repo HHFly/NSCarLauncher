@@ -7,6 +7,7 @@ import android.media.AudioManager;
 import android.support.annotation.NonNull;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -42,16 +43,40 @@ int STREAM_MUSIC,STREAM_MAX_MUSIC,progress;
 	public void incomingShow() {
 
 			alertDialog = new Dialog(content, R.style.nodarken_style);
-
 			alertDialog.setCanceledOnTouchOutside(true);// 设置点击屏幕Dialog不消失
 			Window window = alertDialog.getWindow();
+
 			window.setContentView(R.layout.dialog_volume_control);
+			window.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL);
+// 设置具体参数
+			WindowManager.LayoutParams lp = window.getAttributes();
+			lp.y =-30;
+			window.setAttributes(lp);
 			window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 			initView(content,window);
 
 	}
 public void  show(){
-    alertDialog.show();
+	   dismisstime =0;
+    new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    if (dismisstime > 3) {
+                        alertDialog.dismiss();
+                        break;
+                    } else {
+                        dismisstime++;
+                    }
+                    Thread.sleep(1000);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }).start();
+		alertDialog.show();
 }
 
 
@@ -126,24 +151,7 @@ public void  show(){
 			}
 		});
 
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					while (true) {
-						if (dismisstime > 3) {
-							alertDialog.dismiss();
-							break;
-						} else {
-							dismisstime++;
-						}
-						Thread.sleep(1000);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}).start();
+
 
 	}
 

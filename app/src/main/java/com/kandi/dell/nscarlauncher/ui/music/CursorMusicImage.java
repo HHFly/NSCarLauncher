@@ -2,8 +2,14 @@ package com.kandi.dell.nscarlauncher.ui.music;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.widget.ImageView;
+
+import com.kandi.dell.nscarlauncher.R;
 
 public class CursorMusicImage {
 
@@ -49,7 +55,23 @@ public class CursorMusicImage {
 		cur = null;
 		return album_art;
 	}
+	public static Bitmap setArtwork(Context context, String url) {
+		Uri selectedAudio = Uri.parse(url);
+		MediaMetadataRetriever myRetriever = new MediaMetadataRetriever();
+		myRetriever.setDataSource(context, selectedAudio); // the URI of audio file
+		byte[] artwork;
 
+		artwork = myRetriever.getEmbeddedPicture();
+
+		if (artwork != null) {
+			Bitmap bMap = BitmapFactory.decodeByteArray(artwork, 0, artwork.length);
+
+			return bMap;
+		} else {
+
+			return BitmapFactory.decodeResource(context.getResources(), R.mipmap.one);
+		}
+	}
 	public static String getImage(Context context, String filePath) {
 		Cursor currentCursor = getCursor(context, filePath);
 		int album_id = currentCursor.getInt(currentCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID));

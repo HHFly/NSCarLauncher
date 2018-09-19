@@ -52,6 +52,7 @@ public class WaveView extends View {
     public WaveView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
+
     }
 
     public WaveView(Context context) {

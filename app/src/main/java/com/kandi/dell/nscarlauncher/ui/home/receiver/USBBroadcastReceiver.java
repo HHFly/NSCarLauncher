@@ -27,7 +27,7 @@ public class USBBroadcastReceiver extends BroadcastReceiver {
             Toast.makeText(context, R.string.USB拔出, Toast.LENGTH_SHORT).show();
 //            DialogLocalMusic.updateGallery(context);
             MusicFragment.reSetMusic(false);
-            MusicFragment.stopView();
+
             VideoFragment.dialogLocalMusic.ScanVideo(context,false);
         }
         else  if(action.equals("android.intent.action.PACKAGE_ADDED")){

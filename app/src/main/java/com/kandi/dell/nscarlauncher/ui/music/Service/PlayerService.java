@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
+import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.CursorMusicImage;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
@@ -111,7 +112,8 @@ public class PlayerService extends Service {
 			} catch (Exception e) {
 				e.printStackTrace();
 				DialogLocalMusic.data.clear();
-
+				MusicFragment.stopView();
+				HomePagerTwoFragment.myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
 			}
 		}
 	}
@@ -185,18 +187,21 @@ public class PlayerService extends Service {
 			String artist = ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).artist;
 			
 			//设置歌曲专辑内置图片
-			String albumArt = CursorMusicImage.getImage(PlayerService.this, ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).url);
-			if (albumArt == null) {
-				if(MusicFragment.circle_image!=null) {
-					MusicFragment.circle_image.setImageResource(R.mipmap.one);
-				}
-			} else {
-				Bitmap bm = BitmapFactory.decodeFile(albumArt);
-				BitmapDrawable bmpDraw = new BitmapDrawable(bm);
-				if(MusicFragment.circle_image!=null) {
-					MusicFragment.circle_image.setImageDrawable(bmpDraw);
-				}
+			Bitmap bm = CursorMusicImage.setArtwork(PlayerService.this,DialogLocalMusic.playnow.url);
+			BitmapDrawable bmpDraw = new BitmapDrawable(bm);
+			if(MusicFragment.circle_image!=null) {
+				MusicFragment.circle_image.setImageDrawable(bmpDraw);
 			}
+//			String albumArt = CursorMusicImage.getImage(PlayerService.this, ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).url);
+//			if (albumArt == null) {
+//				if(MusicFragment.circle_image!=null) {
+//					MusicFragment.circle_image.setImageResource(R.mipmap.one);
+//				}
+//			} else {
+//
+////				Bitmap bm = BitmapFactory.decodeFile(albumArt);
+
+//			}
 					
 			MusicFragment.setMusicInfo(musicName, artist);
 			if (!isPause) {

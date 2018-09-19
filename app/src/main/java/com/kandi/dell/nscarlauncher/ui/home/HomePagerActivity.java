@@ -29,6 +29,7 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -197,6 +198,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         pagerScroller.setScrollDuration(100);//设置时间，时间越长，速度越慢
         pagerScroller.initViewPagerScroll(viewPager);
         indicator.setViewPager(viewPager);
+
 
     }
 
