@@ -33,6 +33,7 @@ import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
+import com.kandi.dell.nscarlauncher.ui.video.VideoFragment;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -327,6 +328,19 @@ public class DialogLocalMusic  {
 		}
 		mResolver = null;
 	}
+	public static void updateGallery(final Context context){
+		File pathSD = new File(PATH_SDCARD);
+		File pathUSB = new File(PATH_USB);
+		MediaScannerConnection.scanFile(context,
+				new String[] { pathSD.getAbsolutePath(),pathUSB.getAbsolutePath() }, null,
+				new MediaScannerConnection.OnScanCompletedListener() {
+					public void onScanCompleted(String path, Uri uri) {
+						MusicFragment.reSetMusic(false);
+						VideoFragment.dialogLocalMusic.ScanVideo(context,false);
+					}
+				});
+
+	}
 
 	/*获取usb sd */
 	private static  void getSDUSBViedoData(Context context) {
@@ -334,6 +348,7 @@ public class DialogLocalMusic  {
 
 		SDVideoData.clear();
 		USBVideoData.clear();
+
 		ContentResolver mResolver = context.getContentResolver();
 		System.out.println("mResolver:" + mResolver);
 		Cursor cursor = mResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null, null,

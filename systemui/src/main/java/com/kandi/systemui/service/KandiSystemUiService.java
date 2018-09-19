@@ -167,7 +167,7 @@ public class KandiSystemUiService extends Service {
             act.startActivity(intent);
 
         }catch (Exception e){
-            Toast.makeText(act, "未安装该应用", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(act, R.string.未安装该应用, Toast.LENGTH_SHORT).show();
         }
 
     }

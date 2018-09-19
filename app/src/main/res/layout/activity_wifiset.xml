@@ -99,7 +99,6 @@
             android:textColor="#FFFFFF"
             android:textSize="32px" />
         <android.support.v7.widget.RecyclerView
-            android:layout_marginTop=""
             android:id="@+id/recyclerView_wifi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

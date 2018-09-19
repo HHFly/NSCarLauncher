@@ -165,7 +165,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 isBtFragment();
                 if(!FlagProperty.flag_bluetooth){
                     btPaly.isPlay=!isPlay;
-                    Toast.makeText(getActivity(), "R.string.蓝牙未连接", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.蓝牙未连接, Toast.LENGTH_SHORT).show();
                     return;
                 }else {
 
@@ -177,7 +177,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             public void onClickRight() {
                 isBtFragment();
                 if(!FlagProperty.flag_bluetooth){
-                    Toast.makeText(getActivity(), "R.string.蓝牙未连接", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.蓝牙未连接, Toast.LENGTH_SHORT).show();
                 }else {
                     BTMusicFragment.musicNext();
 //                    try {
