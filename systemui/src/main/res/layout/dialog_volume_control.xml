@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="350px"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal|top"
-    >
+    android:orientation="horizontal" android:layout_width="wrap_content"
+    android:layout_height="60px"
+    android:background="#010101"
+    >\
+    <ImageView
+        android:layout_marginLeft="25px"
+        android:layout_width="19px"
+        android:layout_height="24px"
+        android:src="@mipmap/ic_volume_left"/>
     <SeekBar
 
         android:id="@+id/thumb_volume"
@@ -11,6 +16,7 @@
         android:layout_height="wrap_content"
         android:maxHeight="3.4dp"
         android:minHeight="3.4dp"
+        android:layout_marginLeft="25px"
         android:progressDrawable="@drawable/seekbar_style"
         android:thumb="@mipmap/ic_volume"
         android:paddingLeft="7dp"
@@ -22,6 +28,6 @@
         android:id="@+id/imagebt_volume_show"
         android:layout_width="42px"
         android:layout_height="38px"
-        android:layout_marginLeft="10px"
+        android:layout_marginLeft="25px"
          />
 </LinearLayout>

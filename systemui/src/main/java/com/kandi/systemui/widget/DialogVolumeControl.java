@@ -42,15 +42,17 @@ int STREAM_MUSIC,STREAM_MAX_MUSIC,progress;
 	// 来电显示弹出框
 	public void incomingShow() {
 
-			alertDialog = new Dialog(content, R.style.nodarken_style);
+			alertDialog = new Dialog(content);
 			alertDialog.setCanceledOnTouchOutside(true);// 设置点击屏幕Dialog不消失
 			Window window = alertDialog.getWindow();
 
 			window.setContentView(R.layout.dialog_volume_control);
-			window.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL);
+
 // 设置具体参数
 			WindowManager.LayoutParams lp = window.getAttributes();
-			lp.y =-30;
+		lp.x = 0;
+		lp.y = -400;
+		lp.gravity = Gravity.CENTER;
 			window.setAttributes(lp);
 			window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 			initView(content,window);
