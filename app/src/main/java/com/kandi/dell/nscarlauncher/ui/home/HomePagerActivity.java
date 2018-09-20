@@ -1,5 +1,7 @@
 package com.kandi.dell.nscarlauncher.ui.home;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -31,6 +33,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -98,7 +102,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public static SetFragment setFragment;//设置
     public  static AppFragment appFragment;//应用
     public  static VideoFragment videoFragment;//视频
-    private  static  BaseActivity context;
+    public  static  BaseActivity context;
     private ArrayList<HomeModel> mData;
     static Dialog alertDialog;//来电弹框
     public ComingReceiver comingReceiver;
@@ -116,7 +120,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private static  ImageView mIvBluetooth,mIvPower,mIvVedio,mIvWifi,iv_t_power;
     public  static IECarDriver ieCarDriver;//车辆aidl服务
     public static  TextView tv_speed,tv_power,tv_title_date,tv_t_power;
-
+    static  TranslateAnimation mHiddenAction,mShowAction;
     @Override
     protected void onResume() {
         super.onResume();
@@ -190,16 +194,30 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 //        setWifiLevel();//状态栏wifi
 //        initBluetooth();//蓝牙
 //        init_time();//状态栏时间
-
+        initAnim();
         context =this;
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         viewPager.setOffscreenPageLimit(mFragments.size());
         ViewPagerScroller pagerScroller = new ViewPagerScroller(getActivity());
-        pagerScroller.setScrollDuration(100);//设置时间，时间越长，速度越慢
+        pagerScroller.setScrollDuration(1000);//设置时间，时间越长，速度越慢
         pagerScroller.initViewPagerScroll(viewPager);
         indicator.setViewPager(viewPager);
 
 
+    }
+
+    private void initAnim() {
+        mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+
+        mShowAction.setDuration(500);
+
+        mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                -1.0f);
+        mHiddenAction.setDuration(500);
     }
 
     @Override
@@ -300,7 +318,17 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
     /*隐藏fragemt*/
     public static void  hideFragment(){
-        frameLayout.setVisibility(View.GONE);
+        frameLayout.animate()
+                .alpha(0f)
+                .setDuration(500)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        frameLayout.setVisibility(View.GONE);
+                    }
+                });
+//        frameLayout.startAnimation(mHiddenAction);
+//        frameLayout.setVisibility(View.GONE);
 
         freshlayout();
     }
@@ -311,7 +339,11 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     /*显示fragment*/
 
     public static void showFragemnt(){
+        frameLayout.setAlpha(0f);
         frameLayout.setVisibility(View.VISIBLE);
+        frameLayout.animate().alpha(1f).setDuration(500).setListener(null);
+//        frameLayout.startAnimation(mShowAction);
+
     }
 
 

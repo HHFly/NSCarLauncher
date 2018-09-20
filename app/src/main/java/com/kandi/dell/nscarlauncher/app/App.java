@@ -97,7 +97,7 @@ App extends MultiDexApplication {
 
     }
     private void initService(){
-        initFm();
+//        initFm();
         btService();
         registMyReceiver();
     }
@@ -107,18 +107,17 @@ App extends MultiDexApplication {
     }
     /*收音机*/
     private void  initFm(){
+        try {
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         // radio初始化
         radio = IFmService.Stub.asInterface(ServiceManager.getService("fm"));
-        try {
 
-            radio.FmTest();
 
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
 
-        try {
+
+
+
+
             audioservice.setBassLevel(120);
             audioservice.setSurroundWidth(7);
         } catch (RemoteException e) {

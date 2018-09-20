@@ -1,6 +1,7 @@
 package com.kandi.dell.nscarlauncher.ui.home.fragment;
 
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.os.RemoteException;
@@ -59,6 +60,8 @@ public class HomePagerTwoFragment extends BaseFragment {
         setClickListener(R.id.iv_backbox);
         setClickListener(R.id.iv_cenlock);
         setClickListener(R.id.iv_window);
+        setClickListener(R.id.nav_home);
+        setClickListener(R.id.nav_company);
         setPalyListen();
     }
     @Override
@@ -108,7 +111,12 @@ public class HomePagerTwoFragment extends BaseFragment {
                     homePagerActivity.jumpFragment(FragmentType.MUSIC);
                 }
                 break;
-
+            case R.id.nav_home:
+                NavBroasd(0);
+                break;
+            case R.id.nav_company:
+                NavBroasd(1);
+                break;
         }
     }
     private void setPalyListen(){
@@ -254,4 +262,13 @@ public class HomePagerTwoFragment extends BaseFragment {
         };
     };
 
+    /*高德地图导航 0：回家
+1：回公司*/
+    private void NavBroasd(int type){
+        Intent intent = new Intent();
+        intent.setAction("AUTONAVI_STANDARD_BROADCAST_RECV");
+        intent.putExtra("KEY_TYPE", 10070);
+        intent.putExtra("EXTRA_TYPE", 0);
+        getActivity().sendBroadcast(intent);
+    }
 }

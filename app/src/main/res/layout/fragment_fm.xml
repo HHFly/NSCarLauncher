@@ -101,7 +101,7 @@
         android:id="@+id/recyclerView"
         android:layout_marginTop="30px"
         android:layout_width="1300px"
-
+        android:overScrollMode="never"
         android:layout_height="120px">
 
     </android.support.v7.widget.RecyclerView>

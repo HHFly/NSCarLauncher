@@ -109,7 +109,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         setClickListener(R.id.music);
         setClickListener(R.id.rl_air);
         setClickListener(R.id.controll_air);
-
+        setClickListener(R.id.wave_view);
         setPalyListen();
 
 
@@ -300,14 +300,14 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 
         init_time();
         init_Location();
-        circleView.setProgress(50);
-        circleView.startWave();
+        circleView.setProgress(0);
+//        circleView.startWave();
         setFmMHZ();
         setBT();
     }
     /*初始化fm*/
     private void setFmMHZ(){
-        channel= SPUtil.getInstance(getContext(),FMCHANNEL).getFloat(FMCHANNEL,93.0f);
+        channel= SPUtil.getInstance(HomePagerActivity.context,FMCHANNEL).getFloat(FMCHANNEL,93.0f);
         setTvText(R.id.tv_fm_hz,String.valueOf(channel));
     }
     /*初始化蓝牙*/
@@ -342,6 +342,11 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             case  R.id.controll_air:
                 aircontroll();
                 break;
+            case R.id.wave_view:
+                JumpUtils.actAPK(getActivity(),FragmentType.CARPOWER);
+                JumpUtils.actRightIn(getActivity());
+                break;
+
         }
     }
 

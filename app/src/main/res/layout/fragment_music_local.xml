@@ -57,6 +57,7 @@
             />
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
+        android:overScrollMode="never"
         android:id="@+id/recyclerView_musiclocoal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,6 +69,7 @@
     </android.support.v7.widget.RecyclerView>
     <RelativeLayout
         android:visibility="gone"
+        android:overScrollMode="never"
         android:id="@+id/rl_music_local_nodata"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

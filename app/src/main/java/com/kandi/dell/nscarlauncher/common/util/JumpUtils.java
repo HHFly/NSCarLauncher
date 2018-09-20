@@ -50,4 +50,14 @@ public class JumpUtils {
         }
 
     }
+
+    /**
+     * 跳转动画
+     * 透明度动画:右下角
+     *
+     * @param activity
+     */
+    public static void actRightIn(Activity activity) {
+        activity.overridePendingTransition(R.anim.app_out, R.anim.activity_none);
+    }
 }

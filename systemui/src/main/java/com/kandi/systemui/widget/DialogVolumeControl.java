@@ -45,7 +45,7 @@ int STREAM_MUSIC,STREAM_MAX_MUSIC,progress;
 			alertDialog = new Dialog(content);
 			alertDialog.setCanceledOnTouchOutside(true);// 设置点击屏幕Dialog不消失
 			Window window = alertDialog.getWindow();
-
+			window.requestFeature(Window.FEATURE_NO_TITLE);
 			window.setContentView(R.layout.dialog_volume_control);
 
 // 设置具体参数

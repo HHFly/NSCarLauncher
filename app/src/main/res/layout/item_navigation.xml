@@ -5,9 +5,9 @@
     android:layout_marginLeft="50px"
     android:layout_marginRight="50px"
     android:background="@mipmap/item_bg"
-    android:id="@+id/rl_navigation">
+   >
     <RelativeLayout
-
+        android:id="@+id/rl_navigation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -88,11 +88,13 @@
         android:layout_marginTop="70px"
         android:layout_marginBottom="40px">
         <ImageView
+            android:id="@+id/nav_home"
             android:layout_width="52px"
             android:layout_height="50px"
             android:src="@drawable/select_na"
             />
         <ImageView
+            android:id="@+id/nav_company"
             android:layout_width="60px"
             android:layout_height="50px"
             android:layout_marginLeft="100px"
