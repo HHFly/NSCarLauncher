@@ -27,11 +27,7 @@ import android.support.v4.view.ViewPager;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewConfiguration;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -67,7 +63,6 @@ import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
 import com.kandi.dell.nscarlauncher.ui.video.VideoFragment;
 import com.kandi.dell.nscarlauncher.widget.DialogVolumeControl;
 import com.kandi.dell.nscarlauncher.widget.ViewPagerScroller;
-
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -425,60 +420,62 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public void incomingShow(String number, final int index) {
         if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
                 AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-            alertDialog = new Dialog(this, R.style.nodarken_style);
-
-            alertDialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
-            Window window = alertDialog.getWindow();
-            window.setContentView(R.layout.dialog_phone_incalling);
-            TextView tv_info = (TextView) window.findViewById(R.id.dialog_text);
-            tv_info.setText(PhoneFragment.getName(number));
-            Button bt_answer = (Button) window.findViewById(R.id.dialog_btn_answer);
-            Button bt_refuse = (Button) window.findViewById(R.id.dialog_btn_refuse);
-            bt_answer.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    new Thread() {
-                        public void run() {
-                            myHandler.sendMessage(myHandler.obtainMessage(CALL_ANSWER));
-                        };
-                    }.start();
-//                    MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 接听时进入电话页面
-                    jumpFragment(FragmentType.PHONE);
-                    FlagProperty.flag_phone_incall_click = true;
-                   dimissShow();
-                   initImmersionBar();
-                }
-            });
-            bt_refuse.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    FlagProperty.flag_phone_ringcall = false;
-                    new Thread() {
-                        public void run() {
-                            if (index == 1) {
-                                myHandler.sendMessage(myHandler.obtainMessage(CALL_HUNGUP));
-                            } else if (index == 2) {
-                                try {
-                                    Log.d("BlueMusicBroadcoast",
-                                            "btservice.btReleaseWaitingCall():" + btservice.btReleaseWaitingCall());
-                                } catch (RemoteException e) {
-                                    e.printStackTrace();
-                                }
-                            }else{
-                                myHandler.sendMessage(myHandler.obtainMessage(CALL_HUNGUP)); //默认
-                            }
-
-                        };
-                    }.start();
-                  dimissShow();
-                  initImmersionBar();
-                }
-            });
+            jumpFragment(FragmentType.PHONE);
+            PhoneFragment.callIn(number);
+//            alertDialog = new Dialog(this, R.style.nodarken_style);
+//
+//            alertDialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
+//            Window window = alertDialog.getWindow();
+//            window.setContentView(R.layout.dialog_phone_incalling);
+//            TextView tv_info = (TextView) window.findViewById(R.id.dialog_text);
+//            tv_info.setText(PhoneFragment.getName(number));
+//            Button bt_answer = (Button) window.findViewById(R.id.dialog_btn_answer);
+//            Button bt_refuse = (Button) window.findViewById(R.id.dialog_btn_refuse);
+//            bt_answer.setOnClickListener(new View.OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    new Thread() {
+//                        public void run() {
+//                            myHandler.sendMessage(myHandler.obtainMessage(CALL_ANSWER));
+//                        };
+//                    }.start();
+////                    MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 接听时进入电话页面
+//                    jumpFragment(FragmentType.PHONE);
+//                    FlagProperty.flag_phone_incall_click = true;
+//                   dimissShow();
+//                   initImmersionBar();
+//                }
+//            });
+//            bt_refuse.setOnClickListener(new View.OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    FlagProperty.flag_phone_ringcall = false;
+//                    new Thread() {
+//                        public void run() {
+//                            if (index == 1) {
+//                                myHandler.sendMessage(myHandler.obtainMessage(CALL_HUNGUP));
+//                            } else if (index == 2) {
+//                                try {
+//                                    Log.d("BlueMusicBroadcoast",
+//                                            "btservice.btReleaseWaitingCall():" + btservice.btReleaseWaitingCall());
+//                                } catch (RemoteException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }else{
+//                                myHandler.sendMessage(myHandler.obtainMessage(CALL_HUNGUP)); //默认
+//                            }
+//
+//                        };
+//                    }.start();
+//                  dimissShow();
+//                  initImmersionBar();
+//                }
+//            });
         }
 
-        alertDialog.show();
+//        alertDialog.show();
     }
 
 

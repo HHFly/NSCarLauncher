@@ -42,6 +42,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     public final static int                    DELETE_CLIKE   = 5;
     public final static int                    BOOKREFRESH   = 6;
     public final static int                    RECORDREFRESH  =7;
+    public final static int                    PHONE_IN =8;//来电
     public static boolean flag_phone; //是否通话
     private static int phone_call_time;//通话时间
     static String phone_continue_show = "";//通话时间
@@ -161,6 +162,14 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         if(btservice==null) {
             btservice = App.get().getBtservice();
         }
+    }
+    public static void callIn(String num){
+        number=num;
+        new Thread() {
+            public void run() {
+                myHandler.sendMessage(myHandler.obtainMessage(PHONE_IN));
+            }
+        }.start();
     }
     /*打电话*/
    public static void callphone(String num){
@@ -435,6 +444,14 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                     case RECORDREFRESH:
                         if(pRecordFragment!=null) {
                             pRecordFragment.refresh();
+                        }
+                        break;
+                    case PHONE_IN:
+                        if(!"".equals(number)) {
+                            ll_calling_controll.setVisibility(View.INVISIBLE);
+                            tv_phone_number.setText(getName(number));
+                            tv_phone_info.setText("");
+                            rl_call.setVisibility(View.VISIBLE);
                         }
                         break;
                     default:
