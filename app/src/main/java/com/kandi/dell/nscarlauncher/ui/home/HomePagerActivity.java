@@ -318,17 +318,17 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
     /*隐藏fragemt*/
     public static void  hideFragment(){
-        frameLayout.animate()
-                .alpha(0f)
-                .setDuration(500)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        frameLayout.setVisibility(View.GONE);
-                    }
-                });
+//        frameLayout.animate()
+//                .alpha(0f)
+//                .setDuration(500)
+//                .setListener(new AnimatorListenerAdapter() {
+//                    @Override
+//                    public void onAnimationEnd(Animator animation) {
+//                        frameLayout.setVisibility(View.GONE);
+//                    }
+//                });
 //        frameLayout.startAnimation(mHiddenAction);
-//        frameLayout.setVisibility(View.GONE);
+        frameLayout.setVisibility(View.GONE);
 
         freshlayout();
     }
@@ -339,9 +339,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     /*显示fragment*/
 
     public static void showFragemnt(){
-        frameLayout.setAlpha(0f);
+//        frameLayout.setAlpha(0f);
         frameLayout.setVisibility(View.VISIBLE);
-        frameLayout.animate().alpha(1f).setDuration(500).setListener(null);
+//        frameLayout.animate().alpha(1f).setDuration(500).setListener(null);
 //        frameLayout.startAnimation(mShowAction);
 
     }
