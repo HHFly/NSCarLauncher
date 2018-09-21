@@ -9,8 +9,6 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -110,6 +108,13 @@ public class WaveView extends View {
 
         //根据进度改变起点坐标的y值
         startPoint.y = (int) (height - (progress / 100.0 * height));
+        //startPoint.x在onDraw方法后值会变，故采用下面方法
+        startPoint.x = -200 + count*translateX;
+        if(startPoint.x == 0){
+            count = 0;
+        }else{
+            count++;
+        }
         //起点
         path.moveTo(startPoint.x, startPoint.y);
         int j = 1;
@@ -131,16 +136,18 @@ public class WaveView extends View {
         path.lineTo(startPoint.x, height);//左下角
         path.lineTo(startPoint.x, startPoint.y);//起点
         path.close();
-        canvas.drawPath(path, paint);
+        if(progress > 0){
+            canvas.drawPath(path, paint);
+        }
 
 //        drawText(canvas, textPaint, progress + "%");
-        //判断是不是平移完了一个周期
-        if (startPoint.x + translateX >= 0) {
-            //满了一个周期则恢复默认起点继续平移
-            startPoint.x = -cycle * 4;
-        }
-        //每次波形的平移量 40
-        startPoint.x += translateX;
+//        //判断是不是平移完了一个周期
+//        if (startPoint.x + translateX >= 0) {
+//            //满了一个周期则恢复默认起点继续平移
+//            startPoint.x = -cycle * 4;
+//        }
+//        //每次波形的平移量 40
+//        startPoint.x += translateX;
         if (autoIncrement) {
             if (progress >= 100) {
                 progress = 0;
@@ -151,6 +158,7 @@ public class WaveView extends View {
         path.reset();
         canvas.restore();
     }
+    int count = 0;
 
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
