@@ -35,6 +35,9 @@
     </uses-permission>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.STATUS_BAR_SERVICE"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

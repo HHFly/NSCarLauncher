@@ -430,8 +430,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 getApplicationContext().unbindService(serviceConnection);
             }
             //取消信号强度监听
-            mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
-            mPhoneStateListener = null;
+//
+//            mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
+//            mPhoneStateListener = null;
 
 
         } catch (IllegalArgumentException e) {

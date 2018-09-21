@@ -35,4 +35,7 @@ public @interface HandleKey  {
     int AIROPEN=10;
     /*空调关*/
     int AIRCLOSE=11;
+
+    /*fm关*/
+    int  OPEMFM =12;
 }

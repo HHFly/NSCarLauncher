@@ -18,6 +18,7 @@ import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
+import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.kandi.dell.nscarlauncher.widget.RadioRulerView;
 
 
@@ -247,6 +248,7 @@ public void openFm(){
                     public void run() {
                         try {
                             System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
+                            App.pagerOneHnadler.sendEmptyMessage(HandleKey.OPEMFM);
 //                        System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 开机初始化为频道93.0
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -265,6 +267,7 @@ public void openFm(){
                 public void run() {
                     try {
                         System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
+                        App.pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

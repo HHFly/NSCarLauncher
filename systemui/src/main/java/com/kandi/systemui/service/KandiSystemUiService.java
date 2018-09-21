@@ -1,41 +1,61 @@
 package com.kandi.systemui.service;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.IBinder;
+import android.os.IKdBtService;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.kandi.systemui.R;
+import com.kandi.systemui.base.App;
 import com.kandi.systemui.driver.DriverServiceManger;
 import com.kandi.systemui.listen.MyPhoneStateListener;
+
 import com.kandi.systemui.widget.DialogVolumeControl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class KandiSystemUiService extends Service {
     Window window;
-
-    WindowManager mWindowManager;
+    public ComingReceiver comingReceiver;
+    WindowManager mWindowManager,wm;
     LayoutParams wmParams; // WindowManager.LayoutParams
-    FrameLayout mFloatLayout;
+    FrameLayout mFloatLayout ,phoneFloatLayout;
     private ImageView status_bar_wifi_btn,status_bar_3g_level_btn,status_bar_bluetooth_image,status_bar_3g_type_btn,status_bar_battery_imageView,center_img,iv_power,title_iv_sound;
-    private  TextView tv_t_power,status_bar_time_textview;
+    private  TextView tv_t_power,status_bar_time_textview,tv_hangup,tv_answser,tv_phone_number;
+    private RelativeLayout Rlcenter;
     private DialogVolumeControl dialogVolumeControl ;
     BluetoothController mBluetoothController;
     BatteryAndTimeController mBatteryAndTimeController;
@@ -44,6 +64,14 @@ public class KandiSystemUiService extends Service {
     MyPhoneStateListener MyListener;
     private TelephonyManager Tel;
     private static final  String ACTION ="com.kangdi.systemui.SystemUIService";
+    private float mPosX,mPosY,mCurPosX,mCurPosY;
+    static IKdBtService btservice;//蓝牙服务
+    private WindowManager.LayoutParams wmParamDiaglogs = null;
+
+
+
+    private AlertDialog dialog;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -58,10 +86,13 @@ public class KandiSystemUiService extends Service {
         window = new Dialog(this, R.style.nodarken_style).getWindow();
         //设置Window为全透明
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
+        createFloatView();
         createView();
         setListen();
         initHeader();
+        Receiver();
+        /*初始化蓝牙*/
+        btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
     }
     @Override
     public void onDestroy() {
@@ -70,6 +101,12 @@ public class KandiSystemUiService extends Service {
             mWindowManager.removeView(mFloatLayout);
         }
 
+        if (phoneFloatLayout != null) {
+            wm.removeView(phoneFloatLayout);
+        }
+            if (comingReceiver!=null){
+        this.unregisterReceiver(comingReceiver);
+        }
     }
 
 
@@ -117,15 +154,18 @@ public class KandiSystemUiService extends Service {
         center_img =(ImageView) mFloatLayout.findViewById(R.id.center_img);
         iv_power =(ImageView) mFloatLayout.findViewById(R.id.iv_power);
         title_iv_sound =(ImageView) mFloatLayout.findViewById(R.id.title_iv_sound);
+        Rlcenter =(RelativeLayout) mFloatLayout.findViewById(R.id.center);
+
         mFloatLayout.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+
 
     }
     private void setListen(){
         center_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoHome();
+//                gotoHome();
 
             }
         });
@@ -133,7 +173,7 @@ public class KandiSystemUiService extends Service {
             @Override
             public void onClick(View v) {
 
-                actActivity(getApplicationContext(),"com.kandi.powermanager","com.kandi.powermanager.view.PowerManagerActivity");
+                gotoHome();
             }
         });
         title_iv_sound.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +182,68 @@ public class KandiSystemUiService extends Service {
                 showVolumeDialog();
             }
         });
+        mFloatLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        mPosX = event.getX();
+                        mPosY = event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        mCurPosX = event.getX();
+                        mCurPosY = event.getY();
 
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (mCurPosY - mPosY > 0
+                                && (Math.abs(mCurPosY - mPosY) > 10)&&(isHome())) {
+                            //向下滑動
+                            Rlcenter.setAlpha(0f);
+                            Rlcenter.setVisibility(View.VISIBLE);
+                            Rlcenter.animate().alpha(1f).setDuration(500).setListener(null);
+
+
+                        } else if (mCurPosY - mPosY < 0
+                                && (Math.abs(mCurPosY - mPosY) > 5)&&(isHome())) {
+                            //向上滑动
+                            Rlcenter.animate()
+                                    .alpha(0f)
+                                    .setDuration(500)
+                                    .setListener(new AnimatorListenerAdapter() {
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            Rlcenter.setVisibility(View.GONE);
+                                        }
+                                    });
+                        }
+//                        if (mCurPosX - mPosX > 0
+//                                && (Math.abs(mCurPosX - mPosX) > 25)) {
+//                            //向左滑動
+////                            tiShi(mContext,"向左");
+//
+//                        } else if (mCurPosX - mPosX < 0
+//                                && (Math.abs(mCurPosX - mPosX) > 25)) {
+//                            //向右滑动
+//
+////                            tiShi(mContext,"向右");
+//                        }
+                        break;
+
+                }
+                return false;
+            }
+        });
+    }
+    private void Receiver(){
+        if (comingReceiver == null) {
+            comingReceiver = new ComingReceiver();
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction("phone.iscoming");
+            intentFilter.addAction("3gphone.iscoming");
+            intentFilter.addAction("phone.isgone");
+            registerReceiver(comingReceiver, intentFilter);
+        }
     }
 //返回首页
     void gotoHome() {
@@ -314,4 +415,126 @@ public class KandiSystemUiService extends Service {
             return true;
         }
     }
+  /*判断是顶部app是否是桌面*/
+
+    private boolean isHome() {
+        ActivityManager mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> rti = mActivityManager.getRunningTasks(1);
+        Log.d("SystemUI",rti.get(0).topActivity.getPackageName());
+        return !"com.kandi.nscarlauncher".equals(rti.get(0).topActivity.getPackageName());
+    }
+    /*创建浮窗*/
+    private void createFloatView() {
+        wm=  (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        //        wmParamDiaglogs = new WindowManager.LayoutParams();
+        wmParamDiaglogs =   new LayoutParams();
+
+
+        //        wmParamDiaglogs.type=2002;          //type是关键，这里的2002表示系统级窗口
+        wmParamDiaglogs.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+        wmParamDiaglogs.format= PixelFormat.RGBA_8888;//设置图片格式，效果为背景透明
+
+
+        wmParamDiaglogs.flags= WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE ;//
+        wmParamDiaglogs.gravity = Gravity.LEFT|Gravity.TOP;//
+        wmParamDiaglogs.x = 0;
+        wmParamDiaglogs.y = 0;
+        wmParamDiaglogs.width=WindowManager.LayoutParams.WRAP_CONTENT;
+        wmParamDiaglogs.height= WindowManager.LayoutParams.WRAP_CONTENT;
+        LayoutInflater inflater = LayoutInflater.from(this);
+        phoneFloatLayout = (FrameLayout) inflater.inflate(R.layout.dialog_phone, null);
+
+
+        wm.addView(phoneFloatLayout, wmParamDiaglogs);
+
+        //接听拒绝
+        phoneFloatLayout.findViewById(R.id.rl_bg).getBackground().setAlpha(60);
+        phoneFloatLayout.setVisibility(View.GONE);
+        tv_answser =(TextView) phoneFloatLayout.findViewById(R.id.tv_answser);
+        tv_hangup = (TextView) phoneFloatLayout.findViewById(R.id.tv_hangup);
+        tv_phone_number =(TextView) phoneFloatLayout.findViewById(R.id.tv_phone_number);
+        phoneFloatLayout.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        tv_hangup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    btservice.btHungupCall();
+                    phoneFloatLayout.setVisibility(View.GONE);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        tv_answser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    btservice.btAnswerCall();
+                    tv_answser.setVisibility(View.GONE);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        phoneFloatLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                wmParamDiaglogs.x=(int) event.getRawX() - phoneFloatLayout.getWidth()/2;
+                wmParamDiaglogs.y=(int) event.getRawY()-phoneFloatLayout.getHeight()/2-80;
+                wm.updateViewLayout(phoneFloatLayout,wmParamDiaglogs);
+                return false;
+            }
+        });
+
+
+    }
+
+/*来电广播接听*/
+
+    public class ComingReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction() == "phone.iscoming") {
+                int  index =intent.getIntExtra("index", 0);
+                Log.d("SystemUI","phone.iscoming1 ");
+                if(2!=index) {
+                    if(isHome()){
+                        Log.d("SystemUI","phone.iscoming 2");
+                        if(phoneFloatLayout!=null){
+                            phoneFloatLayout.setVisibility(View.VISIBLE);
+                        }
+                        if(tv_phone_number!=null){
+                            tv_phone_number.setText( intent.getStringExtra("number"));
+                        }
+                        if(tv_hangup!=null){
+                            tv_hangup.setVisibility(View.VISIBLE);
+                        }
+                        if(tv_answser!=null){
+                            tv_answser.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            } else if (intent.getAction() == "phone.isgone") {
+                if(phoneFloatLayout!=null){
+                    phoneFloatLayout.setVisibility(View.GONE);
+                }
+
+            } else if (intent.getAction() == "3gphone.iscoming") {
+//                incoming3gShow(intent.getStringExtra("number"));
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

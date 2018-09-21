@@ -426,6 +426,9 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 case  HandleKey.FM:
                     fmPaly.setPlay(false);
                     break;
+                case  HandleKey.OPEMFM:
+                    fmPaly.setPlay(true);
+                    break;
                 case  HandleKey.BTMUSICCOLSE:
                     btPaly.setPlay(false);
                     break;

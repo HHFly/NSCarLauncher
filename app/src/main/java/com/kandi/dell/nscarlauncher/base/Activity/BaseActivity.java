@@ -32,10 +32,12 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.ShowLoadingDialogListener;
 import com.kandi.dell.nscarlauncher.base.dialog.LoadingDialog;
 import com.kandi.dell.nscarlauncher.common.util.FrescoUtils;
+import com.kandi.dell.nscarlauncher.common.util.LanguageUtil;
 import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gyf.barlibrary.BarHide;
 import com.gyf.barlibrary.ImmersionBar;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.white.lib.utils.location.LocationManagerUtil;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -80,6 +82,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LanguageUtil.isLanguageChanged(this, HomePagerActivity.class);
+
         if (isOnCreate()) {
             if (getContentViewResId() != 0) {
                 setContentView(getContentViewResId());

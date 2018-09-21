@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    >
+    <RelativeLayout
+        android:id="@+id/rl_bg"
+        android:background="#010101"
+        android:layout_width="240px"
+        android:layout_height="280px">
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="53px"
+            android:id="@+id/tv_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#EEEEEE"
+            android:textSize="24px"/>
+        
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="38px"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:id="@+id/tv_hangup"
+                android:layout_width="84px"
+                android:layout_height="40px"
+                android:text="@string/挂断"
+                android:textSize="24px"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/shape_red_r20"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:layout_marginLeft="36px"
+                android:id="@+id/tv_answser"
+                android:layout_width="84px"
+                android:layout_height="40px"
+                android:text="@string/接听"
+                android:textSize="24px"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:background="@drawable/shape_green_r20"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

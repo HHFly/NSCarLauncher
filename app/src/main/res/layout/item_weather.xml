@@ -118,6 +118,11 @@
                 android:layout_height="240px"
                 android:layout_centerInParent="true"
                 />
+        <ImageView
+            android:layout_width="240px"
+            android:layout_height="240px"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_wave_bg"/>
 
         <LinearLayout
             android:id="@+id/ll_speed"
