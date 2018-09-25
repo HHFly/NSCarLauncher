@@ -900,10 +900,17 @@ public int getSim(int num) {
             if (intent.getAction() == "phone.iscoming") {
                 int  index =intent.getIntExtra("index", 0);
                 if(2!=index) {
-                    incomingShow(intent.getStringExtra("number"), intent.getIntExtra("index", 0));
+//                    incomingShow(intent.getStringExtra("number"), intent.getIntExtra("index", 0));
+                    if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
+                            AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                        jumpFragment(FragmentType.PHONE);
+
+                        PhoneFragment.callIn(intent.getStringExtra("number"),intent.getStringExtra("address"),intent.getStringExtra("type"));
+                    }
+
                 }
             } else if (intent.getAction() == "phone.isgone") {
-                dimissShow();
+//                dimissShow();
             } else if (intent.getAction() == "3gphone.iscoming") {
 //                incoming3gShow(intent.getStringExtra("number"));
             }

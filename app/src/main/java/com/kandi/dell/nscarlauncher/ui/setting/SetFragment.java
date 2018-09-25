@@ -123,7 +123,8 @@ public class SetFragment extends BaseFragment {
                     switchFragment(dateFragment);
                     break;
                 case  SetType.LANGUAGE:
-                    JumpUtils.actActivity(getActivity(),Settings.ACTION_INPUT_METHOD_SETTINGS);
+//                    JumpUtils.actActivity(getActivity(),Settings.ACTION_INPUT_METHOD_SUBTYPE_SETTINGS);
+                    JumpUtils.actComponenActivity(getActivity(),"com.android.settings","com.android.settings.LanguageSettings");
 //                    switchFragment(languageFragment);
                     break;
                 case  SetType.ABOUT:

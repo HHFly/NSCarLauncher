@@ -29,12 +29,12 @@
         android:textColor="#989898"
         android:textSize="36px"
         android:layout_gravity="center_horizontal"
-        android:text="00:00"
+        android:text=""
         />
         <LinearLayout
             android:id="@+id/ll_other_phone"
             android:layout_marginTop="20px"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal">
@@ -84,8 +84,8 @@
                 android:src="@mipmap/ic_calling_stop"/>
             <ImageView
                 android:id="@+id/call_start"
-                android:layout_width="80px"
-                android:layout_height="80px"
+                android:layout_width="90px"
+                android:layout_height="90px"
                 android:layout_marginLeft="200px"
                 android:src="@mipmap/ic_call_start"/>
         </LinearLayout>

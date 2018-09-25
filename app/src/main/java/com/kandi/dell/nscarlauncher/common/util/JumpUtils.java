@@ -1,6 +1,7 @@
 package com.kandi.dell.nscarlauncher.common.util;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.widget.Toast;
 
@@ -50,7 +51,14 @@ public class JumpUtils {
         }
 
     }
+    public  static void actComponenActivity(Activity act, String pkg,String cla){
+        Intent intent = new Intent();
+        ComponentName comp = new ComponentName(pkg,cla);
+        intent.setComponent(comp);
+        intent.setAction("android.intent.action.VIEW");
+        act.startActivity(intent);
 
+    }
     /**
      * 跳转动画
      * 透明度动画:右下角

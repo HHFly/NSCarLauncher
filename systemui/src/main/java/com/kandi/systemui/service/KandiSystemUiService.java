@@ -190,23 +190,22 @@ public class KandiSystemUiService extends Service {
                         mPosX = event.getX();
                         mPosY = event.getY();
                         break;
-                    case MotionEvent.ACTION_MOVE:
+
+                    case MotionEvent.ACTION_UP:
                         mCurPosX = event.getX();
                         mCurPosY = event.getY();
-
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        if (mCurPosY - mPosY > 0
-                                && (Math.abs(mCurPosY - mPosY) > 10)&&(isHome())) {
+                        Log.d("systemui","slide " +mCurPosY+"   "+mPosY+"   "+(mCurPosY - mPosY));
+                        if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 30)&&(isHome())) {
                             //向下滑動
-                            Rlcenter.setAlpha(0f);
+                            Log.d("systemui","slide down " +mCurPosY+"   "+mPosY+"   "+(mCurPosY - mPosY));
                             Rlcenter.setVisibility(View.VISIBLE);
                             Rlcenter.animate().alpha(1f).setDuration(500).setListener(null);
 
 
-                        } else if (mCurPosY - mPosY < 0
-                                && (Math.abs(mCurPosY - mPosY) > 5)&&(isHome())) {
+                        }
+                        else if (mCurPosY - mPosY < 0 && (Math.abs(mPosY - mCurPosY) > 30)&&(isHome())) {
                             //向上滑动
+                            Log.d("systemui","slide up " +mCurPosY+"   "+mPosY+"   "+(mCurPosY - mPosY));
                             Rlcenter.animate()
                                     .alpha(0f)
                                     .setDuration(500)

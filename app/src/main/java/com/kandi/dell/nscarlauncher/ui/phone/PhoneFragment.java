@@ -38,10 +38,13 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     public final static int                    PHONE_OVER     = 1;//结束
     public final static int                    PHONE_CONTINUE = 2;//
     public final static int                    PHONE_START    = 3;
-    public final static int                    PHONE_END      = 4;
+    public final static int                    PHONE_END      = 4;//
+    public final static int                    PHONE_ANSWER     = 9;//接电话
     public final static int                    DELETE_CLIKE   = 5;
     public final static int                    BOOKREFRESH   = 6;
     public final static int                    RECORDREFRESH  =7;
+    public final static int                    PHONE_IN =8;//来电
+
     public static boolean flag_phone; //是否通话
     private static int phone_call_time;//通话时间
     static String phone_continue_show = "";//通话时间
@@ -53,7 +56,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     private static PRecordFragment pRecordFragment;//通话记录
     private static ArrayList<PhoneBookInfo> phoneBookInfos =new ArrayList<>();//通讯录
     private static ArrayList<PhoneRecordInfo> phoneRecordInfos =new ArrayList<>();//通讯记录
-    private static  String number;
+    private static  String number,address,type;
     static TextView tv_phone_number,tv_phone_info,tv_keep_calltext,tv_other_phine;
     static ImageView bt_call,bt_stop;
     static LinearLayout ll_other,ll_calling_key,ll_calling_controll;
@@ -182,6 +185,17 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         }.start();
 
     }
+    /*接电话*/
+    public static void answerPhone(){
+
+        new Thread() {
+            public void run() {
+                myHandler.sendMessage(myHandler.obtainMessage(PHONE_ANSWER));
+            }
+        }.start();
+
+    }
+
     /*添加电话号码*/
     private void addphone(String num){
         viewPager.setCurrentItem(0);
@@ -357,11 +371,17 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         }
         phone_call_time = 0;
         flag_phone = true;
+        if(ll_calling_controll!=null){
+            ll_calling_controll.setVisibility(View.VISIBLE);
+        }
         if(rl_call!=null) {
             rl_call.setVisibility(View.VISIBLE);//显示界面
         }
         if(ll_other!=null){
-            ll_other.setVisibility(View.INVISIBLE);
+            ll_other.setVisibility(View.GONE);
+        }
+        if(bt_call!=null){
+            bt_call.setVisibility(View.GONE);
         }
         new CountThread().start();
     }
@@ -396,7 +416,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
             return "" + num;
         }
     }
-    public static Handler myHandler = new Handler() {
+    public static Handler  myHandler = new Handler() {
         public void handleMessage(Message msg) {
             try {
                 switch (msg.what) {
@@ -422,6 +442,12 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                         btservice.btHungupCall();
                         
                         break;
+                    case PHONE_ANSWER:
+                        btservice.btAnswerCall();
+
+                        break;
+
+
                     case DELETE_CLIKE:
                         if(pNumFragment!=null){
                             pNumFragment.subString();
@@ -437,6 +463,16 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                             pRecordFragment.refresh();
                         }
                         break;
+                    case PHONE_IN:
+                        if(!"".equals(number)) {
+                            tv_phone_number.setText(getName(number));
+                            if(address!=null&&type!=null) {
+                                tv_phone_info.setText(address + "," + type);
+                            }
+                            rl_call.setVisibility(View.VISIBLE);
+                        }
+                        break;
+
                     default:
                         break;
                 }
@@ -567,6 +603,18 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         bt_call.setVisibility(View.GONE);
 
     }
+    //
+    public static void callIn(String num,String addre,String ty){
+        number=num;
+        address =addre;
+       type =ty;
+        new Thread() {
+            public void run() {
+                myHandler.sendMessage(myHandler.obtainMessage(PHONE_IN));
+            }
+        }.start();
+    }
+
     @Override
     public void onPageScrollStateChanged(int i) {
 
@@ -634,7 +682,8 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                 hangDownphone();
                 break;
             case R.id.call_start:
-
+                answerPhone();
+                phoneStart();
                 break;
             case R.id.ll_1:
                 addphone("1");
