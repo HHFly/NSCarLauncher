@@ -30,8 +30,10 @@ import com.kandi.dell.nscarlauncher.ui.phone.model.PhoneRecordInfo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.Collator;
 import java.util.ArrayList;
-
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
@@ -326,9 +328,17 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                         info.setNumber(number);
 //                        System.out.println(info.name + " : " + info.number);
                        phoneBookInfos.add(info);
-
                     }
                 }
+                Collections.sort(phoneBookInfos, new Comparator<PhoneBookInfo>() {
+                    @Override
+                    public int compare(PhoneBookInfo o1, PhoneBookInfo o2) {
+                        Collator collator = Collator.getInstance(java.util.Locale.CHINA);
+                        String name1 = o1.getName();
+                        String name2 = o2.getName();
+                        return collator.compare(name1,name2);
+                    }
+                });
                 if(pMemberFragment!=null) {
                     pMemberFragment.setmData(phoneBookInfos);
                     myHandler.sendMessage(myHandler.obtainMessage(BOOKREFRESH));
