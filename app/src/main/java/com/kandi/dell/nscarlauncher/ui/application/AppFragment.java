@@ -1,10 +1,11 @@
 package com.kandi.dell.nscarlauncher.ui.application;
 
-import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,13 +21,15 @@ import java.util.Collections;
 import java.util.List;
 
 public class AppFragment extends BaseFragment {
-    private List<AppInfo> mApps;
-    private AppAdapter mAdapter;
-    private PackageManager pm;
+    public static List<AppInfo> mApps;
+    public static AppAdapter mAdapter;
+    public static PackageManager pm;
     public static final int FILTER_ALL_APP = 0; // 所有应用程序
     public static final int FILTER_SYSTEM_APP = 1; // 系统程序
     public static final int FILTER_THIRD_APP = 2; // 第三方应用程序
     public static final int FILTER_SDCARD_APP = 3; // 安装在SDCard的应用程序
+    public static final int APPREFRESH = 1000;// 刷新所有应用程序列表
+    public static Context context;
 
     @Override
     public int getContentResId() {
@@ -50,6 +53,8 @@ public class AppFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        context = getActivity();
+        mAdapter = null;
         loadApps();
         initRvAdapter(mApps);
     }
@@ -100,8 +105,8 @@ public class AppFragment extends BaseFragment {
         }
     }
     // 根据查询条件，查询特定的ApplicationInfo
-    private List<AppInfo> queryFilterAppInfo(int filter) {
-        pm = getActivity().getPackageManager();
+    public static List<AppInfo> queryFilterAppInfo(int filter) {
+        pm = context.getPackageManager();
         // 查询所有已经安装的应用程序
         List<ApplicationInfo> listAppcations = pm
                 .getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES);
@@ -154,12 +159,32 @@ public class AppFragment extends BaseFragment {
         return appInfos;
     }
     // 构造一个AppInfo对象 ，并赋值
-    private AppInfo getAppInfo(ApplicationInfo app) {
+    public static AppInfo getAppInfo(ApplicationInfo app) {
         AppInfo appInfo = new AppInfo();
         appInfo.setName(app.processName);
         appInfo.setAppLabel((String) app.loadLabel(pm));
         appInfo.setAppIcon(app.loadIcon(pm));
         appInfo.setPkgName(app.packageName);
         return appInfo;
+    }
+
+    public static Handler ViewHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case APPREFRESH:// 刷新所有应用程序列表
+                    if(context != null){
+                        mApps = queryFilterAppInfo(FILTER_THIRD_APP); // 查询所有应用程序信息
+                    }
+                    if (mAdapter != null) {
+                        mAdapter.notifyData(mApps, true);
+                    }
+                    break;
+            }
+        }
+    };
+
+    public  static void refreshAppInfo(){
+        ViewHandler.sendEmptyMessage(APPREFRESH);
     }
 }
