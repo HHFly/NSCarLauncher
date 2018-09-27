@@ -93,6 +93,8 @@
     <string name="附近网络">附近网络</string>
     <string name="当前连接网络">当前连接网络</string>
     <string name="更多应用">更多应用</string>
+    <string name="下午">下午 </string>
+    <string name="上午">上午 </string>
 
 
 </resources>

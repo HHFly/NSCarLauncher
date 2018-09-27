@@ -1,13 +1,12 @@
-package com.kandi.dell.nscarlauncher.common.util;
+package com.kandi.systemui.util;
 
-import com.kandi.dell.nscarlauncher.R;
+
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
-import static com.white.lib.utils.AppResUtil.getString;
+
 
 /**
  * Created by Administrator on 2016/1/15.
@@ -20,34 +19,6 @@ public class TimeUtils {
 //        this.calendar.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
     }
 
-    //获取星期几方法
-    public static String getDayOfWeek(){
-        String mWay = null;
-        switch (calendar.get(Calendar.DAY_OF_WEEK)){
-            case 1:
-                mWay =  getString(R.string.星期日);
-                break;
-            case 2:
-                mWay =getString(R.string.星期一);
-                break;
-            case 3:
-                mWay =getString(R.string.星期二);
-                break;
-            case 4:
-                mWay =getString(R.string.星期三);
-                break;
-            case 5:
-                mWay =getString(R.string.星期四);
-                break;
-            case 6:
-                mWay =getString(R.string.星期五);
-                break;
-            case 7:
-                mWay =getString(R.string.星期六);
-                break;
-        }
-        return  mWay;
-    }
 
     public static String getDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");// HH:mm:ss
@@ -78,11 +49,10 @@ public class TimeUtils {
         calendar = Calendar.getInstance();
         if (calendar.get(Calendar.HOUR_OF_DAY)>13) {
             hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY) - 12);
-            dayFlag = getString(R.string.下午);
         }
         else {
             hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
-            dayFlag = getString(R.string.上午);
+
         }
 
         if (calendar.get(Calendar.MINUTE) < 10)
@@ -90,7 +60,7 @@ public class TimeUtils {
         else
             min = String.valueOf(calendar.get(Calendar.MINUTE));
 
-        String hour_Min12 = dayFlag +" "+hour + ":" + min;
+        String hour_Min12 = hour + ":" + min;
         //e.g: AM 11:12
         return hour_Min12;
     }

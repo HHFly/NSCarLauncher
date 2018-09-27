@@ -44,25 +44,15 @@ public class HomePagerThreeFragment extends BaseFragment {
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.rl_phone:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.PHONE);
-                }
-                break;
+
             case R.id.rl_set:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.SET);
-                }
+                HomePagerActivity.jumpFragment(FragmentType.SET);
                 break;
             case R.id.rl_app:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.APPLICATION);
-                }
+                HomePagerActivity.jumpFragment(FragmentType.APPLICATION);
                 break;
             case R.id.rl_video:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.VIDEO);
-                }
+                HomePagerActivity.jumpFragment(FragmentType.VIDEO);
                 break;
         }
     }

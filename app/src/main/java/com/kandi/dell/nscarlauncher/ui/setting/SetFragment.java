@@ -130,9 +130,9 @@ public class SetFragment extends BaseFragment {
 //                    switchFragment(languageFragment);
                     break;
                 case  SetType.ABOUT:
-//                    switchFragment(aboutFragment);
-                    startActivity(new Intent(Settings.ACTION_DEVICE_INFO_SETTINGS));
-
+                    switchFragment(aboutFragment);
+//                    startActivity(new Intent(Settings.ACTION_DEVICE_INFO_SETTINGS));
+//                    JumpUtils.actComponenActivity(getActivity(),"com.android.settings","com.android.settings.Settings$DeviceInfoSettingsActivity");
 //                    JumpUtils.actActivity(getActivity(),Settings.ACTION_DEVICE_INFO_SETTINGS);
                     break;
                 case SetType.BT:

@@ -55,7 +55,7 @@ public class JumpUtils {
         Intent intent = new Intent();
         ComponentName comp = new ComponentName(pkg,cla);
         intent.setComponent(comp);
-        intent.setAction("android.intent.action.VIEW");
+//        intent.setAction("android.intent.action.VIEW");
         act.startActivity(intent);
 
     }

@@ -73,7 +73,7 @@
             android:id="@+id/iv_t_power"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="14px"
             android:layout_toLeftOf="@+id/tv_title_date"
             android:layout_marginRight="25px"
             android:background="@mipmap/home_top_btn1_01"

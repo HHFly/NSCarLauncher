@@ -123,10 +123,12 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public  static IECarDriver ieCarDriver;//车辆aidl服务
     public static  TextView tv_speed,tv_power,tv_title_date,tv_t_power;
     static  TranslateAnimation mHiddenAction,mShowAction;
+    public  static HomePagerActivity homePagerActivity;
     @Override
     protected void onResume() {
         super.onResume();
             /*来电接受*/
+            Log.d("homepager","onResume");
         if (comingReceiver == null) {
             comingReceiver = new ComingReceiver();
             IntentFilter intentFilter = new IntentFilter();
@@ -179,6 +181,15 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             registerReceiver(mNetworkReceiver, filter);
         }
 
+//        if(homePagerOneFragment!=null){
+//            homePagerOneFragment.setFragment(homePagerActivity,fmFragment);
+//        }
+//        if(homePagerTwoFragment!=null){
+//            homePagerTwoFragment.setHomePagerActivity(homePagerActivity);
+//        }
+//        if(homePagerThreeFragment!=null){
+//            homePagerThreeFragment.setHomePagerActivity(homePagerActivity);
+//        }
     }
 
     @Override
@@ -188,6 +199,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
     @Override
     public void initView() {
+        Log.d("homepager","onCreate");
         initDa();//fragment
         getService();//底层服务
         bindIeCarService();//aidl服务
@@ -291,6 +303,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     //初始化viewpager 数据
     private  void initDa(){
         createFragment();
+        this.homePagerActivity=this;
         homePagerOneFragment =new HomePagerOneFragment();
         homePagerOneFragment.setFragment(this,fmFragment);
         homePagerTwoFragment =new HomePagerTwoFragment();

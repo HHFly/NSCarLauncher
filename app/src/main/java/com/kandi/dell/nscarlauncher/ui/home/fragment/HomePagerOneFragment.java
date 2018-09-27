@@ -8,6 +8,7 @@ import android.support.annotation.DrawableRes;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -60,6 +61,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private static TextView tv_w_date;
     private static TextView tv_w_week;
     public static TextView tv_w_speed,tv_w_authorize,tv_work;
+
     private HomePagerActivity homePagerActivity;
     private HashMap<String, Integer> mWeatherMap; // 天气类型与对应的图标
     //定位客户端,以及参数
@@ -318,19 +320,13 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.FM:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.FM);
-                }
+                HomePagerActivity.jumpFragment(FragmentType.FM);
                 break;
             case R.id.bt_music:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.BTMUSIC);
-                }
+                HomePagerActivity.jumpFragment(FragmentType.BTMUSIC);
                 break;
             case R.id.music:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.MUSIC);
-                }
+                HomePagerActivity.jumpFragment(FragmentType.MUSIC);
                 break;
             case R.id.rl_air:
                 if(FlagProperty.staus==0) {
@@ -414,7 +410,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 
             switch (msg.what){
                 case HandleKey.TIME:
-                    tv_w_time.setText(FlagProperty.isHourdate?TimeUtils.getHour():TimeUtils.getHour_Min12());
+                    tv_w_time.setText(DateFormat.is24HourFormat( App.get())?TimeUtils.getHour():TimeUtils.getHour_Min12());
                     tv_w_date.setText(TimeUtils.getDate());
                     tv_w_week.setText(TimeUtils.getDayOfWeek());
                     break;

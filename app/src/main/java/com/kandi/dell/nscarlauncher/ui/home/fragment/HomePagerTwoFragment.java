@@ -44,6 +44,8 @@ public class HomePagerTwoFragment extends BaseFragment {
         this.homePagerActivity = homePagerActivity;
     }
 
+
+
     @Override
     public void findView() {
         musicPaly=getView(R.id.music_playcontroll);
@@ -80,19 +82,16 @@ public class HomePagerTwoFragment extends BaseFragment {
                 HomePagerActivity.OneKeyWindowOpen();
                 break;
             case R.id.rl_phone:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.PHONE);
-                }
+                HomePagerActivity.jumpFragment(FragmentType.PHONE);
+//                if(homePagerActivity!=null){
+//                    homePagerActivity.jumpFragment(FragmentType.PHONE);
+//                }
                 break;
             case R.id.rl_set:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.SET);
-                }
+                HomePagerActivity.jumpFragment(FragmentType.SET);
                 break;
             case R.id.rl_app:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.APPLICATION);
-                }
+                HomePagerActivity.jumpFragment(FragmentType.APPLICATION);
                 break;
             case R.id.rl_carcontroll:
                 if(FlagProperty.BCMStaus==0) {
@@ -107,9 +106,7 @@ public class HomePagerTwoFragment extends BaseFragment {
                 }
                 break;
             case R.id.music:
-                if(homePagerActivity!=null){
-                    homePagerActivity.jumpFragment(FragmentType.MUSIC);
-                }
+                HomePagerActivity.jumpFragment(FragmentType.MUSIC);
                 break;
             case R.id.nav_home:
                 NavBroasd(0);

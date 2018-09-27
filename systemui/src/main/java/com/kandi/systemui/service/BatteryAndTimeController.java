@@ -2,10 +2,12 @@ package com.kandi.systemui.service;
 
 import android.os.Handler;
 import android.os.RemoteException;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.kandi.systemui.driver.DriverServiceManger;
 import com.kandi.systemui.driver.EcocEnergyInfoDriver;
+import com.kandi.systemui.util.TimeUtils;
 
 
 import java.text.SimpleDateFormat;
@@ -47,10 +49,12 @@ public class BatteryAndTimeController {
     }
 
     private void refreshTime() {
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        String dateStr = sdf.format(date);
-        mService.setCurrentTime(dateStr);
+//        Date date = new Date();
+//
+//        SimpleDateFormat sdf =DateFormat.is24HourFormat(mService.getApplicationContext())? new SimpleDateFormat("HH:mm"):new SimpleDateFormat("HH:mm");
+//
+//        String dateStr = sdf.format(date);
+        mService.setCurrentTime(DateFormat.is24HourFormat( mService.getApplicationContext())?TimeUtils.getHour(): TimeUtils.getHour_Min12());
     }
 
     Handler mHandler = new Handler(){

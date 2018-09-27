@@ -94,4 +94,6 @@
     <string name="附近网络">Network</string>
     <string name="当前连接网络">Current connected network:</string>
     <string name="更多应用">More applications</string>
+    <string name="下午">PM </string>
+    <string name="上午">AM </string>
 </resources>

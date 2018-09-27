@@ -81,6 +81,7 @@ public class KandiSystemUiService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
         DriverServiceManger.getInstance().startService(this);
         mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         window = new Dialog(this, R.style.nodarken_style).getWindow();
@@ -246,12 +247,14 @@ public class KandiSystemUiService extends Service {
     }
 //返回首页
     void gotoHome() {
-        Intent mHomeIntent = new Intent(Intent.ACTION_MAIN);
+        if(isHome()) {
+            Intent mHomeIntent = new Intent(Intent.ACTION_MAIN);
 
-        mHomeIntent.addCategory(Intent.CATEGORY_HOME);
-        mHomeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-        startActivity(mHomeIntent);
+            mHomeIntent.addCategory(Intent.CATEGORY_HOME);
+            mHomeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+            startActivity(mHomeIntent);
+        }
         Intent intent  =new Intent();
         intent.setAction("com.kangdi.home.hide");
         sendBroadcast(intent);
