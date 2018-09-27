@@ -3,10 +3,10 @@ package com.kandi.dell.nscarlauncher.ui.home.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.kandi.dell.nscarlauncher.R;
+import com.kandi.dell.nscarlauncher.ui.application.AppFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
@@ -31,6 +31,7 @@ public class USBBroadcastReceiver extends BroadcastReceiver {
             VideoFragment.dialogLocalMusic.ScanVideo(context,false);
         }
         else  if(action.equals("android.intent.action.PACKAGE_ADDED")){
+            AppFragment.refreshAppInfo();
                 if(FragmentType.APPLICATION== HomePagerActivity.mCurFragment.getmType()){
 
                 }
