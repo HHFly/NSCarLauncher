@@ -151,8 +151,8 @@ public class AppFragment extends BaseFragment {
                         AppInfo appBo =new AppInfo();
                         appBo.setName(app.processName);
                         appBo.setPkgName(app.packageName);
-                        appBo.setAppLabel(getString(R.string.更多应用));
-                        appBo.setAppIcon(getContext().getResources().getDrawable(R.mipmap.ic_app_download));
+                        appBo.setAppLabel(context.getString(R.string.更多应用));
+                        appBo.setAppIcon(context.getResources().getDrawable(R.mipmap.ic_app_download));
                         appInfos.add(appBo);
                     }
                 }
