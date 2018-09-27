@@ -127,6 +127,7 @@ public class AppFragment extends BaseFragment {
             case FILTER_THIRD_APP: // 第三方应用程序
                 appInfos.clear();
                 for (ApplicationInfo app : listAppcations) {
+
                     //非系统程序
                     if ((app.flags & ApplicationInfo.FLAG_SYSTEM) <= 0) {
                         if(FilterAppUtils.filter(app.packageName)){
@@ -137,6 +138,17 @@ public class AppFragment extends BaseFragment {
                     else if ((app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0){
                         if(FilterAppUtils.filter(app.packageName)){
                         appInfos.add(getAppInfo(app));}
+                    }
+
+                }
+                for (ApplicationInfo app : listAppcations) {
+                    if("com.android.browser".equals(app.packageName)) {
+                        AppInfo appBo =new AppInfo();
+                        appBo.setName(app.processName);
+                        appBo.setPkgName(app.packageName);
+                        appBo.setAppLabel(getString(R.string.更多应用));
+                        appBo.setAppIcon(getContext().getResources().getDrawable(R.mipmap.ic_app_download));
+                        appInfos.add(appBo);
                     }
                 }
                 break;

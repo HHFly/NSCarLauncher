@@ -1,5 +1,6 @@
 package com.kandi.dell.nscarlauncher.ui.setting;
 
+import android.content.Intent;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -120,7 +121,8 @@ public class SetFragment extends BaseFragment {
                     switchFragment(displayFragment);
                     break;
                 case  SetType.DATE:
-                    switchFragment(dateFragment);
+//                    switchFragment(dateFragment);
+                    startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));
                     break;
                 case  SetType.LANGUAGE:
 //                    JumpUtils.actActivity(getActivity(),Settings.ACTION_INPUT_METHOD_SUBTYPE_SETTINGS);
@@ -128,7 +130,9 @@ public class SetFragment extends BaseFragment {
 //                    switchFragment(languageFragment);
                     break;
                 case  SetType.ABOUT:
-                    switchFragment(aboutFragment);
+//                    switchFragment(aboutFragment);
+                    startActivity(new Intent(Settings.ACTION_DEVICE_INFO_SETTINGS));
+
 //                    JumpUtils.actActivity(getActivity(),Settings.ACTION_DEVICE_INFO_SETTINGS);
                     break;
                 case SetType.BT:
@@ -136,7 +140,8 @@ public class SetFragment extends BaseFragment {
 //                    JumpUtils.actActivity(getActivity(),BlueToothSetFragment.class);
                     break;
                  case  SetType.WIFI:
-                     switchFragment(wifiFragment);
+//                     switchFragment(wifiFragment);
+                     startActivity(new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS));
 //                     JumpUtils.actActivity(getActivity(), WifiFragment.class);
                      break;
                 case  SetType.CARSET:
