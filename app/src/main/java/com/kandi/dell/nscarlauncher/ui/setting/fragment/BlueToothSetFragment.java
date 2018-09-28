@@ -20,6 +20,8 @@ import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
+import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
 
 import java.io.File;
@@ -41,6 +43,14 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
 
     static TextView tv_set_bluetooth_name;
     static TextView tv_set_bluetooth_password;
+    public int originId = 0;//来源与那个fragment用于隐藏蓝牙设置界面
+    public void setOriginId(int originId){
+        this.originId = originId;
+    }
+
+    public int getOriginId(){
+        return originId;
+    }
 
 
     @Override
@@ -75,7 +85,13 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_return:
-                SetFragment.hideFragment();
+                if(getOriginId() == 0){
+                    SetFragment.hideFragment();
+                }else if(getOriginId() == 1){
+                    HomePagerActivity.jumpFragment(FragmentType.BTMUSIC);
+                }else{
+                    HomePagerActivity.jumpFragment(FragmentType.PHONE);
+                }
                 break;
             case R.id.ll_name:
                 ChangeName();

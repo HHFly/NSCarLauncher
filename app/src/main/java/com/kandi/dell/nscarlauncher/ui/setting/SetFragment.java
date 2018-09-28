@@ -1,6 +1,5 @@
 package com.kandi.dell.nscarlauncher.ui.setting;
 
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,14 +11,14 @@ import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.FragmentUtils;
 import com.kandi.dell.nscarlauncher.common.util.JumpUtils;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
+import com.kandi.dell.nscarlauncher.ui.setting.adapter.SetAdapter;
+import com.kandi.dell.nscarlauncher.ui.setting.eumn.SetType;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.AboutFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.BlueToothSetFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.DateFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.DisplayFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.LanguageFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.WifiFragment;
-import com.kandi.dell.nscarlauncher.ui.setting.adapter.SetAdapter;
-import com.kandi.dell.nscarlauncher.ui.setting.eumn.SetType;
 import com.kandi.dell.nscarlauncher.ui.setting.model.SetData;
 import com.kandi.dell.nscarlauncher.ui.setting.model.SetModel;
 

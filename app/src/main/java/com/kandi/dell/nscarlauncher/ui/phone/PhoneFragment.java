@@ -23,6 +23,7 @@ import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.phone.model.PhoneBookInfo;
 import com.kandi.dell.nscarlauncher.ui.phone.model.PhoneRecordInfo;
@@ -59,7 +60,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     private static ArrayList<PhoneBookInfo> phoneBookInfos =new ArrayList<>();//通讯录
     private static ArrayList<PhoneRecordInfo> phoneRecordInfos =new ArrayList<>();//通讯记录
     private static  String number,address,type;
-    static TextView tv_phone_number,tv_phone_info,tv_keep_calltext,tv_other_phine;
+    static TextView tv_phone_number,tv_phone_info,tv_keep_calltext,tv_other_phine,bt_blueSet;
     static ImageView bt_call,bt_stop;
     static LinearLayout ll_other,ll_calling_key,ll_calling_controll;
     static RelativeLayout rl_call;
@@ -105,6 +106,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         rl_call =getView(R.id.item_phone_calling);
         viewPager=getView(R.id.viewPager1);
         NullView =getView(R.id.bt_phone_null);
+        bt_blueSet =getView(R.id.bt_blueSet);
     }
 
     @Override
@@ -142,6 +144,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         setClickListener(R.id.ll2_10);
         setClickListener(R.id.ll2_11);
         setClickListener(R.id.ll2_12);
+        setClickListener(R.id.bt_blueSet);
         viewPager.addOnPageChangeListener(this);
     }
 
@@ -767,7 +770,9 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
             case R.id.ll2_12:
                 addphoneDtmf("#");
                 break;
-                
+            case R.id.bt_blueSet:
+                HomePagerActivity.jumpFragment(FragmentType.BTSET);
+                break;
         }
     }
 

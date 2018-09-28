@@ -1,19 +1,15 @@
 package com.kandi.dell.nscarlauncher.ui.bluetooth;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.IKdAudioControlService;
 import android.os.IKdBtService;
 import android.os.Message;
 import android.os.RemoteException;
-import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -21,14 +17,14 @@ import android.widget.TextView;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
+import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 
 import java.io.IOException;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
-
-import static com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment.tv_music_songname;
 
 public class BTMusicFragment extends BaseFragment {
     private GifImageView mGifImageView;
@@ -51,7 +47,7 @@ public class BTMusicFragment extends BaseFragment {
     static AudioManager audioManager;
     static IKdAudioControlService audioservice ;
     public static IKdBtService btservice;
-    public static TextView  music_current_time,tv_bt_music_songname,tv_bt_music_singer,music_total_time;
+    public static TextView  music_current_time,tv_bt_music_songname,tv_bt_music_singer,music_total_time,bt_blueSet;
     public  static ImageView iv_bt_stop;
     public static RelativeLayout NullView ;//空界面
     @Override
@@ -69,6 +65,7 @@ public class BTMusicFragment extends BaseFragment {
         music_total_time=getView(R.id.btmusic_total_time);
         NullView =getView(R.id.bt_mic_null);
         iv_bt_stop= getView(R.id.iv_bt_stop);
+        bt_blueSet= getView(R.id.bt_blueSet);
     }
 
     @Override
@@ -77,6 +74,7 @@ public class BTMusicFragment extends BaseFragment {
         setClickListener(R.id.iv_fm_left);
         setClickListener(R.id.iv_fm_right);
         setClickListener(R.id.iv_bt_stop);
+        setClickListener(R.id.bt_blueSet);
     }
 
     @Override
@@ -120,6 +118,9 @@ public class BTMusicFragment extends BaseFragment {
                 break;
             case R.id.iv_bt_stop:
                 musicPlay();
+                break;
+            case R.id.bt_blueSet:
+                HomePagerActivity.jumpFragment(FragmentType.BTSET);
                 break;
         }
     }
