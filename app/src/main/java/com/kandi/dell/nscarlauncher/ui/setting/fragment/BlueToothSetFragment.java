@@ -23,6 +23,7 @@ import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
+import com.kandi.dell.nscarlauncher.widget.CustomDialog;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -103,7 +104,7 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
     }
 /*蓝牙名称*/
     private void ChangeName() {
-        final Dialog dialog = new Dialog(getContext(), R.style.nodarken_style);
+        final Dialog dialog = new CustomDialog(getContext(), R.style.nodarken_style);
 
         Window window = dialog.getWindow();
         window.setContentView(R.layout.dialog_bluetooth_change_name);
@@ -153,7 +154,7 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
     }
         /*更改密码*/
     private void ChangePass() {
-        final Dialog dialog = new Dialog(getContext(), R.style.nodarken_style);
+        final Dialog dialog = new CustomDialog(getContext(), R.style.nodarken_style);
 
         Window window = dialog.getWindow();
         window.setContentView(R.layout.dialog_bluetooth_change_password);
