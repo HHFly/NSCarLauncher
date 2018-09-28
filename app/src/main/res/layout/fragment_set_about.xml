@@ -26,6 +26,7 @@
             android:layout_marginLeft="110px"/>
 
         <View style="@style/BaseLine.Horizontal"
+            android:background="#3C3C3C"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
