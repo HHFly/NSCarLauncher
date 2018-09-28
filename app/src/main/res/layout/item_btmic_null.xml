@@ -17,6 +17,7 @@
        android:background="@drawable/shape_rectagle_white_5rd"
        >
        <TextView
+           android:id="@+id/bt_blueSet"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="@string/bt_tip"

@@ -1,5 +1,6 @@
 package com.kandi.dell.nscarlauncher.ui.setting.fragment;
 
+import android.os.SystemProperties;
 import android.view.View;
 
 import com.kandi.dell.nscarlauncher.R;
@@ -28,6 +29,11 @@ public class AboutFragment extends BaseFragment {
         setTvText(R.id.about_1,android.os.Build.BOARD);
         setTvText(R.id.about_2,android.os.Build.VERSION.RELEASE+"  "+android.os.Build.VERSION.CODENAME );
         setTvText(R.id.about_3,android.os.Build.DEVICE+"  "+android.os.Build.DISPLAY);
+
+        setTvText(R.id.about_5, android.os.Build.MODEL);
+        setTvText(R.id.about_6, SystemProperties.get("ro.baseband"));//基频版本
+        setTvText(R.id.about_7, SystemProperties.get("ro.qiyang.sys_version") );//核心版本
+        setTvText(R.id.about_8, android.os.Build.DISPLAY);
     }
 
     @Override

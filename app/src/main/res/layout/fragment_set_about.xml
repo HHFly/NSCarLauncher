@@ -26,6 +26,39 @@
             android:layout_marginLeft="110px"/>
 
         <View style="@style/BaseLine.Horizontal"
+            android:background="#3C3C3C"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="96px"
+        android:layout_marginLeft="90px"
+        android:layout_marginRight="90px">
+
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="36px"
+            android:text="@string/model"
+            android:layout_marginTop="16px"
+            android:layout_marginLeft="110px"/>
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/about_5"
+            android:textSize="24px"
+            android:text=""
+            android:textColor="#989898"
+            android:layout_marginTop="59px"
+            android:layout_marginLeft="110px"/>
+
+        <View style="@style/BaseLine.Horizontal"
+            android:background="#3C3C3C"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
@@ -54,6 +87,30 @@
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
+    <RelativeLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="96px"
+        android:layout_marginLeft="90px"
+        android:layout_marginRight="90px">
+
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="36px"
+            android:text="@string/baseversion"
+            android:layout_marginTop="16px"
+            android:layout_marginLeft="110px"/>
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/about_6"
+            android:textSize="24px"
+            android:text=""
+            android:textColor="#989898"
+            android:layout_marginTop="59px"
+            android:layout_marginLeft="110px"/>
+
+        <View style="@style/BaseLine.Horizontal"
+            android:background="#3C3C3C"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 
     <RelativeLayout
 
@@ -69,6 +126,31 @@
             android:layout_marginLeft="110px"/>
         <TextView style="@style/BaseText.Tv"
             android:id="@+id/about_1"
+            android:textSize="24px"
+            android:text=""
+            android:textColor="#989898"
+            android:layout_marginTop="59px"
+            android:layout_marginLeft="110px"/>
+
+        <View style="@style/BaseLine.Horizontal"
+            android:background="#3C3C3C"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="96px"
+        android:layout_marginLeft="90px"
+        android:layout_marginRight="90px">
+
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="36px"
+            android:text="@string/coreversion"
+            android:layout_marginTop="16px"
+            android:layout_marginLeft="110px"/>
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/about_7"
             android:textSize="24px"
             android:text=""
             android:textColor="#989898"
@@ -132,6 +214,33 @@
 
 
     </RelativeLayout>
+
+    <RelativeLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="96px"
+        android:layout_marginLeft="90px"
+        android:layout_marginRight="90px">
+
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="36px"
+            android:text="@string/versionnum"
+            android:layout_marginTop="16px"
+            android:layout_marginLeft="110px"/>
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/about_8"
+            android:textSize="24px"
+            android:text=""
+            android:textColor="#989898"
+            android:layout_marginTop="59px"
+            android:layout_marginLeft="110px"/>
+
+        <View style="@style/BaseLine.Horizontal"
+            android:background="#3C3C3C"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

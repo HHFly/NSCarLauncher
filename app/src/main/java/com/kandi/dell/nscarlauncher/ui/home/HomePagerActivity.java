@@ -1,7 +1,5 @@
 package com.kandi.dell.nscarlauncher.ui.home;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -31,13 +29,10 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
-
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-
-import android.view.Window;
 import android.widget.Button;
-
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -70,10 +65,10 @@ import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.phone.PhoneFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
+import com.kandi.dell.nscarlauncher.ui.setting.fragment.BlueToothSetFragment;
 import com.kandi.dell.nscarlauncher.ui.video.VideoFragment;
 import com.kandi.dell.nscarlauncher.widget.DialogVolumeControl;
 import com.kandi.dell.nscarlauncher.widget.ViewPagerScroller;
-
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -104,6 +99,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public static SetFragment setFragment;//设置
     public  static AppFragment appFragment;//应用
     public  static VideoFragment videoFragment;//视频
+    public static BlueToothSetFragment blueToothSetFragment;//蓝牙设置
     public  static  BaseActivity context;
     private ArrayList<HomeModel> mData;
     static Dialog alertDialog;//来电弹框
@@ -330,6 +326,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
       setFragment =new SetFragment();
       appFragment=new AppFragment();
       videoFragment =new VideoFragment();
+      blueToothSetFragment =new BlueToothSetFragment();
     }
     /*隐藏fragemt*/
     public static void  hideFragment(){
@@ -386,15 +383,18 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 switchFragment(fmFragment);
                 break;
             case  FragmentType.BTMUSIC:
+                blueToothSetFragment.setOriginId(1);
                 switchFragment(btMusicFragment);
                 break;
             case  FragmentType.MUSIC:
                 switchFragment(musicFragment);
                 break;
              case  FragmentType.PHONE:
+                 blueToothSetFragment.setOriginId(2);
                  switchFragment(phoneFragment);
                  break;
             case  FragmentType.SET:
+                blueToothSetFragment.setOriginId(0);
                 switchFragment(setFragment);
                 break;
             case  FragmentType.APPLICATION:
@@ -402,6 +402,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 break;
             case  FragmentType.VIDEO:
                 switchFragment(videoFragment);
+                break;
+            case FragmentType.BTSET:
+                switchFragment(blueToothSetFragment);
                 break;
         }
     }

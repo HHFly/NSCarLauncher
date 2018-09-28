@@ -58,9 +58,13 @@
     <string name="默认状态">默認狀態</string>
     <string name="车辆已授权">車輛已授權</string>
     <string name="Sport">Sport</string>
+    <string name="model">型號</string>
     <string name="android">Android版本</string>
+    <string name="baseversion">基頻版本</string>
+    <string name="coreversion">核心版本</string>
     <string name="固件版本">固件版本</string>
     <string name="驱动名">驅動名</string>
+    <string name="versionnum">版本號碼</string>
     <string name="视频列表">視頻列表</string>
     <string name="本地视频">本地視頻</string>
     <string name="USB视频">USB視頻</string>
