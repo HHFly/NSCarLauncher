@@ -63,9 +63,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     //自动适配框架
-//    implementation 'com.zhy:autolayout:1.4.5'
+    //    implementation 'com.zhy:autolayout:1.4.5'
     //图片加载框架
     implementation 'com.facebook.fresco:fresco:1.4.0'
     implementation 'jp.wasabeef:fresco-processors:2.1.0'
@@ -88,11 +87,12 @@ dependencies {
     implementation 'me.relex:circleindicator:1.2.2@aar'
     //fa
     implementation 'com.android.support:multidex:1.0.3'
-//gif
+    //gif
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
     //高德地图 定位功能
     implementation 'com.amap.api:location:3.4.1'
     implementation 'com.amap.api:search:5.2.1'
     //jiecaoplay
     implementation 'fm.jiecao:jiecaovideoplayer:3.6.1'
+    implementation 'com.belerweb:pinyin4j:2.5.1'
 }
