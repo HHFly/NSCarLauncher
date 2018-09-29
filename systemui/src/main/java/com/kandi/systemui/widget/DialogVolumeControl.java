@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.media.AudioManager;
 
+import android.os.RemoteException;
 import android.support.annotation.NonNull;
 
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import com.kandi.systemui.R;
+import com.kandi.systemui.service.KandiSystemUiService;
 
 
 public class DialogVolumeControl {
@@ -186,10 +188,20 @@ public void  show(){
         {	
         	//System.out.println("progress: " + progress);
             int volume = (int) Math.round((float)progress/100.0  * STREAM_MAX_MUSIC);
+
             if (volume != STREAM_MUSIC) {
             	audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
             	STREAM_MUSIC = volume;
             	setVolumeImage(volume);
+			}
+			int blueVolume =  (int) Math.round((float)progress/100.0  * 21.0);
+            if(KandiSystemUiService.btservice!=null){
+				try {
+					KandiSystemUiService.btservice.btSetVol(String.valueOf(blueVolume));
+				} catch (RemoteException e) {
+					e.printStackTrace();
+					Log.d("BT","blueVolume set error");
+				}
 			}
 			dismisstime=0;
         }

@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
+        android:overScrollMode="never"
         android:layout_marginTop="80px"
         android:layout_marginLeft="73px"
         android:id="@+id/app_rv">

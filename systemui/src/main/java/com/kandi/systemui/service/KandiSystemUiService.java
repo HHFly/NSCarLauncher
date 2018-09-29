@@ -65,7 +65,7 @@ public class KandiSystemUiService extends Service {
     private TelephonyManager Tel;
     private static final  String ACTION ="com.kangdi.systemui.SystemUIService";
     private float mPosX,mPosY,mCurPosX,mCurPosY;
-    static IKdBtService btservice;//蓝牙服务
+  public   static IKdBtService btservice;//蓝牙服务
     private WindowManager.LayoutParams wmParamDiaglogs = null;
 
 

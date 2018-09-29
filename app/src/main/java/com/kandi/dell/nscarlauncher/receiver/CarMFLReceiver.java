@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.os.RemoteException;
 import android.os.SystemProperties;
 
 import com.kandi.dell.nscarlauncher.app.App;
@@ -31,6 +32,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
 
     private @FragmentType int nowFragment=FragmentType.FM;//模式切换
     private boolean isMute;//是否静音
+    private int BlueVolume =7;
      @Override
     public void onReceive(Context context, Intent intent) {
           /*音量+*/
@@ -40,7 +42,12 @@ public class CarMFLReceiver extends BroadcastReceiver {
                 App.get().getAudioManager().adjustStreamVolume(AudioManager.STREAM_VOICE_CALL, AudioManager.ADJUST_RAISE, 0);
                 App.get().getAudioManager().adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1);
                 App.get().getAudioManager().adjustStreamVolume(AudioManager.STREAM_SYSTEM, AudioManager.ADJUST_RAISE, 0);
-
+                BlueVolume++;
+                try {
+                    App.get().getBtservice().btSetVol(String.valueOf(BlueVolume));
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
 
         }
@@ -51,6 +58,12 @@ public class CarMFLReceiver extends BroadcastReceiver {
             App.get().getAudioManager().adjustStreamVolume(AudioManager.STREAM_VOICE_CALL,AudioManager.ADJUST_LOWER,0);
             App.get().getAudioManager().adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 1);
                 App.get().getAudioManager().adjustStreamVolume(AudioManager.STREAM_SYSTEM,AudioManager.ADJUST_LOWER,0);
+                BlueVolume--;
+                try {
+                    App.get().getBtservice().btSetVol(String.valueOf(BlueVolume));
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
         }
         //多功能模式切换
