@@ -44,7 +44,7 @@ public class BatteryAndTimeController {
             if (model.getCargingState() == 1) {
                 mService.setBetteryLevel(-1);
             }else {
-                mService.setBetteryLevel((int)model.getSOC() * 10);
+                mService.setBetteryLevel((int)model.getSOC());
             }
             mService.setRemainMileage((int) model.getSOC());
             Log.d("huachao", "CargingState:" + model.getCargingState() + ":Bettery:" + model.getSOC() + ":RemainMileage:" + model.getRemainMileage());
