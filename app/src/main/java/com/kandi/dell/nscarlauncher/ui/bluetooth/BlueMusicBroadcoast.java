@@ -1,5 +1,6 @@
 package com.kandi.dell.nscarlauncher.ui.bluetooth;
 
+import android.app.ActivityManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,6 +30,8 @@ import com.white.lib.utils.log.LogUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.jumpFragment;
 
@@ -257,24 +260,25 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             }
         }
         if (intent.getAction().equals(ACTION_CALLOUT)) {
-            FlagProperty.is_one_oper = true;
-            FlagProperty.phone_number = intent.getStringExtra(KEY_PHONENUM).trim(); // 记录电话号码
-            FlagProperty.phone_number_one = FlagProperty.phone_number;
-            new Thread() {
-                public void run() {
-                    if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
-                            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                        Log.d("kondi", "BtPhone get AudioFocus");
-                        //MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 拨打时时进入电话页面
-                        jumpFragment(FragmentType.PHONE);
-                        FlagProperty.flag_phone_incall_click = true;
-                        myHandler.sendMessage(myHandler.obtainMessage(PHONE_OUT));
-                        Log.d("kondi", "BtPhone change to PhonePage");
+            if(isHome(context)) {
+                FlagProperty.is_one_oper = true;
+                FlagProperty.phone_number = intent.getStringExtra(KEY_PHONENUM).trim(); // 记录电话号码
+                FlagProperty.phone_number_one = FlagProperty.phone_number;
+                new Thread() {
+                    public void run() {
+                        if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
+                                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                            Log.d("kondi", "BtPhone get AudioFocus");
+                            //MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 拨打时时进入电话页面
+                            jumpFragment(FragmentType.PHONE);
+                            FlagProperty.flag_phone_incall_click = true;
+                            myHandler.sendMessage(myHandler.obtainMessage(PHONE_OUT));
+                            Log.d("kondi", "BtPhone change to PhonePage");
+                        }
                     }
-                }
 
-            }.start();
-
+                }.start();
+            }
         }
         if (intent.getAction().equals(ACTION_AC)) {
             // Toast.makeText(context, "音频蓝牙已连接", Toast.LENGTH_LONG);
@@ -438,7 +442,14 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             myHandler.sendMessage(myHandler.obtainMessage(PHONE_START));
         }
     }
+    /*判断是顶部app是否是桌面*/
 
+    private boolean isHome(Context context) {
+        ActivityManager mActivityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> rti = mActivityManager.getRunningTasks(1);
+        Log.d("SystemUI",rti.get(0).topActivity.getPackageName());
+        return "com.kandi.nscarlauncher".equals(rti.get(0).topActivity.getPackageName());
+    }
     public static Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
