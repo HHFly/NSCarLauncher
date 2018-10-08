@@ -19,6 +19,7 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
+import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 
 import java.io.IOException;
@@ -145,7 +146,7 @@ public class BTMusicFragment extends BaseFragment {
             if (App.get().getAudioManager().requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                 new Thread() {
                     public void run() {
-                        myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
+//                        myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
 
                         MusicFragment.stopView();
 
@@ -250,7 +251,7 @@ public static void  musicNext(){
         try {
             gifDrawable = new GifDrawable(getResources(), R.mipmap.bt_music);
             if (isPlay) {
-                gifDrawable.start();
+//                gifDrawable.start();
                 iv_bt_stop.setVisibility(View.GONE);
             } else {
 //                gifDrawable.stop();
@@ -266,7 +267,7 @@ public static void  musicNext(){
     /*开启gif*/
     public  static  void startGif(){
         if(gifDrawable!=null) {
-            gifDrawable.start();
+//            gifDrawable.start();
             isPlay=true;
             iv_bt_stop.setVisibility(View.GONE);
         }
@@ -291,7 +292,7 @@ public static void  musicNext(){
     public  static  void gifPlayShow(){
         if(isPlay){
             if(gifDrawable!=null) {
-                gifDrawable.start();
+//                gifDrawable.start();
                 iv_bt_stop.setVisibility(View.GONE);
             }
         }else {
@@ -324,9 +325,9 @@ public static void  musicNext(){
 
                     case MUSIC_BLUETOOTH_OPEN:
                         if(gifDrawable!=null) {
-                            gifDrawable.start();
+//                            gifDrawable.start();
                         }
-                        if(btservice!=null){
+                        if(btservice!=null&& isPlay==false){
                         btservice.btAvrPlay();}
                         if(iv_bt_stop!=null) {
                             iv_bt_stop.setVisibility(View.GONE);
@@ -341,7 +342,7 @@ public static void  musicNext(){
                         break;
                     case 11:
                         if(gifDrawable!=null) {
-                            gifDrawable.start();
+//                            gifDrawable.start();
                         }
 
                         if(iv_bt_stop!=null) {
@@ -381,6 +382,9 @@ public static void  musicNext(){
 
                     try {
                         App.get().getBtservice().btAvrPause();
+                        HomePagerOneFragment.btPaly.setPlay(false);
+                        isPlay=false;
+                        stopGif();
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -390,7 +394,11 @@ public static void  musicNext(){
                     Log.d("audioTest", "btmusic gain");
                     try {
 //                        if (!audioservice.isDuringNavi()) {
+                        if(!isPlay) {
                             App.get().getBtservice().btAvrPlay();
+                            HomePagerOneFragment.btPaly.setPlay(true);
+                            isPlay=true;
+                        }
 //                        }
                     }catch (RemoteException e) {
                         e.printStackTrace();
@@ -399,6 +407,9 @@ public static void  musicNext(){
                 case  AudioManager.AUDIOFOCUS_LOSS:
                     try {
                         App.get().getBtservice().btAvrStop();
+                        HomePagerOneFragment.btPaly.setPlay(false);
+                        isPlay=false;
+                        stopGif();
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -406,6 +417,9 @@ public static void  musicNext(){
                 case   AudioManager.AUDIOFOCUS_REQUEST_FAILED:
                     try {
                         App.get().getBtservice().btAvrStop();
+                        HomePagerOneFragment.btPaly.setPlay(false);
+                        isPlay=false;
+                        stopGif();
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -433,7 +447,7 @@ public static void  musicNext(){
 
 //            Log.d("musictest", "btmusic open");
             //}
-
+            setNullViewGone(false);
         } else {
             setNullViewGone(true);
         }

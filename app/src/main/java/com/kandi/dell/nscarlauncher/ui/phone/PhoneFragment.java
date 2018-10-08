@@ -22,6 +22,8 @@ import android.widget.TextView;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.common.util.LogUtils;
+import com.kandi.dell.nscarlauncher.common.util.StringUtils;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
@@ -266,7 +268,9 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     /*获取通话记录*/
     public  static  void getPhoneRecord(){
         try {
-            getPhoneRecordStr(btservice.getCallHistoryJsonString());
+          String PhoneRecordStr=  btservice.getCallHistoryJsonString();
+            getPhoneRecordStr(PhoneRecordStr);
+            LogUtils.log(PhoneRecordStr);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -290,7 +294,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                     String call_time = changeTimeToStandard(jsonObject.getString("callTime"));
                     String name = jsonObject.getString("name");
                    String number = jsonObject.getString("callNumber");
-                   info.setName(name);
+                   info.setName(StringUtils.replaceBlank(name));
                    info.setNumber(number);
                    info.setCall_time(call_time);
                    phoneRecordInfos.add(info);
@@ -307,7 +311,9 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     // 使蓝牙获取到的电话本存储起来
     public static void getPhoneBook() {
         try {
-            getPhoneBookStr(btservice.getContactsJsonString());
+            String  ContactsJsonString =btservice.getContactsJsonString();
+            getPhoneBookStr(ContactsJsonString);
+            LogUtils.log(ContactsJsonString);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -878,6 +884,8 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
     @Override
     public void updateView() {
-        tv_phone_info.setText(mainPresenter.getPhone());
+        if(tv_phone_info!=null&&mainPresenter!=null) {
+            tv_phone_info.setText(mainPresenter.getPhone());
+        }
     }
 }

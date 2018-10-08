@@ -53,6 +53,13 @@ public class AppFragment extends BaseFragment {
     }
 
     @Override
+    public void Resume() {
+        if(isSecondResume){
+            ViewHandler.sendEmptyMessage(APPREFRESH);
+        }
+    }
+
+    @Override
     public void setmType(int mType) {
         super.setmType(FragmentType.APPLICATION);
     }
@@ -258,6 +265,11 @@ public class AppFragment extends BaseFragment {
                         appInfos.add(getAppInfo(app));}
                     }
 
+                }
+                for (ApplicationInfo app : listAppcations) {
+                    if ("com.android.providers.downloads.ui".equals(app.packageName)) {
+                        appInfos.add(getAppInfo(app));
+                    }
                 }
                 for (ApplicationInfo app : listAppcations) {
                     if("com.android.browser".equals(app.packageName)) {

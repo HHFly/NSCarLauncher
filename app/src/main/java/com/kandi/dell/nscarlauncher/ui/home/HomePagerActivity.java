@@ -202,7 +202,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         initNetwork();//网络
 //        init4G();//4g
 //        setWifiLevel();//状态栏wifi
-//        initBluetooth();//蓝牙
+        initBluetooth();//蓝牙
 //        init_time();//状态栏时间
         initAnim();
         context =this;
@@ -646,13 +646,13 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         int bluetooth_state =FlagProperty.flag_bluetooth? 1:0;
 
 //        int bluetooth_state = Settings.System.getInt(getContentResolver(), "bluetooth_state", 1); // 默认为1, 开启
-        if (bluetooth_state == 1) {
-//            setIvImage(R.id.iv_blueTooth,R.mipmap.home_top_btn4_on);
-            mIvBluetooth.setImageResource(R.mipmap.home_top_btn4_on);
-        } else {
-//            setIvImage(R.id.iv_blueTooth,R.mipmap.home_top_btn4_off);
-            mIvBluetooth.setImageResource(R.mipmap.home_top_btn4_off);
-        }
+//        if (bluetooth_state == 1) {
+////            setIvImage(R.id.iv_blueTooth,R.mipmap.home_top_btn4_on);
+//            mIvBluetooth.setImageResource(R.mipmap.home_top_btn4_on);
+//        } else {
+////            setIvImage(R.id.iv_blueTooth,R.mipmap.home_top_btn4_off);
+//            mIvBluetooth.setImageResource(R.mipmap.home_top_btn4_off);
+//        }
     }
 // 行车记录仪
 public static void initCarRecord() {
@@ -1028,24 +1028,27 @@ public int getSim(int num) {
         try {
             if(ieCarDriver!=null) {
                 work = ieCarDriver.getCar_WorkMode();
-                if (FlagProperty.CarWork != work) {
+
                     if (homePagerOneFragment != null) {
                         switch (work) {
-                            case 1:
+                            case 0x01:
                                 homePagerOneFragment.tv_work.setText(R.string.Sport);
                                 break;
-                            case 0:
+                            case 0x00:
                                 homePagerOneFragment.tv_work.setText(R.string.Economic);
                                 break;
-                            case 3:
+                            case 0x03:
                                 homePagerOneFragment.tv_work.setText(R.string.Irascible);
                                 break;
-                            case 4:
+                            case 0x04:
                                 homePagerOneFragment.tv_work.setText(R.string.NEDC);
                                 break;
+                                default:
+                                    homePagerOneFragment.tv_work.setText(R.string.Economic);
+                                    break;
                         }
                     }
-                }
+
             }
             else {
 

@@ -164,6 +164,7 @@ App extends MultiDexApplication {
         intentFilter.addAction("com.kangdi.BroadCast.tripartite.talking");
         intentFilter.addAction("com.kangdi.BroadCast.tripartite.hangup");
         intentFilter.addAction("com.kangdi.BroadCast.tripartite.comming");
+        intentFilter.addAction("com.kangdi.BroadCast.PbapGetCallHistoryCompleted");
         registerReceiver(bluetoothReceiver, intentFilter);
     }
 

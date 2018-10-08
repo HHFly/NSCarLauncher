@@ -425,6 +425,7 @@ public static void musicPlay(Context context){
                         }
                         broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
                         flag_play = true;
+                        HomePagerTwoFragment.musicPaly.setPlay(true);
                     }
                 }
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
@@ -438,6 +439,7 @@ public static void musicPlay(Context context){
                 }
                 broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
+                HomePagerTwoFragment.musicPaly.setPlay(false);
             }
 
         }
@@ -457,8 +459,10 @@ public static void musicPlay(Context context){
                 if(bt_play!=null) {
                     bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
                 }
+
                 broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
+                HomePagerTwoFragment.musicPaly.setPlay(false);
             } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
                 Log.d("audioTest", "3 gain");
                 system_flag = true;
@@ -473,6 +477,7 @@ public static void musicPlay(Context context){
                         }
                         broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
                         flag_play = true;
+                        HomePagerTwoFragment.musicPaly.setPlay(true);
                     }
                 }
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
@@ -486,6 +491,7 @@ public static void musicPlay(Context context){
                 }
                 broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
+                HomePagerTwoFragment.musicPaly.setPlay(false);
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
                 Log.d("audioTest", "3 loss transient can duck");
                 system_flag = false;
@@ -497,6 +503,7 @@ public static void musicPlay(Context context){
                 }
                 broadcastMusicInfo(context, PAUSE_MSG);
                 flag_play = false;
+                HomePagerTwoFragment.musicPaly.setPlay(false);
             }
 
         }

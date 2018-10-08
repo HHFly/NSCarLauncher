@@ -18,6 +18,7 @@
         android:progressDrawable="@drawable/seekbar_style"
         android:thumb="@mipmap/ic_volume"
         android:layout_gravity="center_vertical"
+        android:thumbOffset="3dp"
         />
     <TextView style="@style/BaseText.Tv"
         android:id="@+id/btmusic_total_time"

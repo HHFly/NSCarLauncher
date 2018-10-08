@@ -31,8 +31,8 @@
             />
             <ImageView
                 android:id="@+id/iv_bt_stop"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0px"
+                android:layout_height="0px"
                 android:src="@mipmap/ic_bt_music_stop"/>
         </RelativeLayout>
         <ImageView

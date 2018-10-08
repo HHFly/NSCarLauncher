@@ -57,6 +57,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
     public final static String ACTION_AD                 = "com.kangdi.BroadCast.AudioDisconnect";// 音频蓝牙已断开
     public final static String ACTION_PBAP_CONNECT       = "com.kangdi.BroadCast.PbapConnect";// 请求获取电话本
     public final static String ACTION_PBAP_GET_COMPLETED = "com.kangdi.BroadCast.PbapGetCompleted";// 获取电话本完成
+    public final static  String ACTION_PBAP_GET_CALL_HISTORY_COMPLETED ="com.kangdi.BroadCast.PbapGetCallHistoryCompleted";
     public final static String ACTION_SIM_CALL_START     = "com.kangdi.BroadCast.SimCallStart";// SIM卡接通广播
     public final static String ACTION_MUSIC_INFO_CHANGED = "com.kangdi.BroadCast.MusicInfoChanged";// 歌曲信息变更
     public final static String KEY_PHONENUM              = "com.kangdi.key.phonenum";// 电话号码的KEY
@@ -107,6 +108,19 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 public void run() {
                     try {
                         PhoneFragment.getPhoneBookStr(btservice.getContactsJsonString());
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                ;
+            }.start();
+        }
+        if (intent.getAction().equals(ACTION_PBAP_GET_CALL_HISTORY_COMPLETED)) {
+            new Thread() {
+                public void run() {
+                    try {
                         PhoneFragment.getPhoneRecord();
                     } catch (Exception e) {
                         e.printStackTrace();

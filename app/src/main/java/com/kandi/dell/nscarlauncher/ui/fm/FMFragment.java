@@ -349,6 +349,7 @@ public void  changeChannel(float value){
                         public void run() {
                             try {
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
+                                HomePagerOneFragment.fmPaly.setPlay(false);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -361,6 +362,7 @@ public void  changeChannel(float value){
                             try {
                                 System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
                                 System.out.println("radio.SetRadioFreq():" + channel + "----" + App.get().getRadio().SetRadioFreq(channel)); // 开机初始化为频道93.0
+                                HomePagerOneFragment.fmPaly.setPlay(true);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -372,6 +374,7 @@ public void  changeChannel(float value){
                         public void run() {
                             try {
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
+                                HomePagerOneFragment.fmPaly.setPlay(false);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -383,6 +386,7 @@ public void  changeChannel(float value){
                         public void run() {
                             try {
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
+                                HomePagerOneFragment.fmPaly.setPlay(false);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
