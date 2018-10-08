@@ -16,9 +16,9 @@ public class MyPhoneStateListener extends PhoneStateListener {
     @Override
     public void onSignalStrengthsChanged(SignalStrength signalStrength) {
         super.onSignalStrengthsChanged(signalStrength);
-        Toast.makeText(context,
-                "Go to Firstdroid!!! GSM Cinr = " + String.valueOf(signalStrength.getGsmSignalStrength()),
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context,
+//                "Go to Firstdroid!!! GSM Cinr = " + String.valueOf(signalStrength.getGsmSignalStrength()),
+//                Toast.LENGTH_SHORT).show();
         System.out.println(String.valueOf(signalStrength.getGsmSignalStrength()) + "~~!~~");
     }
 }
