@@ -27,17 +27,24 @@ import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.phone.model.PhoneBookInfo;
 import com.kandi.dell.nscarlauncher.ui.phone.model.PhoneRecordInfo;
+import com.kandi.dell.nscarlauncher.ui.phone.mvp.MvpMainView;
+import com.kandi.dell.nscarlauncher.ui.phone.mvp.mpl.MainPresenter;
+
+import net.sourceforge.pinyin4j.PinyinHelper;
+import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
+import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 
-public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
+public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChangeListener,MvpMainView {
     public final static int                    PHONE_OVER     = 1;//结束
     public final static int                    PHONE_CONTINUE = 2;//
     public final static int                    PHONE_START    = 3;
@@ -47,6 +54,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     public final static int                    BOOKREFRESH   = 6;
     public final static int                    RECORDREFRESH  =7;
     public final static int                    PHONE_IN =8;//来电
+    public final static int                    BOOKBUSY = 2000;//拼音比较
 
     public static boolean flag_phone; //是否通话
     private static int phone_call_time;//通话时间
@@ -67,6 +75,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     static AudioManager audioManager;
     static IKdAudioControlService audioservice ;
     static IKdBtService btservice;
+    static MainPresenter mainPresenter;
 
     public static RelativeLayout NullView ;//空界面
     private int callIndex;
@@ -156,7 +165,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 //        viewPager.setOffscreenPageLimit(PageCount-1);
         viewPager.setOffscreenPageLimit(3);
         setViewSelected(R.id.rl_1,true);
-
+        mainPresenter = new MainPresenter(this);
     }
     /*获取全局模块*/
     private void  getService(){
@@ -333,25 +342,65 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                        phoneBookInfos.add(info);
                     }
                 }
-                Collections.sort(phoneBookInfos, new Comparator<PhoneBookInfo>() {
+                new Thread(new Runnable() {
                     @Override
-                    public int compare(PhoneBookInfo o1, PhoneBookInfo o2) {
-                        Collator collator = Collator.getInstance(java.util.Locale.CHINA);
-                        String name1 = o1.getName();
-                        String name2 = o2.getName();
-                        return collator.compare(name1,name2);
+                    public void run() {
+                        Collections.sort(phoneBookInfos, new Comparator<PhoneBookInfo>() {
+                            @Override
+                            public int compare(PhoneBookInfo o1, PhoneBookInfo o2) {
+                                String name1 = getPingYin(o1.getName());
+                                String name2 = getPingYin(o2.getName());
+                                return name1.compareTo(name2);
+                            }
+                        });
+                        myHandler.sendEmptyMessage(BOOKBUSY);
                     }
-                });
-                if(pMemberFragment!=null) {
-                    pMemberFragment.setmData(phoneBookInfos);
-                    myHandler.sendMessage(myHandler.obtainMessage(BOOKREFRESH));
-
-                }
+                }).start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
+
+    /**
+     * 将字符串中的中文转化为拼音,其他字符不变
+     *
+     * @param inputString
+     * @return
+     */
+    private static String getPingYin(String inputString) {
+        HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
+        format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+        format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+        format.setVCharType(HanyuPinyinVCharType.WITH_V);
+
+        char[] input = inputString.trim().toCharArray();// 把字符串转化成字符数组
+        String output = "";
+
+        try {
+            for (int i = 0; i < input.length; i++) {
+                // \\u4E00是unicode编码，判断是不是中文
+                if (java.lang.Character.toString(input[i]).matches(
+                        "[\\u4E00-\\u9FA5]+")) {
+                    // 将汉语拼音的全拼存到temp数组
+                    String[] temp = PinyinHelper.toHanyuPinyinStringArray(
+                            input[i], format);
+                    // 取拼音的第一个读音
+                    output += temp[0];
+                }
+                // 大写字母转化成小写字母
+                else if (input[i] > 'A' && input[i] < 'Z') {
+                    output += java.lang.Character.toString(input[i]);
+                    output = output.toLowerCase();
+                }
+                output += java.lang.Character.toString(input[i]);
+            }
+        } catch (Exception e) {
+            Log.e("Exception", e.toString());
+        }
+        return output;
+    }
+
     // 改时间为标准格式
     private static String changeTimeToStandard(String time) { // 20160807T183300
         String result = "";
@@ -481,11 +530,20 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                             tv_phone_number.setText(getName(number));
                             if(address!=null&&type!=null) {
                                 tv_phone_info.setText(address + "," + type);
+                            }else{
+                                tv_phone_info.setText("");
                             }
                             rl_call.setVisibility(View.VISIBLE);
+                            mainPresenter.searchPhoneInfo(number);
                         }
                         break;
+                    case BOOKBUSY:
+                        if(pMemberFragment!=null) {
+                            pMemberFragment.setmData(phoneBookInfos);
+                            myHandler.sendMessage(myHandler.obtainMessage(BOOKREFRESH));
 
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -816,5 +874,10 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
             NullView.setVisibility(isShow ? View.VISIBLE : View.GONE);
         }
 
+    }
+
+    @Override
+    public void updateView() {
+        tv_phone_info.setText(mainPresenter.getPhone());
     }
 }
