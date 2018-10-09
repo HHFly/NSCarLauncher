@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
@@ -24,12 +25,9 @@ import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 
 import java.io.IOException;
 
-import pl.droidsonroids.gif.GifDrawable;
-import pl.droidsonroids.gif.GifImageView;
-
 public class BTMusicFragment extends BaseFragment {
-    private GifImageView mGifImageView;
-    public static GifDrawable gifDrawable;
+    private ImageView mGifImageView;
+
     public static boolean isPlay;
 
     private final static int DIRECTION_PREV = 1; // 向前切歌
@@ -248,9 +246,10 @@ public static void  musicNext(){
 
     /*初始化gif控制*/
     private void initGif(){
-        try {
-            gifDrawable = new GifDrawable(getResources(), R.mipmap.bt_music);
-            if (isPlay) {
+        String gifPath = "file:///android_asset/bt_music.gif";
+        Glide.with(this).load(gifPath).into(mGifImageView);
+
+        if (isPlay) {
 //                gifDrawable.start();
                 iv_bt_stop.setVisibility(View.GONE);
             } else {
@@ -260,25 +259,20 @@ public static void  musicNext(){
 //            mGifImageView.setImageDrawable(gifDrawable);
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     /*开启gif*/
     public  static  void startGif(){
-        if(gifDrawable!=null) {
-//            gifDrawable.start();
+
             isPlay=true;
             iv_bt_stop.setVisibility(View.GONE);
-        }
+
     }
     /*关闭gif*/
     public  static  void stopGif(){
-        if(gifDrawable!=null) {
-//            gifDrawable.stop();
+
             isPlay=false;
             iv_bt_stop.setVisibility(View.VISIBLE);
-        }
+
 
     }
     private void gifPlay(boolean isPlay){
@@ -291,15 +285,13 @@ public static void  musicNext(){
     }
     public  static  void gifPlayShow(){
         if(isPlay){
-            if(gifDrawable!=null) {
-//                gifDrawable.start();
+
                 iv_bt_stop.setVisibility(View.GONE);
-            }
+
         }else {
-            if(gifDrawable!=null) {
-//                gifDrawable.stop();
+
                 iv_bt_stop.setVisibility(View.VISIBLE);
-            }
+
         }
     }
     public  static  Handler myHandler = new Handler() {
@@ -311,9 +303,7 @@ public static void  musicNext(){
 
                         break;
                     case MUSIC_BLUETOOTH_CLOSE:
-                        if(gifDrawable!=null) {
-//                            gifDrawable.stop();
-                        }
+
                         if(btservice!=null) {
                             btservice.btAvrPause();
                         }
@@ -324,9 +314,7 @@ public static void  musicNext(){
                         break;
 
                     case MUSIC_BLUETOOTH_OPEN:
-                        if(gifDrawable!=null) {
-//                            gifDrawable.start();
-                        }
+
                         if(btservice!=null&& isPlay==false){
                         btservice.btAvrPlay();}
                         if(iv_bt_stop!=null) {
@@ -341,9 +329,7 @@ public static void  musicNext(){
                         btservice.btAvrNext();
                         break;
                     case 11:
-                        if(gifDrawable!=null) {
-//                            gifDrawable.start();
-                        }
+
 
                         if(iv_bt_stop!=null) {
                             iv_bt_stop.setVisibility(View.GONE);
@@ -351,9 +337,7 @@ public static void  musicNext(){
                         isPlay=true;
                         break;
                     case  12:
-                        if(gifDrawable!=null) {
-//                            gifDrawable.stop();
-                        }
+
 
                         if(iv_bt_stop!=null) {
                             iv_bt_stop.setVisibility(View.VISIBLE);

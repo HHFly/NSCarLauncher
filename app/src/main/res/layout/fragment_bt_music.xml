@@ -23,16 +23,15 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/iv_fm_left"
             android:layout_marginLeft="186px">
-        <pl.droidsonroids.gif.GifImageView
+        <ImageView
             android:id="@+id/bt_gif"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@mipmap/bt_music"
             />
             <ImageView
                 android:id="@+id/iv_bt_stop"
-                android:layout_width="0px"
-                android:layout_height="0px"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:src="@mipmap/ic_bt_music_stop"/>
         </RelativeLayout>
         <ImageView

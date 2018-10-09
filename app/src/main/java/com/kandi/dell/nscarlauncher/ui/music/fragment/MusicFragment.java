@@ -39,8 +39,7 @@ import com.kandi.dell.nscarlauncher.widget.CircleImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.droidsonroids.gif.GifDrawable;
-import pl.droidsonroids.gif.GifImageView;
+
 
 import static com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty.PAUSE_MSG;
 import static com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty.STOP_MSG;

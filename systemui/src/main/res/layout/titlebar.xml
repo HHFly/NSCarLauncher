@@ -17,8 +17,7 @@
         android:src="@drawable/select_power"
         android:layout_centerVertical="true"
         android:layout_marginLeft="180px"
-        android:layout_marginRight="230px"
-        android:layout_toLeftOf="@+id/center_img"/>
+        android:layout_alignParentLeft="true"/>
 
     <ImageView
         android:id="@+id/title_iv_sound"
@@ -26,8 +25,7 @@
         android:layout_height="48px"
         android:layout_centerVertical="true"
         android:src="@drawable/select_sound"
-        android:layout_toRightOf="@+id/center_img"
-        android:layout_marginLeft="230px"
+        android:layout_alignParentRight="true"
         android:layout_marginRight="180px"
         />
     </com.zhy.autolayout.AutoRelativeLayout>
