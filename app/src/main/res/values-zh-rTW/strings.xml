@@ -101,5 +101,18 @@
     <string name="更多应用">更多應用</string>
     <string name="下午">下午 </string>
     <string name="上午">上午 </string>
+    <string name="上一台">上一臺</string>
+    <string name="开关">開關</string>
+    <string name="下一台">下一臺</string>
+    <string name="上一曲">上一曲</string>
+    <string name="下一曲">下一曲</string>
+    <string name="播放">播放</string>
+    <string name="拨号">撥號</string>
+    <string name="后备箱">後備箱</string>
+    <string name="中控锁">中控鎖</string>
+    <string name="开窗">開窗</string>
+    <string name="回家">回家</string>
+    <string name="上班">上班</string>
+    <string name="商城">商城</string>
 
 </resources>

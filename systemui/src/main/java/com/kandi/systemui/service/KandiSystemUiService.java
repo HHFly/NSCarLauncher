@@ -519,6 +519,7 @@ public class KandiSystemUiService extends Service {
                     }
                 }
             } else if (intent.getAction() == "phone.isgone") {
+                Log.d("SystemUI","phone.isgone");
                 if(phoneFloatLayout!=null){
                     phoneFloatLayout.setVisibility(View.GONE);
                 }

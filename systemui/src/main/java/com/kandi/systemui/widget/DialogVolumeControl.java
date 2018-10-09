@@ -52,9 +52,9 @@ int STREAM_MUSIC,STREAM_MAX_MUSIC,progress;
 
 // 设置具体参数
 			WindowManager.LayoutParams lp = window.getAttributes();
-		lp.x = 0;
-		lp.y = -400;
-		lp.gravity = Gravity.CENTER;
+//		lp.x = 0;
+//		lp.y = -400;
+		lp.gravity = Gravity.CENTER|Gravity.TOP;
 			window.setAttributes(lp);
 			window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 			initView(content,window);

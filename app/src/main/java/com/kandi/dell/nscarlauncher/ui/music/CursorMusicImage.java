@@ -74,8 +74,10 @@ public class CursorMusicImage {
 	}
 	public static String getImage(Context context, String filePath) {
 		Cursor currentCursor = getCursor(context, filePath);
-		int album_id = currentCursor.getInt(currentCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID));
-		String albumArt = getAlbumArt(context, album_id);
+		if(currentCursor.getColumnCount()!=0) {
+			int album_id = currentCursor.getInt(currentCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID));
+
+			String albumArt = getAlbumArt(context, album_id);
 //		Bitmap bm = null;
 //		if (albumArt == null) {
 //			mImageView.setBackgroundResource(R.drawable.staring);
@@ -84,6 +86,8 @@ public class CursorMusicImage {
 //			BitmapDrawable bmpDraw = new BitmapDrawable(bm);
 //			mImageView.setImageDrawable(bmpDraw);
 //		}
-		return albumArt;
+			return albumArt;
+		}
+		return  null;
 	}
 }

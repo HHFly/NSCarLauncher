@@ -100,4 +100,17 @@
     <string name="更多应用">More applications</string>
     <string name="下午">PM </string>
     <string name="上午">AM </string>
+    <string name="上一台">Last</string>
+    <string name="开关">Switch</string>
+    <string name="下一台">Next</string>
+    <string name="上一曲">Last</string>
+    <string name="下一曲">Next</string>
+    <string name="播放">Play</string>
+    <string name="拨号">Dial</string>
+    <string name="后备箱">Trunk</string>
+    <string name="中控锁">Lock</string>
+    <string name="开窗">Windowing</string>
+    <string name="回家">Home</string>
+    <string name="上班">Office</string>
+    <string name="商城">Store</string>
 </resources>

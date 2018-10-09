@@ -271,8 +271,9 @@ public static void  musicNext(){
     public  static  void stopGif(){
 
             isPlay=false;
-            iv_bt_stop.setVisibility(View.VISIBLE);
-
+            if(iv_bt_stop!=null) {
+                iv_bt_stop.setVisibility(View.VISIBLE);
+            }
 
     }
     private void gifPlay(boolean isPlay){

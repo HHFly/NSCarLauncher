@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="373px"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="373px"
     android:layout_height="wrap_content"
     android:layout_marginLeft="50px"
     android:layout_marginRight="50px"
-    android:background="@mipmap/item_bg"
-   >
+    android:background="@mipmap/item_bg">
     <RelativeLayout
         android:id="@+id/rl_carcontroll"
         android:layout_width="wrap_content"
@@ -76,39 +77,71 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="26px"
         android:text="@string/整车控制"
         android:textSize="48px"
         android:textColor="#EEEEEE"
         />
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="70px"
-        android:layout_marginBottom="40px">
+        android:layout_marginTop="20px"
+        >
         <ImageView
             android:id="@+id/iv_backbox"
             android:layout_width="52px"
             android:layout_height="50px"
             android:src="@drawable/select_car_1"
             />
+        <TextView
+            app:layout_constraintTop_toBottomOf="@+id/iv_backbox"
+            app:layout_constraintLeft_toLeftOf="@+id/iv_backbox"
+            app:layout_constraintRight_toRightOf="@+id/iv_backbox"
+            android:layout_marginTop="46px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/后备箱"
+            android:textColor="@drawable/select_text_press_white_blue"
+            android:textSize="20px" />
         <ImageView
             android:id="@+id/iv_cenlock"
             android:layout_width="60px"
             android:layout_height="50px"
             android:layout_marginLeft="60px"
+            app:layout_constraintLeft_toRightOf="@+id/iv_backbox"
             android:src="@drawable/select_car_2"
            />
-
+        <TextView
+            app:layout_constraintTop_toBottomOf="@+id/iv_cenlock"
+            app:layout_constraintLeft_toLeftOf="@+id/iv_cenlock"
+            app:layout_constraintRight_toRightOf="@+id/iv_cenlock"
+            android:layout_marginTop="46px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/中控锁"
+            android:textColor="@drawable/select_text_press_white_blue"
+            android:textSize="20px" />
         <ImageView
             android:id="@+id/iv_window"
             android:layout_width="50px"
             android:layout_height="50px"
             android:layout_marginLeft="60px"
+            app:layout_constraintLeft_toRightOf="@+id/iv_cenlock"
             android:src="@drawable/select_car_3"
            />
-    </LinearLayout>
+        <TextView
+            app:layout_constraintTop_toBottomOf="@+id/iv_window"
+            app:layout_constraintLeft_toLeftOf="@+id/iv_window"
+            app:layout_constraintRight_toRightOf="@+id/iv_window"
+            android:layout_marginTop="46px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="5"
+            android:text="@string/开窗"
+            android:textColor="@drawable/select_text_press_white_blue"
+            android:textSize="20px" />
+    </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>

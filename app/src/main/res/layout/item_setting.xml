@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="26px"
         android:text="@string/设置"
         android:textSize="48px"
         android:textColor="#EEEEEE"
@@ -84,9 +84,15 @@
         android:layout_width="80px"
         android:layout_height="80px"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="70px"
-        android:layout_marginBottom="40px"
+        android:layout_marginTop="20px"
         android:src="@drawable/select_home_set_controll"/>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17px"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/设置"
+        android:textSize="20px"
+        android:textColor="@drawable/select_text_press_white_blue"/>
 
 </LinearLayout>

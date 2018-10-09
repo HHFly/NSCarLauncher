@@ -309,7 +309,11 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     }
     /*初始化fm*/
     private void setFmMHZ(){
-        channel= SPUtil.getInstance(HomePagerActivity.context,FMCHANNEL).getFloat(FMCHANNEL,93.0f);
+        if(fmFragment.isSecondResume){
+            channel=FMFragment.channel;
+        }else {
+            channel= SPUtil.getInstance(HomePagerActivity.context,FMCHANNEL).getFloat(FMCHANNEL,93.0f);
+        }
         setTvText(R.id.tv_fm_hz,String.valueOf(channel));
     }
     /*初始化蓝牙*/

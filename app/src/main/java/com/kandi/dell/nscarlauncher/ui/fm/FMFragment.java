@@ -35,6 +35,7 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
     private HomePagerActivity homePagerActivity;
 
     private IFmService radio;  //收音机
+    private boolean isPlay;
     public static   float channel = 93.0f;// 默认初始的波段
     private IKdAudioControlService audioservice ;
     AudioManager audioManager;
@@ -175,7 +176,9 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
         if(channel>88.0f) {
             channel = (float) (channel * 10-1)/10f;
             changeChannel(channel);
-
+        }
+        if(!isPlay){
+            openFm();
         }
     }
     /*右调频*/
@@ -184,6 +187,9 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
         if(channel<108.0f) {
             channel = (float) (channel * 10+1)/10f;
             changeChannel(channel);
+        }
+        if(!isPlay){
+          openFm();
         }
     }
     /*初始化数据*/
@@ -247,7 +253,7 @@ public void openFm(){
                 new Thread() {
                     public void run() {
                         try {
-                            System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
+//                            System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
                             App.pagerOneHnadler.sendEmptyMessage(HandleKey.OPEMFM);
 //                        System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 开机初始化为频道93.0
                         } catch (Exception e) {
@@ -266,7 +272,7 @@ public void openFm(){
             new Thread() {
                 public void run() {
                     try {
-                        System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
+//                        System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                         App.pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -348,8 +354,10 @@ public void  changeChannel(float value){
                     new Thread() {
                         public void run() {
                             try {
+
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                                 HomePagerOneFragment.fmPaly.setPlay(false);
+                                isPlay=false;
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -363,6 +371,7 @@ public void  changeChannel(float value){
                                 System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
                                 System.out.println("radio.SetRadioFreq():" + channel + "----" + App.get().getRadio().SetRadioFreq(channel)); // 开机初始化为频道93.0
                                 HomePagerOneFragment.fmPaly.setPlay(true);
+                                isPlay=true;
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -375,6 +384,7 @@ public void  changeChannel(float value){
                             try {
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                                 HomePagerOneFragment.fmPaly.setPlay(false);
+                                isPlay=false;
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -387,6 +397,7 @@ public void  changeChannel(float value){
                             try {
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                                 HomePagerOneFragment.fmPaly.setPlay(false);
+                                isPlay=false;
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

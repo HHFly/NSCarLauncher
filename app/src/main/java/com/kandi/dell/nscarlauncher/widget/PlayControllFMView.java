@@ -3,6 +3,7 @@ package com.kandi.dell.nscarlauncher.widget;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -60,6 +61,7 @@ public class PlayControllFMView extends LinearLayout {
         right.setVisibility(isShow?View.VISIBLE : View.GONE);
     }
     public void setPlay(boolean isPlay){
+//        Log.d("fm" , String.valueOf(isPlay));
         center.setImageResource(isPlay?R.mipmap.ic_play:R.mipmap.ic_off);
         this.isPlay =isPlay;
     }

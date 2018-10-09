@@ -112,7 +112,7 @@ public class WifiController extends BroadcastReceiver {
                 
                 WifiInfo wifiInfo = wifiMg.getConnectionInfo();
                 int nWSig = WifiManager.calculateSignalLevel(wifiInfo.getRssi(), mTotalLevel);
-                Log.e("huachao"," level is !! : "+nWSig);
+//                Log.e("huachao"," level is !! : "+nWSig);
                 ((KandiSystemUiService)context).setWifiLevel(nWSig);
                 
             }else

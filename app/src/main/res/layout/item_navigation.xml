@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="373px"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="373px"
     android:layout_height="wrap_content"
     android:layout_marginLeft="50px"
     android:layout_marginRight="50px"
-    android:background="@mipmap/item_bg"
-   >
+    android:background="@mipmap/item_bg">
     <RelativeLayout
         android:id="@+id/rl_navigation"
         android:layout_width="wrap_content"
@@ -76,32 +77,55 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="26px"
         android:text="@string/导航"
         android:textSize="48px"
         android:textColor="#EEEEEE"
         />
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="70px"
-        android:layout_marginBottom="40px">
+        android:layout_marginTop="20px"
+        >
+
         <ImageView
             android:id="@+id/nav_home"
             android:layout_width="52px"
             android:layout_height="50px"
             android:src="@drawable/select_na"
+            android:layout_gravity="center_horizontal"
             />
+            <TextView
+                app:layout_constraintTop_toBottomOf="@+id/nav_home"
+                app:layout_constraintLeft_toLeftOf="@+id/nav_home"
+               app:layout_constraintRight_toRightOf="@+id/nav_home"
+                android:layout_marginTop="46px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/回家"
+                android:textColor="@drawable/select_text_press_white_blue"
+                android:textSize="20px" />
+
         <ImageView
             android:id="@+id/nav_company"
             android:layout_width="60px"
             android:layout_height="50px"
+            app:layout_constraintLeft_toRightOf="@+id/nav_home"
             android:layout_marginLeft="100px"
             android:src="@drawable/select_na_2"
             />
+            <TextView
+                app:layout_constraintTop_toBottomOf="@+id/nav_company"
+                app:layout_constraintLeft_toLeftOf="@+id/nav_company"
+                app:layout_constraintRight_toRightOf="@+id/nav_company"
+                android:layout_marginTop="46px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/上班"
+                android:textColor="@drawable/select_text_press_white_blue"
+                android:textSize="20px" />
 
-
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>

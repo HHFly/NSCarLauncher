@@ -73,18 +73,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="26px"
         android:text="@string/电台"
         android:textSize="48px"
         android:textColor="#EEEEEE"
         />
+
     <com.kandi.dell.nscarlauncher.widget.PlayControllFMView
         android:id="@+id/fm_playcontroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="70px"
-        android:layout_marginBottom="40px"/>
+        android:layout_marginTop="20px" />
 
 
 </LinearLayout>

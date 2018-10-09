@@ -44,6 +44,7 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.FragmentUtils;
+import com.kandi.dell.nscarlauncher.common.util.IsHomeUtils;
 import com.kandi.dell.nscarlauncher.common.util.JumpUtils;
 import com.kandi.dell.nscarlauncher.common.util.LogUtils;
 import com.kandi.dell.nscarlauncher.common.util.NetUtils;
@@ -378,6 +379,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
     }
     public  static void  jumpFragment(@FragmentType int type ){
+        if(IsHomeUtils.isHome(context))
         switch (type){
             case  FragmentType.FM:
                 switchFragment(fmFragment);
