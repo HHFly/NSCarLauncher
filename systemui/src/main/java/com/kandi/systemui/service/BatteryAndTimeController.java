@@ -48,7 +48,7 @@ public class BatteryAndTimeController {
                 mService.setBetteryLevel((int)model.getSOC());
             }
             mService.setRemainMileage((int) model.getSOC());
-            Log.d("huachao", "CargingState:" + model.getCargingState() + ":Bettery:" + model.getSOC() + ":RemainMileage:" + model.getRemainMileage());
+            Log.d("Power", "CargingState:" + model.getCargingState() + ":Bettery:" + model.getSOC() + ":RemainMileage:" + model.getRemainMileage());
         }
         else {
             mService.restartKdService();

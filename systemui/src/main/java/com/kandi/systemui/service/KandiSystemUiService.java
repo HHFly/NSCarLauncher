@@ -7,14 +7,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Service;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.PixelFormat;
-import android.os.Build;
 import android.os.IBinder;
 import android.os.IKdBtService;
 import android.os.RemoteException;
@@ -34,20 +30,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.gyf.barlibrary.ImmersionBar;
 import com.kandi.systemui.R;
-import com.kandi.systemui.base.App;
 import com.kandi.systemui.driver.DriverServiceManger;
 import com.kandi.systemui.listen.MyPhoneStateListener;
 
+import com.kandi.systemui.receiver.CarPowerManangerAnimRecevie;
+import com.kandi.systemui.widget.DialogGunIn;
 import com.kandi.systemui.widget.DialogVolumeControl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class KandiSystemUiService extends Service {
     Window window;
@@ -59,7 +51,9 @@ public class KandiSystemUiService extends Service {
     private  TextView tv_t_power,status_bar_time_textview,tv_hangup,tv_answser,tv_phone_number,tv_home,tv_t_volume;
     private RelativeLayout Rlcenter;
     private DialogVolumeControl dialogVolumeControl ;
+    private DialogGunIn dialogGunIn;
     BluetoothController mBluetoothController;
+    CarPowerManangerAnimRecevie carPowerManangerAnimRecevie;
     BatteryAndTimeController mBatteryAndTimeController;
     WifiController mWifiController;
     TelephonySignalController mTelephonySignalController;
@@ -117,6 +111,7 @@ public class KandiSystemUiService extends Service {
     protected void initHeader() {
 
         mBluetoothController = new BluetoothController(this);
+        carPowerManangerAnimRecevie =new CarPowerManangerAnimRecevie(this);
         mBatteryAndTimeController = new BatteryAndTimeController(this);
         mWifiController = new WifiController(this);
         mTelephonySignalController = new TelephonySignalController(this);
@@ -290,7 +285,22 @@ public class KandiSystemUiService extends Service {
           dialogVolumeControl.show();
 
     }
+    /*
+     * 显示Gunin*/
+    public   void  showGunInDialog(){
+        if(dialogGunIn ==null){
+            dialogGunIn =new DialogGunIn();
+            dialogGunIn.setContent(this);
+            dialogGunIn.incomingShow();
+        }
+        dialogGunIn.show();
 
+    }
+    public   void  dissGunInDialog(){
+
+        dialogGunIn.dissmiss();
+
+    }
     public void TopRefreshNetworkEvent(int asu, int type) {
         // int asu = event.data; //getGsmSignalStrength();
         if (asu <= 2 || asu == 99) {

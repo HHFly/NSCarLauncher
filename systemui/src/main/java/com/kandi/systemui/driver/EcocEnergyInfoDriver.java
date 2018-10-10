@@ -130,8 +130,8 @@ public class EcocEnergyInfoDriver {
 	//模拟器无法模拟充电线连接状态及充电状态，用广播事件切换
 	////
 	
-	int debugChargeGunState=0;
-	int debugChargingState=0;
+	public  static int debugChargeGunState=0;
+	public  static int debugChargingState=0;
 	
 	/**
 	 * @return array_info[8]	充电线连接状态:0未连接，1连接, 
