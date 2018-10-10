@@ -123,7 +123,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             public void onClickLeft() {
                 isFmFragment();
                 if(fmFragment!=null){
-                    fmFragment.leftFm();
+                    fmFragment.leftFm(channel);
                     setFmMHZ();
                 }
             }
@@ -139,7 +139,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             public void onClickRight() {
                 isFmFragment();
                 if(fmFragment!=null){
-                    fmFragment.rightFm();
+                    fmFragment.rightFm(channel);
                     setFmMHZ();
                 }
             }
@@ -219,6 +219,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private  void isFmFragment(){
             if(FragmentType.FM!=homePagerActivity.mCurFragment.getmType()){
                 homePagerActivity.switchFragmenthide(homePagerActivity.fmFragment);
+                fmFragment.isSecondResume=true;
             }
     }
 //  加载蓝牙
@@ -315,6 +316,8 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             channel= SPUtil.getInstance(HomePagerActivity.context,FMCHANNEL).getFloat(FMCHANNEL,93.0f);
         }
         setTvText(R.id.tv_fm_hz,String.valueOf(channel));
+//        Log.d("Fm","Chennl1   "+String.valueOf(channel));
+        SPUtil.getInstance(getContext(),FMCHANNEL).putFloat(FMCHANNEL,channel);
     }
     /*初始化蓝牙*/
     private void setBT(){
@@ -424,10 +427,13 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 
                     break;
                 case  HandleKey.FM:
+
                     fmPaly.setPlay(false);
+                    FMFragment.isPlay=false;
                     break;
                 case  HandleKey.OPEMFM:
                     fmPaly.setPlay(true);
+                    FMFragment.isPlay=true;
                     break;
                 case  HandleKey.BTMUSICCOLSE:
                     btPaly.setPlay(false);

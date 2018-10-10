@@ -8,6 +8,7 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.os.IFmService;
 import com.kandi.dell.nscarlauncher.R;
@@ -35,7 +36,7 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
     private HomePagerActivity homePagerActivity;
 
     private IFmService radio;  //收音机
-    private boolean isPlay;
+    public static boolean isPlay;
     public static   float channel = 93.0f;// 默认初始的波段
     private IKdAudioControlService audioservice ;
     AudioManager audioManager;
@@ -125,10 +126,10 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
                 }
                 break;
             case R.id.iv_fm_left:
-                leftFm();
+                leftFm(channel);
                 break;
             case R.id.iv_fm_right:
-                rightFm();
+                rightFm(channel);
                 break;
         }
     }
@@ -171,26 +172,51 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
     }
 
     /*左调频*/
-    public  void  leftFm(){
-
-        if(channel>88.0f) {
-            channel = (float) (channel * 10-1)/10f;
-            changeChannel(channel);
-        }
+    public  void  leftFm(Float channels){
+//        channel= SPUtil.getInstance(getContext(),FMCHANNEL).getFloat(FMCHANNEL,93.0f);
+//        if(channel>88.0f) {
+//            channel = (float) (channel * 10-1)/10f;
+//            changeChannel(channel);
+//        }
+        channel=channels;
         if(!isPlay){
             openFm();
         }
+        try {
+            if(App.get().getRadio().RadioFreqSeekDown()>=0){
+
+                channel =App.get().getRadio().GetRadioFreq();
+                myHandler.sendMessage(myHandler.obtainMessage(VIEWFRESH));
+
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
     }
     /*右调频*/
-    public  void  rightFm(){
+    public  void  rightFm(Float channels){
 //        channel= SPUtil.getInstance(getContext(),FMCHANNEL).getFloat(FMCHANNEL,93.0f);
-        if(channel<108.0f) {
-            channel = (float) (channel * 10+1)/10f;
-            changeChannel(channel);
-        }
+//        if(channel<108.0f) {
+//            channel = (float) (channel * 10+1)/10f;
+//            changeChannel(channel);
+//        }
+        channel=channels;
+//        Log.d("Fm","Channel   "+String.valueOf(channel));
         if(!isPlay){
           openFm();
         }
+        try {
+            if(App.get().getRadio().RadioFreqSeekUp()>=0){
+
+                 channel =App.get().getRadio().GetRadioFreq();
+                myHandler.sendMessage(myHandler.obtainMessage(VIEWFRESH));
+//                Log.d("Fm","Channel   "+String.valueOf(channel));
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
     }
     /*初始化数据*/
     private void  initData(){
@@ -369,7 +395,9 @@ public void  changeChannel(float value){
                         public void run() {
                             try {
                                 System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
+                                Log.d("Fm","Channel open  "+String.valueOf(channel));
                                 System.out.println("radio.SetRadioFreq():" + channel + "----" + App.get().getRadio().SetRadioFreq(channel)); // 开机初始化为频道93.0
+                                Log.d("Fm","Channel  set "+String.valueOf(channel));
                                 HomePagerOneFragment.fmPaly.setPlay(true);
                                 isPlay=true;
                             } catch (Exception e) {
