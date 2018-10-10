@@ -81,11 +81,11 @@
         android:textColor="#EEEEEE"
         />
     <ImageView
-        android:layout_width="80px"
-        android:layout_height="80px"
+        android:layout_width="90px"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20px"
-
+        android:scaleType="fitXY"
         android:src="@drawable/select_home_video"/>
     <TextView
         android:layout_width="wrap_content"

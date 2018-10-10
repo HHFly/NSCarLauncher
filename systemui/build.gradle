@@ -35,5 +35,5 @@ dependencies {
     //沉浸式实现
     implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
     //
-    compile 'com.zhy:autolayout:1.4.3'
+    implementation 'com.zhy:autolayout:1.4.3'
 }

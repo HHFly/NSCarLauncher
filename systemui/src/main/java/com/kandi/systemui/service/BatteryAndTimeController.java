@@ -14,6 +14,7 @@ import com.kandi.systemui.util.TimeUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
@@ -24,7 +25,7 @@ public class BatteryAndTimeController {
     Timer mTime;
     TimerTask mTimerTask;
     public boolean timeFlag =true;
-
+    String locale ="ch" ;
     public BatteryAndTimeController(KandiSystemUiService service) {
         mService = service;
         addBatteryAndTimeObserve();
@@ -72,6 +73,11 @@ public class BatteryAndTimeController {
             }
             if(msg.what==1){
                 mService.setCurrentTime(DateFormat.is24HourFormat( mService.getApplicationContext())?TimeUtils.getHour(): TimeUtils.getHour_Min12());
+                String language = Locale.getDefault().getLanguage();
+                if(!locale.equals(language)){
+                    locale= language;
+                    mService.setLocal(locale);
+                }
             }
         };
     };
@@ -111,4 +117,5 @@ public class BatteryAndTimeController {
             }
         });
     }
+
 }

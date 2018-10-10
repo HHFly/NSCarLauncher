@@ -55,7 +55,7 @@
     <string name="版本号">版本号</string>
     <string name="默认状态">默认状态</string>
     <string name="车辆已授权">车辆已授权</string>
-    <string name="Sport">Sport</string>
+    <string name="Sport">sport</string>
     <string name="model">型号</string>
     <string name="android">Android版本</string>
     <string name="baseversion">基频版本</string>
@@ -71,7 +71,7 @@
     <string name="断开">断开</string>
     <string name="连接">连接</string>
     <string name="电话接入">电话接入：</string>
-    <string name="Economic">Economic</string>
+    <string name="Economic">Economy</string>
     <string name="NEDC">NEDC</string>
     <string name="Irascible">Irascible</string>
     <string name="safetip">车辆在高速运行，为确保安全，暂时无法进行操作</string>
@@ -112,6 +112,7 @@
     <string name="回家">回家</string>
     <string name="上班">上班</string>
     <string name="商城">商城</string>
+    <string name="剩余里程">剩余里程</string>
 
 
 </resources>

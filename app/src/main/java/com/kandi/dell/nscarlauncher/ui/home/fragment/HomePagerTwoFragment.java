@@ -71,12 +71,22 @@ public class HomePagerTwoFragment extends BaseFragment {
         switch (view.getId()){
             case R.id.iv_backbox:
 //                后备箱要注意只控制开锁，关锁不需要控制。
-                HomePagerActivity.setBackBox(true);
+                if(FlagProperty.BCMStaus==0) {
+                    HomePagerActivity.setBackBox(true);
+                }else {
+                    Toast.makeText(getActivity(), R.string.BCM未连接, Toast.LENGTH_SHORT).show();
+                }
+
                     break;
             case R.id.iv_cenlock:
 //
-                isCenterlockOpen=!isCenterlockOpen;
-                HomePagerActivity.setDoorLock(isCenterlockOpen);
+                if(FlagProperty.BCMStaus==0) {
+                    isCenterlockOpen=!isCenterlockOpen;
+                    HomePagerActivity.setDoorLock(isCenterlockOpen);
+                }else {
+                    Toast.makeText(getActivity(), R.string.BCM未连接, Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             case R.id.iv_window:
                 HomePagerActivity.OneKeyWindowOpen();

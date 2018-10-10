@@ -46,6 +46,8 @@ import com.kandi.systemui.widget.DialogVolumeControl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class KandiSystemUiService extends Service {
     Window window;
@@ -54,7 +56,7 @@ public class KandiSystemUiService extends Service {
     LayoutParams wmParams; // WindowManager.LayoutParams
     FrameLayout mFloatLayout ,phoneFloatLayout;
     private ImageView status_bar_wifi_btn,status_bar_3g_level_btn,status_bar_bluetooth_image,status_bar_3g_type_btn,status_bar_battery_imageView,center_img,iv_power,title_iv_sound;
-    private  TextView tv_t_power,status_bar_time_textview,tv_hangup,tv_answser,tv_phone_number;
+    private  TextView tv_t_power,status_bar_time_textview,tv_hangup,tv_answser,tv_phone_number,tv_home,tv_t_volume;
     private RelativeLayout Rlcenter;
     private DialogVolumeControl dialogVolumeControl ;
     BluetoothController mBluetoothController;
@@ -151,10 +153,13 @@ public class KandiSystemUiService extends Service {
         tv_t_power= (TextView)mFloatLayout.findViewById(R.id.tv_t_power);
 //        时间
         status_bar_time_textview = (TextView) mFloatLayout.findViewById(R.id.tv_title_date);
+
 //        中间栏
         center_img =(ImageView) mFloatLayout.findViewById(R.id.center_img);
         iv_power =(ImageView) mFloatLayout.findViewById(R.id.iv_power);
         title_iv_sound =(ImageView) mFloatLayout.findViewById(R.id.title_iv_sound);
+        tv_home =(TextView) mFloatLayout.findViewById(R.id.tv_home);
+        tv_t_volume =(TextView) mFloatLayout.findViewById(R.id.tv_t_volume);
         Rlcenter =(RelativeLayout) mFloatLayout.findViewById(R.id.center);
 
         mFloatLayout.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
@@ -415,6 +420,14 @@ public class KandiSystemUiService extends Service {
             return false;
         } else {
             return true;
+        }
+    }
+    //设置语言
+    public void setLocal(String local){
+        switch (local){
+            case "ch":tv_home.setText("首页");tv_t_volume.setText("音量");break;
+            case "en": tv_home.setText("Home");tv_t_volume.setText("Volume");break;
+            default: tv_home.setText("首页");tv_t_volume.setText("音量");break;
         }
     }
   /*判断是顶部app是否是桌面*/

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="373px"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="373px"
     android:layout_height="match_parent"
     android:layout_marginLeft="50px"
     android:layout_marginRight="50px"
@@ -124,38 +126,66 @@
             android:layout_centerInParent="true"
             android:src="@mipmap/ic_wave_bg"/>
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:id="@+id/ll_speed"
             android:layout_width="wrap_content"
             android:layout_height="73px"
             android:orientation="horizontal"
-          android:layout_centerInParent="true"
+          android:layout_centerHorizontal="true"
+            android:layout_marginTop="110px"
            >
         <TextView style="@style/BaseText.Tv"
             android:id="@+id/tv_w_speed"
-            android:textSize="98px"
-            android:text=""
+            android:textSize="72px"
+            android:text="200"
             android:includeFontPadding="false"
-            android:layout_marginTop="-20px"
+
             />
         <TextView style="@style/BaseText.Tv"
-            android:textSize="36px"
+            android:textSize="30px"
             android:text="KM"
             android:includeFontPadding="false"
+            app:layout_constraintLeft_toRightOf="@+id/tv_w_speed"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_w_speed"
             android:layout_marginTop="-20px"/>
-        </LinearLayout>
-
+        </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/ll_speed"
+            android:layout_marginTop="16px">
         <TextView
             android:id="@+id/tv_work"
             android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#EEEEEE"
-            android:textSize="24px"
-            android:text=""
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/ll_speed"
-            android:layout_marginTop="24px"
+            android:textSize="20px"
+            android:text="sport"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
            />
+            <View
+                android:background="#B9D3FF"
+                android:layout_width="1px"
+                android:layout_height="30px"
+                app:layout_constraintLeft_toRightOf="@+id/tv_work"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="9px"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/tv_work"
+                android:layout_marginLeft="19px"
+                android:textSize="20px"
+                android:textColor="#FFFFFF"
+                android:text="@string/剩余里程"
+
+                />
+        </android.support.constraint.ConstraintLayout>
     </RelativeLayout>
 </RelativeLayout>
