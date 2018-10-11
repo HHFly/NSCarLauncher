@@ -1,21 +1,17 @@
 package com.kandi.dell.nscarlauncher.ui.video;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
-import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
-import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
-import com.kandi.dell.nscarlauncher.ui.music.adapter.MusicAdapter;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 
 import java.lang.reflect.Field;
@@ -23,13 +19,14 @@ import java.util.List;
 
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
-public class VideoFragment extends BaseFragment {
+public class VideoFragment extends BaseFragment{
     private VideoAdapter mAdapter;
-    private List<Mp3Info> mData;
+    public static List<Mp3Info> mData;
    public static DialogLocalMusic dialogLocalMusic;
     private final static int  VIEWFRESH =1;
+    public static int position = 0;
+    public static Context context;
 
     @Override
     public void setmType(int mType) {
@@ -55,6 +52,7 @@ public class VideoFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        context = getContext();
         dialogLocalMusic  = new DialogLocalMusic(new DialogLocalMusic.ThreadCallback() {
            @Override
            public void threadEndLisener() {
@@ -157,9 +155,10 @@ public class VideoFragment extends BaseFragment {
 //                    if(imageView!=null){
 //                        imageView.setVisibility(View.GONE);
 //                    }
+                    position = Pos;
                     JCFullScreenActivity.startActivity(getContext(),
                             data.url,
-                            JCVideoPlayerStandard.class,
+                            MyJCVideoPlayerStandard.class,
                             data.title);
 
 
