@@ -6,9 +6,6 @@ import android.media.AudioManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
-
-import com.kandi.dell.nscarlauncher.R;
 
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCMediaManager;
@@ -17,7 +14,6 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
 
-    public ImageView fullscreenButton;
     public int position;
 
     public MyJCVideoPlayerStandard(Context context) {
@@ -31,7 +27,6 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
     }
 
     protected void initView(Context context) {
-        fullscreenButton = (ImageView) findViewById(R.id.fullscreen);
         fullscreenButton.setVisibility(View.GONE);
     }
 
