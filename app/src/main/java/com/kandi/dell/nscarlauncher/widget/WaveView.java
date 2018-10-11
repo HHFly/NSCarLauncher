@@ -65,7 +65,7 @@ public class WaveView extends View {
         paint.setStrokeWidth(dip2px(context, 5));
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(mWaveColor);
-            paint.setMaskFilter(new )
+
         circlePaint = new Paint();
         circlePaint.setStrokeWidth(dip2px(context, 5));
         circlePaint.setStyle(Paint.Style.STROKE);
