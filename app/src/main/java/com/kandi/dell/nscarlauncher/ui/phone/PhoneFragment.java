@@ -270,7 +270,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         try {
           String PhoneRecordStr=  btservice.getCallHistoryJsonString();
             getPhoneRecordStr(PhoneRecordStr);
-            LogUtils.log(PhoneRecordStr);
+//            LogUtils.log(PhoneRecordStr);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -313,7 +313,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         try {
             String  ContactsJsonString =btservice.getContactsJsonString();
             getPhoneBookStr(ContactsJsonString);
-            LogUtils.log(ContactsJsonString);
+//            LogUtils.log(ContactsJsonString);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -502,7 +502,9 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
                         if(!"".equals(number)) {
                             btservice.btDial(number);
+                            bt_call.setVisibility(View.GONE);
                             rl_call.setVisibility(View.VISIBLE);
+
                         }
 
                         break;
