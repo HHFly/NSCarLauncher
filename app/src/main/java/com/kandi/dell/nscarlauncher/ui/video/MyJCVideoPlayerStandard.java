@@ -14,8 +14,6 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
 
-    public int position;
-
     public MyJCVideoPlayerStandard(Context context) {
         super(context);
         initView(context);
@@ -53,13 +51,13 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         ((Activity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        position = VideoFragment.position + 1;
-        if(position < VideoFragment.mData.size()){
+        VideoFragment.position = VideoFragment.position + 1;
+        if(VideoFragment.position < VideoFragment.mData.size()){
             JCVideoPlayer.WIFI_TIP_DIALOG_SHOWED =true;//关闭网络播放提示
             JCFullScreenActivity.startActivity(VideoFragment.context,
-                    VideoFragment.mData.get(position).url,
+                    VideoFragment.mData.get(VideoFragment.position).url,
                     MyJCVideoPlayerStandard.class,
-                    VideoFragment.mData.get(position).title);
+                    VideoFragment.mData.get(VideoFragment.position).title);
         }
     }
 
