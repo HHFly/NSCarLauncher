@@ -52,16 +52,28 @@ public class CarPowerManangerAnimRecevie extends BroadcastReceiver {
 
                 if(3==eventId){
                     //充电启停事件
-                    int state =bundle.getInt(skeyChargeState);//Value值0是停止充电，1是开始充电。
+                    int state =bundle.getInt(skeyChargeState);//Value值0是停止充电，1是开始充电。2 故障
                     if(0==state){
                         EcocEnergyInfoDriver.debugChargingState=0;
+                        mService.dissGunInDialog();
+                        mService.dissPowerInDialog();
                     }
                     if(1==state){
                         EcocEnergyInfoDriver.debugChargingState=1;
                         mService.dissGunInDialog();
+                        mService.showPowerInDialog();
+                        if(mService.getDialogPowerIn().isShow){
+                            mService.getDialogPowerIn().setPowerError(false);
+                        }
+
                     }
                     if(2==state){
                         EcocEnergyInfoDriver.debugChargingState=0;
+                        mService.dissGunInDialog();
+                        mService.showPowerInDialog();
+                       if(mService.getDialogPowerIn().isShow){
+                           mService.getDialogPowerIn().setPowerError(true);
+                       }
                     }
                 }
             }

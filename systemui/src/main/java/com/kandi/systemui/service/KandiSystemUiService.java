@@ -28,6 +28,7 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,6 +38,7 @@ import com.kandi.systemui.listen.MyPhoneStateListener;
 
 import com.kandi.systemui.receiver.CarPowerManangerAnimRecevie;
 import com.kandi.systemui.widget.DialogGunIn;
+import com.kandi.systemui.widget.DialogPowerIn;
 import com.kandi.systemui.widget.DialogVolumeControl;
 
 import java.util.List;
@@ -50,6 +52,7 @@ public class KandiSystemUiService extends Service {
     private ImageView status_bar_wifi_btn,status_bar_3g_level_btn,status_bar_bluetooth_image,status_bar_3g_type_btn,status_bar_battery_imageView,center_img,iv_power,title_iv_sound;
     private  TextView tv_t_power,status_bar_time_textview,tv_hangup,tv_answser,tv_phone_number,tv_home,tv_t_volume;
     private RelativeLayout Rlcenter;
+    private TextView ll_volume,ll_power;
     private DialogVolumeControl dialogVolumeControl ;
     private DialogGunIn dialogGunIn;
     BluetoothController mBluetoothController;
@@ -64,9 +67,9 @@ public class KandiSystemUiService extends Service {
   public   static IKdBtService btservice;//蓝牙服务
     private WindowManager.LayoutParams wmParamDiaglogs = null;
 
+    DialogPowerIn dialogPowerIn;
 
 
-    private AlertDialog dialog;
 
     @Nullable
     @Override
@@ -173,11 +176,22 @@ public class KandiSystemUiService extends Service {
         iv_power.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                gotoHome();
+            }
+        });
+        tv_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 gotoHome();
             }
         });
         title_iv_sound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showVolumeDialog();
+            }
+        });
+        tv_t_volume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showVolumeDialog();
@@ -291,15 +305,37 @@ public class KandiSystemUiService extends Service {
         if(dialogGunIn ==null){
             dialogGunIn =new DialogGunIn();
             dialogGunIn.setContent(this);
-            dialogGunIn.incomingShow();
         }
         dialogGunIn.show();
 
     }
     public   void  dissGunInDialog(){
-
+        if(dialogGunIn ==null){
+            dialogGunIn =new DialogGunIn();
+            dialogGunIn.setContent(this);
+        }
         dialogGunIn.dissmiss();
 
+    }
+    /*显示powerin*/
+    public  void  showPowerInDialog(){
+        if(dialogPowerIn==null){
+            dialogPowerIn =new DialogPowerIn(this);
+        }
+        dialogPowerIn.show();
+    }
+    public   void  dissPowerInDialog(){
+        if(dialogPowerIn==null){
+            dialogPowerIn =new DialogPowerIn(this);
+        }
+        dialogPowerIn.dissmiss();
+
+    }
+    public DialogPowerIn getDialogPowerIn(){
+        if(dialogPowerIn==null){
+            dialogPowerIn =new DialogPowerIn(this);
+        }
+        return dialogPowerIn;
     }
     public void TopRefreshNetworkEvent(int asu, int type) {
         // int asu = event.data; //getGsmSignalStrength();

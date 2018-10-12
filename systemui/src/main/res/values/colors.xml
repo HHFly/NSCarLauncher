@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
-
+    <color name="colormusicblue">#B9D3FF</color>
+    <color name="colormusicwhiet">#EDEDED</color>
 </resources>

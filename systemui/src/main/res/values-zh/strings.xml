@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">systemui</string>
+    <string name="未安装该应用">未安裝該應用</string>
+    <string name="挂断">掛斷</string>
+    <string name="接听">接聽</string>
+    <string name="正在充电中">正在充電中...</string>
+    <string name="充电异常">充電異常</string>
+    <string name="充电已完成">充電已完成</string>
+</resources>

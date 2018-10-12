@@ -13,7 +13,7 @@ public class DialogGunIn {
     Dialog alertDialog;
     public void setContent(Context content){
         this.content = content;
-
+        incomingShow();
     }
     // 显示弹出框
     public void incomingShow() {
@@ -23,6 +23,7 @@ public class DialogGunIn {
         Window window = alertDialog.getWindow();
         window.requestFeature(Window.FEATURE_NO_TITLE);
         window.setContentView(R.layout.dialog_gunin);
+        window.setBackgroundDrawableResource(android.R.color.transparent);
 
 // 设置具体参数
         WindowManager.LayoutParams lp = window.getAttributes();

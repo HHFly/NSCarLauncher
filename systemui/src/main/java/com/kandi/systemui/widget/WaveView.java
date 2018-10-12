@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class PowerView extends View {
+public class WaveView extends View {
 
     /*画布宽度*/
     private int width;
@@ -56,15 +56,20 @@ public class PowerView extends View {
     private boolean starting = false;
     private boolean isPause = false;
 
-    public PowerView(Context context, @Nullable AttributeSet attrs) {
+    public WaveView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
 
     }
 
-    public PowerView(Context context) {
+    public WaveView(Context context) {
         super(context);
         init(context);
+
+    }
+
+    public void setPause(boolean pause) {
+        isPause = pause;
     }
 
     private void init(Context context) {
@@ -73,13 +78,13 @@ public class PowerView extends View {
         paint.setAntiAlias(true);
         paint.setStrokeWidth(dip2px(context, 5));
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.parseColor("#78A9FC"));
+        paint.setColor(Color.parseColor("#619BFD"));
 
         circlePaint = new Paint();
         circlePaint.setStrokeWidth(dip2px(context, 5));
         circlePaint.setStyle(Paint.Style.STROKE);
         circlePaint.setAntiAlias(true);
-        circlePaint.setColor(Color.parseColor("#1C1E2E"));
+        circlePaint.setColor(Color.parseColor("#3A6ADB"));
 
         textPaint = new Paint();
         textPaint.setAntiAlias(true);
@@ -92,7 +97,7 @@ public class PowerView extends View {
                     invalidate();
                     if (mStarted) {
                         // 不断发消息给自己，使自己不断被重绘
-                        mHandler.sendEmptyMessageDelayed(0, 320L);
+                        mHandler.sendEmptyMessageDelayed(0, 160L);
                     }
                 }
             }
@@ -168,7 +173,7 @@ public class PowerView extends View {
         canvas.restore();
         onDrawBubble(canvas);
         //启动绘制
-        postInvalidateDelayed(150);
+        postInvalidateDelayed(350);
     }
     int count = 0;
 
@@ -271,7 +276,33 @@ public class PowerView extends View {
         this.translateX = translateX;
     }
 
-//
+    /**
+     * 通过动画设置当前进度
+     *
+     * @param progress 进度 <=100
+     * @param duration 动画时长
+     */
+    public void setProgress(final int progress, int duration) {
+        if (progress > 100 || progress < 0)
+            throw new RuntimeException(getClass().getName() + "请设置[0,100]之间的值");
+        autoIncrement = false;
+        openAnimate = true;
+        ValueAnimator progressAnimator = ValueAnimator.ofInt(0, progress);
+        progressAnimator.setDuration(duration);
+        progressAnimator.setTarget(progress);
+        progressAnimator.setInterpolator(new LinearInterpolator());
+        progressAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                WaveView.this.progress = (int) animation.getAnimatedValue();
+                if (WaveView.this.progress == progress)
+                    openAnimate = false;
+                invalidate();
+            }
+        });
+        progressAnimator.start();
+    }
+
     public int getProgress() {
         return progress;
     }
@@ -370,10 +401,11 @@ private void onDrawBubble(Canvas canvas) {
 		paint.setAlpha(200);
     List<Bubble> list = new ArrayList<Bubble>(bubbles);
     for (Bubble bubble : list) {
-        if ((bubble.getY()-bubble.getRadius()-bubble.getSpeedY() -waveHeight/2)<waterLine ) {
+        if ((bubble.getY()-bubble.getRadius()-bubble.getSpeedY() -waveHeight/2)<waterLine ||isOverRange(bubble) ) {
             bubbles.remove(bubble);
 
         } else {
+
             int i = bubbles.indexOf(bubble);
             if (bubble.getX() + bubble.getSpeedX() <= bubble.getRadius()) {
                 bubble.setX(bubble.getRadius());
@@ -394,7 +426,24 @@ private void onDrawBubble(Canvas canvas) {
     }
 
 }
-
+private Boolean isOverRange(Bubble bubble){
+    //点击位置x坐标与圆心的x坐标的距离
+    int distanceX = (int) Math.abs(width/2-bubble.getX());
+    //点击位置y坐标与圆心的y坐标的距离
+    int distanceY = (int) Math.abs(height/2-bubble.getY());
+    //点击位置与圆心的直线距离
+    int distanceZ = (int) Math.sqrt(Math.pow(distanceX,2)+Math.pow(distanceY,2));
+    if(bubble.getY()>height*0.75){
+        if(width / 2<distanceZ){
+            return true;
+        }
+        return false;
+    }
+    if(width / 2<distanceZ+bubble.getRadius()*2+10){
+       return true;
+    }
+    return false;
+}
 
 
     private class Bubble {

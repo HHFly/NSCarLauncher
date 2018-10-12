@@ -3,4 +3,7 @@
     <string name="未安装该应用">未安装该应用</string>
     <string name="挂断">挂断</string>
     <string name="接听">接听</string>
+    <string name="正在充电中">正在充电中...</string>
+    <string name="充电异常">充电异常</string>
+    <string name="充电已完成">充电已完成</string>
 </resources>

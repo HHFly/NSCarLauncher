@@ -48,6 +48,10 @@ public class BatteryAndTimeController {
                 mService.setBetteryLevel((int)model.getSOC());
             }
             mService.setRemainMileage((int) model.getSOC());
+            if(mService.getDialogPowerIn().isShow){
+                mService.getDialogPowerIn().setProgress((int) model.getSOC());
+//                mService.getDialogPowerIn().setProgress(50);
+            }
             Log.d("Power", "CargingState:" + model.getCargingState() + ":Bettery:" + model.getSOC() + ":RemainMileage:" + model.getRemainMileage());
         }
         else {
