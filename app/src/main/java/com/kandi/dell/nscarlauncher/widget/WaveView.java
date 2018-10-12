@@ -33,7 +33,7 @@ public class WaveView extends View {
     /*sin曲线 1/4个周期的宽度*/
     private int cycle = 60;
     /*sin曲线振幅的高度*/
-    private int waveHeight = 30;
+    private int waveHeight = 20;
     /*sin曲线的起点*/
     private Point startPoint;
     /*当前进度*/
@@ -157,6 +157,7 @@ public class WaveView extends View {
         }
         path.reset();
         canvas.restore();
+        postInvalidateDelayed(160);
     }
     int count = 0;
 

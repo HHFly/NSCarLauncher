@@ -121,9 +121,11 @@
                 android:layout_centerInParent="true"
                 />
         <ImageView
-            android:layout_width="240px"
-            android:layout_height="240px"
+
+            android:layout_width="245px"
+            android:layout_height="245px"
             android:layout_centerInParent="true"
+            android:alpha="0.5"
             android:src="@mipmap/ic_wave_bg"/>
 
         <android.support.constraint.ConstraintLayout
