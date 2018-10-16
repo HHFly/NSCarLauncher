@@ -84,7 +84,9 @@
             android:layout_width="576px"
             android:layout_height="match_parent"
             android:layout_marginBottom="90px"
-            android:background="@mipmap/ic_f_fm_bg">
+            android:background="#00000000"
+
+            >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
