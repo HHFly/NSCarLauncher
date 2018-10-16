@@ -82,7 +82,7 @@ dependencies {
     implementation 'com.mark.app:mkbasetools:1.0.0'
     implementation 'com.bakerj:infinite-cards:1.0.3'
     //沉浸式实现
-    implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
+    implementation 'com.gyf.immersionbar:immersionbar:2.3.2-beta01'
     //viewpager 指示器
     implementation 'me.relex:circleindicator:1.2.2@aar'
     //fa
@@ -93,6 +93,7 @@ dependencies {
     implementation 'com.amap.api:location:3.4.1'
     implementation 'com.amap.api:search:5.2.1'
     //jiecaoplay
-    implementation 'fm.jiecao:jiecaovideoplayer:3.6.1'
+    //    implementation 'fm.jiecao:jiecaovideoplayer:3.6.1'
     implementation 'com.belerweb:pinyin4j:2.5.1'
+    implementation project(':jcvideoplayer-lib')
 }

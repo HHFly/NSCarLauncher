@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.kandi.dell.nscarlauncher.R;
 
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCMediaManager;
@@ -59,7 +62,18 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
                     MyJCVideoPlayerStandard.class,
                     VideoFragment.mData.get(VideoFragment.position).title);
         }
+
     }
+
+
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        super.onTouch(v, event);
+        return  true;
+    }
+
+
 
     private static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override

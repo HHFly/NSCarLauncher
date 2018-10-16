@@ -1,1 +1,1 @@
-include ':app', ':systemui'
+include ':app', ':systemui', ':jcvideoplayer-lib'
