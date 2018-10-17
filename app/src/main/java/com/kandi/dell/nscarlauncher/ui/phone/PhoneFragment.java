@@ -490,9 +490,13 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                 switch (msg.what) {
                     case PHONE_OVER:
                         tv_phone_info.setText("");
+                        tv_phone_info.setText("通话结束");
                         rl_call.setVisibility(View.GONE);
                         ll_calling_controll.setVisibility(View.VISIBLE);
                         ll_calling_key.setVisibility(View.GONE);
+                        bt_stop.setVisibility(View.VISIBLE);
+                        bt_call.setVisibility(View.VISIBLE);
+
 
                         break;
                     case PHONE_CONTINUE:
@@ -582,9 +586,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
         }
         if (tv_phone_info != null) {
-            tv_phone_info.setText("通话结束");
-            bt_stop.setVisibility(View.VISIBLE);
-            bt_call.setVisibility(View.VISIBLE);
+
 
             new CallOverThread().start();
         }
