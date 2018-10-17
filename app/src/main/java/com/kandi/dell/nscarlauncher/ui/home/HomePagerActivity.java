@@ -62,6 +62,7 @@ import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerThreeFragment;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.home.model.HomeModel;
 import com.kandi.dell.nscarlauncher.ui.home.receiver.USBBroadcastReceiver;
+import com.kandi.dell.nscarlauncher.ui.home.receiver.USBReceover;
 import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.phone.PhoneFragment;
@@ -107,6 +108,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public ComingReceiver comingReceiver;
     public USBBroadcastReceiver usbBroadcastReceiver;
     public CarMFLReceiver  carMFLReceiver;
+    public USBReceover usbReceover;
     static AudioManager audioManager;
     static IKdBtService btservice;
     private static final  String ACTION ="com.driverlayer.kdos_driverServer.RemoteService";
@@ -125,7 +127,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     protected void onResume() {
         super.onResume();
             /*来电接受*/
-            Log.d("homepager","onResume");
+
         if (comingReceiver == null) {
             comingReceiver = new ComingReceiver();
             IntentFilter intentFilter = new IntentFilter();
@@ -135,6 +137,13 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             registerReceiver(comingReceiver, intentFilter);
         }
         /*usb插拔接受*/
+        if(usbReceover==null){
+            usbReceover =new USBReceover();
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction("android.hardware.usb.action.USB_DEVICE_ATTACHED");
+            intentFilter.addAction("android.hardware.usb.action.USB_DEVICE_DETACHED");
+            registerReceiver(usbReceover, intentFilter);
+        }
         if(usbBroadcastReceiver==null){
             usbBroadcastReceiver =new USBBroadcastReceiver();
             IntentFilter intentFilter = new IntentFilter();
@@ -439,6 +448,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             }
             if(usbBroadcastReceiver!=null){
                 this.unregisterReceiver(usbBroadcastReceiver);
+            }
+            if(usbReceover!=null){
+                this.unregisterReceiver(usbReceover);
             }
             if(carMFLReceiver!=null){
                 this.unregisterReceiver(carMFLReceiver);

@@ -18,13 +18,13 @@ public class USBBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-            Toast.makeText(context, R.string.USB接入, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, R.string.USB接入, Toast.LENGTH_SHORT).show();
             DialogLocalMusic.updateGallery(context);
 
 
 
         } else if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
-            Toast.makeText(context, R.string.USB拔出, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, R.string.USB拔出, Toast.LENGTH_SHORT).show();
 //            DialogLocalMusic.updateGallery(context);
             MusicFragment.reSetMusic(false);
 

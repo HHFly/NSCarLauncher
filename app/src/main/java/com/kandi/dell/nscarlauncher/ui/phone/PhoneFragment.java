@@ -294,6 +294,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                     String call_time = changeTimeToStandard(jsonObject.getString("callTime"));
                     String name = jsonObject.getString("name");
                    String number = jsonObject.getString("callNumber");
+
                    info.setName(StringUtils.replaceBlank(name));
                    info.setNumber(number);
                    info.setCall_time(call_time);
