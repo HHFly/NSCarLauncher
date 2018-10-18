@@ -492,10 +492,10 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                         tv_phone_info.setText("");
                         tv_phone_info.setText("通话结束");
                         rl_call.setVisibility(View.GONE);
-                        ll_calling_controll.setVisibility(View.VISIBLE);
+                        ll_calling_controll.setVisibility(View.INVISIBLE);
                         ll_calling_key.setVisibility(View.GONE);
-                        bt_stop.setVisibility(View.VISIBLE);
-                        bt_call.setVisibility(View.VISIBLE);
+
+
 
 
                         break;
@@ -508,7 +508,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                             btservice.btDial(number);
                             bt_call.setVisibility(View.GONE);
                             rl_call.setVisibility(View.VISIBLE);
-
+                            ll_calling_controll.setVisibility(View.VISIBLE);
                         }
 
                         break;
@@ -517,6 +517,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                         
                         break;
                     case PHONE_ANSWER:
+
                         btservice.btAnswerCall();
 
                         break;
@@ -546,6 +547,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                                 tv_phone_info.setText("");
                             }
                             rl_call.setVisibility(View.VISIBLE);
+                            bt_call.setVisibility(View.VISIBLE);
                             mainPresenter.searchPhoneInfo(number);
                         }
                         break;
