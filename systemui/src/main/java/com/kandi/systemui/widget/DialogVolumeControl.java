@@ -3,22 +3,16 @@ package com.kandi.systemui.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.media.AudioManager;
-
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
-
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-
 import android.view.Window;
 import android.view.WindowManager;
-
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
+
 import com.kandi.systemui.R;
 import com.kandi.systemui.service.KandiSystemUiService;
 
@@ -44,7 +38,7 @@ int STREAM_MUSIC,STREAM_MAX_MUSIC,progress;
 	// 来电显示弹出框
 	public void incomingShow() {
 
-			alertDialog = new Dialog(content);
+			alertDialog = new MyDialog(content);
 			alertDialog.setCanceledOnTouchOutside(true);// 设置点击屏幕Dialog不消失
 			Window window = alertDialog.getWindow();
 			window.requestFeature(Window.FEATURE_NO_TITLE);
@@ -53,12 +47,19 @@ int STREAM_MUSIC,STREAM_MAX_MUSIC,progress;
 // 设置具体参数
 			WindowManager.LayoutParams lp = window.getAttributes();
 //		lp.x = 0;
-//		lp.y = -400;
+//		lp.y = -285;
 		lp.gravity = Gravity.CENTER|Gravity.TOP;
 			window.setAttributes(lp);
 			window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 			initView(content,window);
 
+	}
+	class MyDialog extends Dialog{
+		Context context;
+		public MyDialog(Context context) {
+			super(context, R.style.tranDialog);
+			this.context = context;
+		}
 	}
 public void  show(){
 	   dismisstime =0;
