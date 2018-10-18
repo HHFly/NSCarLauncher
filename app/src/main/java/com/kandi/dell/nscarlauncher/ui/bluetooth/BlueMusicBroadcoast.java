@@ -301,6 +301,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_AD)) {
             // Toast.makeText(context, "音频蓝牙已断开", Toast.LENGTH_LONG);
             BTMusicFragment.setNullViewGone(true);
+            App.pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
         }
         if (intent.getAction().equals(ACTION_MUSIC_INFO_CHANGED)) {
             String music_info = intent.getStringExtra(KEY_MUSICINFO);
