@@ -271,7 +271,7 @@ public class HomePagerTwoFragment extends BaseFragment {
         Intent intent = new Intent();
         intent.setAction("AUTONAVI_STANDARD_BROADCAST_RECV");
         intent.putExtra("KEY_TYPE", 10070);
-        intent.putExtra("EXTRA_TYPE", 0);
+        intent.putExtra("EXTRA_TYPE", type);
         getActivity().sendBroadcast(intent);
     }
 }
