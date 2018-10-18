@@ -66,7 +66,7 @@ public class VideoFragment extends BaseFragment{
            }
        });
        dialogLocalMusic.ScanVideo(getContext(),false);
-
+       dialogLocalMusic.ScanVideoMusic(getContext(),false,2);
     }
 
     @Override

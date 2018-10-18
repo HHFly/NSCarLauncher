@@ -4,11 +4,9 @@ package com.kandi.dell.nscarlauncher.ui.home.fragment;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.os.RemoteException;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
@@ -22,9 +20,6 @@ import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.music.model.MusicModel;
 import com.kandi.dell.nscarlauncher.widget.PlayControllView;
 
-import static com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty.PAUSE_MSG;
-import static com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment.broadcastMusicInfo;
-import static com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment.bt_play;
 import static com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment.circle_image;
 
 public class HomePagerTwoFragment extends BaseFragment {
@@ -217,6 +212,7 @@ public class HomePagerTwoFragment extends BaseFragment {
     @Override
     public void initView() {
         MusicFragment.dialogLocalMusic.ScanMusic(getContext(),false);
+        MusicFragment.dialogLocalMusic.ScanVideoMusic(getContext(),false,1);
     }
 
 
