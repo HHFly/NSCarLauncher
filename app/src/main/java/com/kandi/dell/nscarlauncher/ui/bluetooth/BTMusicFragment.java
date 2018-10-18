@@ -131,6 +131,7 @@ public class BTMusicFragment extends BaseFragment {
                 new Thread() {
                     public void run() {
                         myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
+                        isPlay=false;
                     }
 
 
@@ -141,10 +142,14 @@ public class BTMusicFragment extends BaseFragment {
     /*播放*/
     public static void musicPlay(){
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
+            int a =App.get().getAudioManager().requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+
             if (App.get().getAudioManager().requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                 new Thread() {
                     public void run() {
-//                        myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
+
+
+                            myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
 
                         MusicFragment.stopView();
 
@@ -162,6 +167,9 @@ public class BTMusicFragment extends BaseFragment {
             if (App.get().getAudioManager().requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                 new Thread() {
                     public void run() {
+
+                            myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
+
                         myHandler.sendMessage(myHandler.obtainMessage(MUSCI_BACK));
                     }
 
@@ -177,6 +185,8 @@ public static void  musicNext(){
         if (App.get().getAudioManager().requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             new Thread() {
                 public void run() {
+
+                        myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
                     myHandler.sendMessage(myHandler.obtainMessage(MUSIC_NEXT));
                 }
 
@@ -296,6 +306,7 @@ public static void  musicNext(){
         }
     }
     public  static  Handler myHandler = new Handler() {
+
         public void handleMessage(Message msg) {
             try {
                 switch (msg.what) {
@@ -305,8 +316,8 @@ public static void  musicNext(){
                         break;
                     case MUSIC_BLUETOOTH_CLOSE:
 
-                        if(btservice!=null) {
-                            btservice.btAvrPause();
+                        if(App.get().getBtservice()!=null) {
+                            App.get().getBtservice().btAvrPause();
                         }
                         if(iv_bt_stop!=null) {
                             iv_bt_stop.setVisibility(View.VISIBLE);
@@ -316,18 +327,19 @@ public static void  musicNext(){
 
                     case MUSIC_BLUETOOTH_OPEN:
 
-                        if(btservice!=null&& isPlay==false){
-                        btservice.btAvrPlay();}
+                        if(App.get().getBtservice()!=null&& isPlay==false){
+                        App.get().getBtservice().btAvrPlay();
+                        }
                         if(iv_bt_stop!=null) {
                             iv_bt_stop.setVisibility(View.GONE);
                         }
                         isPlay=true;
                         break;
                     case MUSCI_BACK:
-                        btservice.btAvrLast();
+                        App.get().getBtservice().btAvrLast();
                         break;
                     case MUSIC_NEXT:
-                        btservice.btAvrNext();
+                        App.get().getBtservice().btAvrNext();
                         break;
                     case 11:
 
@@ -359,6 +371,7 @@ public static void  musicNext(){
      * 蓝牙音乐监听器
      */
     public static AudioManager.OnAudioFocusChangeListener afBTChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+
         @Override
         public void onAudioFocusChange(int i) {
             switch (i){
@@ -380,6 +393,7 @@ public static void  musicNext(){
                     try {
 //                        if (!audioservice.isDuringNavi()) {
                         if(!isPlay) {
+                            Log.d("AUDIOFOCUS_GAIN", "run: " +String.valueOf(isPlay));
                             App.get().getBtservice().btAvrPlay();
                             HomePagerOneFragment.btPaly.setPlay(true);
                             isPlay=true;

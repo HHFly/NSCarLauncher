@@ -429,7 +429,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+
         App.get().unregistMyReceiver();
         App.get().PauseService();
 
@@ -464,7 +464,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
         dialogVolumeControl=null;
         stopService(new Intent(this, PlayerService.class));
-
+        super.onDestroy();
     }
 
 

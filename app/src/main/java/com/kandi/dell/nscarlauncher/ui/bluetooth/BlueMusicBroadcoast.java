@@ -377,11 +377,11 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             music_total_time =intent.getIntExtra("total",0);
             BTMusicFragment.setBlueMusicProgress(current);
             LogUtils.log("BT:"+"current:"+current+"total"+ music_total_time);
-            if(!BTMusicFragment.isPlay){
-                BTMusicFragment.isPlay=true;
-//                App.pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICOPEN);
-//                BTMusicFragment.myHandler.sendEmptyMessage(5);
-            }
+//            if(!BTMusicFragment.isPlay){
+//                BTMusicFragment.isPlay=true;
+////                App.pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICOPEN);
+////                BTMusicFragment.myHandler.sendEmptyMessage(5);
+//            }
         }
 
         if (intent.getAction().equals("com.kangdi.BroadCast.PhoneState")) {
