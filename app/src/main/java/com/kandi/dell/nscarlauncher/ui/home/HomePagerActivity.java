@@ -1,6 +1,7 @@
 package com.kandi.dell.nscarlauncher.ui.home;
 
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,6 +10,9 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbDeviceConnection;
+import android.hardware.usb.UsbManager;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -63,6 +67,7 @@ import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.home.model.HomeModel;
 import com.kandi.dell.nscarlauncher.ui.home.receiver.USBBroadcastReceiver;
 import com.kandi.dell.nscarlauncher.ui.home.receiver.USBReceover;
+import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.phone.PhoneFragment;
@@ -123,10 +128,12 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public static  TextView tv_speed,tv_power,tv_title_date,tv_t_power;
     static  TranslateAnimation mHiddenAction,mShowAction;
     public  static HomePagerActivity homePagerActivity;
+
     @Override
     protected void onResume() {
         super.onResume();
             /*来电接受*/
+
 
         if (comingReceiver == null) {
             comingReceiver = new ComingReceiver();
@@ -187,15 +194,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             registerReceiver(mNetworkReceiver, filter);
         }
 
-//        if(homePagerOneFragment!=null){
-//            homePagerOneFragment.setFragment(homePagerActivity,fmFragment);
-//        }
-//        if(homePagerTwoFragment!=null){
-//            homePagerTwoFragment.setHomePagerActivity(homePagerActivity);
-//        }
-//        if(homePagerThreeFragment!=null){
-//            homePagerThreeFragment.setHomePagerActivity(homePagerActivity);
-//        }
+
     }
 
     @Override
@@ -222,8 +221,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         pagerScroller.setScrollDuration(1000);//设置时间，时间越长，速度越慢
         pagerScroller.initViewPagerScroll(viewPager);
         indicator.setViewPager(viewPager);
-
-
+        //获取usb权限
+//        openUsbDevice();
+        DialogLocalMusic.ScanAllDaTa(this);
     }
 
     private void initAnim() {
@@ -376,9 +376,10 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
      * @param fragment
      */
 
-    private  static void switchFragment(Fragment fragment) {
+    private  static void switchFragment(BaseFragment fragment) {
 
         mCurFragment = FragmentUtils.selectFragment(context, mCurFragment, fragment, R.id.frame_main);
+        mCurFragment.setmType(fragment.getmType());
         mCurFragment.Resume();
         myHandler.sendMessage(myHandler.obtainMessage(HandleKey.FRAME));
     }
@@ -1179,4 +1180,76 @@ public int getSim(int num) {
             e.printStackTrace();
         }
     }
+    /**
+     * 获得 usb 权限
+     */
+    private void openUsbDevice(){
+        //before open usb device
+        //should try to get usb permission
+        tryGetUsbPermission();
+    }
+    UsbManager mUsbManager;
+    private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
+
+    private void tryGetUsbPermission(){
+        mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+
+        IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
+        registerReceiver(mUsbPermissionActionReceiver, filter);
+
+        PendingIntent mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
+
+        //here do emulation to ask all connected usb device for permission
+        for (final UsbDevice usbDevice : mUsbManager.getDeviceList().values()) {
+            //add some conditional check if necessary
+            //if(isWeCaredUsbDevice(usbDevice)){
+            if(mUsbManager.hasPermission(usbDevice)){
+                //if has already got permission, just goto connect it
+                //that means: user has choose yes for your previously popup window asking for grant perssion for this usb device
+                //and also choose option: not ask again
+                afterGetUsbPermission(usbDevice);
+            }else{
+                //this line will let android popup window, ask user whether to allow this app to have permission to operate this usb device
+                mUsbManager.requestPermission(usbDevice, mPermissionIntent);
+            }
+            //}
+        }
+    }
+
+
+    private void afterGetUsbPermission(UsbDevice usbDevice){
+        //call method to set up device communication
+        //Toast.makeText(this, String.valueOf("Got permission for usb device: " + usbDevice), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, String.valueOf("Found USB device: VID=" + usbDevice.getVendorId() + " PID=" + usbDevice.getProductId()), Toast.LENGTH_LONG).show();
+
+        doYourOpenUsbDevice(usbDevice);
+    }
+
+    private void doYourOpenUsbDevice(UsbDevice usbDevice){
+        //now follow line will NOT show: User has not given permission to device UsbDevice
+        UsbDeviceConnection connection = mUsbManager.openDevice(usbDevice);
+        //add your operation code here
+    }
+
+    private final BroadcastReceiver mUsbPermissionActionReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (ACTION_USB_PERMISSION.equals(action)) {
+                synchronized (this) {
+                    UsbDevice usbDevice = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                    if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                        //user choose YES for your previously popup window asking for grant perssion for this usb device
+                        if(null != usbDevice){
+                            afterGetUsbPermission(usbDevice);
+                        }
+                    }
+                    else {
+                        //user choose NO for your previously popup window asking for grant perssion for this usb device
+                        Toast.makeText(context, String.valueOf("Permission denied for device" + usbDevice), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        }
+    };
+
 }

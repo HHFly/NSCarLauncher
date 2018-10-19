@@ -16,7 +16,7 @@ public class USBBroadcastReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
 //            Toast.makeText(context, R.string.USB接入, Toast.LENGTH_SHORT).show();
-            DialogLocalMusic.updateGallery(context);
+           DialogLocalMusic.ScanVideoMusic(context,0);
 
 
 
@@ -26,7 +26,7 @@ public class USBBroadcastReceiver extends BroadcastReceiver {
 //            MusicFragment.reSetMusic(false);
 //            VideoFragment.dialogLocalMusic.ScanVideo(context,false);
 
-            VideoFragment.dialogLocalMusic.ScanVideoMusic(context,false,0);
+//            VideoFragment.dialogLocalMusic.ScanVideoMusic(context,0);
         }
         else  if(action.equals("android.intent.action.PACKAGE_ADDED")){
             AppFragment.refreshAppInfo();

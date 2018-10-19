@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 import com.kandi.dell.nscarlauncher.ui.video.VideoFragment;
 
@@ -37,9 +38,6 @@ public class DialogLocalMusic  {
 	@SuppressLint("SdCardPath")
 	public static final String PATH_SDCARD = "/storage/emulated/0/";
 	public static final String PATH_USB = "/storage/udisk/";
-	static Dialog dialog;
-	static ImageView cursor;
-	ImageButton btn_locality, btn_usb, btn_refresh;
 	static int cursor_position = 0;
 	ListView listview;
 	public static List<Mp3Info> data = new ArrayList<Mp3Info>();
@@ -49,8 +47,8 @@ public class DialogLocalMusic  {
 	public static List<Mp3Info> USBData = new ArrayList<Mp3Info>();
 	public static  List<Mp3Info> SDVideoData = new ArrayList<Mp3Info>();
 	public static List<Mp3Info> USBVideoData = new ArrayList<Mp3Info>();
-
-	public static MusicListAdapter adapter;
+	static	VideoFragment videoFragment;
+	static MusicFragment musicFragment;
 	static String url;
 	static ContentResolver mResolver;
 	public static int musicID;
@@ -63,53 +61,13 @@ public class DialogLocalMusic  {
 
 	}
 
-//	public DialogLocalMusic(final Context context) {
-//		dialog = new Dialog(context, R.style.nodarken_style);
-////		dialog.show();
-//		Window window = dialog.getWindow();
-//		window.setContentView(R.layout.dialog_local_music);
-//		WindowManager.LayoutParams lp = window.getAttributes();
-//		lp.y = 34; //
-//		window.setAttributes(lp);
-//		window.setWindowAnimations(R.style.dialog_localmusic_style);
-//		this.context = context;
-//
-//		cursor = (ImageView) window.findViewById(R.id.local_music_cursor);
-//		btn_locality = (ImageButton) window.findViewById(R.id.local_music_locality);
-//		btn_locality.setOnClickListener(this);
-//		btn_usb = (ImageButton) window.findViewById(R.id.local_music_usb);
-//		btn_usb.setOnClickListener(this);
-//		btn_refresh = (ImageButton) window.findViewById(R.id.local_music_refresh);
-//		btn_refresh.setOnClickListener(this);
-//
-//		listview = (ListView) window.findViewById(R.id.local_music_listview);
-//
-////		dialog.hide();
-//
-//		getFile(PATH_SDCARD);
-//		adapter = new MusicListAdapter(context);
-//		listview.setAdapter(adapter);
-//		listview.setOnItemClickListener(new OnItemClickListener() {
-//
-//			@Override
-//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//				if (newdata.size() > 0) {
-//					transportData();
-//				}
-//
-//				musicID = arg2;
-//				PlayerService.isPause = false;
-//				Intent i = new Intent(context, PlayerService.class);
-//				i.putExtra("MSG", FlagProperty.PLAY_MSG);
-//				context.startService(i);
-//				MusicFragment.listStartPlayMusic();
-//			}
-//		});
-//
-////		MediaScannerConnection.scanFile(context, new String[] { Environment
-////				.getExternalStorageDirectory().getAbsolutePath() }, null, null);
-//
-//	}
+	public static void setVideoFragment(VideoFragment videoFragment1) {
+		videoFragment = videoFragment1;
+	}
+
+	public static void setMusicFragment(MusicFragment musicFragment) {
+		DialogLocalMusic.musicFragment = musicFragment;
+	}
 
 	private void scanSdCard(){
         IntentFilter intentfilter = new IntentFilter();
@@ -142,47 +100,12 @@ public class DialogLocalMusic  {
                 Uri.parse("file://" + Environment.getExternalStorageDirectory().getAbsolutePath())));
     }
 
-//	public static void showLocalMusicDialog() {
-//		dialog.show();
-//		changeCursorPosition(cursor_position);
-//	}
 
-//	@Override
-//	public void onClick(View v) {
-//		switch (v.getId()) {
-//		case R.id.local_music_locality:
-//			getFile(PATH_SDCARD);
-//			changeCursorPosition(0);
-//			break;
-//		case R.id.local_music_usb:
-//			getFile(PATH_USB);
-//			changeCursorPosition(155);
-//			break;
-//		case R.id.local_music_refresh:
-//			if (cursor_position == 0) {
-//				btn_locality.performClick();
-//			} else if (cursor_position == 155) {
-//				btn_usb.performClick();
-//			}
-//			break;
-//		}
-//		adapter.notifyDataSetChanged();
-//
-//	}
-	public static List<Mp3Info> getData(Context context,String path) {
 
-//		Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);   //, MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-//        Uri uri = Uri.fromFile(new File(path));
-//        intent.setData(uri);
-//        context.sendBroadcast(intent);
-		//scanSdCard();
-
-		System.out.println("get file");
+	public static List<Mp3Info> getDataMusic(Context context,String path) {
 
 		newdata.clear();
-
 		ContentResolver	mResolver = context.getContentResolver();
-		System.out.println("mResolver:" + mResolver);
 		Cursor cursor = mResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null,
 				MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
 		int i = 0, j = 0;
@@ -219,61 +142,10 @@ public class DialogLocalMusic  {
 		mResolver = null;
 		return data;
 	}
-	private void getFile(String path) {
-
-//		Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);   //, MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-//        Uri uri = Uri.fromFile(new File(path));
-//        intent.setData(uri);
-//        context.sendBroadcast(intent);
-		//scanSdCard();
-
-        System.out.println("get file");
-
-		newdata.clear();
-
-		ContentResolver mResolver = context.getContentResolver();
-		System.out.println("mResolver:" + mResolver);
-		Cursor cursor = mResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null,
-				MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
-		int i = 0, j = 0;
-		int cursorCount = cursor.getCount();
-		System.out.println("cursorCount" + cursorCount);
-		if (cursorCount > 0) {
-			cursor.moveToFirst();
-			while (i < cursorCount) {
-				// 歌曲文件的路径 ：MediaStore.Audio.Media.DATA
-				url = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
-				if (url.toLowerCase().indexOf(path) > -1) {
-					Mp3Info info = new Mp3Info();
-					info.id = j++;
-					info.displayName = cursor
-							.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME));
-					System.out.println("歌曲名:" + info.displayName);
-					info.duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
-					info.title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
-					info.artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
-					info.url = url;
-					newdata.add(info);
-				}
-				i++;
-				cursor.moveToNext();
-			}
-			cursor.close();
-		}
-		if (data.size() == 0) {
-			musicID = 0;
-			transportData();
-		}
-		System.out.println("newdata.size():" + newdata.size());
-		mResolver = null;
-	}
 	/*获取usb sd */
-	private static  void getSDUSBData(Context context) {
-
+	private static  void getSDUSBMusicData(Context context) {
 
 		SDData.clear();
-		infoidMusic = 0;
-
 		ContentResolver mResolver = context.getContentResolver();
 		System.out.println("mResolver:" + mResolver);
 		Cursor cursor = mResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null,
@@ -310,31 +182,13 @@ public class DialogLocalMusic  {
 		}
 		mResolver = null;
 
-		/**/
-		infoidMusic = j;
-		/**/
+
 	}
-	public static void updateGallery(final Context context){
-		File pathSD = new File(PATH_SDCARD);
-		File pathUSB = new File(PATH_USB);
-		MediaScannerConnection.scanFile(context,
-				new String[] { pathSD.getAbsolutePath(),pathUSB.getAbsolutePath() }, null,
-				new MediaScannerConnection.OnScanCompletedListener() {
-					public void onScanCompleted(String path, Uri uri) {
-//						MusicFragment.reSetMusic(false);
-//						VideoFragment.dialogLocalMusic.ScanVideo(context,false);
-					}
-				});
-		VideoFragment.dialogLocalMusic.ScanVideoMusic(context,false,0);
-	}
+
 
 	/*获取usb sd */
 	private static  void getSDUSBViedoData(Context context) {
-
-
 		SDVideoData.clear();
-		infoid = 0;
-
 		ContentResolver mResolver = context.getContentResolver();
 		System.out.println("mResolver:" + mResolver);
 		Cursor cursor = mResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null, null,
@@ -368,9 +222,7 @@ public class DialogLocalMusic  {
 		}
 		mResolver = null;
 
-		/**/
-		infoid = j;
-		/**/
+
 	}
 
 	/*获取usb sd */
@@ -393,7 +245,12 @@ public class DialogLocalMusic  {
 			default:
 				break;
 		}
-		getMediaFile(new File(PATH_USB),choose);
+		try {
+			getMediaFile(new File(PATH_USB),choose);
+		}catch (Exception e){
+
+		}
+
 	}
 
 	public static void transportData(){
@@ -428,7 +285,7 @@ public class DialogLocalMusic  {
 						e.printStackTrace();
 					}
 				}
-				getSDUSBData(context);
+				getSDUSBMusicData(context);
 				if(mThreadCallback!=null){
 					mThreadCallback.threadEndLisener();
 				}
@@ -458,96 +315,71 @@ public class DialogLocalMusic  {
 		}.start();  //开启一个线程
 	}
 
-	public static void ScanVideoMusic(final Context context ,final boolean isReSet,final int choose){
+	public static void ScanVideoMusic(final Context context ,final int choose){
 
 		new Thread(){
 			public void run() {
-				if(isReSet){
-					try {
-						Thread.sleep(5000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
+
 				if(context!=null) {
 					getUSBVideoMusicData(context,choose);
+					transportData();
 				}
-				if(mThreadCallback!=null){
-					mThreadCallback.videoEndListener();
+
+                if(videoFragment!=null){
+                    videoFragment.myHandler.sendMessage(videoFragment.myHandler.obtainMessage(videoFragment.VIEWFRESH));
+                }
+                if(musicFragment!=null){
+					musicFragment.myHandler.sendMessage(musicFragment.myHandler.obtainMessage(musicFragment.VIEWFRESH));
 				}
 
 			}
 		}.start();  //开启一个线程
 	}
-	// private void getFile(String path){
-	// map.clear();
-	// data.clear();
-	// File file = new File(path);
-	// if (file.exists()) {
-	// File[] files = file.listFiles();// ��ȡ
-	// getFileName(files);
-	// }
-	// }
-	//
-	// //��Ŀ¼�л�ȡ�����ļ�
-	// private void getFileName(File[] files) {
-	// if (files != null) {// ���ж�Ŀ¼�Ƿ�Ϊ�գ�����ᱨ��ָ��
-	// for (File file : files) {
-	// if (file.isDirectory()) {
-	// getFileName(file.listFiles());
-	// } else {
-	// String fileName = file.getName();
-	// if (fileName.endsWith(".mp3")) {
-	// map.put(fileName, file.getPath());
-	// data.add(fileName);
-	// }
-	// }
-	// }
-	// }
-	// }
 
-	//光亮游标随着点击的不同而不同
-	public static void changeCursorPosition(int nextPosition) {
-		Animation animation = new TranslateAnimation(cursor_position, nextPosition, 0, 0);
-		animation.setFillAfter(true);//  True:图片停在动画结束位置
-		animation.setDuration(300);
-		cursor.startAnimation(animation);
-		cursor_position = nextPosition;
-	}
+	public static void updateGallery(final Context context){
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				File pathSD = new File(PATH_SDCARD);
+//		File pathUSB = new File(PATH_USB);
+//		MediaScannerConnection.scanFile(context,
+//				new String[] { pathSD.getAbsolutePath(),pathUSB.getAbsolutePath() }, null,
+//				new MediaScannerConnection.OnScanCompletedListener() {
+//					public void onScanCompleted(String path, Uri uri) {
+////						MusicFragment.reSetMusic(false);
+////						VideoFragment.dialogLocalMusic.ScanVideo(context,false);
+//					}
+//				});
+				MediaScannerConnection.scanFile(context,
+						new String[] { pathSD.getAbsolutePath()}, null,
+						new MediaScannerConnection.OnScanCompletedListener() {
+							public void onScanCompleted(String path, Uri uri) {
+//						MusicFragment.reSetMusic(false);
+//						VideoFragment.dialogLocalMusic.ScanVideo(context,false);
+								getSDUSBMusicData(context);
+								getSDUSBViedoData(context);
+							}
+						});
+			}
+		}).start();
 
-	public class MusicListAdapter extends BaseAdapter {
-		Context context;
 
-		public MusicListAdapter(Context context) {
-			this.context = context;
-		}
-
-		@Override
-		public int getCount() {
-			return newdata.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return newdata.get(position);
-		}
-
-		@Override
-		public long getItemId(int id) {
-			return id;
-		}
-
-		@SuppressLint("ViewHolder")
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-//			convertView = View.inflate(context, R.layout.music_list_cell, null);
-//			TextView tv = (TextView) convertView.findViewById(R.id.music_list_textview);
-//			tv.setTextColor(Color.WHITE);
-//			tv.setText(newdata.get(position).displayName);
-			return convertView;
-		}
 
 	}
+	public static void ScanAllDaTa(final Context context ){
+
+		new Thread(){
+			public void run() {
+				if(context!=null) {
+					updateGallery(context);
+				getUSBVideoMusicData(context,0);
+				}
+
+
+			}
+		}.start();  //开启一个线程
+	}
+
 	private static ThreadCallback mThreadCallback;
 	public DialogLocalMusic(ThreadCallback threadCallback){
 		this.mThreadCallback = threadCallback;
@@ -559,102 +391,7 @@ public class DialogLocalMusic  {
 		void videoEndListener();
 	}
 
-	private static String newpathMusic;
-	private static int infoidMusic = 0;
-	public static void getPathMusic(String path) {
-		File f=new File(path);
-		File[] fs=f.listFiles();
-		if(fs != null){
-			for (int i = 0; i < fs.length; i++) {
-				if (fs[i].getName().trim().toLowerCase().endsWith(".mp3")
-						|| fs[i].getName().trim().toLowerCase().endsWith(".amr")
-						|| fs[i].getName().trim().toLowerCase().endsWith(".flac")
-						|| fs[i].getName().trim().toLowerCase().endsWith(".m4a")
-						|| fs[i].getName().trim().toLowerCase().endsWith(".m4r")
-						|| fs[i].getName().trim().toLowerCase().endsWith(".wav")
-						|| fs[i].getName().trim().toLowerCase().endsWith(".aac")) {
-					MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-					String str = fs[i].getAbsolutePath();
-					try {
-						mmr.setDataSource(str);
-						Mp3Info info = new Mp3Info();
-						info.id = infoidMusic++;
-						info.displayName = fs[i].getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);;
-						info.duration = Long.valueOf(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-						info.title = fs[i].getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-						info.artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-						info.url = str;
-						if (path.toLowerCase().indexOf(PATH_USB) > -1) {
-							USBData.add(info);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
 
-					//					if (isMediaPluged) {
-					//						tempList.add(map);
-					//					}
-				}
-				if (fs[i].isDirectory()) {
-					newpathMusic = fs[i].getAbsolutePath();
-					getPathMusic(newpathMusic);
-				}
-				try {
-					Thread.sleep(2);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	private static String newpath;
-	private static int infoid = 0;
-	public static void getPath(String path) {
-		File f=new File(path);
-		File[] fs=f.listFiles();
-		if(fs != null){
-			for (int i = 0; i < fs.length; i++) {
-				if (fs[i].getName().trim().toLowerCase().endsWith(".mp4")
-						|| fs[i].getName().trim().toLowerCase().endsWith(".flv")
-						|| fs[i].getName().trim().toLowerCase().endsWith(".mkv")
-						|| fs[i].getName().trim().toLowerCase().endsWith(".rmvb")
-						|| fs[i].getName().trim().toLowerCase().endsWith(".avi")
-						|| fs[i].getName().trim().toLowerCase().endsWith(".3gp")) {
-					MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-					String str = fs[i].getAbsolutePath();
-					try {
-						mmr.setDataSource(str);
-						Mp3Info info = new Mp3Info();
-						info.id = infoid++;
-						info.displayName = fs[i].getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);;
-						info.duration = Long.valueOf(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-						info.title = fs[i].getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-						info.artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-						info.url = str;
-						if (path.toLowerCase().indexOf(PATH_USB) > -1) {
-							USBVideoData.add(info);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-
-					//					if (isMediaPluged) {
-					//						tempList.add(map);
-					//					}
-				}
-				if (fs[i].isDirectory()) {
-					newpath = fs[i].getAbsolutePath();
-					getPath(newpath);
-				}
-				try {
-					Thread.sleep(2);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
 
 	static int m = 0,v = 0;
 	/**

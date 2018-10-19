@@ -211,8 +211,8 @@ public class HomePagerTwoFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        MusicFragment.dialogLocalMusic.ScanMusic(getContext(),false);
-        MusicFragment.dialogLocalMusic.ScanVideoMusic(getContext(),false,1);
+//        MusicFragment.dialogLocalMusic.ScanMusic(getContext(),false);
+//        MusicFragment.dialogLocalMusic.ScanVideoMusic(getContext(),false,1);
     }
 
 

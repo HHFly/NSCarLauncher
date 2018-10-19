@@ -22,6 +22,7 @@ import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.CursorMusicImage;
@@ -47,7 +48,7 @@ public class MusicFragment extends BaseFragment {
     private final static int MUSIC_BLUETOOTH_OPEN = 5; // 蓝牙音乐打开
     private final static int MUSCI_BACK = 6; // 蓝牙音乐上一首
     private final static int MUSIC_NEXT = 7; // 蓝牙音乐下一首
-    private final static int  VIEWFRESH =8;//刷新界面
+    public final static int  VIEWFRESH =8;//刷新界面
     public static int music_model = 1; // 音乐播放循环模式
     static SeekBar music_progress_bar; // 音乐播放进度条
     static int progress = 0; // 记录进度
@@ -77,7 +78,13 @@ public class MusicFragment extends BaseFragment {
     public void setmType(int mType) {
         super.setmType(FragmentType.MUSIC);
     }
-
+    @Override
+    public void Resume() {
+        super.Resume();
+        if(mData!=null&&isSecondResume){
+            getMusicData();
+        }
+    }
     @Override
     public void findView() {
         bt_play=getView(R.id.music_play);
@@ -110,17 +117,7 @@ public class MusicFragment extends BaseFragment {
 
 
         initSeekBar();
-         dialogLocalMusic =new DialogLocalMusic(new DialogLocalMusic.ThreadCallback() {
-            @Override
-            public void threadEndLisener() {
-                myHandler.sendMessage(myHandler.obtainMessage(VIEWFRESH));
-            }
-
-             @Override
-             public void videoEndListener() {
-
-             }
-         });
+        DialogLocalMusic.setMusicFragment(this);
         getMusicData();
 //        dialogLocalMusic.ScanMusic(getContext(),false);
         if(flag_play){
@@ -188,7 +185,7 @@ public class MusicFragment extends BaseFragment {
                 break;
             case R.id.music_refresh:
                 dialogLocalMusic.ScanMusic(getContext(),false);
-                dialogLocalMusic.ScanVideoMusic(getContext(),false,1);
+                dialogLocalMusic.ScanVideoMusic(getContext(),1);
                 break;
 
         }
@@ -387,7 +384,10 @@ public static void musicPlay(Context context){
                     break;
 
                 case VIEWFRESH:
+                    Log.d("Music ", "getMusiType: " +String.valueOf( HomePagerActivity.mCurFragment.getmType()));
+                    if(FragmentType.MUSIC== HomePagerActivity.mCurFragment.getmType()){
                    getMusicData();
+                    }
                     break;
                 default:
                     break;
@@ -573,13 +573,9 @@ public static void musicPlay(Context context){
 
           initRvAdapter(mData);
           initRvLocalAdapter(mData);
-
+      Log.d("Music ", "getMusicData: " +String.valueOf(mData.size()));
   }
-    public  void transportData(){
-        for (int i = 0; i < mData.size(); i++) {
-            mLocalData.add(mData.get(i));
-        }
-    }
+
   /*获取本地音乐*/
   private  void getLocalMusicData(){
 //      if(flag_play){

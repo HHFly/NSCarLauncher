@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.kandi.dell.nscarlauncher.R;
@@ -24,7 +25,7 @@ public class VideoFragment extends BaseFragment{
     private VideoAdapter mAdapter;
     public static List<Mp3Info> mData;
    public static DialogLocalMusic dialogLocalMusic;
-    private final static int  VIEWFRESH =1;
+    public final static int  VIEWFRESH =1;
     public static int position = 0;
     public static Context context;
 
@@ -44,6 +45,14 @@ public class VideoFragment extends BaseFragment{
     }
 
     @Override
+    public void Resume() {
+        super.Resume();
+        if(mData!=null&&isSecondResume){
+            getMusicData();
+        }
+    }
+
+    @Override
     public void setListener() {
         setClickListener(R.id.video_local_1);
         setClickListener(R.id.video_local_2);
@@ -53,20 +62,10 @@ public class VideoFragment extends BaseFragment{
     @Override
     public void initView() {
         context = getContext();
-        dialogLocalMusic  = new DialogLocalMusic(new DialogLocalMusic.ThreadCallback() {
-           @Override
-           public void threadEndLisener() {
-
-           }
-
-           @Override
-           public void videoEndListener() {
-               myHandler.sendMessage(myHandler.obtainMessage(VIEWFRESH));
-
-           }
-       });
-       dialogLocalMusic.ScanVideo(getContext(),false);
-       dialogLocalMusic.ScanVideoMusic(getContext(),false,2);
+        DialogLocalMusic.setVideoFragment(this);
+        getMusicData();
+//       dialogLocalMusic.ScanVideo(getContext(),false);
+//       dialogLocalMusic.ScanVideoMusic(getContext(),2);
     }
 
     @Override
@@ -85,7 +84,8 @@ public class VideoFragment extends BaseFragment{
     }
 
     /*初始化本地音乐数据*/
-    private  void getMusicData(){
+    public   void getMusicData(){
+
         mData =DialogLocalMusic.SDVideoData;
 
         selectMode(1);
@@ -96,7 +96,7 @@ public class VideoFragment extends BaseFragment{
                 selectMode(2);
             }
         }
-
+        Log.d("Video ", "getMusicData: " +String.valueOf(mData.size()));
         initRvAdapter(mData);
 
     }
@@ -110,7 +110,10 @@ public class VideoFragment extends BaseFragment{
             switch (msg.what) {
 
                 case VIEWFRESH:
-                    getMusicData();
+                    Log.d("Video ", "getMusicData: " +String.valueOf( HomePagerActivity.mCurFragment.getmType()));
+                    if(FragmentType.VIDEO==HomePagerActivity.mCurFragment.getmType()) {
+                        getMusicData();
+                    }
                     break;
                 default:
                     break;
