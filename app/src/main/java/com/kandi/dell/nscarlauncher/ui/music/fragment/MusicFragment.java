@@ -1,6 +1,5 @@
 package com.kandi.dell.nscarlauncher.ui.music.fragment;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,7 +10,6 @@ import android.os.Handler;
 import android.os.IKdAudioControlService;
 import android.os.IKdBtService;
 import android.os.Message;
-import android.os.RemoteException;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,25 +22,21 @@ import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
-import com.kandi.dell.nscarlauncher.ui.fm.FMAdapter;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.CursorMusicImage;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
+import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
 import com.kandi.dell.nscarlauncher.ui.music.adapter.MusicAdapter;
 import com.kandi.dell.nscarlauncher.ui.music.adapter.MusicLocalAdapter;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 import com.kandi.dell.nscarlauncher.ui.music.model.MusicModel;
-import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
 import com.kandi.dell.nscarlauncher.widget.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import static com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty.PAUSE_MSG;
-import static com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty.STOP_MSG;
 
 public class MusicFragment extends BaseFragment {
 
@@ -194,6 +188,7 @@ public class MusicFragment extends BaseFragment {
                 break;
             case R.id.music_refresh:
                 dialogLocalMusic.ScanMusic(getContext(),false);
+                dialogLocalMusic.ScanVideoMusic(getContext(),false,1);
                 break;
 
         }

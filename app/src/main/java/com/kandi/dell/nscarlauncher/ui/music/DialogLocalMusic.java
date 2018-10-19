@@ -1,6 +1,5 @@
 package com.kandi.dell.nscarlauncher.ui.music;
 
-import android.annotation.SdkConstant;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ContentResolver;
@@ -9,34 +8,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-
-import com.kandi.dell.nscarlauncher.R;
-import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
-import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
-import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 import com.kandi.dell.nscarlauncher.ui.video.VideoFragment;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,7 +110,7 @@ public class DialogLocalMusic  {
 ////				.getExternalStorageDirectory().getAbsolutePath() }, null, null);
 //
 //	}
-	
+
 	private void scanSdCard(){
         IntentFilter intentfilter = new IntentFilter();
         intentfilter.addAction(Intent.ACTION_MEDIA_SCANNER_STARTED);
@@ -127,26 +118,26 @@ public class DialogLocalMusic  {
         intentfilter.addDataScheme("file");
         ScanSdReceiver scanSdReceiver = new ScanSdReceiver();
         context.registerReceiver(scanSdReceiver, intentfilter);
-        
+
         MediaScannerConnection.scanFile(context, new String[] { Environment
                 .getExternalStorageDirectory().getAbsolutePath() }, null, null);
-        
+
         final ContentValues values = new ContentValues(2);
         values.put(MediaStore.Video.Media.MIME_TYPE, "image/jpeg");
         values.put(MediaStore.Video.Media.DATA, PATH_SDCARD);
-        
-        
+
+
         final Uri uri = context.getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 values);
         context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                 Uri.parse("file://"+ Environment.getExternalStorageDirectory().getAbsolutePath())));
-        
+
         Intent mediaScanIntent = new Intent(
                 Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         Uri contentUri = Uri.fromFile(new File(PATH_SDCARD)); //out is your output file
         mediaScanIntent.setData(contentUri);
         context.sendBroadcast(mediaScanIntent);
-        
+
         context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED,
                 Uri.parse("file://" + Environment.getExternalStorageDirectory().getAbsolutePath())));
     }
@@ -281,7 +272,8 @@ public class DialogLocalMusic  {
 
 
 		SDData.clear();
-		USBData.clear();
+		infoidMusic = 0;
+
 		ContentResolver mResolver = context.getContentResolver();
 		System.out.println("mResolver:" + mResolver);
 		Cursor cursor = mResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null,
@@ -307,18 +299,6 @@ public class DialogLocalMusic  {
 					info.url = url;
 					SDData.add(info);
 				}
-				if (url.toLowerCase().indexOf(PATH_USB) > -1) {
-					Mp3Info info = new Mp3Info();
-					info.id = j++;
-					info.displayName = cursor
-							.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME));
-					System.out.println("歌曲名:" + info.displayName);
-					info.duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
-					info.title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
-					info.artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
-					info.url = url;
-					USBData.add(info);
-				}
 				i++;
 				cursor.moveToNext();
 			}
@@ -329,6 +309,10 @@ public class DialogLocalMusic  {
 
 		}
 		mResolver = null;
+
+		/**/
+		infoidMusic = j;
+		/**/
 	}
 	public static void updateGallery(final Context context){
 		File pathSD = new File(PATH_SDCARD);
@@ -337,11 +321,11 @@ public class DialogLocalMusic  {
 				new String[] { pathSD.getAbsolutePath(),pathUSB.getAbsolutePath() }, null,
 				new MediaScannerConnection.OnScanCompletedListener() {
 					public void onScanCompleted(String path, Uri uri) {
-						MusicFragment.reSetMusic(false);
-						VideoFragment.dialogLocalMusic.ScanVideo(context,false);
+//						MusicFragment.reSetMusic(false);
+//						VideoFragment.dialogLocalMusic.ScanVideo(context,false);
 					}
 				});
-
+		VideoFragment.dialogLocalMusic.ScanVideoMusic(context,false,0);
 	}
 
 	/*获取usb sd */
@@ -349,7 +333,7 @@ public class DialogLocalMusic  {
 
 
 		SDVideoData.clear();
-		USBVideoData.clear();
+		infoid = 0;
 
 		ContentResolver mResolver = context.getContentResolver();
 		System.out.println("mResolver:" + mResolver);
@@ -376,18 +360,6 @@ public class DialogLocalMusic  {
 					info.url = url;
 					SDVideoData.add(info);
 				}
-				if (url.toLowerCase().indexOf(PATH_USB) > -1) {
-					Mp3Info info = new Mp3Info();
-					info.id = j++;
-					info.displayName = cursor
-							.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME));
-					System.out.println("歌曲名:" + info.displayName);
-					info.duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
-					info.title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
-					info.artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
-					info.url = url;
-					USBVideoData.add(info);
-				}
 				i++;
 				cursor.moveToNext();
 			}
@@ -395,7 +367,35 @@ public class DialogLocalMusic  {
 
 		}
 		mResolver = null;
+
+		/**/
+		infoid = j;
+		/**/
 	}
+
+	/*获取usb sd */
+	private static  void getUSBVideoMusicData(Context context,int choose) {
+		switch (choose){
+			case 0:
+				USBVideoData.clear();
+				USBData.clear();
+				m = 0;
+				v = 0;
+				break;
+			case 1:
+				USBData.clear();
+				m = 0;
+				break;
+			case 2:
+				USBVideoData.clear();
+				v = 0;
+				break;
+			default:
+				break;
+		}
+		getMediaFile(new File(PATH_USB),choose);
+	}
+
 	public static void transportData(){
 		data.clear();
 		if(SDData!=null&&SDData.size()!=0) {
@@ -449,6 +449,28 @@ public class DialogLocalMusic  {
 				}
 				if(context!=null) {
 					getSDUSBViedoData(context);
+				}
+				if(mThreadCallback!=null){
+					mThreadCallback.videoEndListener();
+				}
+
+			}
+		}.start();  //开启一个线程
+	}
+
+	public static void ScanVideoMusic(final Context context ,final boolean isReSet,final int choose){
+
+		new Thread(){
+			public void run() {
+				if(isReSet){
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				if(context!=null) {
+					getUSBVideoMusicData(context,choose);
 				}
 				if(mThreadCallback!=null){
 					mThreadCallback.videoEndListener();
@@ -535,5 +557,183 @@ public class DialogLocalMusic  {
 		void threadEndLisener();
 
 		void videoEndListener();
+	}
+
+	private static String newpathMusic;
+	private static int infoidMusic = 0;
+	public static void getPathMusic(String path) {
+		File f=new File(path);
+		File[] fs=f.listFiles();
+		if(fs != null){
+			for (int i = 0; i < fs.length; i++) {
+				if (fs[i].getName().trim().toLowerCase().endsWith(".mp3")
+						|| fs[i].getName().trim().toLowerCase().endsWith(".amr")
+						|| fs[i].getName().trim().toLowerCase().endsWith(".flac")
+						|| fs[i].getName().trim().toLowerCase().endsWith(".m4a")
+						|| fs[i].getName().trim().toLowerCase().endsWith(".m4r")
+						|| fs[i].getName().trim().toLowerCase().endsWith(".wav")
+						|| fs[i].getName().trim().toLowerCase().endsWith(".aac")) {
+					MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+					String str = fs[i].getAbsolutePath();
+					try {
+						mmr.setDataSource(str);
+						Mp3Info info = new Mp3Info();
+						info.id = infoidMusic++;
+						info.displayName = fs[i].getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);;
+						info.duration = Long.valueOf(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+						info.title = fs[i].getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+						info.artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+						info.url = str;
+						if (path.toLowerCase().indexOf(PATH_USB) > -1) {
+							USBData.add(info);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+					//					if (isMediaPluged) {
+					//						tempList.add(map);
+					//					}
+				}
+				if (fs[i].isDirectory()) {
+					newpathMusic = fs[i].getAbsolutePath();
+					getPathMusic(newpathMusic);
+				}
+				try {
+					Thread.sleep(2);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private static String newpath;
+	private static int infoid = 0;
+	public static void getPath(String path) {
+		File f=new File(path);
+		File[] fs=f.listFiles();
+		if(fs != null){
+			for (int i = 0; i < fs.length; i++) {
+				if (fs[i].getName().trim().toLowerCase().endsWith(".mp4")
+						|| fs[i].getName().trim().toLowerCase().endsWith(".flv")
+						|| fs[i].getName().trim().toLowerCase().endsWith(".mkv")
+						|| fs[i].getName().trim().toLowerCase().endsWith(".rmvb")
+						|| fs[i].getName().trim().toLowerCase().endsWith(".avi")
+						|| fs[i].getName().trim().toLowerCase().endsWith(".3gp")) {
+					MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+					String str = fs[i].getAbsolutePath();
+					try {
+						mmr.setDataSource(str);
+						Mp3Info info = new Mp3Info();
+						info.id = infoid++;
+						info.displayName = fs[i].getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);;
+						info.duration = Long.valueOf(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+						info.title = fs[i].getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+						info.artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+						info.url = str;
+						if (path.toLowerCase().indexOf(PATH_USB) > -1) {
+							USBVideoData.add(info);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+					//					if (isMediaPluged) {
+					//						tempList.add(map);
+					//					}
+				}
+				if (fs[i].isDirectory()) {
+					newpath = fs[i].getAbsolutePath();
+					getPath(newpath);
+				}
+				try {
+					Thread.sleep(2);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	static int m = 0,v = 0;
+	/**
+	 * 获取视频文件
+	 *
+	 * @param file
+	 * @param choose 0:扫描音视频;1:扫描音乐;2:扫描视频
+	 * @return
+	 */
+	private static void getMediaFile(File file, final int choose) {
+
+		file.listFiles(new FileFilter() {
+
+			@Override
+			public boolean accept(File file) {
+
+				String name = file.getName();
+
+				int i = name.indexOf('.');
+				if (i != -1) {
+					name = name.substring(i);
+					if((choose == 0 || choose == 1) && (name.equalsIgnoreCase(".mp3")|| name.equalsIgnoreCase(".ogg") || name.equalsIgnoreCase(".wmv"))){
+						MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+						mmr.setDataSource(file.getPath());
+						String title = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+						String album = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+						String artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+						String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+						Log.d("MUSIC", "title:" + title +"   "+album+"   "+artist+"   "+duration);
+						Mp3Info info = new Mp3Info();
+						file.getUsableSpace();
+						info.id = m++;
+						info.displayName = file.getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);;
+						info.duration = Long.valueOf(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+						info.title = file.getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+						info.artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+						info.url = file.getPath();
+						USBData.add(info);
+						return true;
+					}
+					if ((choose == 0 || choose == 2) && (name.equalsIgnoreCase(".mp4") || name.equalsIgnoreCase(".3gp") || name.equalsIgnoreCase(".wmv"))
+							|| name.equalsIgnoreCase(".ts") || name.equalsIgnoreCase(".rmvb")
+							|| name.equalsIgnoreCase(".mov") || name.equalsIgnoreCase(".m4v")
+							|| name.equalsIgnoreCase(".avi") || name.equalsIgnoreCase(".m3u8")
+							|| name.equalsIgnoreCase(".3gpp") || name.equalsIgnoreCase(".3gpp2")
+							|| name.equalsIgnoreCase(".mkv") || name.equalsIgnoreCase(".flv")
+							|| name.equalsIgnoreCase(".divx") || name.equalsIgnoreCase(".f4v")
+							|| name.equalsIgnoreCase(".rm") || name.equalsIgnoreCase(".asf")
+							|| name.equalsIgnoreCase(".ram") || name.equalsIgnoreCase(".mpg")
+							|| name.equalsIgnoreCase(".v8") || name.equalsIgnoreCase(".swf")
+							|| name.equalsIgnoreCase(".m2v") || name.equalsIgnoreCase(".asx")
+							|| name.equalsIgnoreCase(".ra") || name.equalsIgnoreCase(".ndivx")
+							|| name.equalsIgnoreCase(".xvid")) {
+						MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+						mmr.setDataSource(file.getPath());
+						String title = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+						String[] a = file.getPath().split("/");
+						String  displayname =file.getPath().split("/")[a.length-1];
+						String album = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+						String artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+						String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+						Log.d("VIDEO", "title:" + title+"   "+displayname +"   "+album+"   "+artist+"   "+duration);
+						Mp3Info info = new Mp3Info();
+						file.getUsableSpace();
+						info.id = v++;
+						info.displayName = file.getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);;
+						info.duration = Long.valueOf(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+						info.title = file.getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+						info.artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+						info.url = file.getPath();
+						USBVideoData.add(info);
+						return true;
+					}
+					// 判断是不是目录
+				} else if (file.isDirectory()) {
+					getMediaFile(file,choose);
+				}
+				return false;
+			}
+		});
 	}
 }
