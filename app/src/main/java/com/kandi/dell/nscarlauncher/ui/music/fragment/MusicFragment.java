@@ -559,17 +559,40 @@ public static void musicPlay(Context context){
     }
 /*初始化本地音乐数据*/
   private  void getMusicData(){
-          mData =DialogLocalMusic.SDData;
-          dataMode=1;
-          selectMode(1);
-          if(mData==null||mData.size()==0){
+      switch (dataMode){
+          case 2:
               mData =DialogLocalMusic.USBData;
               if(mData!=null||mData.size()!=0) {
 
-                dataMode=2;
-                  selectMode(2);
+                  dataMode=2;
+                  selectMode(dataMode);
               }
-          }
+              break;
+          default:
+              mData =DialogLocalMusic.SDData;
+              dataMode = 1;
+              selectMode(dataMode);
+              if(mData==null||mData.size()==0){
+                  mData =DialogLocalMusic.USBData;
+                  if(mData!=null||mData.size()!=0) {
+
+                      dataMode=2;
+                      selectMode(dataMode);
+                  }
+              }
+              break;
+      }
+//          mData =DialogLocalMusic.SDData;
+//          dataMode=1;
+//          selectMode(1);
+//          if(mData==null||mData.size()==0){
+//              mData =DialogLocalMusic.USBData;
+//              if(mData!=null||mData.size()!=0) {
+//
+//                dataMode=2;
+//                  selectMode(2);
+//              }
+//          }
 
           initRvAdapter(mData);
           initRvLocalAdapter(mData);

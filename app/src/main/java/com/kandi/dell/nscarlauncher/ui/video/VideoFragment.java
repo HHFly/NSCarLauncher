@@ -28,6 +28,7 @@ public class VideoFragment extends BaseFragment{
     public final static int  VIEWFRESH =1;
     public static int position = 0;
     public static Context context;
+    public int dataMode;
 
     @Override
     public void setmType(int mType) {
@@ -85,22 +86,33 @@ public class VideoFragment extends BaseFragment{
 
     /*初始化本地音乐数据*/
     public   void getMusicData(){
+        switch (dataMode) {
+            case 2:
+                mData =DialogLocalMusic.USBVideoData;
+                if(mData!=null||mData.size()!=0) {
 
-        mData =DialogLocalMusic.SDVideoData;
-
-        selectMode(1);
-        if(mData==null||mData.size()==0){
-            mData =DialogLocalMusic.USBVideoData;
-            if(mData!=null||mData.size()!=0) {
-
-                selectMode(2);
-            }
+                    selectMode(2);
+                }
+                break;
+            default:
+                dataMode=1;
+                mData =DialogLocalMusic.SDVideoData;
+                selectMode(dataMode);
+                if(mData==null||mData.size()==0){
+                    mData =DialogLocalMusic.USBVideoData;
+                    if(mData!=null||mData.size()!=0) {
+                        dataMode=2;
+                        selectMode(dataMode);
+                    }
+                }
+                break;
         }
         Log.d("Video ", "getMusicData: " +String.valueOf(mData.size()));
         initRvAdapter(mData);
 
     }
     private void  changeData(int mode){
+        dataMode = mode;
         mData =mode==1?DialogLocalMusic.SDVideoData:DialogLocalMusic.USBVideoData;
         selectMode(mode);
         initRvAdapter(mData);
