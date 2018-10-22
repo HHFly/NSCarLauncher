@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
+import android.view.View;
 
 public class BluetoothController extends BroadcastReceiver {
 
@@ -17,7 +18,8 @@ public class BluetoothController extends BroadcastReceiver {
     public final static String ACTION_HD = "com.kangdi.BroadCast.HandsFreeDisconnect";
     public final static String ACTION_AC = "com.kangdi.BroadCast.AudioConnect";
     public final static String ACTION_AD = "com.kangdi.BroadCast.AudioDisconnect";
-
+    public final static String KEY_CALLINDEX                        = "com.kangdi.key.callindex";// 来电通话索引
+    public final static String KEY_PHONENUM              = "com.kangdi.key.phonenum";// 电话号码的KEY
     KandiSystemUiService mService;
 
     public BluetoothController(KandiSystemUiService service) {
@@ -53,8 +55,18 @@ public class BluetoothController extends BroadcastReceiver {
             isBluetoothHandsFreeEnable = false;
         } else if (intent.getAction().equals(ACTION_AD)) {
             isBluetoothAudioEnable = false;
+        }else if (intent.getAction().equals(ACTION_RINGCALL)) {
+
+            System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
+                String num = intent.getStringExtra(KEY_PHONENUM).trim();
+                int index =intent.getIntExtra(KEY_CALLINDEX, 0);
+            if(2!=index) {
+               mService.showPhone(num);
+            }
+        }else if (intent.getAction().equals(ACTION_CALLEND)) {
+            mService.hidePhone();
         }
-        mService.setBluetoothState(isBluetoothAudioEnable
+            mService.setBluetoothState(isBluetoothAudioEnable
                 || isBluetoothHandsFreeEnable);
     }
 

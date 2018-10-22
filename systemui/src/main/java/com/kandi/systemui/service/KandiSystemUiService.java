@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.IKdBtService;
 import android.os.RemoteException;
@@ -253,9 +255,7 @@ public class KandiSystemUiService extends Service {
         if (comingReceiver == null) {
             comingReceiver = new ComingReceiver();
             IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction("phone.iscoming");
-            intentFilter.addAction("3gphone.iscoming");
-            intentFilter.addAction("phone.isgone");
+            intentFilter.addAction("nscar_fresh_sdcard");
             registerReceiver(comingReceiver, intentFilter);
         }
     }
@@ -551,40 +551,35 @@ public class KandiSystemUiService extends Service {
 
 
     }
+    public void  showPhone(String num){
+        if(isHome()){
 
+            if(phoneFloatLayout!=null){
+                phoneFloatLayout.setVisibility(View.VISIBLE);
+            }
+            if(tv_phone_number!=null){
+                tv_phone_number.setText( num);
+            }
+            if(tv_hangup!=null){
+                tv_hangup.setVisibility(View.VISIBLE);
+            }
+            if(tv_answser!=null){
+                tv_answser.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+    public void  hidePhone(){
+        if(phoneFloatLayout!=null){
+            phoneFloatLayout.setVisibility(View.GONE);
+        }
+    }
 /*来电广播接听*/
 
     public class ComingReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction() == "phone.iscoming") {
-                int  index =intent.getIntExtra("index", 0);
-                Log.d("SystemUI","phone.iscoming1 ");
-                if(2!=index) {
-                    if(isHome()){
-                        Log.d("SystemUI","phone.iscoming 2");
-                        if(phoneFloatLayout!=null){
-                            phoneFloatLayout.setVisibility(View.VISIBLE);
-                        }
-                        if(tv_phone_number!=null){
-                            tv_phone_number.setText( intent.getStringExtra("number"));
-                        }
-                        if(tv_hangup!=null){
-                            tv_hangup.setVisibility(View.VISIBLE);
-                        }
-                        if(tv_answser!=null){
-                            tv_answser.setVisibility(View.VISIBLE);
-                        }
-                    }
-                }
-            } else if (intent.getAction() == "phone.isgone") {
-                Log.d("SystemUI","phone.isgone");
-                if(phoneFloatLayout!=null){
-                    phoneFloatLayout.setVisibility(View.GONE);
-                }
-
-            } else if (intent.getAction() == "3gphone.iscoming") {
-//                incoming3gShow(intent.getStringExtra("number"));
+            if (intent.getAction() == "nscar_fresh_sdcard") {
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
             }
         }
     }
