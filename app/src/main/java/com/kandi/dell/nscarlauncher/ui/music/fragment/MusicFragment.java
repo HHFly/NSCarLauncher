@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.common.util.CopyFileThread;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
@@ -32,11 +33,10 @@ import com.kandi.dell.nscarlauncher.ui.music.adapter.MusicAdapter;
 import com.kandi.dell.nscarlauncher.ui.music.adapter.MusicLocalAdapter;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 import com.kandi.dell.nscarlauncher.ui.music.model.MusicModel;
-import com.kandi.dell.nscarlauncher.ui.setting.fragment.WifiFragment;
-import com.kandi.dell.nscarlauncher.ui.setting.model.Wifiinfo;
 import com.kandi.dell.nscarlauncher.widget.AddOneEtParamDialog;
 import com.kandi.dell.nscarlauncher.widget.CircleImageView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +72,8 @@ public class MusicFragment extends BaseFragment {
     private MusicAdapter mAdapter;
     private MusicLocalAdapter musicLocalAdapter;
     public static    DialogLocalMusic dialogLocalMusic;
+    public static final String PATH_SDCARDMUSIC = "/sdcard/Music/";
+    public int blockCount = 4;
     @Override
     public int getContentResId() {
         return R.layout.fragment_music;
@@ -715,7 +717,9 @@ public static void musicPlay(Context context){
 
                 @Override
                 public void onLongClickMusic(Mp3Info data, int Pos) {
-                    ShowDialog(data);
+                    if(dataMode==2){
+                        ShowDialog(data);
+                    }
                 }
 
 
@@ -747,14 +751,19 @@ public static void musicPlay(Context context){
         ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
     }
     //    填写信息dialog
-    private  void  ShowDialog( Mp3Info data){
+    private  void  ShowDialog( final Mp3Info info){
         AddOneEtParamDialog mAddOneEtParamDialog = AddOneEtParamDialog.getInstance(false,"",2);
 
         mAddOneEtParamDialog.setOnDialogClickListener(new AddOneEtParamDialog.DefOnDialogClickListener() {
             @Override
             public void onClickCommit(AddOneEtParamDialog dialog, String data) {
-
-
+                File sourse = new File(info.url);
+                long len = sourse.length();
+                long oneNum = len/blockCount;
+                for(int i=0;i<blockCount-1;i++){
+                    new CopyFileThread(info.url,PATH_SDCARDMUSIC+info.displayName,oneNum*i,oneNum*(i+1)).start();
+                }
+                new CopyFileThread(info.url,PATH_SDCARDMUSIC+info.displayName,oneNum*(blockCount-1),len).start();
                 dialog.dismiss();
                 App.get().getCurActivity().initImmersionBar();
 
@@ -769,4 +778,6 @@ public static void musicPlay(Context context){
 
         mAddOneEtParamDialog.show(this.getFragmentManager());
     }
+
+
 }
