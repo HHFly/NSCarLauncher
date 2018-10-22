@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.os.IFmService;
+import android.widget.Toast;
+
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
@@ -36,7 +38,7 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
     private HomePagerActivity homePagerActivity;
 
     private IFmService radio;  //收音机
-    public static boolean isPlay;
+    public static boolean isPlay,isSearch;
     public static   float channel = 93.0f;// 默认初始的波段
     private IKdAudioControlService audioservice ;
     AudioManager audioManager;
@@ -172,50 +174,80 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
     }
 
     /*左调频*/
-    public  void  leftFm(Float channels){
+    public  void  leftFm(final Float channels){
 //        channel= SPUtil.getInstance(getContext(),FMCHANNEL).getFloat(FMCHANNEL,93.0f);
 //        if(channel>88.0f) {
 //            channel = (float) (channel * 10-1)/10f;
 //            changeChannel(channel);
 //        }
-        channel=channels;
-        if(!isPlay){
-            openFm();
-        }
-        try {
-            if(App.get().getRadio().RadioFreqSeekDown()>=0){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                channel=channels;
+                if(!isPlay){
+                    openFm();
+                }
+                try {
+                    if(!isSearch) {
+                        isSearch = true;
+                        if (App.get().getRadio().RadioFreqSeekDown() >= 0) {
 
-                channel =App.get().getRadio().GetRadioFreq();
-                myHandler.sendMessage(myHandler.obtainMessage(VIEWFRESH));
+                            channel = App.get().getRadio().GetRadioFreq();
+                            myHandler.sendMessage(myHandler.obtainMessage(VIEWFRESH));
+                            isSearch = false;
 
+                        } else {
+                            isSearch = false;
+                        }
+                    }else {
+//                        Toast.makeText(getActivity(),"正在搜索", Toast.LENGTH_SHORT).show();\
+//                        Log.d("FM", "run: is Search" );
+                    }
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        }).start();
+
 
     }
     /*右调频*/
-    public  void  rightFm(Float channels){
+    public  void  rightFm( final Float channels){
 //        channel= SPUtil.getInstance(getContext(),FMCHANNEL).getFloat(FMCHANNEL,93.0f);
 //        if(channel<108.0f) {
 //            channel = (float) (channel * 10+1)/10f;
 //            changeChannel(channel);
 //        }
-        channel=channels;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                channel=channels;
 //        Log.d("Fm","Channel   "+String.valueOf(channel));
-        if(!isPlay){
-          openFm();
-        }
-        try {
-            if(App.get().getRadio().RadioFreqSeekUp()>=0){
+                if(!isPlay){
+                    openFm();
+                }
+                try {
+                    if(!isSearch) {
+                        isSearch = true;
+                        if (App.get().getRadio().RadioFreqSeekUp() >= 0) {
 
-                 channel =App.get().getRadio().GetRadioFreq();
-                myHandler.sendMessage(myHandler.obtainMessage(VIEWFRESH));
+                            channel = App.get().getRadio().GetRadioFreq();
+                            myHandler.sendMessage(myHandler.obtainMessage(VIEWFRESH));
 //                Log.d("Fm","Channel   "+String.valueOf(channel));
+                            isSearch = false;
+                        } else {
+                            isSearch = false;
+                        }
+                    }else {
+//                        Toast.makeText(getActivity(),"正在搜索", Toast.LENGTH_SHORT).show();
+//                        Log.d("FM", "run: is Search" );
+                    }
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+
             }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        }).start();
 
     }
     /*初始化数据*/
