@@ -78,7 +78,7 @@ public class AddOneEtParamDialog extends BaseDialogFragment {
                 rootView = inflater.inflate(R.layout.dialog_wifi_input, container, false);
                 break;
             case 2:
-                rootView = inflater.inflate(R.layout.dialog_wifi_input_password, container, false);
+                rootView = inflater.inflate(R.layout.dialog_file_input, container, false);
                 break;
             default:  rootView = inflater.inflate(R.layout.dialog_wifi_input_password, ((ViewGroup) getDialog().getWindow().findViewById(android.R.id.content)), false);
         }
@@ -119,7 +119,9 @@ public class AddOneEtParamDialog extends BaseDialogFragment {
         View viewCommit = getView(rootView, R.id.wifi_input_confirm);
         setListener(viewCancel, this);
         setListener(viewCommit, this);
-        setShowlisten();
+        if(1==type) {
+            setShowlisten();
+        }
     }
 /*
 *设置输入数字

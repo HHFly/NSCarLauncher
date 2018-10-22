@@ -32,6 +32,9 @@ import com.kandi.dell.nscarlauncher.ui.music.adapter.MusicAdapter;
 import com.kandi.dell.nscarlauncher.ui.music.adapter.MusicLocalAdapter;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 import com.kandi.dell.nscarlauncher.ui.music.model.MusicModel;
+import com.kandi.dell.nscarlauncher.ui.setting.fragment.WifiFragment;
+import com.kandi.dell.nscarlauncher.ui.setting.model.Wifiinfo;
+import com.kandi.dell.nscarlauncher.widget.AddOneEtParamDialog;
 import com.kandi.dell.nscarlauncher.widget.CircleImageView;
 
 import java.util.ArrayList;
@@ -710,6 +713,11 @@ public static void musicPlay(Context context){
 //                    listStartPlayMusic();
                 }
 
+                @Override
+                public void onLongClickMusic(Mp3Info data, int Pos) {
+                    ShowDialog(data);
+                }
+
 
             });
 
@@ -738,5 +746,27 @@ public static void musicPlay(Context context){
     public static  void  stopView(){
         ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
     }
+    //    填写信息dialog
+    private  void  ShowDialog( Mp3Info data){
+        AddOneEtParamDialog mAddOneEtParamDialog = AddOneEtParamDialog.getInstance(false,"",2);
 
+        mAddOneEtParamDialog.setOnDialogClickListener(new AddOneEtParamDialog.DefOnDialogClickListener() {
+            @Override
+            public void onClickCommit(AddOneEtParamDialog dialog, String data) {
+
+
+                dialog.dismiss();
+                App.get().getCurActivity().initImmersionBar();
+
+            }
+
+            @Override
+            public void onClickCancel(AddOneEtParamDialog dialog) {
+                App.get().getCurActivity().initImmersionBar();
+                dialog.dismiss();
+            }
+        });
+
+        mAddOneEtParamDialog.show(this.getFragmentManager());
+    }
 }

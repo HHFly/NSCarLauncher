@@ -9,11 +9,13 @@ import android.util.Log;
 import android.view.View;
 
 import com.kandi.dell.nscarlauncher.R;
+import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
+import com.kandi.dell.nscarlauncher.widget.AddOneEtParamDialog;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -179,6 +181,11 @@ public class VideoFragment extends BaseFragment{
 
                 }
 
+                @Override
+                public void onLongClickMusic(Mp3Info data, int Pos) {
+                    ShowDialog(data);
+                }
+
 
             });
 
@@ -216,5 +223,27 @@ public class VideoFragment extends BaseFragment{
         }
         return -1;
     }
+    //    填写信息dialog
+    private  void  ShowDialog( Mp3Info data){
+        AddOneEtParamDialog mAddOneEtParamDialog = AddOneEtParamDialog.getInstance(false,"",2);
 
+        mAddOneEtParamDialog.setOnDialogClickListener(new AddOneEtParamDialog.DefOnDialogClickListener() {
+            @Override
+            public void onClickCommit(AddOneEtParamDialog dialog, String data) {
+
+
+                dialog.dismiss();
+                App.get().getCurActivity().initImmersionBar();
+
+            }
+
+            @Override
+            public void onClickCancel(AddOneEtParamDialog dialog) {
+                App.get().getCurActivity().initImmersionBar();
+                dialog.dismiss();
+            }
+        });
+
+        mAddOneEtParamDialog.show(this.getFragmentManager());
+    }
 }

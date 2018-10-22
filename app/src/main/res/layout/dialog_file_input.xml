@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="600px"
+    android:layout_height="400px"
+    android:background="#eeeeee">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+       android:layout_marginTop="100px"
+        android:text="@string/是否将文件导入本地"
+        android:textColor="#010101"
+        android:textSize="48px"
+        />
+
+    <EditText
+        android:visibility="gone"
+        android:id="@+id/wifi_input_password"
+        android:layout_width="450px"
+        android:layout_height="wrap_content"
+        android:text="null"
+        android:layout_centerHorizontal="true"
+        android:background="@null"
+        android:inputType="textPassword"
+        android:textColor="#010101"
+        android:textSize="36px"
+        />
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="78px">
+        <TextView
+            android:id="@+id/wifi_input_cancel"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/取消"
+            android:textColor="#5178E1"
+            android:textSize="36px"
+            android:gravity="center"/>
+        <View style="@style/BaseLine.Vertical"
+            android:background="#989898"/>
+        <TextView
+            android:id="@+id/wifi_input_confirm"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/确认"
+            android:textSize="36px"
+            android:textColor="#989898"
+            android:gravity="center"/>
+
+    </LinearLayout>
+</RelativeLayout>

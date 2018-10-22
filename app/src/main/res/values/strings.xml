@@ -113,6 +113,7 @@
     <string name="上班">上班</string>
     <string name="商城">商城</string>
     <string name="剩余里程">剩余里程</string>
+    <string name="是否将文件导入本地">是否将文件导入本地</string>
 
 
 </resources>
