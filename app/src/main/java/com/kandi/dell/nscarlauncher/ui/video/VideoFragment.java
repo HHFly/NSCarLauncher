@@ -75,7 +75,7 @@ public class VideoFragment extends BaseFragment{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.video_local_1:
-                changeData(1);
+                changeData(3);
                 break;
             case R.id.video_local_2:
                 changeData(2);
@@ -89,6 +89,12 @@ public class VideoFragment extends BaseFragment{
     /*初始化本地音乐数据*/
     public   void getMusicData(){
         switch (dataMode) {
+            case 3:
+                dataMode=1;
+                mData =DialogLocalMusic.SDVideoData;
+                selectMode(dataMode);
+
+                break;
             case 2:
                 mData =DialogLocalMusic.USBVideoData;
                 if(mData!=null||mData.size()!=0) {
@@ -115,16 +121,22 @@ public class VideoFragment extends BaseFragment{
     }
     private void  changeData(int mode){
         dataMode = mode;
-        mData =mode==1?DialogLocalMusic.SDVideoData:DialogLocalMusic.USBVideoData;
-        selectMode(mode);
-        initRvAdapter(mData);
+
+        if(3==dataMode){
+            DialogLocalMusic.updateLocalVideo(context);
+        }else {
+            mData =mode==1?DialogLocalMusic.SDVideoData:DialogLocalMusic.USBVideoData;
+            selectMode(mode);
+            initRvAdapter(mData);
+        }
+
     }
     public Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
 
                 case VIEWFRESH:
-                    Log.d("Video ", "getMusicData: " +String.valueOf( HomePagerActivity.mCurFragment.getmType()));
+
                     if(FragmentType.VIDEO==HomePagerActivity.mCurFragment.getmType()) {
                         getMusicData();
                     }

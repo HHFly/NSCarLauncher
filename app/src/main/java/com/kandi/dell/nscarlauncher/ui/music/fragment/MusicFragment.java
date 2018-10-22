@@ -179,7 +179,7 @@ public class MusicFragment extends BaseFragment {
                 setViewVisibilityGone(R.id.music_local,false);
                 break;
             case  R.id.music_local_1:
-                dataMode=1;
+                dataMode=3;
                 getLocalMusicData();
                 break;
             case R.id.music_local_2:
@@ -187,8 +187,8 @@ public class MusicFragment extends BaseFragment {
                 getUsbMusicData();
                 break;
             case R.id.music_refresh:
-                dialogLocalMusic.ScanMusic(getContext(),false);
-                dialogLocalMusic.ScanVideoMusic(getContext(),1);
+//                dialogLocalMusic.ScanMusic(getContext(),false);
+//                dialogLocalMusic.ScanVideoMusic(getContext(),1);
                 break;
 
         }
@@ -563,6 +563,12 @@ public static void musicPlay(Context context){
 /*初始化本地音乐数据*/
   private  void getMusicData(){
       switch (dataMode){
+          case 3:
+              dataMode=1;
+              mData =DialogLocalMusic.SDData;
+              selectMode(dataMode);
+
+              break;
           case 2:
               mData =DialogLocalMusic.USBData;
               if(mData!=null||mData.size()!=0) {
@@ -585,17 +591,7 @@ public static void musicPlay(Context context){
               }
               break;
       }
-//          mData =DialogLocalMusic.SDData;
-//          dataMode=1;
-//          selectMode(1);
-//          if(mData==null||mData.size()==0){
-//              mData =DialogLocalMusic.USBData;
-//              if(mData!=null||mData.size()!=0) {
-//
-//                dataMode=2;
-//                  selectMode(2);
-//              }
-//          }
+
 
           initRvAdapter(mData);
           initRvLocalAdapter(mData);
@@ -610,7 +606,8 @@ public static void musicPlay(Context context){
 //      DialogLocalMusic.musicID=0;
       selectMode(dataMode);
       flag_hachage=true;
-      initRvLocalAdapter(DialogLocalMusic.SDData);
+      DialogLocalMusic.updateLocalMusic(context);
+
   }
     /*获取Usb音乐*/
     private  void getUsbMusicData(){

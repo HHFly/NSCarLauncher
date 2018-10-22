@@ -38,6 +38,8 @@ public class DialogLocalMusic  {
 	@SuppressLint("SdCardPath")
 	public static final String PATH_SDCARD = "/storage/emulated/0/";
 	public static final String PATH_USB = "/storage/udisk/";
+	public static final String PATH_MOVIE = "/storage/sdcard0/Movies/";
+	public static final String PATH_MUSIC = "/storage/sdcard0/Music/";
 	static int cursor_position = 0;
 	ListView listview;
 	public static List<Mp3Info> data = new ArrayList<Mp3Info>();
@@ -158,7 +160,7 @@ public class DialogLocalMusic  {
 			while (i < cursorCount) {
 				// 歌曲文件的路径 ：MediaStore.Audio.Media.DATA
 				url = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
-				if (url.toLowerCase().indexOf(PATH_SDCARD) > -1) {
+				if (url.toLowerCase().indexOf(PATH_SDCARD) > -1||url.toLowerCase().indexOf("/storage/sdcard0/") > -1) {
 					Mp3Info info = new Mp3Info();
 					info.id = j++;
 					info.displayName = cursor
@@ -176,9 +178,11 @@ public class DialogLocalMusic  {
 			}
 			cursor.close();
 
-				musicID = 0;
-				transportData();
-
+//				musicID = 0;
+//				transportData();
+			if(musicFragment!=null){
+				musicFragment.myHandler.sendMessage(musicFragment.myHandler.obtainMessage(musicFragment.VIEWFRESH));
+			}
 		}
 		mResolver = null;
 
@@ -219,6 +223,9 @@ public class DialogLocalMusic  {
 			}
 			cursor.close();
 
+		}
+		if(videoFragment!=null){
+			videoFragment.myHandler.sendMessage(videoFragment.myHandler.obtainMessage(videoFragment.VIEWFRESH));
 		}
 		mResolver = null;
 
@@ -335,23 +342,46 @@ public class DialogLocalMusic  {
 			}
 		}.start();  //开启一个线程
 	}
+	public static void updateLocalMusic(final Context context){
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				File pathSDMusic = new File(PATH_MUSIC);
+				MediaScannerConnection.scanFile(context,
+						new String[] { pathSDMusic.getAbsolutePath()}, null,
+						new MediaScannerConnection.OnScanCompletedListener() {
+							public void onScanCompleted(String path, Uri uri) {
 
+								getSDUSBMusicData(context);
+							}
+						});
+			}
+		}).start();
+	}
+	public static void updateLocalVideo(final Context context){
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+
+				File pathSDMovie = new File(PATH_MOVIE);
+				MediaScannerConnection.scanFile(context,
+						new String[] { pathSDMovie.getAbsolutePath()}, null,
+						new MediaScannerConnection.OnScanCompletedListener() {
+							public void onScanCompleted(String path, Uri uri) {
+								Log.d("Video", "onScanCompleted: callback");
+								getSDUSBViedoData(context);
+							}
+						});
+			}
+		}).start();
+	}
 	public static void updateGallery(final Context context){
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				File pathSD = new File(PATH_SDCARD);
-//		File pathUSB = new File(PATH_USB);
-//		MediaScannerConnection.scanFile(context,
-//				new String[] { pathSD.getAbsolutePath(),pathUSB.getAbsolutePath() }, null,
-//				new MediaScannerConnection.OnScanCompletedListener() {
-//					public void onScanCompleted(String path, Uri uri) {
-////						MusicFragment.reSetMusic(false);
-////						VideoFragment.dialogLocalMusic.ScanVideo(context,false);
-//					}
-//				});
+				File pathSDMusic = new File("/storage/sdcard0/");
 				MediaScannerConnection.scanFile(context,
-						new String[] { pathSD.getAbsolutePath()}, null,
+						new String[] {pathSDMusic.getAbsolutePath()}, null,
 						new MediaScannerConnection.OnScanCompletedListener() {
 							public void onScanCompleted(String path, Uri uri) {
 //						MusicFragment.reSetMusic(false);
@@ -362,9 +392,6 @@ public class DialogLocalMusic  {
 						});
 			}
 		}).start();
-
-
-
 	}
 	public static void ScanAllDaTa(final Context context ){
 

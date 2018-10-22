@@ -39,7 +39,7 @@ public class VideoAdapter  extends BaseListRvAdapter<Mp3Info> {
                 if(onItemClickListener!=null){
                     onItemClickListener.onLongClickMusic(data,bodyPos);
                 }
-                return false;
+                return true;
             }
 
 
