@@ -21,7 +21,9 @@ import android.widget.TextView;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.common.util.CopyFileThread;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.CursorMusicImage;
@@ -31,8 +33,10 @@ import com.kandi.dell.nscarlauncher.ui.music.adapter.MusicAdapter;
 import com.kandi.dell.nscarlauncher.ui.music.adapter.MusicLocalAdapter;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 import com.kandi.dell.nscarlauncher.ui.music.model.MusicModel;
+import com.kandi.dell.nscarlauncher.widget.AddOneEtParamDialog;
 import com.kandi.dell.nscarlauncher.widget.CircleImageView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +51,7 @@ public class MusicFragment extends BaseFragment {
     private final static int MUSIC_BLUETOOTH_OPEN = 5; // 蓝牙音乐打开
     private final static int MUSCI_BACK = 6; // 蓝牙音乐上一首
     private final static int MUSIC_NEXT = 7; // 蓝牙音乐下一首
-    private final static int  VIEWFRESH =8;//刷新界面
+    public final static int  VIEWFRESH =8;//刷新界面
     public static int music_model = 1; // 音乐播放循环模式
     static SeekBar music_progress_bar; // 音乐播放进度条
     static int progress = 0; // 记录进度
@@ -68,6 +72,8 @@ public class MusicFragment extends BaseFragment {
     private MusicAdapter mAdapter;
     private MusicLocalAdapter musicLocalAdapter;
     public static    DialogLocalMusic dialogLocalMusic;
+    public static final String PATH_SDCARDMUSIC = "/sdcard/Music/";
+    public int blockCount = 4;
     @Override
     public int getContentResId() {
         return R.layout.fragment_music;
@@ -77,7 +83,13 @@ public class MusicFragment extends BaseFragment {
     public void setmType(int mType) {
         super.setmType(FragmentType.MUSIC);
     }
-
+    @Override
+    public void Resume() {
+        super.Resume();
+        if(mData!=null&&isSecondResume){
+            getMusicData();
+        }
+    }
     @Override
     public void findView() {
         bt_play=getView(R.id.music_play);
@@ -110,17 +122,7 @@ public class MusicFragment extends BaseFragment {
 
 
         initSeekBar();
-         dialogLocalMusic =new DialogLocalMusic(new DialogLocalMusic.ThreadCallback() {
-            @Override
-            public void threadEndLisener() {
-                myHandler.sendMessage(myHandler.obtainMessage(VIEWFRESH));
-            }
-
-             @Override
-             public void videoEndListener() {
-
-             }
-         });
+        DialogLocalMusic.setMusicFragment(this);
         getMusicData();
 //        dialogLocalMusic.ScanMusic(getContext(),false);
         if(flag_play){
@@ -179,7 +181,7 @@ public class MusicFragment extends BaseFragment {
                 setViewVisibilityGone(R.id.music_local,false);
                 break;
             case  R.id.music_local_1:
-                dataMode=1;
+                dataMode=3;
                 getLocalMusicData();
                 break;
             case R.id.music_local_2:
@@ -187,8 +189,8 @@ public class MusicFragment extends BaseFragment {
                 getUsbMusicData();
                 break;
             case R.id.music_refresh:
-                dialogLocalMusic.ScanMusic(getContext(),false);
-                dialogLocalMusic.ScanVideoMusic(getContext(),false,1);
+//                dialogLocalMusic.ScanMusic(getContext(),false);
+//                dialogLocalMusic.ScanVideoMusic(getContext(),1);
                 break;
 
         }
@@ -387,7 +389,10 @@ public static void musicPlay(Context context){
                     break;
 
                 case VIEWFRESH:
+                    Log.d("Music ", "getMusiType: " +String.valueOf( HomePagerActivity.mCurFragment.getmType()));
+                    if(FragmentType.MUSIC== HomePagerActivity.mCurFragment.getmType()){
                    getMusicData();
+                    }
                     break;
                 default:
                     break;
@@ -559,27 +564,42 @@ public static void musicPlay(Context context){
     }
 /*初始化本地音乐数据*/
   private  void getMusicData(){
-          mData =DialogLocalMusic.SDData;
-          dataMode=1;
-          selectMode(1);
-          if(mData==null||mData.size()==0){
+      switch (dataMode){
+          case 3:
+              dataMode=1;
+              mData =DialogLocalMusic.SDData;
+              selectMode(dataMode);
+
+              break;
+          case 2:
               mData =DialogLocalMusic.USBData;
               if(mData!=null||mData.size()!=0) {
 
-                dataMode=2;
-                  selectMode(2);
+                  dataMode=2;
+                  selectMode(dataMode);
               }
-          }
+              break;
+          default:
+              mData =DialogLocalMusic.SDData;
+              dataMode = 1;
+              selectMode(dataMode);
+              if(mData==null||mData.size()==0){
+                  mData =DialogLocalMusic.USBData;
+                  if(mData!=null||mData.size()!=0) {
+
+                      dataMode=2;
+                      selectMode(dataMode);
+                  }
+              }
+              break;
+      }
+
 
           initRvAdapter(mData);
           initRvLocalAdapter(mData);
-
+      Log.d("Music ", "getMusicData: " +String.valueOf(mData.size()));
   }
-    public  void transportData(){
-        for (int i = 0; i < mData.size(); i++) {
-            mLocalData.add(mData.get(i));
-        }
-    }
+
   /*获取本地音乐*/
   private  void getLocalMusicData(){
 //      if(flag_play){
@@ -591,7 +611,8 @@ public static void musicPlay(Context context){
       context.sendBroadcast(intent);
       selectMode(dataMode);
       flag_hachage=true;
-      initRvLocalAdapter(DialogLocalMusic.SDData);
+      DialogLocalMusic.updateLocalMusic(context);
+
   }
     /*获取Usb音乐*/
     private  void getUsbMusicData(){
@@ -694,6 +715,13 @@ public static void musicPlay(Context context){
 //                    listStartPlayMusic();
                 }
 
+                @Override
+                public void onLongClickMusic(Mp3Info data, int Pos) {
+                    if(dataMode==2){
+                        ShowDialog(data);
+                    }
+                }
+
 
             });
 
@@ -722,5 +750,34 @@ public static void musicPlay(Context context){
     public static  void  stopView(){
         ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
     }
+    //    填写信息dialog
+    private  void  ShowDialog( final Mp3Info info){
+        AddOneEtParamDialog mAddOneEtParamDialog = AddOneEtParamDialog.getInstance(false,"",2);
+
+        mAddOneEtParamDialog.setOnDialogClickListener(new AddOneEtParamDialog.DefOnDialogClickListener() {
+            @Override
+            public void onClickCommit(AddOneEtParamDialog dialog, String data) {
+                File sourse = new File(info.url);
+                long len = sourse.length();
+                long oneNum = len/blockCount;
+                for(int i=0;i<blockCount-1;i++){
+                    new CopyFileThread(info.url,PATH_SDCARDMUSIC+info.displayName,oneNum*i,oneNum*(i+1)).start();
+                }
+                new CopyFileThread(info.url,PATH_SDCARDMUSIC+info.displayName,oneNum*(blockCount-1),len).start();
+                dialog.dismiss();
+                App.get().getCurActivity().initImmersionBar();
+
+            }
+
+            @Override
+            public void onClickCancel(AddOneEtParamDialog dialog) {
+                App.get().getCurActivity().initImmersionBar();
+                dialog.dismiss();
+            }
+        });
+
+        mAddOneEtParamDialog.show(this.getFragmentManager());
+    }
+
 
 }

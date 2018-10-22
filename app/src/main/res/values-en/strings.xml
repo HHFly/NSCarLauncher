@@ -114,4 +114,5 @@
     <string name="上班">Office</string>
     <string name="商城">Store</string>
     <string name="剩余里程">remainkon</string>
+    <string name="是否将文件导入本地">Whether to import the file locally</string>
 </resources>

@@ -5,15 +5,20 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.kandi.dell.nscarlauncher.R;
+import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.common.util.CopyFileThread;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
+import com.kandi.dell.nscarlauncher.widget.AddOneEtParamDialog;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -24,9 +29,12 @@ public class VideoFragment extends BaseFragment{
     private VideoAdapter mAdapter;
     public static List<Mp3Info> mData;
    public static DialogLocalMusic dialogLocalMusic;
-    private final static int  VIEWFRESH =1;
+    public final static int  VIEWFRESH =1;
     public static int position = 0;
     public static Context context;
+    public int dataMode;
+    public static final String PATH_SDCARDMOVIES = "/sdcard/Movies/";
+    public int blockCount = 3;
 
     @Override
     public void setmType(int mType) {
@@ -44,6 +52,14 @@ public class VideoFragment extends BaseFragment{
     }
 
     @Override
+    public void Resume() {
+        super.Resume();
+        if(mData!=null&&isSecondResume){
+            getMusicData();
+        }
+    }
+
+    @Override
     public void setListener() {
         setClickListener(R.id.video_local_1);
         setClickListener(R.id.video_local_2);
@@ -53,27 +69,17 @@ public class VideoFragment extends BaseFragment{
     @Override
     public void initView() {
         context = getContext();
-        dialogLocalMusic  = new DialogLocalMusic(new DialogLocalMusic.ThreadCallback() {
-           @Override
-           public void threadEndLisener() {
-
-           }
-
-           @Override
-           public void videoEndListener() {
-               myHandler.sendMessage(myHandler.obtainMessage(VIEWFRESH));
-
-           }
-       });
-       dialogLocalMusic.ScanVideo(getContext(),false);
-       dialogLocalMusic.ScanVideoMusic(getContext(),false,2);
+        DialogLocalMusic.setVideoFragment(this);
+        getMusicData();
+//       dialogLocalMusic.ScanVideo(getContext(),false);
+//       dialogLocalMusic.ScanVideoMusic(getContext(),2);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.video_local_1:
-                changeData(1);
+                changeData(3);
                 break;
             case R.id.video_local_2:
                 changeData(2);
@@ -85,32 +91,59 @@ public class VideoFragment extends BaseFragment{
     }
 
     /*初始化本地音乐数据*/
-    private  void getMusicData(){
-        mData =DialogLocalMusic.SDVideoData;
+    public   void getMusicData(){
+        switch (dataMode) {
+            case 3:
+                dataMode=1;
+                mData =DialogLocalMusic.SDVideoData;
+                selectMode(dataMode);
 
-        selectMode(1);
-        if(mData==null||mData.size()==0){
-            mData =DialogLocalMusic.USBVideoData;
-            if(mData!=null||mData.size()!=0) {
+                break;
+            case 2:
+                mData =DialogLocalMusic.USBVideoData;
+                if(mData!=null||mData.size()!=0) {
 
-                selectMode(2);
-            }
+                    selectMode(2);
+                }
+                break;
+            default:
+                dataMode=1;
+                mData =DialogLocalMusic.SDVideoData;
+                selectMode(dataMode);
+                if(mData==null||mData.size()==0){
+                    mData =DialogLocalMusic.USBVideoData;
+                    if(mData!=null||mData.size()!=0) {
+                        dataMode=2;
+                        selectMode(dataMode);
+                    }
+                }
+                break;
         }
-
+        Log.d("Video ", "getMusicData: " +String.valueOf(mData.size()));
         initRvAdapter(mData);
 
     }
     private void  changeData(int mode){
-        mData =mode==1?DialogLocalMusic.SDVideoData:DialogLocalMusic.USBVideoData;
-        selectMode(mode);
-        initRvAdapter(mData);
+        dataMode = mode;
+
+        if(3==dataMode){
+            DialogLocalMusic.updateLocalVideo(context);
+        }else {
+            mData =mode==1?DialogLocalMusic.SDVideoData:DialogLocalMusic.USBVideoData;
+            selectMode(mode);
+            initRvAdapter(mData);
+        }
+
     }
     public Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
 
                 case VIEWFRESH:
-                    getMusicData();
+
+                    if(FragmentType.VIDEO==HomePagerActivity.mCurFragment.getmType()) {
+                        getMusicData();
+                    }
                     break;
                 default:
                     break;
@@ -164,6 +197,14 @@ public class VideoFragment extends BaseFragment{
 
                 }
 
+                @Override
+                public void onLongClickMusic(Mp3Info data, int Pos) {
+                    if(dataMode==2){
+                        ShowDialog(data);
+                    }
+
+                }
+
 
             });
 
@@ -201,5 +242,32 @@ public class VideoFragment extends BaseFragment{
         }
         return -1;
     }
+    //    填写信息dialog
+    private  void  ShowDialog( final Mp3Info info){
+        AddOneEtParamDialog mAddOneEtParamDialog = AddOneEtParamDialog.getInstance(false,"",2);
 
+        mAddOneEtParamDialog.setOnDialogClickListener(new AddOneEtParamDialog.DefOnDialogClickListener() {
+            @Override
+            public void onClickCommit(AddOneEtParamDialog dialog, String data) {
+                File sourse = new File(info.url);
+                long len = sourse.length();
+                long oneNum = len/blockCount;
+                for(int i=0;i<blockCount-1;i++){
+                    new CopyFileThread(info.url,PATH_SDCARDMOVIES+info.displayName,oneNum*i,oneNum*(i+1)).start();
+                }
+                new CopyFileThread(info.url,PATH_SDCARDMOVIES+info.displayName,oneNum*(blockCount-1),len).start();
+                dialog.dismiss();
+                App.get().getCurActivity().initImmersionBar();
+
+            }
+
+            @Override
+            public void onClickCancel(AddOneEtParamDialog dialog) {
+                App.get().getCurActivity().initImmersionBar();
+                dialog.dismiss();
+            }
+        });
+
+        mAddOneEtParamDialog.show(this.getFragmentManager());
+    }
 }

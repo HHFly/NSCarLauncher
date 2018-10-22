@@ -35,6 +35,17 @@ public class MusicLocalAdapter extends BaseListRvAdapter<Mp3Info> {
                 }
             }
         });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(onItemClickListener!=null){
+                    onItemClickListener.onLongClickMusic(data,bodyPos);
+                }
+                return false;
+            }
+
+
+        });
     }
     private OnItemClickListener onItemClickListener;
 
@@ -50,6 +61,6 @@ public class MusicLocalAdapter extends BaseListRvAdapter<Mp3Info> {
          */
         void onClickMusic(Mp3Info data,int Pos);
 
-
+        void  onLongClickMusic(Mp3Info data,int Pos);
     }
 }
