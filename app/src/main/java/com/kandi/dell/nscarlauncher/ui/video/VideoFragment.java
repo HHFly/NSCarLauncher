@@ -11,12 +11,14 @@ import android.view.View;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.common.util.CopyFileThread;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 import com.kandi.dell.nscarlauncher.widget.AddOneEtParamDialog;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -31,6 +33,8 @@ public class VideoFragment extends BaseFragment{
     public static int position = 0;
     public static Context context;
     public int dataMode;
+    public static final String PATH_SDCARDMOVIES = "/sdcard/Movies/";
+    public int blockCount = 3;
 
     @Override
     public void setmType(int mType) {
@@ -195,7 +199,10 @@ public class VideoFragment extends BaseFragment{
 
                 @Override
                 public void onLongClickMusic(Mp3Info data, int Pos) {
-                    ShowDialog(data);
+                    if(dataMode==2){
+                        ShowDialog(data);
+                    }
+
                 }
 
 
@@ -236,14 +243,19 @@ public class VideoFragment extends BaseFragment{
         return -1;
     }
     //    填写信息dialog
-    private  void  ShowDialog( Mp3Info data){
+    private  void  ShowDialog( final Mp3Info info){
         AddOneEtParamDialog mAddOneEtParamDialog = AddOneEtParamDialog.getInstance(false,"",2);
 
         mAddOneEtParamDialog.setOnDialogClickListener(new AddOneEtParamDialog.DefOnDialogClickListener() {
             @Override
             public void onClickCommit(AddOneEtParamDialog dialog, String data) {
-
-
+                File sourse = new File(info.url);
+                long len = sourse.length();
+                long oneNum = len/blockCount;
+                for(int i=0;i<blockCount-1;i++){
+                    new CopyFileThread(info.url,PATH_SDCARDMOVIES+info.displayName,oneNum*i,oneNum*(i+1)).start();
+                }
+                new CopyFileThread(info.url,PATH_SDCARDMOVIES+info.displayName,oneNum*(blockCount-1),len).start();
                 dialog.dismiss();
                 App.get().getCurActivity().initImmersionBar();
 
