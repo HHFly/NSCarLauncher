@@ -48,6 +48,7 @@ public class DialogLocalMusic  {
 	public static int musicID;
 	Context context;
 	public static boolean usbStatus = false;
+	public static boolean usedStatus = false;
 	public static void Clear(){
 		SDData.clear();
 		USBData.clear();
@@ -315,30 +316,27 @@ public class DialogLocalMusic  {
 		}.start();  //开启一个线程
 	}
 
-	static boolean usedStatus = false;
 	public static void ScanVideoMusic(final Context context ,final int choose){
 
 		new Thread(){
 			public void run() {
-//				if(usbStatus && !usedStatus){
-//					usedStatus = true;
-//					if(context!=null) {
-//						getUSBVideoMusicData(context,choose);
-//						transportData();
-//					}
-//					usedStatus = false;
-//				}else if(!usbStatus){
-//					if(context!=null) {
-//						getUSBVideoMusicData(context,choose);
-//						transportData();
-//					}
-//				}
-
-				if(context!=null) {
-					getUSBVideoMusicData(context,choose);
-					transportData();
+				if(usbStatus && !usedStatus){
+					usedStatus = true;
+					if(context!=null) {
+						getUSBVideoMusicData(context,choose);
+						if(!usbStatus){
+							USBVideoData.clear();
+							USBData.clear();
+						}
+						transportData();
+					}
+					usedStatus = false;
+				}else if(!usbStatus){
+					if(context!=null) {
+						getUSBVideoMusicData(context,choose);
+						transportData();
+					}
 				}
-
                 if(videoFragment!=null){
                     videoFragment.myHandler.sendMessage(videoFragment.myHandler.obtainMessage(videoFragment.VIEWFRESH));
                 }
@@ -406,7 +404,11 @@ public class DialogLocalMusic  {
 			public void run() {
 				if(context!=null) {
 					updateGallery(context);
-				getUSBVideoMusicData(context,0);
+					if(!usedStatus){
+						usedStatus = true;
+						getUSBVideoMusicData(context,0);
+						usedStatus = false;
+					}
 				}
 
 

@@ -16,7 +16,7 @@ public class USBBroadcastReceiver extends BroadcastReceiver {
         if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
 //            Toast.makeText(context, R.string.USB接入, Toast.LENGTH_SHORT).show();
            DialogLocalMusic.usbStatus = true;
-           if(intent.getExtras().getBoolean("userStatus",false)){
+           if(!intent.getExtras().getBoolean("userStatus",false)){
                DialogLocalMusic.ScanVideoMusic(context,0);
            }
 
