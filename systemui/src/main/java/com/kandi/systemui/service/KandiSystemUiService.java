@@ -580,7 +580,9 @@ public class KandiSystemUiService extends Service {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction() == "nscar_fresh_sdcard") {
                 Log.d("ComingReceiver", "onReceive: ");
-                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+                Uri dirUri = Uri.parse("file://" + Environment.getExternalStorageDirectory());
+
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
             }
         }
     }
