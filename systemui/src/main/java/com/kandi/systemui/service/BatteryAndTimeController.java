@@ -52,7 +52,7 @@ public class BatteryAndTimeController {
                 mService.getDialogPowerIn().setProgress((int) model.getSOC());
 //                mService.getDialogPowerIn().setProgress(50);
             }
-            Log.d("Power", "CargingState:" + model.getCargingState() + ":Bettery:" + model.getSOC() + ":RemainMileage:" + model.getRemainMileage());
+//            Log.d("Power", "CargingState:" + model.getCargingState() + ":Bettery:" + model.getSOC() + ":RemainMileage:" + model.getRemainMileage());
         }
         else {
             mService.restartKdService();

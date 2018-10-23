@@ -52,7 +52,7 @@ public class MusicFragment extends BaseFragment {
     private final static int MUSCI_BACK = 6; // 蓝牙音乐上一首
     private final static int MUSIC_NEXT = 7; // 蓝牙音乐下一首
     public final static int  VIEWFRESH =8;//刷新界面
-    public static int music_model = 1; // 音乐播放循环模式
+    public static int music_model = 1,dataMode; // 音乐播放循环模式
     static SeekBar music_progress_bar; // 音乐播放进度条
     static int progress = 0; // 记录进度
     static int music_time = 0; // 记录歌曲时间，若无变化，则不更新界面
@@ -66,7 +66,7 @@ public class MusicFragment extends BaseFragment {
     static Context context;
     public static ImageView bt_open, bt_play, bt_back, bt_next, bt_u, bt_music_model;
     public static TextView tv_music_songname, tv_music_singer, music_current_time, music_total_time;
-    private  int dataMode ,currentMode ;
+    private  int  currentMode ;
   private   List<Mp3Info> mData = new ArrayList<>();//数据源
     private   List<Mp3Info> mLocalData = new ArrayList<>();//缓存数据源
     private MusicAdapter mAdapter;
@@ -643,6 +643,7 @@ public static void musicPlay(Context context){
             case 1:
                 setViewSelected(R.id.music_local_1,true);
                 setTvText(R.id.music_type,getString(R.string.本地音乐));
+
                 break;
             case 2 :
                 setViewSelected(R.id.music_local_2,true);

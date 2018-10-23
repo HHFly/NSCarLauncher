@@ -178,8 +178,8 @@ public class DialogLocalMusic  {
 			}
 			cursor.close();
 
-//				musicID = 0;
-//				transportData();
+				musicID = 0;
+				transportData();
 			if(musicFragment!=null){
 				musicFragment.myHandler.sendMessage(musicFragment.myHandler.obtainMessage(musicFragment.VIEWFRESH));
 			}
@@ -262,18 +262,21 @@ public class DialogLocalMusic  {
 
 	public static void transportData(){
 		data.clear();
-		if(SDData!=null&&SDData.size()!=0) {
-			for (int i = 0; i < SDData.size(); i++) {
-				data.add(SDData.get(i));
-			}
-			return;
-		}
-		if(USBData!=null&&USBData.size()!=0) {
-			for (int i = 0; i < USBData.size(); i++) {
-				data.add(USBData.get(i));
-			}
 
-		}
+            if (SDData != null && SDData.size() != 0) {
+                for (int i = 0; i < SDData.size(); i++) {
+                    data.add(SDData.get(i));
+                }
+                return;
+
+        }
+            if (USBData != null && USBData.size() != 0) {
+                for (int i = 0; i < USBData.size(); i++) {
+                    data.add(USBData.get(i));
+                }
+
+            }
+
 	}
 	public static void transport(List<Mp3Info> data,List<Mp3Info> newdata){
 		data.clear();

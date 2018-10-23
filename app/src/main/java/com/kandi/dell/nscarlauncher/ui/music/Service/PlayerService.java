@@ -19,6 +19,9 @@ import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 
 public class PlayerService extends Service {
 
@@ -105,13 +108,16 @@ public class PlayerService extends Service {
 				}
 				mediaPlayer.reset();//把各项参数恢复到初始状态
 				DialogLocalMusic.playnow =new Mp3Info(DialogLocalMusic.data.get(DialogLocalMusic.musicID));
-				mediaPlayer.setDataSource(DialogLocalMusic.data.get(DialogLocalMusic.musicID).url);
-				mediaPlayer.prepare(); // 进行缓冲
+				File file = new File(DialogLocalMusic.data.get(DialogLocalMusic.musicID).url);
+				FileInputStream fis = new FileInputStream(file);
+				mediaPlayer.setDataSource(fis.getFD());
+				mediaPlayer.prepareAsync(); // 进行缓冲
 				mediaPlayer.setOnPreparedListener(new PreparedListener(currentTime));// 注册一个监听器
 				handler.sendEmptyMessage(1);
 			} catch (Exception e) {
 				e.printStackTrace();
-				DialogLocalMusic.data.clear();
+//				DialogLocalMusic.data.clear();
+				DialogLocalMusic.ScanAllDaTa(this);
 				MusicFragment.stopView();
 				HomePagerTwoFragment.myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
 			}

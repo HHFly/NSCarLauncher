@@ -212,7 +212,7 @@ public class KandiSystemUiService extends Service {
                         mCurPosX = event.getX();
                         mCurPosY = event.getY();
                         Log.d("systemui","slide " +mCurPosY+"   "+mPosY+"   "+(mCurPosY - mPosY));
-                        if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 30)&&(isHome())) {
+                        if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 30)) {
                             //向下滑動
                             Log.d("systemui","slide down " +mCurPosY+"   "+mPosY+"   "+(mCurPosY - mPosY));
                             Rlcenter.setVisibility(View.VISIBLE);
@@ -411,7 +411,7 @@ public class KandiSystemUiService extends Service {
 
     public void setWifiLevel(int level) {
 
-        Log.d("wifi", "wifi level:" + level);
+//        Log.d("wifi", "wifi level:" + level);
         switch (level) {
             // 如果收到正确的消息就获取WifiInfo，改变图片并显示信号强度
             case 4:
@@ -579,6 +579,7 @@ public class KandiSystemUiService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction() == "nscar_fresh_sdcard") {
+                Log.d("ComingReceiver", "onReceive: ");
                 sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
             }
         }

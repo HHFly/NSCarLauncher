@@ -217,15 +217,17 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     }
 // 加载电台
     private  void isFmFragment(){
-            if(FragmentType.FM!=homePagerActivity.mCurFragment.getmType()){
-                homePagerActivity.switchFragmenthide(homePagerActivity.fmFragment);
-                fmFragment.isSecondResume=true;
+            if(FragmentType.FM!=HomePagerActivity.mCurFragment.getmType()){
+                HomePagerActivity.switchFragmenthide(HomePagerActivity.fmFragment);
+                if(HomePagerActivity.fmFragment!=null) {
+                    HomePagerActivity.fmFragment.isSecondResume = true;
+                }
             }
     }
 //  加载蓝牙
     private  void isBtFragment(){
-        if(FragmentType.BTMUSIC!=homePagerActivity.mCurFragment.getmType()){
-            homePagerActivity.switchFragmenthide(homePagerActivity.btMusicFragment);
+        if(FragmentType.BTMUSIC!=HomePagerActivity.mCurFragment.getmType()){
+            HomePagerActivity.switchFragmenthide(HomePagerActivity.btMusicFragment);
         }
     }
 //    电台播放
@@ -310,7 +312,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     }
     /*初始化fm*/
     private void setFmMHZ(){
-        if(fmFragment.isSecondResume){
+        if(HomePagerActivity.fmFragment.isSecondResume){
             channel=FMFragment.channel;
         }else {
             channel= SPUtil.getInstance(HomePagerActivity.context,FMCHANNEL).getFloat(FMCHANNEL,93.0f);

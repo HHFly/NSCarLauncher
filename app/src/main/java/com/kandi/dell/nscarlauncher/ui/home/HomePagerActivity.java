@@ -161,6 +161,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             intentFilter.addDataScheme("file");
             registerReceiver(usbBroadcastReceiver, intentFilter);
         }
+
         /*车辆方向盘*/
         if(carMFLReceiver ==null){
             carMFLReceiver =new CarMFLReceiver();
@@ -193,7 +194,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             mNetworkReceiver = new NetworkBroadcastReceiver();
             registerReceiver(mNetworkReceiver, filter);
         }
-
+        createFragment();
 
     }
 
@@ -309,13 +310,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     //初始化viewpager 数据
     private  void initDa(){
         createFragment();
-        this.homePagerActivity=this;
-        homePagerOneFragment =new HomePagerOneFragment();
-        homePagerOneFragment.setFragment(this,fmFragment);
-        homePagerTwoFragment =new HomePagerTwoFragment();
-        homePagerTwoFragment.setHomePagerActivity(this);
-        homePagerThreeFragment =new HomePagerThreeFragment();
-        homePagerThreeFragment.setHomePagerActivity(this);
+
         mFragments.add(homePagerOneFragment);
         mFragments.add(homePagerTwoFragment);
         mFragments.add(homePagerThreeFragment);
@@ -328,15 +323,46 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
      * 初始化fragment
      */
     private void createFragment() {
-      fmFragment =new FMFragment();
-      fmFragment.setHomePagerActivity(this);
-      btMusicFragment =new BTMusicFragment();
-      musicFragment= new MusicFragment();
-      phoneFragment= new PhoneFragment();
-      setFragment =new SetFragment();
-      appFragment=new AppFragment();
-      videoFragment =new VideoFragment();
-      blueToothSetFragment =new BlueToothSetFragment();
+        if(fmFragment==null) {
+            fmFragment = new FMFragment();
+        }
+        if(fmFragment==null){
+            fmFragment.setHomePagerActivity(this);
+        }
+     if(btMusicFragment==null) {
+         btMusicFragment = new BTMusicFragment();
+     }
+     if(musicFragment==null){
+         musicFragment= new MusicFragment();
+     }
+    if(phoneFragment ==null ) {
+        phoneFragment = new PhoneFragment();
+    }
+    if(setFragment ==null) {
+        setFragment = new SetFragment();
+    }
+    if(appFragment==null) {
+        appFragment = new AppFragment();
+    }
+    if(videoFragment==null){
+        videoFragment =new VideoFragment();
+    }
+     if(blueToothSetFragment==null) {
+         blueToothSetFragment = new BlueToothSetFragment();
+     }
+        this.homePagerActivity=this;
+        if(homePagerOneFragment==null) {
+            homePagerOneFragment = new HomePagerOneFragment();
+        }
+        homePagerOneFragment.setFragment(this,fmFragment);
+        if(homePagerTwoFragment==null) {
+            homePagerTwoFragment = new HomePagerTwoFragment();
+        }
+        homePagerTwoFragment.setHomePagerActivity(this);
+        if(homePagerThreeFragment==null) {
+            homePagerThreeFragment = new HomePagerThreeFragment();
+        }
+        homePagerThreeFragment.setHomePagerActivity(this);
     }
     /*隐藏fragemt*/
     public static void  hideFragment(){
@@ -1229,6 +1255,7 @@ public int getSim(int num) {
         //now follow line will NOT show: User has not given permission to device UsbDevice
         UsbDeviceConnection connection = mUsbManager.openDevice(usbDevice);
         //add your operation code here
+
     }
 
     private final BroadcastReceiver mUsbPermissionActionReceiver = new BroadcastReceiver() {
