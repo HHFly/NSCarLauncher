@@ -3,7 +3,6 @@ package com.kandi.systemui.service;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -30,14 +29,12 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kandi.systemui.R;
 import com.kandi.systemui.driver.DriverServiceManger;
 import com.kandi.systemui.listen.MyPhoneStateListener;
-
 import com.kandi.systemui.receiver.CarPowerManangerAnimRecevie;
 import com.kandi.systemui.widget.DialogGunIn;
 import com.kandi.systemui.widget.DialogPowerIn;
@@ -581,8 +578,9 @@ public class KandiSystemUiService extends Service {
             if (intent.getAction() == "nscar_fresh_sdcard") {
                 Log.d("ComingReceiver", "onReceive: ");
                 Uri dirUri = Uri.parse("file://" + Environment.getExternalStorageDirectory());
-
-                sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+                Intent it = new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory()));
+                it.putExtra("userStatus",true);
+                sendBroadcast(it);
             }
         }
     }
