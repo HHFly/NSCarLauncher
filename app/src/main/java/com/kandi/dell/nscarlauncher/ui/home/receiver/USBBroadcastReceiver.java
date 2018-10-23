@@ -8,7 +8,6 @@ import com.kandi.dell.nscarlauncher.ui.application.AppFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
-import com.kandi.dell.nscarlauncher.ui.video.VideoFragment;
 
 public class USBBroadcastReceiver extends BroadcastReceiver {
     @Override
@@ -16,8 +15,10 @@ public class USBBroadcastReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
 //            Toast.makeText(context, R.string.USB接入, Toast.LENGTH_SHORT).show();
-           DialogLocalMusic.ScanVideoMusic(context,0);
-
+           DialogLocalMusic.usbStatus = true;
+           if(intent.getExtras().getBoolean("userStatus",false)){
+               DialogLocalMusic.ScanVideoMusic(context,0);
+           }
 
 
         } else if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {

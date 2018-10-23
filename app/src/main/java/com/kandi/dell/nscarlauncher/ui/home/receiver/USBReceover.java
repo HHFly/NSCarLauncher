@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
-import com.kandi.dell.nscarlauncher.ui.video.VideoFragment;
 
 public class USBReceover  extends BroadcastReceiver {
 
@@ -23,7 +22,7 @@ public class USBReceover  extends BroadcastReceiver {
         }
         else if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
             Toast.makeText(context, R.string.USB拔出, Toast.LENGTH_SHORT).show();
-
+            DialogLocalMusic.usbStatus = false;
             DialogLocalMusic.ScanVideoMusic(context,0);
         }
     }
