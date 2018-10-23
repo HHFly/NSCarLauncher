@@ -59,11 +59,13 @@ public class HomePagerTwoFragment extends BaseFragment {
         setClickListener(R.id.iv_window);
         setClickListener(R.id.nav_home);
         setClickListener(R.id.nav_company);
+        setClickListener(R.id.iv_phone_logo);
         setPalyListen();
     }
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+
             case R.id.iv_backbox:
 //                后备箱要注意只控制开锁，关锁不需要控制。
                 if(FlagProperty.BCMStaus==0) {
@@ -91,6 +93,9 @@ public class HomePagerTwoFragment extends BaseFragment {
 //                if(homePagerActivity!=null){
 //                    homePagerActivity.jumpFragment(FragmentType.PHONE);
 //                }
+                break;
+            case  R.id.iv_phone_logo:
+                HomePagerActivity.jumpFragment(FragmentType.PHONE);
                 break;
             case R.id.rl_set:
                 HomePagerActivity.jumpFragment(FragmentType.SET);

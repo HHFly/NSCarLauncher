@@ -81,6 +81,7 @@
         android:textColor="#EEEEEE"
         />
     <ImageView
+        android:id="@+id/iv_phone_logo"
         android:layout_width="80px"
         android:layout_height="80px"
         android:layout_gravity="center_horizontal"
