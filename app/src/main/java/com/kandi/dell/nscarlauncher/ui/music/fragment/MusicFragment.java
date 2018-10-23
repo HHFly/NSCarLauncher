@@ -816,7 +816,10 @@ public static void musicPlay(Context context){
                 in.close();
                 long endTimes = System.currentTimeMillis();
                 Log.i("CopyFileThread",""+Thread.currentThread().getName()+"-alltime:"+(endTimes-beginTimes));
-//                DialogLocalMusic.updateLocalMusic(context,new File(destPath));
+                Intent intent  =new Intent();
+                intent.setAction("nscar_fresh_sdcard");
+                context.sendBroadcast(intent);
+                DialogLocalMusic.updateLocalMusic(context);
                 hideLoadingDialog();
             } catch (Exception e) {
                 e.printStackTrace();

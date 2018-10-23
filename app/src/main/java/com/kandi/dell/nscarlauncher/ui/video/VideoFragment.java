@@ -1,6 +1,7 @@
 package com.kandi.dell.nscarlauncher.ui.video;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
@@ -312,7 +313,10 @@ public class VideoFragment extends BaseFragment{
                 in.close();
                 long endTimes = System.currentTimeMillis();
                 Log.i("CopyFileThread",""+Thread.currentThread().getName()+"-alltime:"+(endTimes-beginTimes));
-//                DialogLocalMusic.updateLocalVideo(context,new File(destPath));
+                Intent intent  =new Intent();
+                intent.setAction("nscar_fresh_sdcard");
+                context.sendBroadcast(intent);
+                DialogLocalMusic.updateLocalVideo(context);
                 hideLoadingDialog();
             } catch (Exception e) {
                 e.printStackTrace();
