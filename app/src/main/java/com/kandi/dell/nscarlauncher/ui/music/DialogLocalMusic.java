@@ -1,7 +1,6 @@
 package com.kandi.dell.nscarlauncher.ui.music;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,13 +13,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.BaseAdapter;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
@@ -55,6 +47,8 @@ public class DialogLocalMusic  {
 	static ContentResolver mResolver;
 	public static int musicID;
 	Context context;
+	public static boolean usbStatus = false;
+	public static boolean usedStatus = false;
 	public static void Clear(){
 		SDData.clear();
 		USBData.clear();
@@ -329,12 +323,23 @@ public class DialogLocalMusic  {
 
 		new Thread(){
 			public void run() {
-
-				if(context!=null) {
-					getUSBVideoMusicData(context,choose);
-					transportData();
+				if(usbStatus && !usedStatus){
+					usedStatus = true;
+					if(context!=null) {
+						getUSBVideoMusicData(context,choose);
+						if(!usbStatus){
+							USBVideoData.clear();
+							USBData.clear();
+						}
+						transportData();
+					}
+					usedStatus = false;
+				}else if(!usbStatus){
+					if(context!=null) {
+						getUSBVideoMusicData(context,choose);
+						transportData();
+					}
 				}
-
                 if(videoFragment!=null){
                     videoFragment.myHandler.sendMessage(videoFragment.myHandler.obtainMessage(videoFragment.VIEWFRESH));
                 }
@@ -402,7 +407,11 @@ public class DialogLocalMusic  {
 			public void run() {
 				if(context!=null) {
 					updateGallery(context);
-				getUSBVideoMusicData(context,0);
+					if(!usedStatus){
+						usedStatus = true;
+						getUSBVideoMusicData(context,0);
+						usedStatus = false;
+					}
 				}
 
 

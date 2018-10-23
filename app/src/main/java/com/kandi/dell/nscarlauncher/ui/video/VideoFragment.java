@@ -1,6 +1,7 @@
 package com.kandi.dell.nscarlauncher.ui.video;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +12,6 @@ import android.view.View;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
-import com.kandi.dell.nscarlauncher.common.util.CopyFileThread;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
@@ -19,7 +19,10 @@ import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 import com.kandi.dell.nscarlauncher.widget.AddOneEtParamDialog;
 
 import java.io.File;
+import java.io.RandomAccessFile;
 import java.lang.reflect.Field;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.util.List;
 
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
@@ -251,11 +254,12 @@ public class VideoFragment extends BaseFragment{
             public void onClickCommit(AddOneEtParamDialog dialog, String data) {
                 File sourse = new File(info.url);
                 long len = sourse.length();
-                long oneNum = len/blockCount;
-                for(int i=0;i<blockCount-1;i++){
-                    new CopyFileThread(info.url,PATH_SDCARDMOVIES+info.displayName,oneNum*i,oneNum*(i+1)).start();
-                }
-                new CopyFileThread(info.url,PATH_SDCARDMOVIES+info.displayName,oneNum*(blockCount-1),len).start();
+//                long oneNum = len/blockCount;
+//                for(int i=0;i<blockCount-1;i++){
+//                    new CopyFileThread(info.url,PATH_SDCARDMOVIES+info.displayName,oneNum*i,oneNum*(i+1)).start();
+//                }
+//                new CopyFileThread(info.url,PATH_SDCARDMOVIES+info.displayName,oneNum*(blockCount-1),len).start();
+                new CopyFileThread(info.url,PATH_SDCARDMOVIES+info.displayName,0,len).start();
                 dialog.dismiss();
                 App.get().getCurActivity().initImmersionBar();
 
@@ -269,5 +273,55 @@ public class VideoFragment extends BaseFragment{
         });
 
         mAddOneEtParamDialog.show(this.getFragmentManager());
+    }
+    class CopyFileThread extends Thread{
+        private String srcPath;//源文件
+        private String destPath;//目标文件地址
+        private long start,end;//start起始位置,end结束位置
+
+        public CopyFileThread(String srcPath,String destPath,long start,long end){
+            this.srcPath = srcPath;
+            this.destPath = destPath;
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public void run(){
+            try {
+                showLoadingDialog();
+                long beginTimes = System.currentTimeMillis();
+                Log.i("CopyFileThread","start:"+beginTimes);
+                //创建只读的随机访问文件
+                RandomAccessFile in = new RandomAccessFile(srcPath,"r");
+                //创建可读写的随机访问文件
+                RandomAccessFile out = new RandomAccessFile(destPath,"rw");
+                //将输入跳转到指定位置
+                in.seek(start);
+                //从指定位置开始写
+                out.seek(start);
+                //文件输入通道
+                FileChannel inChannel = in.getChannel();
+                //文件输出通道
+                FileChannel outChannel = out.getChannel();
+                //锁住需要操作的区域,false代表锁住
+                FileLock lock = outChannel.lock(start,(end-start),false);
+                //将字节从此通道的文件传输到给定的可写入字节的输出通道
+                inChannel.transferTo(start,(end-start),outChannel);
+                lock.release();
+                out.close();
+                in.close();
+                long endTimes = System.currentTimeMillis();
+                Log.i("CopyFileThread",""+Thread.currentThread().getName()+"-alltime:"+(endTimes-beginTimes));
+                Intent intent  =new Intent();
+                intent.setAction("nscar_fresh_sdcard");
+                context.sendBroadcast(intent);
+                DialogLocalMusic.updateLocalVideo(context);
+                hideLoadingDialog();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 }

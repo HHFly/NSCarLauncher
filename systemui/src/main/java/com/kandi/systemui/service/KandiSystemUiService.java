@@ -579,7 +579,10 @@ public class KandiSystemUiService extends Service {
                 Log.d("ComingReceiver", "onReceive: ");
                 Uri dirUri = Uri.parse("file://" + Environment.getExternalStorageDirectory());
 
-                sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+                Intent it = new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory()));
+                it.putExtra("userStatus",true);
+                sendBroadcast(it);
+
             }
         }
     }
