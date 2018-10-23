@@ -608,9 +608,9 @@ public static void musicPlay(Context context){
 ////          play();
 ////      }
 //      DialogLocalMusic.musicID=0;
-      Intent intent  =new Intent();
-      intent.setAction("nscar_fresh_sdcard");
-      context.sendBroadcast(intent);
+//      Intent intent  =new Intent();
+//      intent.setAction("nscar_fresh_sdcard");
+//      context.sendBroadcast(intent);
       selectMode(dataMode);
       flag_hachage=true;
       DialogLocalMusic.updateLocalMusic(context);
