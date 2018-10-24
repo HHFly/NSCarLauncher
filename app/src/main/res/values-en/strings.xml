@@ -40,6 +40,7 @@
     <string name="空调">Air-conditioning</string>
     <string name="室内">Indoor</string>
     <string name="usb">USB Music</string>
+    <string name="MusicCol">收藏音乐</string>
     <string name="刷新列表">Refresh List</string>
     <string name="暂无本地音乐">No Local Music</string>
     <string name="新密码">New Password：</string>
