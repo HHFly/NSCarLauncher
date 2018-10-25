@@ -25,7 +25,7 @@ public class USBReceover  extends BroadcastReceiver {
             Toast.makeText(context, R.string.USB拔出, Toast.LENGTH_SHORT).show();
             DialogLocalMusic.usbStatus = false;
             DialogLocalMusic.ScanVideoMusic(context,0);
-            MusicCollectionDao.deleteFavByUrl(context,"/storage/udisk");
+            MusicCollectionDao.deleteFavByUsbOut(context,"/storage/udisk");
         }
     }
 }
