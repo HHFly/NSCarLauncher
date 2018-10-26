@@ -353,8 +353,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         this.homePagerActivity=this;
         if(homePagerOneFragment==null) {
             homePagerOneFragment = new HomePagerOneFragment();
+            homePagerOneFragment.setFragment(this,fmFragment);
         }
-        homePagerOneFragment.setFragment(this,fmFragment);
+
         if(homePagerTwoFragment==null) {
             homePagerTwoFragment = new HomePagerTwoFragment();
         }

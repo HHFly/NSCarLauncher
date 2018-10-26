@@ -319,7 +319,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         }
         setTvText(R.id.tv_fm_hz,String.valueOf(channel));
 //        Log.d("Fm","Chennl1   "+String.valueOf(channel));
-        SPUtil.getInstance(getContext(),FMCHANNEL).putFloat(FMCHANNEL,channel);
+        SPUtil.getInstance(App.get(),FMCHANNEL).putFloat(FMCHANNEL,channel);
     }
     /*初始化蓝牙*/
     private void setBT(){
