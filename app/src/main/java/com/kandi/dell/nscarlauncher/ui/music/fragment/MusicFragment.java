@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.db.dao.MusicCollectionDao;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
@@ -63,19 +64,20 @@ public class MusicFragment extends BaseFragment {
     static AudioManager audioManager;
     static IKdAudioControlService audioservice ;
     static IKdBtService btservice;
-  public   static boolean system_flag, am_flag,flag_play,flag_hachage;
+    public static boolean system_flag, am_flag,flag_play,flag_hachage;
     public static CircleImageView circle_image;
     static Context context;
-    public static ImageView bt_open, bt_play, bt_back, bt_next, bt_u, bt_music_model;
+    public static ImageView bt_open, bt_play, bt_back, bt_next, bt_u, bt_music_model, bt_fav;
     public static TextView tv_music_songname, tv_music_singer, music_current_time, music_total_time;
     private  int  currentMode ;
-  private   List<Mp3Info> mData = new ArrayList<>();//数据源
+    private   List<Mp3Info> mData = new ArrayList<>();//数据源
     private   List<Mp3Info> mLocalData = new ArrayList<>();//缓存数据源
     private MusicAdapter mAdapter;
     private MusicLocalAdapter musicLocalAdapter;
     public static    DialogLocalMusic dialogLocalMusic;
     public static final String PATH_SDCARDMUSIC = "/sdcard/Music/";
     public int blockCount = 4;
+    public List<Mp3Info> favMusic;
     @Override
     public int getContentResId() {
         return R.layout.fragment_music;
@@ -103,6 +105,7 @@ public class MusicFragment extends BaseFragment {
         circle_image =getView(R.id.circle_image);
         bt_music_model=getView(R.id.iv_music_mode);
         bt_next =getView(R.id.music_ringt);
+        bt_fav = getView(R.id.music_fav);
         context=  getContext();
     }
 
@@ -116,13 +119,15 @@ public class MusicFragment extends BaseFragment {
         setClickListener(R.id.music_local_return);
         setClickListener(R.id.music_local_1);
         setClickListener(R.id.music_local_2);
+        setClickListener(R.id.music_local_3);
         setClickListener(R.id.music_refresh);
+        setClickListener(R.id.music_fav);
     }
 
     @Override
     public void initView() {
 
-
+        favMusic = MusicCollectionDao.getAllFav(getContext());
         initSeekBar();
         DialogLocalMusic.setMusicFragment(this);
         getMusicData();
@@ -166,10 +171,10 @@ public class MusicFragment extends BaseFragment {
                 play();
                 break;
             case R.id.music_left:
-                    PreMusic();
+                PreMusic();
                 break;
             case R.id.music_ringt:
-                    NextMusic();
+                NextMusic();
                 break;
             case R.id.iv_music_mode:
                 setMode();
@@ -183,16 +188,36 @@ public class MusicFragment extends BaseFragment {
                 setViewVisibilityGone(R.id.music_local,false);
                 break;
             case  R.id.music_local_1:
-                dataMode=3;
+                dataMode=1;
                 getLocalMusicData();
                 break;
             case R.id.music_local_2:
                 dataMode=2;
                 getUsbMusicData();
                 break;
+            case R.id.music_local_3:
+                dataMode=3;
+                getMusicColData();
+                break;
             case R.id.music_refresh:
 //                dialogLocalMusic.ScanMusic(getContext(),false);
 //                dialogLocalMusic.ScanVideoMusic(getContext(),1);
+                break;
+            case R.id.music_fav:
+                try {
+                    if(DialogLocalMusic.playnow != null && (DialogLocalMusic.playnow.url != null && !"".equals(DialogLocalMusic.playnow.url))){
+                        if(MusicCollectionDao.findFavByUrl(getContext(),DialogLocalMusic.playnow.url).size()>0){
+                            MusicCollectionDao.deleteFavByUrl(getContext(),DialogLocalMusic.playnow.url);
+                            bt_fav.setBackgroundResource(R.mipmap.ic_music_collect);
+                        }else{
+                            MusicCollectionDao.addFav(getContext(),DialogLocalMusic.playnow);
+                            bt_fav.setBackgroundResource(R.mipmap.ic_music_collect_press);
+                        }
+                        getMusicColData();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
 
         }
@@ -273,53 +298,53 @@ public class MusicFragment extends BaseFragment {
             MusicModel.getNextMusic(context, music_model);
         }
     }
-  /*音乐模式*/
-  public  static   void setMode(){
-      try {
-          if (music_model == 1) {
-              bt_music_model.setBackgroundResource(R.drawable.music_model_singlecycle);
-              music_model = 2;
-          } else if (music_model == 2) {
-              bt_music_model.setBackgroundResource(R.drawable.music_model_randomcycle);
-              music_model = 3;
-          } else if (music_model == 3) {
-              bt_music_model.setBackgroundResource(R.drawable.music_model_listcycle);
-              music_model = 1;
-          }
-      } catch (Exception e) {
-          e.printStackTrace();
-      }
-  }
-
-/*音乐播放*/
-public   void  play(){
-    if (!flag_play) {
-        musicPlay(getActivity());
-    } else {
-       musicPause(getActivity());
-    }
-}
-/*播发音乐*/
-public static void musicPlay(Context context){
-    if (App.get().getAudioManager().requestAudioFocus(afChangeListener, 12,
-            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
-            && App.get().getAudioManager().requestAudioFocus(afSystemChangeListener, AudioManager.STREAM_MUSIC,
-            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-        system_flag = true;
-        am_flag = true;
-        if (DialogLocalMusic.data.size() > 0) {
-            if(circle_image!=null) {
-                circle_image.roatateStart();
+    /*音乐模式*/
+    public  static   void setMode(){
+        try {
+            if (music_model == 1) {
+                bt_music_model.setBackgroundResource(R.drawable.music_model_singlecycle);
+                music_model = 2;
+            } else if (music_model == 2) {
+                bt_music_model.setBackgroundResource(R.drawable.music_model_randomcycle);
+                music_model = 3;
+            } else if (music_model == 3) {
+                bt_music_model.setBackgroundResource(R.drawable.music_model_listcycle);
+                music_model = 1;
             }
-            if(bt_play!=null) {
-                bt_play.setBackgroundResource(R.mipmap.ic_play_big);
-            }
-            broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
-            flag_play = true;
-            HomePagerTwoFragment.musicPaly.setPlay(true);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-}
+
+    /*音乐播放*/
+    public   void  play(){
+        if (!flag_play) {
+            musicPlay(getActivity());
+        } else {
+            musicPause(getActivity());
+        }
+    }
+    /*播发音乐*/
+    public static void musicPlay(Context context){
+        if (App.get().getAudioManager().requestAudioFocus(afChangeListener, 12,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
+                && App.get().getAudioManager().requestAudioFocus(afSystemChangeListener, AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            system_flag = true;
+            am_flag = true;
+            if (DialogLocalMusic.data.size() > 0) {
+                if(circle_image!=null) {
+                    circle_image.roatateStart();
+                }
+                if(bt_play!=null) {
+                    bt_play.setBackgroundResource(R.mipmap.ic_play_big);
+                }
+                broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
+                flag_play = true;
+                HomePagerTwoFragment.musicPaly.setPlay(true);
+            }
+        }
+    }
     public  static void musicPause(Context context){
         if (App.get().getAudioManager().abandonAudioFocus(afChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
                 && App.get().getAudioManager().abandonAudioFocus(
@@ -354,32 +379,40 @@ public static void musicPlay(Context context){
             }
         }
     }
+    // 设置收藏状态信息
+    public static void setMusicCol(String url) {
+        if(MusicCollectionDao.findFavByUrl(context,url).size()>0){
+            bt_fav.setBackgroundResource(R.mipmap.ic_music_collect_press);
+        }else{
+            bt_fav.setBackgroundResource(R.mipmap.ic_music_collect);
+        }
+    }
     public static Handler  ViewHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-           switch (msg.what){
-               case MUSIC_BLUETOOTH_CLOSE:
-                   if(bt_play!=null){
-                       bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
-                   }
-                   if(circle_image!=null){
+            switch (msg.what){
+                case MUSIC_BLUETOOTH_CLOSE:
+                    if(bt_play!=null){
+                        bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
+                    }
+                    if(circle_image!=null){
 
-                       circle_image.roatatePause();
-                   }
-                   flag_play=false;
-                   break;
+                        circle_image.roatatePause();
+                    }
+                    flag_play=false;
+                    break;
 
-               case MUSIC_BLUETOOTH_OPEN:
-                   if(bt_play!=null){
-                       bt_play.setBackgroundResource(R.mipmap.ic_play_big);
-                   }
-                   if(circle_image!=null){
+                case MUSIC_BLUETOOTH_OPEN:
+                    if(bt_play!=null){
+                        bt_play.setBackgroundResource(R.mipmap.ic_play_big);
+                    }
+                    if(circle_image!=null){
 
-                       circle_image.roatateStart();
-                   }
-                   flag_play=true;
-                   break;
-           }
+                        circle_image.roatateStart();
+                    }
+                    flag_play=true;
+                    break;
+            }
         }
     };
 
@@ -393,7 +426,7 @@ public static void musicPlay(Context context){
                 case VIEWFRESH:
                     Log.d("Music ", "getMusiType: " +String.valueOf( HomePagerActivity.mCurFragment.getmType()));
                     if(FragmentType.MUSIC== HomePagerActivity.mCurFragment.getmType()){
-                   getMusicData();
+                        getMusicData();
                     }
                     break;
                 default:
@@ -564,46 +597,46 @@ public static void musicPlay(Context context){
             return "" + time;
         }
     }
-/*初始化本地音乐数据*/
-  private  void getMusicData(){
-      switch (dataMode){
-          case 3:
-              dataMode=1;
-              mData =DialogLocalMusic.SDData;
-              selectMode(dataMode);
+    /*初始化本地音乐数据*/
+    private  void getMusicData(){
+        switch (dataMode){
+            case 3:
+                mData =DialogLocalMusic.ColData;
+                DialogLocalMusic.transport(DialogLocalMusic.data, DialogLocalMusic.ColData);
+                selectMode(dataMode);
 
-              break;
-          case 2:
-              mData =DialogLocalMusic.USBData;
-              if(mData!=null||mData.size()!=0) {
+                break;
+            case 2:
+                mData =DialogLocalMusic.USBData;
+                if(mData!=null||mData.size()!=0) {
 
-                  dataMode=2;
-                  selectMode(dataMode);
-              }
-              break;
-          default:
-              mData =DialogLocalMusic.SDData;
-              dataMode = 1;
-              selectMode(dataMode);
-              if(mData==null||mData.size()==0){
-                  mData =DialogLocalMusic.USBData;
-                  if(mData!=null||mData.size()!=0) {
+                    dataMode=2;
+                    selectMode(dataMode);
+                }
+                break;
+            default:
+                mData =DialogLocalMusic.SDData;
+                dataMode = 1;
+                selectMode(dataMode);
+                if(mData==null||mData.size()==0){
+                    mData =DialogLocalMusic.USBData;
+                    if(mData!=null||mData.size()!=0) {
 
-                      dataMode=2;
-                      selectMode(dataMode);
-                  }
-              }
-              break;
-      }
+                        dataMode=2;
+                        selectMode(dataMode);
+                    }
+                }
+                break;
+        }
 
 
-          initRvAdapter(mData);
-          initRvLocalAdapter(mData);
-      Log.d("Music ", "getMusicData: " +String.valueOf(mData.size()));
-  }
+        initRvAdapter(mData);
+        initRvLocalAdapter(mData);
+        Log.d("Music ", "getMusicData: " +String.valueOf(mData.size()));
+    }
 
-  /*获取本地音乐*/
-  private  void getLocalMusicData(){
+    /*获取本地音乐*/
+    private  void getLocalMusicData(){
 //      if(flag_play){
 ////          play();
 ////      }
@@ -611,17 +644,35 @@ public static void musicPlay(Context context){
 //      Intent intent  =new Intent();
 //      intent.setAction("nscar_fresh_sdcard");
 //      context.sendBroadcast(intent);
+
       selectMode(dataMode);
       flag_hachage=true;
       DialogLocalMusic.updateLocalMusic(context);
 
   }
+
+//
+
     /*获取Usb音乐*/
     private  void getUsbMusicData(){
 
         selectMode(dataMode);
         flag_hachage=true;
         initRvLocalAdapter(DialogLocalMusic.USBData);
+    }
+    /*获取收藏音乐*/
+    private  void getMusicColData(){
+//      if(flag_play){
+////          play();
+////      }
+//      DialogLocalMusic.musicID=0;
+//      Intent intent  =new Intent();
+//      intent.setAction("nscar_fresh_sdcard");
+//      context.sendBroadcast(intent);
+        selectMode(dataMode);
+        flag_hachage=true;
+        DialogLocalMusic.updateColMusic(context);
+
     }
     private void setMusic(int dataMode){
         if(dataMode!=currentMode){
@@ -630,17 +681,24 @@ public static void musicPlay(Context context){
         if(dataMode==1) {
             mData = DialogLocalMusic.SDData;
             DialogLocalMusic.transport(DialogLocalMusic.data, DialogLocalMusic.SDData);
-        }else {
+        }else if(dataMode==2){
+            mData = DialogLocalMusic.USBData;
+            DialogLocalMusic.transport(DialogLocalMusic.data, DialogLocalMusic.USBData);
+        }else if(dataMode==3){
+            mData = DialogLocalMusic.ColData;
+            DialogLocalMusic.transport(DialogLocalMusic.data, DialogLocalMusic.ColData);
+        }else{
             mData = DialogLocalMusic.USBData;
             DialogLocalMusic.transport(DialogLocalMusic.data, DialogLocalMusic.USBData);
         }
-        setTvText(R.id.music_type,dataMode==1?getString(R.string.本地音乐):getString(R.string.usb));
+        setTvText(R.id.music_type,dataMode==1?getString(R.string.本地音乐):dataMode==2?getString(R.string.usb):getString(R.string.MusicCol));
 
         initRvAdapter(mData);
     }
     private void  selectMode(int type){
-      setViewSelected(R.id.music_local_1,false);
+        setViewSelected(R.id.music_local_1,false);
         setViewSelected(R.id.music_local_2,false);
+        setViewSelected(R.id.music_local_3,false);
         switch (type){
             case 1:
                 setViewSelected(R.id.music_local_1,true);
@@ -650,6 +708,10 @@ public static void musicPlay(Context context){
             case 2 :
                 setViewSelected(R.id.music_local_2,true);
                 setTvText(R.id.music_type,getString(R.string.usb));
+                break;
+            case 3:
+                setViewSelected(R.id.music_local_3,true);
+                setTvText(R.id.music_type,getString(R.string.MusicCol));
                 break;
         }
     }
@@ -821,7 +883,12 @@ public static void musicPlay(Context context){
                 intent.setAction("nscar_fresh_sdcard");
                 context.sendBroadcast(intent);
                 DialogLocalMusic.updateLocalMusic(context);
-                hideLoadingDialog();
+                myHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideLoadingDialog();
+                    }
+                },3500);
             } catch (Exception e) {
                 e.printStackTrace();
             }

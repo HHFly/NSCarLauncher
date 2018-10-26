@@ -31,7 +31,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 public class VideoFragment extends BaseFragment{
     private VideoAdapter mAdapter;
     public static List<Mp3Info> mData;
-   public static DialogLocalMusic dialogLocalMusic;
+    public static DialogLocalMusic dialogLocalMusic;
     public final static int  VIEWFRESH =1;
     public static int position = 0;
     public static Context context;
@@ -317,7 +317,12 @@ public class VideoFragment extends BaseFragment{
                 intent.setAction("nscar_fresh_sdcard");
                 context.sendBroadcast(intent);
                 DialogLocalMusic.updateLocalVideo(context);
-                hideLoadingDialog();
+                myHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideLoadingDialog();
+                    }
+                },3500);
             } catch (Exception e) {
                 e.printStackTrace();
             }

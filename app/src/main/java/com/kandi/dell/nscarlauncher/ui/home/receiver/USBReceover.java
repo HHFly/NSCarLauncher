@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.kandi.dell.nscarlauncher.R;
+import com.kandi.dell.nscarlauncher.db.dao.MusicCollectionDao;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 
 public class USBReceover  extends BroadcastReceiver {
@@ -24,6 +25,7 @@ public class USBReceover  extends BroadcastReceiver {
             Toast.makeText(context, R.string.USB拔出, Toast.LENGTH_SHORT).show();
             DialogLocalMusic.usbStatus = false;
             DialogLocalMusic.ScanVideoMusic(context,0);
+            MusicCollectionDao.deleteFavByUsbOut(context,"/storage/udisk");
         }
     }
 }

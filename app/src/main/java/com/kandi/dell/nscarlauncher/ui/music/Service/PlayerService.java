@@ -2,7 +2,6 @@ package com.kandi.dell.nscarlauncher.ui.music.Service;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -11,7 +10,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.CursorMusicImage;
@@ -210,6 +208,7 @@ public class PlayerService extends Service {
 //			}
 					
 			MusicFragment.setMusicInfo(musicName, artist);
+            MusicFragment.setMusicCol(DialogLocalMusic.playnow.url);
 			if (!isPause) {
 				mediaPlayer.start(); // 开始播放
 			}

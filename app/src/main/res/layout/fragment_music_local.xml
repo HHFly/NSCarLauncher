@@ -40,6 +40,15 @@
         android:layout_marginTop="347px"
         android:textColor="@drawable/select_music_local_text_bg"
         android:textSize="36px" />
+    <TextView
+        android:id="@+id/music_local_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/MusicCol"
+        android:layout_marginLeft="200px"
+        android:layout_marginTop="451px"
+        android:textColor="@drawable/select_music_local_text_bg"
+        android:textSize="36px" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -12,12 +12,12 @@ public class MusicModel {
 	public static final int LIST_LOOP = 1;//列表循环
 	public static final int SINGLE_LOOP = 2;         //单曲循环
 	public static final int RANDOM_PLAY = 3;         //随机循环
- 
+
 	// 获取下首歌曲
 	public static void getNextMusic(Context context, int model) {
 		if(DialogLocalMusic.data.size()>0) {
 			if (model == LIST_LOOP) {
-				if (DialogLocalMusic.musicID == (DialogLocalMusic.data.size() - 1)) {
+				if (DialogLocalMusic.musicID >= (DialogLocalMusic.data.size() - 1)) {
 					DialogLocalMusic.musicID = 0;
 				} else {
 					DialogLocalMusic.musicID++;
@@ -31,7 +31,7 @@ public class MusicModel {
 		}
 	}
 
-//获取上首歌曲
+	//获取上首歌曲
 	public static void getPrevMusic(Context context, int model) {
 		if(DialogLocalMusic.data.size()>0) {
 			if (model == LIST_LOOP) {
@@ -55,7 +55,7 @@ public class MusicModel {
 		i.putExtra("MSG", msg);
 		context.startService(i);
 	}
-	
+
 	//获取随机的一首歌曲
 	public static void getRandom(int sum){
 		int num = 0;
