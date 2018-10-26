@@ -120,13 +120,13 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
             public void onClick(View v) {
                 newName = bluetooth_new_name.getText().toString().trim();
                 if (newName.compareTo("") != 0) {
-                    System.out.println("新名称： " + newName);
+//                    System.out.println("新名称： " + newName);
                     new Thread() {
                         public void run() {
                             int result = -1;
                             try {
                                 result = btservice.btSetLocalName(newName);
-                                System.out.println("改名称结果:" + result);
+//                                System.out.println("改名称结果:" + result);
                             } catch (RemoteException e) {
                                 e.printStackTrace();
                             }

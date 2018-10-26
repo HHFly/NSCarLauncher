@@ -31,6 +31,7 @@
         android:theme="@style/mySwitch"
         android:layout_marginLeft="900px"/>
     <View style="@style/BaseLine.Horizontal"
+        android:background="#3c3c3c"
         android:layout_alignParentBottom="true"/>
 </RelativeLayout>
 
@@ -62,6 +63,7 @@
                 android:textSize="36px"/>
         </LinearLayout>
         <View style="@style/BaseLine.Horizontal"
+            android:background="#3c3c3c"
           />
         <LinearLayout
             android:id="@+id/ll_pin"
