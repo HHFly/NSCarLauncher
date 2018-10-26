@@ -22,7 +22,6 @@ import android.widget.TextView;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
-import com.kandi.dell.nscarlauncher.common.util.LogUtils;
 import com.kandi.dell.nscarlauncher.common.util.StringUtils;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
@@ -436,7 +435,11 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 //            bt_stop.setVisibility(View.VISIBLE);
         }
         if(tv_phone_number!=null) {
-            tv_phone_number.setText(getName(FlagProperty.phone_number));
+            if("".equals(FlagProperty.phone_number)){
+                tv_phone_number.setText(getName(number));
+            }else{
+                tv_phone_number.setText(getName(FlagProperty.phone_number));
+            }
         }
         phone_call_time = 0;
         flag_phone = true;
@@ -546,6 +549,9 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                                 tv_phone_info.setText(address + "," + type);
                             }else{
                                 tv_phone_info.setText("");
+                            }
+                            if(ll_calling_controll!=null){
+                                ll_calling_controll.setVisibility(View.VISIBLE);
                             }
                             rl_call.setVisibility(View.VISIBLE);
                             bt_call.setVisibility(View.VISIBLE);
