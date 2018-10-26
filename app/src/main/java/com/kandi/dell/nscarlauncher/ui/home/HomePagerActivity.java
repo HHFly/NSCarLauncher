@@ -371,7 +371,11 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 //                });
 //        frameLayout.startAnimation(mHiddenAction);
         frameLayout.setVisibility(View.GONE);
-
+        if(homePagerActivity!=null){
+            homePagerActivity.hideLoadingDialog();
+        }if(FragmentType.BTSET==mCurFragment.getmType()){
+            blueToothSetFragment.hideDialog();
+        }
         freshlayout();
     }
 

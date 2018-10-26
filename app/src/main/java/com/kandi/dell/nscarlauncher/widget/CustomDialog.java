@@ -9,11 +9,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 public class CustomDialog extends Dialog {
+
     public CustomDialog(@NonNull Context context) {
         super(context);
     }
 
     public CustomDialog(@NonNull Context context, int themeResId) {
+
         super(context, themeResId);
     }
 
