@@ -11,15 +11,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30px"
         android:textColor="@android:color/white"
-        android:text="更改蓝牙名称"
+        android:text="@string/更改蓝牙名称"
         android:textSize="23px" />
 
     <TextView
+        android:id="@+id/tv_bt_name_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30px"
         android:layout_marginTop="94px"
-        android:text="旧名称："
+        android:text="@string/旧名称"
         android:textColor="@android:color/white"
         android:textSize="20px" />
 
@@ -27,17 +28,19 @@
         android:id="@+id/dialog_bluetooth_previous_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="125px"
+        android:layout_toRightOf="@+id/tv_bt_name_dialog"
+        android:layout_marginLeft="20px"
         android:layout_marginTop="94px"
         android:textColor="@android:color/white"
         android:textSize="20px"/>
     
     <TextView
+        android:id="@+id/tv_bt_name_dialog_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30px"
         android:layout_marginTop="158px"
-        android:text="新名称："
+        android:text="@string/新名称"
         android:textColor="@android:color/white"
         android:textSize="20px" />
 
@@ -45,30 +48,38 @@
         android:id="@+id/bluetooth_input_new_name"
         android:layout_width="300px"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="130px"
-        android:layout_marginRight="40px"
+        android:layout_marginLeft="20px"
+        android:layout_toRightOf="@+id/tv_bt_name_dialog_new"
         android:layout_marginTop="160px"
         android:background="@null"
-        android:hint="请输入蓝牙名称"
+        android:hint="@string/请输入蓝牙名称"
         android:inputType="textNoSuggestions"
         android:textColor="@android:color/white"
         android:textSize="20px" />
 
-    <ImageButton
+    <TextView
         android:id="@+id/bluetooth_input_confirm_name"
         android:layout_width="140px"
         android:layout_height="44px"
         android:layout_marginLeft="60px"
         android:layout_marginTop="229px"
-        android:background="@drawable/set_wifi_info_confirm" />
+        android:text="@string/确认"
+        android:gravity="center"
 
-    <ImageButton
+        android:textColor="@drawable/select_music_local_text_bg"
+        />
+
+    <TextView
         android:id="@+id/bluetooth_input_cancel_name"
         android:layout_width="140px"
         android:layout_height="44px"
         android:layout_alignParentRight="true"
         android:layout_marginRight="60px"
         android:layout_marginTop="229px"
-        android:background="@drawable/set_wifi_info_cancel" />
+        android:text="@string/取消"
+        android:gravity="center"
+
+        android:textColor="@drawable/select_music_local_text_bg"
+        />
 
 </RelativeLayout>

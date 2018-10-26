@@ -111,8 +111,8 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
         TextView bluetooth_previous_name = (TextView) window.findViewById(R.id.dialog_bluetooth_previous_name);
         final EditText bluetooth_new_name = (EditText) window.findViewById(R.id.bluetooth_input_new_name);
         bluetooth_previous_name.setText(info[0]);
-        ImageButton bt_confirm = (ImageButton) window.findViewById(R.id.bluetooth_input_confirm_name);
-        ImageButton bt_cancel = (ImageButton) window.findViewById(R.id.bluetooth_input_cancel_name);
+        TextView bt_confirm = (TextView) window.findViewById(R.id.bluetooth_input_confirm_name);
+        TextView bt_cancel = (TextView) window.findViewById(R.id.bluetooth_input_cancel_name);
 
         bt_confirm.setOnClickListener(new View.OnClickListener() {
 
@@ -163,8 +163,8 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
         final EditText bluetooth_new_password = (EditText) window
                 .findViewById(R.id.bluetooth_input_new_password);
         bluetooth_previous_password.setText(FlagProperty.BtCode);
-        ImageButton bt_confirm = (ImageButton) window.findViewById(R.id.bluetooth_input_confirm_password);
-        ImageButton bt_cancel = (ImageButton) window.findViewById(R.id.bluetooth_input_cancel_password);
+        TextView bt_confirm = (TextView) window.findViewById(R.id.bluetooth_input_confirm_password);
+        TextView bt_cancel = (TextView) window.findViewById(R.id.bluetooth_input_cancel_password);
 
         bt_confirm.setOnClickListener(new View.OnClickListener() {
 
@@ -172,7 +172,7 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
             public void onClick(View v) {
                 newPassword = bluetooth_new_password.getText().toString().trim();
                 if (newPassword.compareTo("") != 0) {
-                    System.out.println("新密码： " + newPassword);
+//                    System.out.println("新密码： " + newPassword);
                     new Thread() {
                         public void run() {
                             FlagProperty.BtCode = newPassword;
