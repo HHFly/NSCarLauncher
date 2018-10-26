@@ -166,12 +166,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         if(carMFLReceiver ==null){
             carMFLReceiver =new CarMFLReceiver();
             IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction("com.kangdi.BroadCast.WheelVolumeAdd");
-            intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_VOLUMEADD);
-            intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_VOLUMEREDUCE);
             intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_MODE);
             intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_VOICE);
-            intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_MUTE);
             intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_MUSIC_PREV);
             intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_MUSIC_NEXT);
             intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_CALL);

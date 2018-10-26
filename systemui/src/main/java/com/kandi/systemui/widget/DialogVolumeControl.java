@@ -160,6 +160,18 @@ public void  show(){
 
 	}
 
+	public void setVolumeProgress(int progress){
+		thumb_volume.setProgress(progress);
+	}
+
+	public int getVolumeProgress(){
+		return thumb_volume.getProgress();
+	}
+
+	public void setVolumeMute(){
+		imagebtn_volume.performClick();
+	}
+
 	public  void volumeResume(){
 		if(audiomanage!=null) {
 			int current = audiomanage.getStreamVolume(AudioManager.STREAM_MUSIC);

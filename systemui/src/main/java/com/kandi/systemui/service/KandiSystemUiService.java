@@ -16,6 +16,7 @@ import android.os.IBinder;
 import android.os.IKdBtService;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -62,6 +63,9 @@ public class KandiSystemUiService extends Service {
     MyPhoneStateListener MyListener;
     private TelephonyManager Tel;
     private static final  String ACTION ="com.kangdi.systemui.SystemUIService";
+    public final static String ACTION_WHEEL_VOLUMEADD = "com.kangdi.BroadCast.WheelVolumeAdd";/*音量+*/
+    public final static  String ACTION_WHEEL_VOLUMEREDUCE ="com.kangdi.BroadCast.WheelVolumeReduce";//音量-
+    public final static String ACTION_WHEEL_MUTE ="com.kangdi.BroadCast.Mute";//静音
     private float mPosX,mPosY,mCurPosX,mCurPosY;
   public   static IKdBtService btservice;//蓝牙服务
     private WindowManager.LayoutParams wmParamDiaglogs = null;
@@ -253,6 +257,9 @@ public class KandiSystemUiService extends Service {
             comingReceiver = new ComingReceiver();
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction("nscar_fresh_sdcard");
+            intentFilter.addAction(ACTION_WHEEL_VOLUMEADD);
+            intentFilter.addAction(ACTION_WHEEL_VOLUMEREDUCE);
+            intentFilter.addAction(ACTION_WHEEL_MUTE);
             registerReceiver(comingReceiver, intentFilter);
         }
     }
@@ -570,6 +577,16 @@ public class KandiSystemUiService extends Service {
             phoneFloatLayout.setVisibility(View.GONE);
         }
     }
+    /*多功能方向盘接听蓝牙电话*/
+    public void  wheelAnswser(){
+        tv_answser.setVisibility(View.GONE);
+    }
+    /*多功能方向盘挂断蓝牙电话*/
+    public void  wheelHangup(){
+        if(phoneFloatLayout!=null) {
+            phoneFloatLayout.setVisibility(View.GONE);
+        }
+    }
 /*来电广播接听*/
 
     public class ComingReceiver extends BroadcastReceiver {
@@ -583,6 +600,33 @@ public class KandiSystemUiService extends Service {
                 it.putExtra("userStatus",true);
                 sendBroadcast(it);
 
+            }else if (intent.getAction().equals(ACTION_WHEEL_VOLUMEADD)) {
+                if( SystemProperties.getInt("sys.kd.revers",0)==0) { // 1 倒车
+                    showVolumeDialog();
+                    int progress = dialogVolumeControl.getVolumeProgress() + 5;
+                    if(progress >= 100){
+                        progress = 100;
+                        dialogVolumeControl.setVolumeProgress(progress);
+                    }else{
+                        dialogVolumeControl.setVolumeProgress(progress);
+                    }
+                }
+            }else if (intent.getAction().equals(ACTION_WHEEL_VOLUMEREDUCE)) {
+                if( SystemProperties.getInt("sys.kd.revers",0)==0) { // 1 倒车
+                    showVolumeDialog();
+                    int progress = dialogVolumeControl.getVolumeProgress() - 5;
+                    if(progress <= 0) {
+                        progress = 0;
+                        dialogVolumeControl.setVolumeProgress(progress);
+                    }else{
+                        dialogVolumeControl.setVolumeProgress(progress);
+                    }
+                }
+            }else if (intent.getAction().equals(ACTION_WHEEL_MUTE)) {
+                if( SystemProperties.getInt("sys.kd.revers",0)==0) { // 1 倒车
+                    showVolumeDialog();
+                    dialogVolumeControl.setVolumeMute();
+                }
             }
         }
     }

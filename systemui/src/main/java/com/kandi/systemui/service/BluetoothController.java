@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
-import android.view.View;
 
 public class BluetoothController extends BroadcastReceiver {
 
@@ -20,6 +19,8 @@ public class BluetoothController extends BroadcastReceiver {
     public final static String ACTION_AD = "com.kangdi.BroadCast.AudioDisconnect";
     public final static String KEY_CALLINDEX                        = "com.kangdi.key.callindex";// 来电通话索引
     public final static String KEY_PHONENUM              = "com.kangdi.key.phonenum";// 电话号码的KEY
+    public final static String ACTION_WHEEL_CALL="com.kangdi.BroadCast.WheelCall";//接听
+    public final static String ACTION_WHEEL_HANGUP="com.kangdi.BroadCast.WheelHangup";//挂断
     KandiSystemUiService mService;
 
     public BluetoothController(KandiSystemUiService service) {
@@ -65,6 +66,10 @@ public class BluetoothController extends BroadcastReceiver {
             }
         }else if (intent.getAction().equals(ACTION_CALLEND)) {
             mService.hidePhone();
+        }else if (intent.getAction().equals(ACTION_WHEEL_CALL)) {
+            mService.wheelAnswser();
+        }else if (intent.getAction().equals(ACTION_WHEEL_HANGUP)) {
+            mService.wheelHangup();
         }
             mService.setBluetoothState(isBluetoothAudioEnable
                 || isBluetoothHandsFreeEnable);
@@ -80,6 +85,8 @@ public class BluetoothController extends BroadcastReceiver {
         iFilter.addAction(ACTION_RINGCALL);
         iFilter.addAction(ACTION_CALLSTART);
         iFilter.addAction(ACTION_CALLEND);
+        iFilter.addAction(ACTION_WHEEL_CALL);
+        iFilter.addAction(ACTION_WHEEL_HANGUP);
         mService.registerReceiver(this, iFilter);
     }
 
