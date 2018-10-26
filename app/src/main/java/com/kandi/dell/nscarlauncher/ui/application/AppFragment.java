@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
@@ -213,8 +214,17 @@ public class AppFragment extends BaseFragment {
 
                     intent =packageManager.getLaunchIntentForPackage(data.getPkgName());  //com.xx.xx是我们获取到的包名
                     if(intent!=null){
-                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                        startActivity(intent);
+                        if("org.mozilla.firefox".equals(data.getPkgName())){
+                            intent.setAction("android.intent.action.VIEW");
+                            Uri content_url = Uri.parse("http://www.kandigroup.com.cn/");
+                            intent.setData(content_url);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            startActivity(intent);
+                        }else {
+                            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            startActivity(intent);
+                        }
+
                     }
 
 
@@ -272,7 +282,7 @@ public class AppFragment extends BaseFragment {
                     }
                 }
                 for (ApplicationInfo app : listAppcations) {
-                    if("com.android.browser".equals(app.packageName)) {
+                    if("org.mozilla.firefox".equals(app.packageName)) {
                         AppInfo appBo =new AppInfo();
                         appBo.setName(app.processName);
                         appBo.setPkgName(app.packageName);
