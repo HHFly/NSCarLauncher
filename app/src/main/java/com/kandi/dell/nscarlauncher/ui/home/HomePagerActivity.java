@@ -194,7 +194,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             mNetworkReceiver = new NetworkBroadcastReceiver();
             registerReceiver(mNetworkReceiver, filter);
         }
-        createFragment();
+
 
     }
 
@@ -310,7 +310,13 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     //初始化viewpager 数据
     private  void initDa(){
         createFragment();
-
+        this.homePagerActivity=this;
+        homePagerOneFragment = new HomePagerOneFragment();
+        homePagerOneFragment.setFragment(this,fmFragment);
+        homePagerTwoFragment = new HomePagerTwoFragment();
+        homePagerTwoFragment.setHomePagerActivity(this);
+        homePagerThreeFragment = new HomePagerThreeFragment();
+        homePagerThreeFragment.setHomePagerActivity(this);
         mFragments.add(homePagerOneFragment);
         mFragments.add(homePagerTwoFragment);
         mFragments.add(homePagerThreeFragment);
@@ -350,20 +356,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
      if(blueToothSetFragment==null) {
          blueToothSetFragment = new BlueToothSetFragment();
      }
-        this.homePagerActivity=this;
-        if(homePagerOneFragment==null) {
-            homePagerOneFragment = new HomePagerOneFragment();
-            homePagerOneFragment.setFragment(this,fmFragment);
-        }
 
-        if(homePagerTwoFragment==null) {
-            homePagerTwoFragment = new HomePagerTwoFragment();
-        }
-        homePagerTwoFragment.setHomePagerActivity(this);
-        if(homePagerThreeFragment==null) {
-            homePagerThreeFragment = new HomePagerThreeFragment();
-        }
-        homePagerThreeFragment.setHomePagerActivity(this);
     }
     /*隐藏fragemt*/
     public static void  hideFragment(){
