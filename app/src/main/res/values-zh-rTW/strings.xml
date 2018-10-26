@@ -117,5 +117,9 @@
     <string name="商城">商城</string>
     <string name="剩余里程">剩餘里程</string>
     <string name="是否将文件导入本地">是否將文件導入本地</string>
+    <string name="更改蓝牙名称">更改藍牙名稱</string>
+    <string name="旧名称">舊名稱：</string>
+    <string name="新名称">新名稱：</string>
+    <string name="请输入蓝牙名称">請輸入藍牙名稱</string>
 
 </resources>

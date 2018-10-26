@@ -53,6 +53,10 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
         return originId;
     }
 
+    @Override
+    public void setmType(int mType) {
+        super.setmType(FragmentType.BTSET);
+    }
 
     @Override
     public void initView() {
@@ -102,17 +106,29 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
                 break;
         }
     }
-/*蓝牙名称*/
-    private void ChangeName() {
-        final Dialog dialog = new CustomDialog(getContext(), R.style.nodarken_style);
+    public void hideDialog(){
+        if(dialogName!=null){
+            dialogName.dismiss();
+            dialogName=null;
 
-        Window window = dialog.getWindow();
+        }if(dialogPass!=null){
+            dialogPass.dismiss();
+            dialogPass=null;
+        }
+
+    }
+/*蓝牙名称*/
+  private    Dialog dialogName;
+    private void ChangeName() {
+        dialogName = new CustomDialog(getContext(), R.style.nodarken_style);
+
+        Window window = dialogName.getWindow();
         window.setContentView(R.layout.dialog_bluetooth_change_name);
         TextView bluetooth_previous_name = (TextView) window.findViewById(R.id.dialog_bluetooth_previous_name);
         final EditText bluetooth_new_name = (EditText) window.findViewById(R.id.bluetooth_input_new_name);
         bluetooth_previous_name.setText(info[0]);
-        ImageButton bt_confirm = (ImageButton) window.findViewById(R.id.bluetooth_input_confirm_name);
-        ImageButton bt_cancel = (ImageButton) window.findViewById(R.id.bluetooth_input_cancel_name);
+        TextView bt_confirm = (TextView) window.findViewById(R.id.bluetooth_input_confirm_name);
+        TextView bt_cancel = (TextView) window.findViewById(R.id.bluetooth_input_cancel_name);
 
         bt_confirm.setOnClickListener(new View.OnClickListener() {
 
@@ -120,13 +136,13 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
             public void onClick(View v) {
                 newName = bluetooth_new_name.getText().toString().trim();
                 if (newName.compareTo("") != 0) {
-                    System.out.println("新名称： " + newName);
+//                    System.out.println("新名称： " + newName);
                     new Thread() {
                         public void run() {
                             int result = -1;
                             try {
                                 result = btservice.btSetLocalName(newName);
-                                System.out.println("改名称结果:" + result);
+//                                System.out.println("改名称结果:" + result);
                             } catch (RemoteException e) {
                                 e.printStackTrace();
                             }
@@ -135,7 +151,8 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
                             }
                         };
                     }.start();
-                    dialog.dismiss();
+                    dialogName.dismiss();
+                    dialogName=null;
                     App.get().getCurActivity().initImmersionBar();
                 }
             }
@@ -146,25 +163,28 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
             @Override
             public void onClick(View v) {
 
-                dialog.dismiss();
+                dialogName.dismiss();
+                dialogName=null;
                 App.get().getCurActivity().initImmersionBar();
             }
         });
-        dialog.show();
+        dialogName.show();
     }
+    private Dialog dialogPass;
+
         /*更改密码*/
     private void ChangePass() {
-        final Dialog dialog = new CustomDialog(getContext(), R.style.nodarken_style);
+        dialogPass = new CustomDialog(getContext(), R.style.nodarken_style);
 
-        Window window = dialog.getWindow();
+        Window window = dialogPass.getWindow();
         window.setContentView(R.layout.dialog_bluetooth_change_password);
         TextView bluetooth_previous_password = (TextView) window
                 .findViewById(R.id.dialog_bluetooth_previous_password);
         final EditText bluetooth_new_password = (EditText) window
                 .findViewById(R.id.bluetooth_input_new_password);
         bluetooth_previous_password.setText(FlagProperty.BtCode);
-        ImageButton bt_confirm = (ImageButton) window.findViewById(R.id.bluetooth_input_confirm_password);
-        ImageButton bt_cancel = (ImageButton) window.findViewById(R.id.bluetooth_input_cancel_password);
+        TextView bt_confirm = (TextView) window.findViewById(R.id.bluetooth_input_confirm_password);
+        TextView bt_cancel = (TextView) window.findViewById(R.id.bluetooth_input_cancel_password);
 
         bt_confirm.setOnClickListener(new View.OnClickListener() {
 
@@ -172,7 +192,7 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
             public void onClick(View v) {
                 newPassword = bluetooth_new_password.getText().toString().trim();
                 if (newPassword.compareTo("") != 0) {
-                    System.out.println("新密码： " + newPassword);
+//                    System.out.println("新密码： " + newPassword);
                     new Thread() {
                         public void run() {
                             FlagProperty.BtCode = newPassword;
@@ -180,7 +200,8 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
                             myHandler.sendMessage(myHandler.obtainMessage(BLUETOOTH_CHANGE_PASSWORD));
                         };
                     }.start();
-                    dialog.dismiss();
+                    dialogPass.dismiss();
+                    dialogPass=null;
                     App.get().getCurActivity().initImmersionBar();
                 }
             }
@@ -190,11 +211,12 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
 
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                dialogPass.dismiss();
+                dialogPass=null;
                 App.get().getCurActivity().initImmersionBar();
             }
         });
-        dialog.show();
+        dialogPass.show();
     }
 
     @Override

@@ -31,6 +31,7 @@
         android:theme="@style/mySwitch"
         android:layout_marginLeft="900px"/>
     <View style="@style/BaseLine.Horizontal"
+        android:background="#3c3c3c"
         android:layout_alignParentBottom="true"/>
 </RelativeLayout>
 
@@ -42,7 +43,7 @@
         android:orientation="vertical"
         android:layout_marginLeft="90px"
         android:layout_marginRight="90px">
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/ll_name"
             android:layout_width="wrap_content"
             android:layout_height="96px"
@@ -57,13 +58,15 @@
             />
             <TextView style="@style/BaseText.Tv"
                 android:id="@+id/bt_name"
-                android:layout_marginLeft="900px"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="600px"
 
                 android:textSize="36px"/>
-        </LinearLayout>
+        </RelativeLayout>
         <View style="@style/BaseLine.Horizontal"
+            android:background="#3c3c3c"
           />
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/ll_pin"
             android:layout_width="wrap_content"
             android:layout_height="96px"
@@ -72,15 +75,15 @@
             <TextView style="@style/BaseText.Tv"
                 android:textSize="24px"
                 android:textColor="#989898"
-                android:text="PIN码"
+                android:text="PIN"
                 android:layout_marginLeft="110px"
 
                 />
             <TextView style="@style/BaseText.Tv"
                 android:id="@+id/bt_pin"
-                android:layout_marginLeft="934px"
-
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="600px"
                 android:textSize="36px"/>
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
