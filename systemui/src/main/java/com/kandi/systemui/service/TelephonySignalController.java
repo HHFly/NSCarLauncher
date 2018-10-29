@@ -21,7 +21,7 @@ public class TelephonySignalController {
             @Override
             public void onSignalStrengthsChanged(SignalStrength signalStrength) {
             	int level = signalStrength.getGsmSignalStrength();
-            	Log.d("huachao", "telephone level:" + level);
+//            	Log.d("huachao", "telephone level:" + level);
             	mService.TopRefreshNetworkEvent(level,mPhone.getNetworkType());
             }
         };

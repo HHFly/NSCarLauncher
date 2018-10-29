@@ -19,6 +19,6 @@ public class MyPhoneStateListener extends PhoneStateListener {
 //        Toast.makeText(context,
 //                "Go to Firstdroid!!! GSM Cinr = " + String.valueOf(signalStrength.getGsmSignalStrength()),
 //                Toast.LENGTH_SHORT).show();
-        System.out.println(String.valueOf(signalStrength.getGsmSignalStrength()) + "~~!~~");
+//        System.out.println(String.valueOf(signalStrength.getGsmSignalStrength()) + "~~!~~");
     }
 }
