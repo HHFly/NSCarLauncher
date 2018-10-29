@@ -120,4 +120,12 @@
     <string name="旧名称">Old name：</string>
     <string name="新名称">New name：</string>
     <string name="请输入蓝牙名称">Please enter bluetooth name</string>
+    <string name="自定义">自定义</string>
+    <string name="关闭">关闭</string>
+    <string name="摇滚">摇滚</string>
+    <string name="现场">现场</string>
+    <string name="流行">流行</string>
+    <string name="舞曲">舞曲</string>
+    <string name="古典">古典</string>
+    <string name="柔和">柔和</string>
 </resources>
