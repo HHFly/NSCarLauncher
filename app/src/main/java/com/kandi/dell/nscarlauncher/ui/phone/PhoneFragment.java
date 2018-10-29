@@ -663,13 +663,17 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     }
     // 根据号码显示电话薄中姓名
     public static String getName(String number) {
-        System.out.println("number:" + number);
-        for (int i = 0; i < phoneBookInfos.size(); i++) {
+//        System.out.println("number:" + number);
+        if(number!=null) {
+            for (int i = 0; i < phoneBookInfos.size(); i++) {
 //            System.out.println("" + (i + 1) + ":" + DialogPhoneBook.datas.get(i).number + "结果"
 //                    + (DialogPhoneBook.datas.get(i).number.compareTo(number) == 0));
-            if (phoneBookInfos.get(i).getNumber().compareTo(number) == 0) {
-                return phoneBookInfos.get(i).getName() + "(" + phoneBookInfos.get(i).getNumber() + ")";
+                if (phoneBookInfos.get(i).getNumber().compareTo(number) == 0) {
+                    return phoneBookInfos.get(i).getName() + "(" + phoneBookInfos.get(i).getNumber() + ")";
+                }
             }
+        }else {
+            number="";
         }
         return number;
     }
