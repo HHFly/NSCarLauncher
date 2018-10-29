@@ -486,58 +486,63 @@ public class DialogLocalMusic  {
 
                 int i = name.indexOf('.');
                 if (i != -1) {
-                    name = name.substring(i);
-                    if((choose == 0 || choose == 1) && (name.equalsIgnoreCase(".mp3")|| name.equalsIgnoreCase(".ogg") || name.equalsIgnoreCase(".wmv"))){
-                        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-                        mmr.setDataSource(file.getPath());
-                        String title = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-                        String album = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
-                        String artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-                        String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-                        Log.d("MUSIC", "title:" + title +"   "+album+"   "+artist+"   "+duration);
-                        Mp3Info info = new Mp3Info();
-                        file.getUsableSpace();
-                        info.id = m++;
-                        info.displayName = file.getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);;
-                        info.duration = Long.valueOf(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-                        info.title = file.getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-                        info.artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-                        info.url = file.getPath();
-                        USBData.add(info);
-                        return true;
-                    }
-                    if ((choose == 0 || choose == 2) && (name.equalsIgnoreCase(".mp4") || name.equalsIgnoreCase(".3gp") || name.equalsIgnoreCase(".wmv"))
-                            || name.equalsIgnoreCase(".ts") || name.equalsIgnoreCase(".rmvb")
-                            || name.equalsIgnoreCase(".mov") || name.equalsIgnoreCase(".m4v")
-                            || name.equalsIgnoreCase(".avi") || name.equalsIgnoreCase(".m3u8")
-                            || name.equalsIgnoreCase(".3gpp") || name.equalsIgnoreCase(".3gpp2")
-                            || name.equalsIgnoreCase(".mkv") || name.equalsIgnoreCase(".flv")
-                            || name.equalsIgnoreCase(".divx") || name.equalsIgnoreCase(".f4v")
-                            || name.equalsIgnoreCase(".rm") || name.equalsIgnoreCase(".asf")
-                            || name.equalsIgnoreCase(".ram") || name.equalsIgnoreCase(".mpg")
-                            || name.equalsIgnoreCase(".v8") || name.equalsIgnoreCase(".swf")
-                            || name.equalsIgnoreCase(".m2v") || name.equalsIgnoreCase(".asx")
-                            || name.equalsIgnoreCase(".ra") || name.equalsIgnoreCase(".ndivx")
-                            || name.equalsIgnoreCase(".xvid")) {
-                        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-                        mmr.setDataSource(file.getPath());
-                        String title = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-                        String[] a = file.getPath().split("/");
-                        String  displayname =file.getPath().split("/")[a.length-1];
-                        String album = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
-                        String artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-                        String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-                        Log.d("VIDEO", "title:" + title+"   "+displayname +"   "+album+"   "+artist+"   "+duration);
-                        Mp3Info info = new Mp3Info();
-                        file.getUsableSpace();
-                        info.id = v++;
-                        info.displayName = file.getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);;
-                        info.duration = Long.valueOf(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-                        info.title = file.getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-                        info.artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-                        info.url = file.getPath();
-                        USBVideoData.add(info);
-                        return true;
+                    try {
+//                        Log.d("1", "accept: "+name);
+                        name = name.substring(i);
+                        if ((choose == 0 || choose == 1) && (name.equalsIgnoreCase(".mp3") || name.equalsIgnoreCase(".ogg") || name.equalsIgnoreCase(".wmv"))) {
+                            MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                            mmr.setDataSource(file.getPath());
+                            String title = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+                            String album = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+                            String artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                            String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                            Log.d("MUSIC", "title:" + title + "   " + album + "   " + artist + "   " + duration);
+                            Mp3Info info = new Mp3Info();
+                            file.getUsableSpace();
+                            info.id = m++;
+                            info.displayName = file.getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);;
+                            info.duration = Long.valueOf(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+                            info.title = file.getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+                            info.artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                            info.url = file.getPath();
+                            USBData.add(info);
+                            return true;
+                        }
+                        if ((choose == 0 || choose == 2) && (name.equalsIgnoreCase(".mp4") || name.equalsIgnoreCase(".3gp") || name.equalsIgnoreCase(".wmv"))
+                                || name.equalsIgnoreCase(".ts") || name.equalsIgnoreCase(".rmvb")
+                                || name.equalsIgnoreCase(".mov") || name.equalsIgnoreCase(".m4v")
+                                || name.equalsIgnoreCase(".avi") || name.equalsIgnoreCase(".m3u8")
+                                || name.equalsIgnoreCase(".3gpp") || name.equalsIgnoreCase(".3gpp2")
+                                || name.equalsIgnoreCase(".mkv") || name.equalsIgnoreCase(".flv")
+                                || name.equalsIgnoreCase(".divx") || name.equalsIgnoreCase(".f4v")
+                                || name.equalsIgnoreCase(".rm") || name.equalsIgnoreCase(".asf")
+                                || name.equalsIgnoreCase(".ram") || name.equalsIgnoreCase(".mpg")
+                                || name.equalsIgnoreCase(".v8") || name.equalsIgnoreCase(".swf")
+                                || name.equalsIgnoreCase(".m2v") || name.equalsIgnoreCase(".asx")
+                                || name.equalsIgnoreCase(".ra") || name.equalsIgnoreCase(".ndivx")
+                                || name.equalsIgnoreCase(".xvid")) {
+                            MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                            mmr.setDataSource(file.getPath());
+                            String title = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+                            String[] a = file.getPath().split("/");
+                            String displayname = file.getPath().split("/")[a.length - 1];
+                            String album = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+                            String artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                            String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                            Log.d("VIDEO", "title:" + title + "   " + displayname + "   " + album + "   " + artist + "   " + duration);
+                            Mp3Info info = new Mp3Info();
+                            file.getUsableSpace();
+                            info.id = v++;
+                            info.displayName = file.getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);;
+                            info.duration = Long.valueOf(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+                            info.title = file.getName();//mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+                            info.artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+                            info.url = file.getPath();
+                            USBVideoData.add(info);
+                            return true;
+                        }
+                    }catch (Exception e){
+
                     }
                     // 判断是不是目录
                 } else if (file.isDirectory()) {

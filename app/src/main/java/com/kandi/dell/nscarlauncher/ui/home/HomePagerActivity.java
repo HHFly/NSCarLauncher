@@ -325,33 +325,33 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
      * 初始化fragment
      */
     private void createFragment() {
-        if(fmFragment==null) {
+
             fmFragment = new FMFragment();
-        }
-        if(fmFragment==null){
+
+
             fmFragment.setHomePagerActivity(this);
-        }
-     if(btMusicFragment==null) {
+
+
          btMusicFragment = new BTMusicFragment();
-     }
-     if(musicFragment==null){
+
+
          musicFragment= new MusicFragment();
-     }
-    if(phoneFragment ==null ) {
+
+
         phoneFragment = new PhoneFragment();
-    }
-    if(setFragment ==null) {
+
+
         setFragment = new SetFragment();
-    }
-    if(appFragment==null) {
+
+
         appFragment = new AppFragment();
-    }
-    if(videoFragment==null){
+
+
         videoFragment =new VideoFragment();
-    }
-     if(blueToothSetFragment==null) {
+
+
          blueToothSetFragment = new BlueToothSetFragment();
-     }
+
 
     }
     /*隐藏fragemt*/

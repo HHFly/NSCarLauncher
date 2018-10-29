@@ -424,7 +424,7 @@ public class MusicFragment extends BaseFragment {
                     break;
 
                 case VIEWFRESH:
-                    Log.d("Music ", "getMusiType: " +String.valueOf( HomePagerActivity.mCurFragment.getmType()));
+//                    Log.d("Music ", "getMusiType: " +String.valueOf( HomePagerActivity.mCurFragment.getmType()));
                     if(FragmentType.MUSIC== HomePagerActivity.mCurFragment.getmType()){
                         getMusicData();
                     }
@@ -632,7 +632,7 @@ public class MusicFragment extends BaseFragment {
 
         initRvAdapter(mData);
         initRvLocalAdapter(mData);
-        Log.d("Music ", "getMusicData: " +String.valueOf(mData.size()));
+//        Log.d("Music ", "getMusicData: " +String.valueOf(mData.size()));
     }
 
     /*获取本地音乐*/
