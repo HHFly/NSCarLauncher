@@ -50,6 +50,7 @@ import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.FragmentUtils;
 import com.kandi.dell.nscarlauncher.common.util.IsHomeUtils;
 import com.kandi.dell.nscarlauncher.common.util.JumpUtils;
+import com.kandi.dell.nscarlauncher.common.util.LanguageUtil;
 import com.kandi.dell.nscarlauncher.common.util.LogUtils;
 import com.kandi.dell.nscarlauncher.common.util.NetUtils;
 import com.kandi.dell.nscarlauncher.common.util.TimeUtils;
@@ -1198,6 +1199,22 @@ public int getSim(int num) {
           ieCarDriver.set_OneKeyOpenWindow(0);
         } catch (RemoteException e) {
             e.printStackTrace();
+        }
+    }
+    /**
+     * 内存不够时
+     * @param level
+     */
+    @Override
+
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        if (level == TRIM_MEMORY_MODERATE) {
+//            TRIM_MEMORY_COMPLETE：内存不足，并且该进程在后台进程列表最后一个，马上就要被清理
+//            TRIM_MEMORY_MODERATE：内存不足，并且该进程在后台进程列表的中部。
+//            TRIM_MEMORY_BACKGROUND：内存不足，并且该进程是后台进程。
+//            TRIM_MEMORY_UI_HIDDEN：内存不足，并且该进程的UI已经不可见了
+            LanguageUtil.restartApp(this,HomePagerActivity.class);
         }
     }
     /**
