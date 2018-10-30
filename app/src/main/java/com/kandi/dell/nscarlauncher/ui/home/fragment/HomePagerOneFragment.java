@@ -1,8 +1,8 @@
 package com.kandi.dell.nscarlauncher.ui.home.fragment;
 
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
-import android.os.RemoteException;
 import android.provider.Settings;
 import android.support.annotation.DrawableRes;
 import android.text.Editable;
@@ -12,6 +12,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,6 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.AppConst;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.JumpUtils;
-import com.kandi.dell.nscarlauncher.common.util.NumParseUtils;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.common.util.TimeUtils;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
@@ -40,7 +40,6 @@ import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.kandi.dell.nscarlauncher.ui.home.model.WeatherData;
-import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.widget.PlayControllFMView;
 import com.kandi.dell.nscarlauncher.widget.PlayControllView;
 import com.kandi.dell.nscarlauncher.widget.WaveView;
@@ -61,6 +60,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private static TextView tv_w_date;
     private static TextView tv_w_week;
     public static TextView tv_w_speed,tv_w_authorize,tv_work;
+    private LinearLayout layout_home;
 
     private HomePagerActivity homePagerActivity;
     private HashMap<String, Integer> mWeatherMap; // 天气类型与对应的图标
@@ -79,6 +79,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private float channel;
     private boolean isON=true;// 空调
     public static int isAirOpen =0  ;
+    public String PicIndex ="picindex";
     public void setFragment(HomePagerActivity homePagerActivity,FMFragment fmFragment) {
         this.homePagerActivity = homePagerActivity;
         this.fmFragment =fmFragment;
@@ -102,6 +103,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         tv_w_authorize =getView(R.id.tv_w_authorize);
         tv_work =getView(R.id.tv_work);
         controll_air= getView(R.id.controll_air);
+        layout_home = getView(R.id.layout_home);
     }
 
     @Override
@@ -309,6 +311,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 //        circleView.startWave();
         setFmMHZ();
         setBT();
+        changBgView(SPUtil.getInstance(getContext(),PicIndex).getInt(PicIndex,0));
     }
     /*初始化fm*/
     private void setFmMHZ(){
@@ -618,6 +621,27 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     @Override
     public void onWeatherForecastSearched(LocalWeatherForecastResult localWeatherForecastResult, int i) {
 
+    }
+
+    /*设置背景param int resid*/
+    public void changBgView(int index){
+        switch (index){
+            case 0:
+                layout_home.setBackgroundResource(R.color.dfbackground);
+                break;
+            case 1:
+                layout_home.setBackgroundColor(Color.YELLOW);
+                break;
+            case 2:
+                layout_home.setBackgroundColor(Color.BLUE);
+                break;
+            case 3:
+                layout_home.setBackgroundColor(Color.GREEN);
+                break;
+            default:
+                break;
+        }
+        //layout_home.setBackgroundResource(resid);
     }
 
 }

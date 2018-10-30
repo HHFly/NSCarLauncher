@@ -7,6 +7,7 @@
     colorBg:背景色
 -->
     <color name="background">#f6f6f6</color>
+    <color name="dfbackground">#080B0F</color>
 
     <!--
         view_line:线条颜色

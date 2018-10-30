@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ctype">
+           <item>图片1</item>
+           <item>图片2</item>
+           <item>图片3</item>
+           <item>图片4</item>
+    </string-array>
+</resources>

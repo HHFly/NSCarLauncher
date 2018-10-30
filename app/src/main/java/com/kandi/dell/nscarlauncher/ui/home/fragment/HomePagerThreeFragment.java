@@ -1,18 +1,19 @@
 package com.kandi.dell.nscarlauncher.ui.home.fragment;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
-import com.kandi.dell.nscarlauncher.common.util.JumpUtils;
+import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 
 public class HomePagerThreeFragment extends BaseFragment {
     private HomePagerActivity homePagerActivity;
+    private LinearLayout layout_home;
+    public String PicIndex ="picindex";
 
     public void setHomePagerActivity(HomePagerActivity homePagerActivity) {
         this.homePagerActivity = homePagerActivity;
@@ -26,7 +27,7 @@ public class HomePagerThreeFragment extends BaseFragment {
 
     @Override
     public void findView() {
-
+        layout_home = getView(R.id.layout_home);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class HomePagerThreeFragment extends BaseFragment {
 
     @Override
     public void initView() {
-
+        changBgView(SPUtil.getInstance(getContext(),PicIndex).getInt(PicIndex,0));
     }
 
     @Override
@@ -57,5 +58,25 @@ public class HomePagerThreeFragment extends BaseFragment {
         }
     }
 
+    /*设置背景param int resid*/
+    public void changBgView(int index){
+        switch (index){
+            case 0:
+                layout_home.setBackgroundResource(R.color.dfbackground);
+                break;
+            case 1:
+                layout_home.setBackgroundColor(Color.YELLOW);
+                break;
+            case 2:
+                layout_home.setBackgroundColor(Color.BLUE);
+                break;
+            case 3:
+                layout_home.setBackgroundColor(Color.GREEN);
+                break;
+            default:
+                break;
+        }
+        //layout_home.setBackgroundResource(resid);
+    }
 
 }

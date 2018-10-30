@@ -52,6 +52,7 @@ import com.kandi.dell.nscarlauncher.common.util.IsHomeUtils;
 import com.kandi.dell.nscarlauncher.common.util.JumpUtils;
 import com.kandi.dell.nscarlauncher.common.util.LogUtils;
 import com.kandi.dell.nscarlauncher.common.util.NetUtils;
+import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.common.util.TimeUtils;
 import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
 import com.kandi.dell.nscarlauncher.receiver.CarMFLReceiver;
@@ -141,6 +142,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             intentFilter.addAction("phone.iscoming");
             intentFilter.addAction("3gphone.iscoming");
             intentFilter.addAction("phone.isgone");
+            intentFilter.addAction("com.changeBg");
             registerReceiver(comingReceiver, intentFilter);
         }
         /*usb插拔接受*/
@@ -325,33 +327,33 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
      * 初始化fragment
      */
     private void createFragment() {
-        if(fmFragment==null) {
-            fmFragment = new FMFragment();
-        }
-        if(fmFragment==null){
-            fmFragment.setHomePagerActivity(this);
-        }
-     if(btMusicFragment==null) {
-         btMusicFragment = new BTMusicFragment();
-     }
-     if(musicFragment==null){
-         musicFragment= new MusicFragment();
-     }
-    if(phoneFragment ==null ) {
+
+        fmFragment = new FMFragment();
+
+
+        fmFragment.setHomePagerActivity(this);
+
+
+        btMusicFragment = new BTMusicFragment();
+
+
+        musicFragment= new MusicFragment();
+
+
         phoneFragment = new PhoneFragment();
-    }
-    if(setFragment ==null) {
+
+
         setFragment = new SetFragment();
-    }
-    if(appFragment==null) {
+
+
         appFragment = new AppFragment();
-    }
-    if(videoFragment==null){
+
+
         videoFragment =new VideoFragment();
-    }
-     if(blueToothSetFragment==null) {
-         blueToothSetFragment = new BlueToothSetFragment();
-     }
+
+
+        blueToothSetFragment = new BlueToothSetFragment();
+
 
     }
     /*隐藏fragemt*/
@@ -964,6 +966,11 @@ public int getSim(int num) {
 //                dimissShow();
             } else if (intent.getAction() == "3gphone.iscoming") {
 //                incoming3gShow(intent.getStringExtra("number"));
+            } else if(intent.getAction() == "com.changeBg"){
+                int picindex = SPUtil.getInstance(getActivity(),"picindex").getInt("picindex",0);//存放图片数组存入对应资源
+                homePagerOneFragment.changBgView(picindex);
+                homePagerTwoFragment.changBgView(picindex);
+                homePagerThreeFragment.changBgView(picindex);
             }
         }
     }

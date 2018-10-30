@@ -5,8 +5,7 @@
     android:layout_width="373px"
     android:layout_height="match_parent"
     android:layout_marginLeft="50px"
-    android:layout_marginRight="50px"
-    android:background="#080B0F">
+    android:layout_marginRight="50px">
     <LinearLayout
         android:id="@+id/ll_top"
         android:layout_width="373px"
