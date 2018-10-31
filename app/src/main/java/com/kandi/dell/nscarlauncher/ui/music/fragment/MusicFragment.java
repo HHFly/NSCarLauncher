@@ -372,6 +372,11 @@ public class MusicFragment extends BaseFragment {
     public static void setMusicInfo(String songname, String singer) {
         if (tv_music_songname != null) {
             tv_music_songname.setText(songname);
+            if("".equals(songname)){
+                HomePagerTwoFragment.music_name.setText(context.getString(R.string.本地音乐));
+            }else {
+                HomePagerTwoFragment.music_name.setText(songname);
+            }
             if (!("").equals(singer)) {
                 tv_music_singer.setText("- " + singer);
             } else {

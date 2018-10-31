@@ -2,7 +2,6 @@ package com.kandi.dell.nscarlauncher.ui.home.fragment;
 
 import android.os.Handler;
 import android.os.Message;
-import android.os.RemoteException;
 import android.provider.Settings;
 import android.support.annotation.DrawableRes;
 import android.text.Editable;
@@ -30,7 +29,6 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.AppConst;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.JumpUtils;
-import com.kandi.dell.nscarlauncher.common.util.NumParseUtils;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.common.util.TimeUtils;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
@@ -40,7 +38,7 @@ import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.kandi.dell.nscarlauncher.ui.home.model.WeatherData;
-import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
+import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.widget.PlayControllFMView;
 import com.kandi.dell.nscarlauncher.widget.PlayControllView;
 import com.kandi.dell.nscarlauncher.widget.WaveView;
@@ -60,7 +58,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private static TextView tv_w_time;
     private static TextView tv_w_date;
     private static TextView tv_w_week;
-    public static TextView tv_w_speed,tv_w_authorize,tv_work;
+    public static TextView tv_w_speed,tv_w_authorize,tv_work,music_name;
 
     private HomePagerActivity homePagerActivity;
     private HashMap<String, Integer> mWeatherMap; // 天气类型与对应的图标
@@ -102,6 +100,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         tv_w_authorize =getView(R.id.tv_w_authorize);
         tv_work =getView(R.id.tv_work);
         controll_air= getView(R.id.controll_air);
+        music_name=getView(R.id.music_name);
     }
 
     @Override

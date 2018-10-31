@@ -1,5 +1,6 @@
 package com.kandi.dell.nscarlauncher.ui.bluetooth;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.IKdAudioControlService;
@@ -22,8 +23,6 @@ import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
-
-import java.io.IOException;
 
 public class BTMusicFragment extends BaseFragment {
     private ImageView mGifImageView;
@@ -49,6 +48,7 @@ public class BTMusicFragment extends BaseFragment {
     public static TextView  music_current_time,tv_bt_music_songname,tv_bt_music_singer,music_total_time,bt_blueSet;
     public  static ImageView iv_bt_stop;
     public static RelativeLayout NullView ;//空界面
+    static Context context;
     @Override
     public int getContentResId() {
         return R.layout.fragment_bt_music;
@@ -65,6 +65,7 @@ public class BTMusicFragment extends BaseFragment {
         NullView =getView(R.id.bt_mic_null);
         iv_bt_stop= getView(R.id.iv_bt_stop);
         bt_blueSet= getView(R.id.bt_blueSet);
+        context=  getContext();
     }
 
     @Override
@@ -244,6 +245,11 @@ public static void  musicNext(){
     // 设置歌曲信息
     public static void setMusicInfo(String songname, String singer) {
         if (tv_bt_music_songname != null) {
+            if("".equals(songname)){
+                HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
+            }else {
+                HomePagerOneFragment.music_name.setText(songname);
+            }
             tv_bt_music_songname.setText(songname);
             if (!("").equals(singer)) {
                 tv_bt_music_singer.setText("- " + singer);

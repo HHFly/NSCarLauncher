@@ -18,6 +18,7 @@ import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.music.model.MusicModel;
+import com.kandi.dell.nscarlauncher.widget.MarqueTextView;
 import com.kandi.dell.nscarlauncher.widget.PlayControllView;
 
 import static com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment.circle_image;
@@ -29,6 +30,7 @@ public class HomePagerTwoFragment extends BaseFragment {
     public static  int backbox =0x02;//0x01为开启状态，0x02为关闭状态。
     public static int  centerlock =0x02;//0x01为开启状态，0x02为关闭状态。
     private static ImageView iv_backbox,iv_cenlock;
+    public static MarqueTextView music_name;
     public static  boolean isBackboxOpen,isCenterlockOpen;
     @Override
     public int getContentResId() {
@@ -46,6 +48,7 @@ public class HomePagerTwoFragment extends BaseFragment {
         musicPaly=getView(R.id.music_playcontroll);
         iv_backbox=getView(R.id.iv_backbox);
         iv_cenlock =getView(R.id.iv_cenlock);
+        music_name=getView(R.id.music_name);
     }
     @Override
     public void setListener() {

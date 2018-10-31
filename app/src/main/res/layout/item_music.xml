@@ -70,7 +70,8 @@
         </RelativeLayout>
 
     </RelativeLayout>
-    <TextView
+    <com.kandi.dell.nscarlauncher.widget.MarqueTextView
+        android:id="@+id/music_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -78,6 +79,9 @@
         android:text="@string/本地音乐"
         android:textSize="48px"
         android:textColor="#EEEEEE"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:ellipsize="marquee"
+        android:singleLine="true"
         />
     <com.kandi.dell.nscarlauncher.widget.PlayControllView
         android:id="@+id/music_playcontroll"

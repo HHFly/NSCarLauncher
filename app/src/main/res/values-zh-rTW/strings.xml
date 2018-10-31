@@ -121,5 +121,6 @@
     <string name="旧名称">舊名稱：</string>
     <string name="新名称">新名稱：</string>
     <string name="请输入蓝牙名称">請輸入藍牙名稱</string>
+    <string name="暂停">暫停</string>
 
 </resources>
