@@ -32,8 +32,8 @@ public class BTMusicFragment extends BaseFragment {
     private final static int DIRECTION_PREV = 1; // 向前切歌
     private final static int DIRECTION_NEXT = 2; // 向后切歌
     private final static int MUSIC_CHANGE = 3; // 切歌时进行瞬间暂停状态
-    private final static int MUSIC_BLUETOOTH_CLOSE = 4; // 蓝牙音乐关闭
-    private final static int MUSIC_BLUETOOTH_OPEN = 5; // 蓝牙音乐打开
+    public final static int MUSIC_BLUETOOTH_CLOSE = 4; // 蓝牙音乐关闭
+    public final static int MUSIC_BLUETOOTH_OPEN = 5; // 蓝牙音乐打开
     private final static int MUSCI_BACK = 6; // 蓝牙音乐上一首
     private final static int MUSIC_NEXT = 7; // 蓝牙音乐下一首
     static int music_model = 1; // 音乐播放循环模式
@@ -350,18 +350,12 @@ public static void  musicNext(){
                     case 11:
 
 
-                        if(iv_bt_stop!=null) {
-                            iv_bt_stop.setVisibility(View.GONE);
-                        }
-                        isPlay=true;
+                     musicPlay();
                         break;
                     case  12:
 
 
-                        if(iv_bt_stop!=null) {
-                            iv_bt_stop.setVisibility(View.VISIBLE);
-                        }
-                        isPlay=false;
+                     musicPause();
                         break;
                     default:
                         break;

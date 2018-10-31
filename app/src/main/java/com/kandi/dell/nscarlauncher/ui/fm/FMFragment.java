@@ -312,7 +312,8 @@ public void openFm(){
                     public void run() {
                         try {
 //                            System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
-                            App.pagerOneHnadler.sendEmptyMessage(HandleKey.OPEMFM);
+                            App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
+//
 //                        System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 开机初始化为频道93.0
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -331,7 +332,7 @@ public void openFm(){
                 public void run() {
                     try {
 //                        System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
-                        App.pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
+                        App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.FM));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -414,7 +415,7 @@ public void  changeChannel(float value){
                             try {
 
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
-                                HomePagerOneFragment.fmPaly.setPlay(false);
+                                App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.FM));
                                 isPlay=false;
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -427,10 +428,10 @@ public void  changeChannel(float value){
                         public void run() {
                             try {
                                 System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
-                                Log.d("Fm","Channel open  "+String.valueOf(channel));
+//                                Log.d("Fm","Channel open  "+String.valueOf(channel));
                                 System.out.println("radio.SetRadioFreq():" + channel + "----" + App.get().getRadio().SetRadioFreq(channel)); // 开机初始化为频道93.0
-                                Log.d("Fm","Channel  set "+String.valueOf(channel));
-                                HomePagerOneFragment.fmPaly.setPlay(true);
+//                                Log.d("Fm","Channel  set "+String.valueOf(channel));
+                                App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
                                 isPlay=true;
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -443,7 +444,7 @@ public void  changeChannel(float value){
                         public void run() {
                             try {
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
-                                HomePagerOneFragment.fmPaly.setPlay(false);
+                                App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.FM));
                                 isPlay=false;
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -456,7 +457,7 @@ public void  changeChannel(float value){
                         public void run() {
                             try {
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
-                                HomePagerOneFragment.fmPaly.setPlay(false);
+                                App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.FM));
                                 isPlay=false;
                             } catch (Exception e) {
                                 e.printStackTrace();

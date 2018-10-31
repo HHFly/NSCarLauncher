@@ -25,6 +25,7 @@ import com.kandi.dell.nscarlauncher.db.dao.MusicCollectionDao;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
+import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.CursorMusicImage;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
@@ -44,6 +45,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty.PAUSE_MSG;
+import static com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment.MUSIC_CLOSE;
+import static com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment.MUSIC_OPEN;
 
 public class MusicFragment extends BaseFragment {
 
@@ -342,6 +345,8 @@ public class MusicFragment extends BaseFragment {
                 broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
                 flag_play = true;
                 HomePagerTwoFragment.musicPaly.setPlay(true);
+
+                HomePagerTwoFragment.myHandler.sendMessage(HomePagerTwoFragment.myHandler.obtainMessage(MUSIC_OPEN));
             }
         }
     }
@@ -356,7 +361,7 @@ public class MusicFragment extends BaseFragment {
             bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
             broadcastMusicInfo(context, PAUSE_MSG);
             flag_play = false;
-            HomePagerTwoFragment.musicPaly.setPlay(false);
+            HomePagerTwoFragment.myHandler.sendMessage(HomePagerTwoFragment.myHandler.obtainMessage(MUSIC_CLOSE));
         }
     }
     /*获取全局模块*/
