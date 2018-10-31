@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="180px"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+<TextView
+    android:id="@+id/tv_eq_hz"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="36px"
+    android:textColor="#EEEEEE"
+    android:layout_gravity="center_horizontal"
+    />
+
+    <com.kandi.dell.nscarlauncher.widget.VerticalSeekBar
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/eq_seekbar"
+        android:layout_marginTop="23px"
+        android:layout_width="wrap_content"
+        android:layout_height="342px"
+        android:progressDrawable="@drawable/seekbar_style"
+        android:thumb="@mipmap/ic_volume"
+        android:secondaryProgress="100"/>
+    <TextView
+        android:id="@+id/tv_eq_band"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="36px"
+        android:textColor="#EEEEEE"
+        android:layout_marginTop="23px"
+        android:layout_gravity="center_horizontal"
+        />
+</LinearLayout>

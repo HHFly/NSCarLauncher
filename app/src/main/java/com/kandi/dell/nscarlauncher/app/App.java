@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.IFmService;
@@ -46,7 +47,7 @@ App extends MultiDexApplication {
     }
 
     private  IFmService radio;  //收音机
-
+    private MediaPlayer mediaPlayer;//本地音乐播放
     private   IKdAudioControlService audioservice = IKdAudioControlService.Stub
             .asInterface(ServiceManager.getService("audioCtrl"));
     AudioManager audioManager;
@@ -97,6 +98,7 @@ App extends MultiDexApplication {
 
     }
     private void initService(){
+        mediaPlayer= new MediaPlayer();
         initFm();
         btService();
         registMyReceiver();
@@ -180,7 +182,9 @@ App extends MultiDexApplication {
     }
 
 
-
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
 
     /**
      * 获取当前Activity
