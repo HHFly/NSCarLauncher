@@ -24,13 +24,15 @@ import java.io.FileInputStream;
 public class PlayerService extends Service {
 
 
-	private MediaPlayer mediaPlayer; // 媒体播放器对象
+	public static MediaPlayer mediaPlayer; // 媒体播放器对象
 	private int msg;				//播放信息
 	public static boolean isPause; 		//  暂停状态
 	private int currentTime;		//当前播放进度
 	
 	public static boolean is_start_speed = true;  //是否第一次快进播放
-	
+
+
+
 	/**
 	 * handler用来接收消息，来发送广播更新播放时间
 	 */

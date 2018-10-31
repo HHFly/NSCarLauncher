@@ -5,5 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@mipmap/ic_f_fm_bg">
 <include layout="@layout/item_set_eq_select" />
- 
+ <LinearLayout
+     android:id="@+id/ll_seekbar"
+     android:orientation="horizontal"
+     android:layout_marginTop="224px"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content">
+
+ </LinearLayout>
 </RelativeLayout>
