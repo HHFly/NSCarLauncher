@@ -38,11 +38,12 @@
             android:src="@mipmap/ic_music_home_stop"
             />
         <TextView
+            android:id="@+id/ctl_tv_center"
             android:layout_marginTop="17px"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/播放"
+            android:text="@string/暂停"
             android:textSize="20px"
             android:textColor="@drawable/select_text_press_white_blue"/>
     </LinearLayout>
