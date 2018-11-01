@@ -7,6 +7,7 @@
 <include layout="@layout/item_set_eq_select" />
  <LinearLayout
      android:id="@+id/ll_seekbar"
+     android:layout_centerHorizontal="true"
      android:orientation="horizontal"
      android:layout_marginTop="224px"
      android:layout_marginLeft="80px"
