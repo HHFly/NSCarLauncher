@@ -14,6 +14,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.kandi.systemui.R;
+import com.kandi.systemui.service.BluetoothController;
 import com.kandi.systemui.service.KandiSystemUiService;
 
 
@@ -208,12 +209,14 @@ public void  show(){
             	setVolumeImage(volume);
 			}
 			int blueVolume =  (int) Math.round((float)progress/100.0  * 21.0);
-            if(KandiSystemUiService.btservice!=null){
-				try {
-					KandiSystemUiService.btservice.btSetVol(String.valueOf(blueVolume));
-				} catch (RemoteException e) {
-					e.printStackTrace();
-					Log.d("BT","blueVolume set error");
+            if(BluetoothController.isRingCall) {
+				if (KandiSystemUiService.btservice != null) {
+					try {
+						KandiSystemUiService.btservice.btSetVol(String.valueOf(blueVolume));
+					} catch (RemoteException e) {
+						e.printStackTrace();
+						Log.d("BT", "blueVolume set error");
+					}
 				}
 			}
 			dismisstime=0;

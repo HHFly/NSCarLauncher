@@ -108,11 +108,14 @@ public class CarMFLReceiver extends BroadcastReceiver {
         }
         //接听
         if (intent.getAction().equals(ACTION_WHEEL_CALL)) {
-            LogUtils.log(ACTION_WHEEL_CALL);
-            HomePagerActivity.jumpFragment(FragmentType.PHONE);
-            FlagProperty.flag_phone_incall_click = true;
-            PhoneFragment.answerPhone();
-            PhoneFragment.phoneStart();
+            if( FlagProperty.flag_phone_ringcall ) {
+                FlagProperty.flag_phone_ringcall=false;
+                LogUtils.log(ACTION_WHEEL_CALL);
+                HomePagerActivity.jumpFragment(FragmentType.PHONE);
+                FlagProperty.flag_phone_incall_click = true;
+                PhoneFragment.answerPhone();
+                PhoneFragment.phoneStart();
+            }
 
         }
         //挂断

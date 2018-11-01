@@ -248,22 +248,28 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         }
         if (intent.getAction().equals(ACTION_RINGCALL)) {
 
-            System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
-            FlagProperty.is_one_oper = true;
-            if (!FlagProperty.flag_phone_ringcall) {
-               String num = intent.getStringExtra(KEY_PHONENUM).trim();
-               int index =intent.getIntExtra(KEY_CALLINDEX, 0);
-                Intent i = new Intent();
-                i.setAction("phone.iscoming");// 发出自定义广播
-                i.putExtra("number", num);
-                i.putExtra("index", index);
-                context.sendBroadcast(i);
-                if(2!=index) {
+//            System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
+            try {
+                FlagProperty.is_one_oper = true;
+                if (!FlagProperty.flag_phone_ringcall) {
                     FlagProperty.flag_phone_ringcall = true;
-                    FlagProperty.phone_number = num; // 记录电话号码
-                    FlagProperty.phone_number_one = num;
+                    String num = intent.getStringExtra(KEY_PHONENUM).trim();
+                    int index =intent.getIntExtra(KEY_CALLINDEX, 0);
+                    Intent i = new Intent();
+                    i.setAction("phone.iscoming");// 发出自定义广播
+                    i.putExtra("number", num);
+                    i.putExtra("index", index);
+                    context.sendBroadcast(i);
+                    if(2!=index) {
+                        FlagProperty.flag_phone_ringcall = true;
+                        FlagProperty.phone_number = num; // 记录电话号码
+                        FlagProperty.phone_number_one = num;
+                    }
                 }
+            }catch (Exception e){
+
             }
+
 
         }
         if (intent.getAction().equals(ACTION_CALLACTIVE)) {

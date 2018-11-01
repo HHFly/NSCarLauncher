@@ -22,7 +22,7 @@ public class BluetoothController extends BroadcastReceiver {
     public final static String ACTION_WHEEL_CALL="com.kangdi.BroadCast.WheelCall";//接听
     public final static String ACTION_WHEEL_HANGUP="com.kangdi.BroadCast.WheelHangup";//挂断
     KandiSystemUiService mService;
-
+    public static boolean isRingCall =false;
     public BluetoothController(KandiSystemUiService service) {
         mService = service;
         addBluetoothReceiver();
@@ -58,13 +58,22 @@ public class BluetoothController extends BroadcastReceiver {
             isBluetoothAudioEnable = false;
         }else if (intent.getAction().equals(ACTION_RINGCALL)) {
 
-            System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
+//            System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
+            try {
+
                 String num = intent.getStringExtra(KEY_PHONENUM).trim();
                 int index =intent.getIntExtra(KEY_CALLINDEX, 0);
-            if(2!=index) {
-               mService.showPhone(num);
-            }
-        }else if (intent.getAction().equals(ACTION_CALLEND)) {
+
+                if(2!=index) {
+                    mService.showPhone(num);
+                }
+            }catch (Exception e){}
+
+        }else if(intent.getAction().equals(ACTION_CALLSTART)){
+            isRingCall=true;
+        }
+        else if (intent.getAction().equals(ACTION_CALLEND)) {
+            isRingCall=false;
             mService.hidePhone();
         }else if (intent.getAction().equals(ACTION_WHEEL_CALL)) {
             mService.wheelAnswser();
