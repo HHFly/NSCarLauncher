@@ -39,13 +39,38 @@
 
     <LinearLayout
         android:id="@+id/layout_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#99000000"
+        android:background="@drawable/bg_bottom"
+        android:layout_centerHorizontal="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/btn_last"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:paddingRight="16dp"
+            android:scaleType="center"
+            android:src="@drawable/btn_last" />
+
+        <ImageView
+            android:id="@+id/btn_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:paddingRight="16dp"
+            android:scaleType="center"
+            android:src="@drawable/btn_switch_off" />
+
+        <ImageView
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:paddingRight="16dp"
+            android:scaleType="center"
+            android:src="@drawable/btn_next" />
 
         <TextView
             android:id="@+id/current"
@@ -53,6 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:text="00:00"
+            android:textSize="24px"
             android:textColor="#ffffff" />
 
         <SeekBar
@@ -76,7 +102,16 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:text="00:00"
+            android:textSize="24px"
             android:textColor="#ffffff" />
+
+        <ImageView
+            android:id="@+id/btn_list"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:paddingRight="16dp"
+            android:scaleType="center"
+            android:src="@drawable/btn_list" />
 
         <ImageView
             android:id="@+id/fullscreen"
@@ -84,7 +119,7 @@
             android:layout_height="fill_parent"
             android:paddingRight="16dp"
             android:scaleType="center"
-            android:src="@drawable/jc_enlarge" />
+            android:src="@drawable/btn_narrow" />
     </LinearLayout>
 
     <ProgressBar
@@ -137,5 +172,31 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
         android:src="@drawable/jc_click_play_selector" />
+
+    <RelativeLayout
+        android:id="@+id/listlayout"
+        android:layout_width="420dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/bg_list"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/mtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="23dp"
+            android:text="@string/localmovie"
+            android:textColor="#EDEDED"
+            android:textSize="36px" />
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below ="@+id/mtitle"
+            android:layout_marginTop="15dp"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
 
 </RelativeLayout>

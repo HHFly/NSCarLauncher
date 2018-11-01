@@ -35,7 +35,7 @@ public class VideoFragment extends BaseFragment{
     public final static int  VIEWFRESH =1;
     public static int position = 0;
     public static Context context;
-    public int dataMode;
+    public static int dataMode;
     public static final String PATH_SDCARDMOVIES = "/sdcard/Movies/";
     public int blockCount = 3;
 

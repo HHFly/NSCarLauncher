@@ -4,4 +4,6 @@
     <string name="tips_not_wifi_confirm">Devam Et</string>
     <string name="tips_not_wifi_cancel">Durdur</string>
     <string name="no_url">URL Bulunamadı</string>
+    <string name="localmovie">本地视频</string>
+    <string name="usbmovie">USB视频</string>
 </resources>
