@@ -97,8 +97,8 @@ public class VerticalSeekBar extends AbsSeekBar {
 
 	protected synchronized void onMeasure(int widthMeasureSpec,
 										  int heightMeasureSpec) {
-		height = View.MeasureSpec.getSize(heightMeasureSpec) / 2;
-		width = 50;
+		height = View.MeasureSpec.getSize(heightMeasureSpec) ;
+		width = 30;
 		this.setMeasuredDimension(width, height);
 	}
 

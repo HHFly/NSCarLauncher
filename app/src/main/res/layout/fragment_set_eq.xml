@@ -4,7 +4,42 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@mipmap/ic_f_fm_bg">
-<include layout="@layout/item_set_eq_select" />
+
+ <LinearLayout
+     android:orientation="horizontal"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_centerHorizontal="true"
+     android:layout_marginTop="132px">
+  <TextView
+      android:id="@+id/tv_set_eq_self"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/自定义"
+      android:textSize="36px"
+      android:textColor="@drawable/select_music_local_text_bg2"
+      />
+  <TextView
+      android:id="@+id/tv_set_eq_close"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintLeft_toRightOf="@+id/tv_set_eq_self"
+      android:layout_marginLeft="95px"
+      android:text="@string/关闭"
+      android:textSize="36px"
+      android:textColor="@drawable/select_music_local_text_bg2"/>
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/rv_eq_nameList"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical"
+      android:scrollbars="none"
+      android:overScrollMode="never">
+
+  </android.support.v7.widget.RecyclerView>
+ </LinearLayout>
+
+
  <LinearLayout
      android:id="@+id/ll_seekbar"
      android:layout_centerHorizontal="true"

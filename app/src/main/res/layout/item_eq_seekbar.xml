@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="180px"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
 <TextView
     android:id="@+id/tv_eq_hz"
     android:layout_width="wrap_content"
@@ -15,10 +16,10 @@
     <com.kandi.dell.nscarlauncher.widget.VerticalSeekBar
         android:layout_gravity="center_horizontal"
         android:id="@+id/eq_seekbar"
-        android:layout_marginTop="23px"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
+        android:layout_width="wrap_content"
+        android:layout_height="342px"
+       android:progressDrawable="@drawable/seekbar_style"
         android:thumb="@mipmap/ic_volume"
         android:secondaryProgress="100"/>
     <TextView
