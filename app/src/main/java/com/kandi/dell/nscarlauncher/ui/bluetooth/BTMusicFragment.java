@@ -22,6 +22,7 @@ import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
+import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 
 public class BTMusicFragment extends BaseFragment {
@@ -248,7 +249,7 @@ public static void  musicNext(){
             if("".equals(songname)){
                 HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
             }else {
-                HomePagerOneFragment.music_name.setText(songname);
+                HomePagerOneFragment.music_name.setText(songname+"- " + singer);
             }
             tv_bt_music_songname.setText(songname);
             if (!("").equals(singer)) {
@@ -340,6 +341,7 @@ public static void  musicNext(){
                             iv_bt_stop.setVisibility(View.GONE);
                         }
                         isPlay=true;
+                        HomePagerTwoFragment.music_name.setText(context.getString(R.string.本地音乐));
                         break;
                     case MUSCI_BACK:
                         App.get().getBtservice().btAvrLast();
@@ -397,6 +399,7 @@ public static void  musicNext(){
                             App.get().getBtservice().btAvrPlay();
                             HomePagerOneFragment.btPaly.setPlay(true);
                             isPlay=true;
+                            HomePagerTwoFragment.music_name.setText(context.getString(R.string.本地音乐));
                         }
 //                        }
                     }catch (RemoteException e) {

@@ -259,6 +259,11 @@ public class HomePagerTwoFragment extends BaseFragment {
                     break;
 
                 case MUSIC_OPEN:
+                    try{
+                        music_name.setText((DialogLocalMusic.data.get(DialogLocalMusic.musicID)).title);
+                    }catch (Exception e){
+                        music_name.setText(App.get().getString(R.string.本地音乐));
+                    }
                     musicPaly.setPlay(true);
                     break;
                 case  BACKBOX:

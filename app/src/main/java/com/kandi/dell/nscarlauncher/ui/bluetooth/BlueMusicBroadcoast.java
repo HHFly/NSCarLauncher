@@ -11,27 +11,27 @@ import android.os.IKdBtService;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.os.SystemClock;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-
+import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.common.util.LogUtils;
+import com.kandi.dell.nscarlauncher.ui.fm.FMFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.phone.PhoneFragment;
-import com.white.lib.utils.log.LogUtil;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.jumpFragment;
 
@@ -250,6 +250,8 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 
 //            System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
             try {
+                int blueVolume =  (int) Math.round((float)30/100.0  * 21.0);
+                btservice.btSetVol(String.valueOf(blueVolume));
                 FlagProperty.is_one_oper = true;
                 if (!FlagProperty.flag_phone_ringcall) {
                     FlagProperty.flag_phone_ringcall = true;
@@ -310,6 +312,10 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             App.pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
         }
         if (intent.getAction().equals(ACTION_MUSIC_INFO_CHANGED)) {
+            if(FMFragment.isPlay || MusicFragment.flag_play || JCVideoPlayer.mCurrentState == 2){
+                HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
+                return;
+            }
             String music_info = intent.getStringExtra(KEY_MUSICINFO);
             LogUtils.log("BT:"+ACTION_MUSIC_INFO_CHANGED+":     "+music_info);
             try {
@@ -336,6 +342,9 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         }
         if (intent.getAction().equals(ACTION_BT_STREAM_START)) {
             LogUtils.log("BT:"+ACTION_BT_STREAM_START);
+            if(FMFragment.isPlay || MusicFragment.flag_play || JCVideoPlayer.mCurrentState == 2){
+                return;
+            }
 //            int  intent.getStringExtra(KEY_MEDIA_STATUS)
             App.get().PauseServiceFMMUSic();
             App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.BTMUSICOPEN));

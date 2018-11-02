@@ -38,7 +38,6 @@ import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.kandi.dell.nscarlauncher.ui.home.model.WeatherData;
-import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.widget.PlayControllFMView;
 import com.kandi.dell.nscarlauncher.widget.PlayControllView;
 import com.kandi.dell.nscarlauncher.widget.WaveView;
@@ -435,6 +434,8 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 case  HandleKey.OPEMFM:
                     fmPaly.setPlay(true);
                     FMFragment.isPlay=true;
+                    HomePagerOneFragment.music_name.setText(App.get().getString(R.string.蓝牙音乐));
+                    HomePagerTwoFragment.music_name.setText(App.get().getString(R.string.本地音乐));
                     break;
                 case  HandleKey.BTMUSICCOLSE:
                     btPaly.setPlay(false);

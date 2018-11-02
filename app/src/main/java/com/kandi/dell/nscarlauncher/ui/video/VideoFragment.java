@@ -14,6 +14,7 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
+import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 import com.kandi.dell.nscarlauncher.widget.AddOneEtParamDialog;
@@ -192,6 +193,7 @@ public class VideoFragment extends BaseFragment{
 //                        imageView.setVisibility(View.GONE);
 //                    }
                     position = Pos;
+                    HomePagerTwoFragment.music_name.setText(getContext().getString(R.string.本地音乐));
                     JCFullScreenActivity.startActivity(getContext(),
                             data.url,
                             MyJCVideoPlayerStandard.class,
