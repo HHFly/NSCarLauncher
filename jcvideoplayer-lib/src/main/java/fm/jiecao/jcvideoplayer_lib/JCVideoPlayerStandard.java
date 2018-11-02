@@ -341,7 +341,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     private void changeUiToPlayingClear() {
         changeUiToClear();
-        bottomProgressBar.setVisibility(View.VISIBLE);
+//        bottomProgressBar.setVisibility(View.VISIBLE);
     }
 
     private void changeUiToPauseShow() {
@@ -357,7 +357,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     private void changeUiToPauseClear() {
         changeUiToClear();
-        bottomProgressBar.setVisibility(View.VISIBLE);
+//        bottomProgressBar.setVisibility(View.VISIBLE);
     }
 
     private void changeUiToPlayingBufferingShow() {
@@ -377,7 +377,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         loadingProgressBar.setVisibility(View.VISIBLE);
         thumbImageView.setVisibility(View.INVISIBLE);
         coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.VISIBLE);
+//        bottomProgressBar.setVisibility(View.VISIBLE);
         updateStartImage();
     }
 
@@ -409,7 +409,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         loadingProgressBar.setVisibility(View.INVISIBLE);
         thumbImageView.setVisibility(View.VISIBLE);
         coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.VISIBLE);
+//        bottomProgressBar.setVisibility(View.VISIBLE);
         updateStartImage();
     }
 
@@ -451,7 +451,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                                     && mCurrentState != CURRENT_STATE_AUTO_COMPLETE) {
                                 bottomContainer.setVisibility(View.INVISIBLE);
                                 topContainer.setVisibility(View.INVISIBLE);
-                                bottomProgressBar.setVisibility(View.VISIBLE);
+//                                bottomProgressBar.setVisibility(View.VISIBLE);
                                 startButton.setVisibility(View.INVISIBLE);
                             }
                         }

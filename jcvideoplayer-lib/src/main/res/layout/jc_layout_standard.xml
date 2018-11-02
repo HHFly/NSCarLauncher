@@ -93,8 +93,9 @@
             android:minHeight="4dp"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
+
             android:progressDrawable="@drawable/jc_seek_progress"
-            android:thumb="@drawable/jc_seek_thumb" />
+            android:thumb="@drawable/ic_volume" />
 
         <TextView
             android:id="@+id/total"
@@ -175,7 +176,7 @@
 
     <RelativeLayout
         android:id="@+id/listlayout"
-        android:layout_width="420dp"
+        android:layout_width="560px"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:background="@drawable/bg_list"
@@ -184,8 +185,8 @@
             android:id="@+id/mtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:layout_marginLeft="23dp"
+            android:layout_marginTop="148px"
+            android:layout_marginLeft="38px"
             android:text="@string/localmovie"
             android:textColor="#EDEDED"
             android:textSize="36px" />
@@ -195,7 +196,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below ="@+id/mtitle"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="38px"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
