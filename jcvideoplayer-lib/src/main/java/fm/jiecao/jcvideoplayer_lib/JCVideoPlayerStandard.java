@@ -1,5 +1,7 @@
 package fm.jiecao.jcvideoplayer_lib;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -8,8 +10,13 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,9 +31,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public ImageView backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
-    public TextView titleTextView;
-    public ImageView thumbImageView;
+    public TextView titleTextView,mtitle;
+    public ImageView thumbImageView,btn_list,btn_next,btn_last;
+    public RelativeLayout listlayout;
     public ImageView coverImageView;
+    public ListView list;
+    public TranslateAnimation mHiddenAction,mShowAction;
 
     protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
     protected static JCBuriedPointStandard JC_BURIED_POINT_STANDARD;
@@ -48,10 +58,29 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         thumbImageView = (ImageView) findViewById(R.id.thumb);
         coverImageView = (ImageView) findViewById(R.id.cover);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
+        list = (ListView) findViewById(R.id.list);
+        btn_list = (ImageView) findViewById(R.id.btn_list);
+        btn_next = (ImageView) findViewById(R.id.btn_next);
+        btn_last = (ImageView) findViewById(R.id.btn_last);
+        listlayout = (RelativeLayout) findViewById(R.id.listlayout);
+        mtitle = (TextView) findViewById(R.id.mtitle);
 
         thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
+        initAnim();
+    }
 
+    private void initAnim() {
+        mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+        mShowAction.setDuration(500);
+
+        mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, 1.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                0.0f);
+        mHiddenAction.setDuration(500);
     }
 
     @Override
@@ -119,6 +148,15 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                     break;
                 case MotionEvent.ACTION_UP:
                     startDismissControlViewTimer();
+                    if(listlayout.getVisibility() == View.VISIBLE){
+                        listlayout.animate().alpha(0f).setDuration(500).setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                listlayout.setVisibility(View.GONE);
+                            }
+                        });
+                        listlayout.startAnimation(mHiddenAction);
+                    }
                     if (mChangePosition) {
                         int duration = getDuration();
                         int progress = mResultTimePosition * 100 / (duration == 0 ? 1 : duration);
@@ -188,6 +226,18 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else if (i == R.id.back) {
             backFullscreen();
         }
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+        super.onStartTrackingTouch(seekBar);
+        cancelDismissControlViewTimer();
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        super.onStopTrackingTouch(seekBar);
+        startDismissControlViewTimer();
     }
 
     private void startPlayLocic() {
@@ -291,7 +341,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     private void changeUiToPlayingClear() {
         changeUiToClear();
-        bottomProgressBar.setVisibility(View.VISIBLE);
+//        bottomProgressBar.setVisibility(View.VISIBLE);
     }
 
     private void changeUiToPauseShow() {
@@ -307,7 +357,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     private void changeUiToPauseClear() {
         changeUiToClear();
-        bottomProgressBar.setVisibility(View.VISIBLE);
+//        bottomProgressBar.setVisibility(View.VISIBLE);
     }
 
     private void changeUiToPlayingBufferingShow() {
@@ -327,7 +377,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         loadingProgressBar.setVisibility(View.VISIBLE);
         thumbImageView.setVisibility(View.INVISIBLE);
         coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.VISIBLE);
+//        bottomProgressBar.setVisibility(View.VISIBLE);
         updateStartImage();
     }
 
@@ -359,7 +409,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         loadingProgressBar.setVisibility(View.INVISIBLE);
         thumbImageView.setVisibility(View.VISIBLE);
         coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.VISIBLE);
+//        bottomProgressBar.setVisibility(View.VISIBLE);
         updateStartImage();
     }
 
@@ -377,10 +427,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     private void updateStartImage() {
         if (mCurrentState == CURRENT_STATE_PLAYING) {
             startButton.setImageResource(R.drawable.jc_click_pause_selector);
+            btn_switch.setImageResource(R.drawable.btn_switch_off);
         } else if (mCurrentState == CURRENT_STATE_ERROR) {
             startButton.setImageResource(R.drawable.jc_click_error_selector);
         } else {
             startButton.setImageResource(R.drawable.jc_click_play_selector);
+            btn_switch.setImageResource(R.drawable.btn_switch_on);
         }
     }
 
@@ -399,7 +451,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                                     && mCurrentState != CURRENT_STATE_AUTO_COMPLETE) {
                                 bottomContainer.setVisibility(View.INVISIBLE);
                                 topContainer.setVisibility(View.INVISIBLE);
-                                bottomProgressBar.setVisibility(View.VISIBLE);
+//                                bottomProgressBar.setVisibility(View.VISIBLE);
                                 startButton.setVisibility(View.INVISIBLE);
                             }
                         }

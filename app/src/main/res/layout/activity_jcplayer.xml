@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <fm.jiecao.jcvideoplayer_lib.MyJCVideoPlayerStandard
+    <com.kandi.dell.nscarlauncher.ui.video.MyJCVideoPlayerStandard
         android:id="@+id/jiecao_player_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

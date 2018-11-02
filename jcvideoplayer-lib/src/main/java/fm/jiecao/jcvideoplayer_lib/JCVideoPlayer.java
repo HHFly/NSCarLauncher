@@ -60,7 +60,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected static long CLICK_QUIT_FULLSCREEN_TIME = 0;
     public static final int FULL_SCREEN_NORMAL_DELAY = 2000;
 
-    public ImageView startButton;
+    public ImageView startButton,btn_switch;
     public SeekBar progressBar;
     public ImageView fullscreenButton;
     public TextView currentTimeTextView, totalTimeTextView;
@@ -114,6 +114,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected void init(Context context) {
         View.inflate(context, getLayoutId(), this);
         startButton = (ImageView) findViewById(R.id.start);
+        btn_switch = (ImageView) findViewById(R.id.btn_switch);
         fullscreenButton = (ImageView) findViewById(R.id.fullscreen);
         progressBar = (SeekBar) findViewById(R.id.progress);
         currentTimeTextView = (TextView) findViewById(R.id.current);
@@ -123,11 +124,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         topContainer = (ViewGroup) findViewById(R.id.layout_top);
 
         startButton.setOnClickListener(this);
+        btn_switch.setOnClickListener(this);
         fullscreenButton.setOnClickListener(this);
         progressBar.setOnSeekBarChangeListener(this);
         bottomContainer.setOnClickListener(this);
         textureViewContainer.setOnClickListener(this);
-        progressBar.setOnTouchListener(this);
+//        progressBar.setOnTouchListener(this);
 
         textureViewContainer.setOnTouchListener(this);
         mScreenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
@@ -205,6 +207,57 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.start) {
+            if (TextUtils.isEmpty(mUrl)) {
+                Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_ERROR) {
+                if (!JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage(getResources().getString(R.string.tips_not_wifi));
+                    builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            startButtonLogic();
+                            WIFI_TIP_DIALOG_SHOWED = true;
+                        }
+                    });
+                    builder.setNegativeButton(getResources().getString(R.string.tips_not_wifi_cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+                    return;
+                }
+                startButtonLogic();
+            } else if (mCurrentState == CURRENT_STATE_PLAYING) {
+                Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
+                JCMediaManager.instance().mediaPlayer.pause();
+                setStateAndUi(CURRENT_STATE_PAUSE);
+                if (JC_BURIED_POINT != null && JCMediaManager.instance().listener == this) {
+                    if (mIfCurrentIsFullscreen) {
+                        JC_BURIED_POINT.onClickStopFullscreen(mUrl, mObjects);
+                    } else {
+                        JC_BURIED_POINT.onClickStop(mUrl, mObjects);
+                    }
+                }
+            } else if (mCurrentState == CURRENT_STATE_PAUSE) {
+                if (JC_BURIED_POINT != null && JCMediaManager.instance().listener == this) {
+                    if (mIfCurrentIsFullscreen) {
+                        JC_BURIED_POINT.onClickResumeFullscreen(mUrl, mObjects);
+                    } else {
+                        JC_BURIED_POINT.onClickResume(mUrl, mObjects);
+                    }
+                }
+                JCMediaManager.instance().mediaPlayer.start();
+                setStateAndUi(CURRENT_STATE_PLAYING);
+            } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
+                startButtonLogic();
+            }
+        } else if (i == R.id.btn_switch) {
             if (TextUtils.isEmpty(mUrl)) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
@@ -435,25 +488,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     }
                     break;
             }
-        } else if (id == R.id.progress) {//if I am seeking bar,no mater whoever can not intercept my event
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    cancelProgressTimer();
-                    ViewParent vpdown = getParent();
-                    while (vpdown != null) {
-                        vpdown.requestDisallowInterceptTouchEvent(true);
-                        vpdown = vpdown.getParent();
-                    }
-                    break;
-                case MotionEvent.ACTION_UP:
-                    startProgressTimer();
-                    ViewParent vpup = getParent();
-                    while (vpup != null) {
-                        vpup.requestDisallowInterceptTouchEvent(false);
-                        vpup = vpup.getParent();
-                    }
-                    break;
-            }
         }
 
         return true;
@@ -544,23 +578,37 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (mCurrentState != CURRENT_STATE_PLAYING &&
-                mCurrentState != CURRENT_STATE_PAUSE) return;
-        if (fromUser) {
-            int time = progress * getDuration() / 100;
-            JCMediaManager.instance().mediaPlayer.seekTo(time);
-            Log.d(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
-        }
+//        if (mCurrentState != CURRENT_STATE_PLAYING &&
+//                mCurrentState != CURRENT_STATE_PAUSE) return;
+//        if (fromUser) {
+//            int time = progress * getDuration() / 100;
+//            JCMediaManager.instance().mediaPlayer.seekTo(time);
+//            Log.d(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
+//        }
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-
+        cancelProgressTimer();
+        ViewParent vpdown = getParent();
+        while (vpdown != null) {
+            vpdown.requestDisallowInterceptTouchEvent(true);
+            vpdown = vpdown.getParent();
+        }
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-
+        startProgressTimer();
+        ViewParent vpup = getParent();
+        while (vpup != null) {
+            vpup.requestDisallowInterceptTouchEvent(false);
+            vpup = vpup.getParent();
+        }
+        if (mCurrentState != CURRENT_STATE_PLAYING &&
+                mCurrentState != CURRENT_STATE_PAUSE) return;
+        int time = seekBar.getProgress() * getDuration() / 100;
+        JCMediaManager.instance().mediaPlayer.seekTo(time);
     }
 
     @Override
