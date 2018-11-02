@@ -14,7 +14,11 @@ public class EqAdapter extends BaseListRvAdapter<EqData> {
     public EqAdapter(List<EqData> data) {
         super(data);
     }
-
+    public void DataClear(){
+        for(EqData eqData:getData()){
+            eqData.setSelect(false);
+        }
+    }
     @Override
     public int getItemResId() {
         return R.layout.item_eq_select;
@@ -23,6 +27,7 @@ public class EqAdapter extends BaseListRvAdapter<EqData> {
     @Override
     public void bindBodyData(AutoViewHolder holder, int bodyPos,final EqData data) {
         holder.text(R.id.tv_set_eq,data.getPreset());
+        holder.get(R.id.tv_set_eq).setSelected(data.getSelect());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

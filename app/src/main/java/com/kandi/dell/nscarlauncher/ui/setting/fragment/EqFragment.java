@@ -12,6 +12,7 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.fm.FMAdapter;
 import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
+import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.adapter.EqAdapter;
 import com.kandi.dell.nscarlauncher.ui.setting.model.EqData;
 import com.kandi.dell.nscarlauncher.widget.EqSeekBarView;
@@ -41,7 +42,7 @@ public class EqFragment extends BaseFragment {
 
     @Override
     public void setListener() {
-
+        setClickListener(R.id.tv_set_eq_close);
     }
 
     @Override
@@ -51,19 +52,64 @@ public class EqFragment extends BaseFragment {
         initEqList();
     }
 
+
     private void initEqList() {
         for (int i=0; i<mEqualizer.getNumberOfPresets();i++) {
             EqData data =new EqData();
+
             data.setPosition((short) i);
-            data.setPreset(mEqualizer.getPresetName((short) i));
+            data.setPreset(getName(mEqualizer.getPresetName((short) i)));
+            data.setSelect("Normal".equals(mEqualizer.getPresetName((short) i)));
             mData.add(data);
         }
             initRvAdapter(mData);
     }
-
+private String getName(String name){
+        switch (name){
+            case "Normal":
+                return getString(R.string.普通);
+              
+            case "Classical":
+                return getString(R.string.古典);
+            
+            case "Dance":
+                return getString(R.string.舞曲);
+            
+            case "Flat":
+                return getString(R.string.普通);
+           
+            case "Folk":
+                return getString(R.string.民族);
+           
+            case "Heavy Metal":
+                return getString(R.string.重金属);
+           
+            case "Jazz":
+                return getString(R.string.爵士);
+           
+            case "Hip Hop":
+                return getString(R.string.嘻哈);
+           
+            case "Pop":
+                return getString(R.string.流行);
+           
+            case "Rock":
+                return getString(R.string.摇滚);
+           
+            default:
+                return "";
+               
+        }
+        
+}
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_set_eq_close:
+                SetFragment.hideFragment();
 
+               
+        }
     }
 
     private void setEqualize() {
@@ -112,7 +158,10 @@ public class EqFragment extends BaseFragment {
                 public void onClickMode(EqData data) {
 
                         mEqualizer.usePreset(data.getPosition());
-                    refreshSeekbar();
+                        refreshSeekbar();
+                        mAdapter.DataClear();
+                        data.setSelect(true);
+                       mAdapter.notifyDataSetChanged();
                 }
 
             });

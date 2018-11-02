@@ -6,13 +6,14 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.kandi.dell.nscarlauncher.R;
 
 public class EqSeekBarView extends LinearLayout {
     private TextView  tv_eq_hz,tv_eq_band;
-    private VerticalSeekBar verticalSeekBar;
+    private VerticalSeekBarII verticalSeekBar;
      short band ;
     private Equalizer mEqualizer;
 
@@ -29,31 +30,52 @@ public class EqSeekBarView extends LinearLayout {
         final short maxEqualizer = mEqualizer.getBandLevelRange()[1];
         tv_eq_band.setText((mEqualizer.getCenterFreq(band) / 1000) + "HZ");
         tv_eq_hz.setText( (mEqualizer.getBandLevel(band)/100)+"dB");
-        verticalSeekBar.setMax(maxEqualizer - minEqualizer);
-        verticalSeekBar.setProgress(mEqualizer.getBandLevel(band));
-        verticalSeekBar.setOnSeekBarChangeListener(new VerticalSeekBar.OnSeekBarChangeListener() {
+        verticalSeekBar.setMax(maxEqualizer -minEqualizer);
+
+        verticalSeekBar.setProgress(mEqualizer.getBandLevel(band)-minEqualizer);
+        verticalSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(VerticalSeekBar VerticalSeekBar, int progress, boolean fromUser) {
-                mEqualizer.setBandLevel(band,
-                        (short) (progress + minEqualizer));
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mEqualizer.setBandLevel(band, (short) (progress + minEqualizer));
                 tv_eq_hz.setText( (mEqualizer.getBandLevel(band)/100)+"dB");
             }
 
             @Override
-            public void onStartTrackingTouch(VerticalSeekBar VerticalSeekBar) {
+            public void onStartTrackingTouch(SeekBar seekBar) {
 
             }
 
             @Override
-            public void onStopTrackingTouch(VerticalSeekBar VerticalSeekBar) {
+            public void onStopTrackingTouch(SeekBar seekBar) {
 
             }
         });
+//        verticalSeekBar.setOnSeekBarChangeListener(new VerticalSeekBar.OnSeekBarChangeListener() {
+//            @Override
+//            public void onProgressChanged(VerticalSeekBar VerticalSeekBar, int progress, boolean fromUser) {
+//                mEqualizer.setBandLevel(band,
+//                        (short) (progress + minEqualizer));
+//                tv_eq_hz.setText( (mEqualizer.getBandLevel(band)/100)+"dB");
+//            }
+//
+//            @Override
+//            public void onStartTrackingTouch(VerticalSeekBar VerticalSeekBar) {
+//
+//            }
+//
+//            @Override
+//            public void onStopTrackingTouch(VerticalSeekBar VerticalSeekBar) {
+//
+//            }
+//        });
     }
 
 
     public void  refreshSeekbar(final short band, final Equalizer mEqualizer){
-        verticalSeekBar.setProgress(mEqualizer.getBandLevel(band));
+        final short minEqualizer = mEqualizer.getBandLevelRange()[0];
+        final short maxEqualizer = mEqualizer.getBandLevelRange()[1];
+        verticalSeekBar.setMax(maxEqualizer -minEqualizer);
+        verticalSeekBar.setProgress(mEqualizer.getBandLevel(band)-minEqualizer);
         tv_eq_hz.setText( (mEqualizer.getBandLevel(band)/100)+"dB");
     }
     public void  setTv_eq_hz(String hz){

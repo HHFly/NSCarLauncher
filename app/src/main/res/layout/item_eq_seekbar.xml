@@ -13,15 +13,17 @@
     android:layout_gravity="center_horizontal"
     />
 
-    <com.kandi.dell.nscarlauncher.widget.VerticalSeekBar
+    <com.kandi.dell.nscarlauncher.widget.VerticalSeekBarII
         android:layout_gravity="center_horizontal"
         android:id="@+id/eq_seekbar"
-
+        android:maxHeight="3.4dp"
+        android:minHeight="3.4dp"
         android:layout_width="wrap_content"
         android:layout_height="342px"
+        android:secondaryProgress="100"
        android:progressDrawable="@drawable/seekbar_style"
-        android:thumb="@mipmap/ic_volume"
-        android:secondaryProgress="100"/>
+        android:thumb="@mipmap/ic_volume_two"
+        />
     <TextView
         android:id="@+id/tv_eq_band"
         android:layout_width="wrap_content"

@@ -121,12 +121,18 @@
     <string name="请输入蓝牙名称">请输入蓝牙名称</string>
     <string name="自定义">自定义</string>
     <string name="关闭">关闭</string>
-    <string name="摇滚">摇滚</string>
+
     <string name="现场">现场</string>
-    <string name="流行">流行</string>
     <string name="舞曲">舞曲</string>
     <string name="古典">古典</string>
     <string name="柔和">柔和</string>
+    <string name="普通">普通</string>
+    <string name="民族">民族</string>
+    <string name="重金属">重金属</string>
+    <string name="嘻哈">嘻哈</string>
+    <string name="爵士">爵士</string>
+    <string name="流行">流行</string>
+    <string name="摇滚">摇滚</string>
 
 
 </resources>

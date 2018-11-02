@@ -9,9 +9,12 @@
      android:orientation="horizontal"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
+     android:layout_marginLeft="267px"
+     android:layout_marginRight="293px"
      android:layout_centerHorizontal="true"
      android:layout_marginTop="132px">
   <TextView
+      android:visibility="gone"
       android:id="@+id/tv_set_eq_self"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

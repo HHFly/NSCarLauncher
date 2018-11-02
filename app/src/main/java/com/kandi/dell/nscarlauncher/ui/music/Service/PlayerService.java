@@ -57,13 +57,15 @@ public class PlayerService extends Service {
 		/**
 		 * 设置音乐播放完成时的监听器
 		 */
-		mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+		if(mediaPlayer!=null){
+			mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
 
-			@Override
-			public void onCompletion(MediaPlayer mp) {
-				MusicFragment.bt_next.performClick();
-			}
-		});
+				@Override
+				public void onCompletion(MediaPlayer mp) {
+					MusicFragment.bt_next.performClick();
+				}
+			});
+		}
 	}
 	@Override
 	public IBinder onBind(Intent arg0) {
