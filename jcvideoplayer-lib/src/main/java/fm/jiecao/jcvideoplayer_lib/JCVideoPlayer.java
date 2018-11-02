@@ -42,7 +42,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public static final String TAG = "JieCaoVideoPlayer";
 
-    protected int mCurrentState = -1;//-1相当于null
+    public static int mCurrentState = -1;//-1相当于null
     protected static final int CURRENT_STATE_NORMAL = 0;
     protected static final int CURRENT_STATE_PREPAREING = 1;
     protected static final int CURRENT_STATE_PLAYING = 2;

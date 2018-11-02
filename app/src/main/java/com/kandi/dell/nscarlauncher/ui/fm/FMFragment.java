@@ -1,17 +1,14 @@
 package com.kandi.dell.nscarlauncher.ui.fm;
 
-import android.graphics.PointF;
 import android.media.AudioManager;
 import android.os.Handler;
+import android.os.IFmService;
 import android.os.IKdAudioControlService;
 import android.os.Message;
 import android.os.RemoteException;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.os.IFmService;
-import android.widget.Toast;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
@@ -22,13 +19,10 @@ import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
+import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.widget.RadioRulerView;
 
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class FMFragment extends BaseFragment implements RadioRulerView.OnValueChangeListener{
     private FMAdapter mAdapter ;
@@ -433,6 +427,8 @@ public void  changeChannel(float value){
 //                                Log.d("Fm","Channel  set "+String.valueOf(channel));
                                 App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
                                 isPlay=true;
+                                HomePagerOneFragment.music_name.setText(getContext().getString(R.string.蓝牙音乐));
+                                HomePagerTwoFragment.music_name.setText(getContext().getString(R.string.本地音乐));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
