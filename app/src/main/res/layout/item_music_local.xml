@@ -21,7 +21,7 @@
             android:id="@+id/item_singer"
             android:layout_marginLeft="40px"
             android:textSize="18px"
-            android:textColor="@drawable/select_music_local_text_bg2"
+            android:textColor="@drawable/select_music_local_text_bg"
             android:singleLine="true"
             android:ellipsize="end"
             android:maxEms="15"

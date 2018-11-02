@@ -88,7 +88,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 		current = audiomanage.getStreamVolume( AudioManager.STREAM_MUSIC );
 		FlagProperty.STREAM_MUSIC = current;
 		FlagProperty.STREAM_MAX_MUSIC = max;
-		VerticalSeekBar.progress = Math.round(FlagProperty.STREAM_MUSIC * 100 / FlagProperty.STREAM_MAX_MUSIC);
+		FlagProperty.progress = Math.round(FlagProperty.STREAM_MUSIC * 100 / FlagProperty.STREAM_MAX_MUSIC);
 		Log.d("MUSIC", "max : " + max + " current : " + current);
 
 		//
@@ -100,7 +100,7 @@ public class DialogVolumeControl extends BaseDialogFragment {
 		//
 		thumb_volume = (SeekBar) window.findViewById(R.id.thumb_volume);
 
-		thumb_volume.setProgress(VerticalSeekBar.progress);
+		thumb_volume.setProgress(FlagProperty.progress);
 		thumb_volume.setOnSeekBarChangeListener(verticalSeekBarChangeListener);
 		imagebtn_volume = (ImageView) window.findViewById(R.id.imagebt_volume_show);
 		setVolumeImage(FlagProperty.STREAM_MUSIC);
@@ -113,8 +113,8 @@ public class DialogVolumeControl extends BaseDialogFragment {
 				if (!flag_quiet) {
 					last_volume = FlagProperty.STREAM_MUSIC;
 					FlagProperty.STREAM_MUSIC = 0;
-					VerticalSeekBar.progress = Math.round(FlagProperty.STREAM_MUSIC * 100 / FlagProperty.STREAM_MAX_MUSIC);
-					thumb_volume.setProgress(VerticalSeekBar.progress);
+					FlagProperty.progress = Math.round(FlagProperty.STREAM_MUSIC * 100 / FlagProperty.STREAM_MAX_MUSIC);
+					thumb_volume.setProgress(FlagProperty.progress);
 	            	setVolumeImage(FlagProperty.STREAM_MUSIC);
 	            	audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, FlagProperty.STREAM_MUSIC, 0);
 					audiomanage.setStreamVolume(AudioManager.STREAM_VOICE_CALL, FlagProperty.VOCIE_CALL, 0);
@@ -122,8 +122,8 @@ public class DialogVolumeControl extends BaseDialogFragment {
 //
 				}else{
 					FlagProperty.STREAM_MUSIC = last_volume;
-					VerticalSeekBar.progress = Math.round(FlagProperty.STREAM_MUSIC * 100 / FlagProperty.STREAM_MAX_MUSIC);
-					thumb_volume.setProgress(VerticalSeekBar.progress);
+					FlagProperty.progress = Math.round(FlagProperty.STREAM_MUSIC * 100 / FlagProperty.STREAM_MAX_MUSIC);
+					thumb_volume.setProgress(FlagProperty.progress);
 	            	setVolumeImage(FlagProperty.STREAM_MUSIC);
 	            	audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, FlagProperty.STREAM_MUSIC, 0);
 					audiomanage.setStreamVolume(AudioManager.STREAM_VOICE_CALL, FlagProperty.VOCIE_CALL, 0);
@@ -158,8 +158,8 @@ public class DialogVolumeControl extends BaseDialogFragment {
 		if(audiomanage!=null) {
 			int current = audiomanage.getStreamVolume(AudioManager.STREAM_MUSIC);
 			FlagProperty.STREAM_MUSIC = current;
-			VerticalSeekBar.progress = Math.round(FlagProperty.STREAM_MUSIC * 100 / FlagProperty.STREAM_MAX_MUSIC);
-			thumb_volume.setProgress(VerticalSeekBar.progress);
+			FlagProperty.progress = Math.round(FlagProperty.STREAM_MUSIC * 100 / FlagProperty.STREAM_MAX_MUSIC);
+			thumb_volume.setProgress(FlagProperty.progress);
 		}
 	}
 //	 滑动监听

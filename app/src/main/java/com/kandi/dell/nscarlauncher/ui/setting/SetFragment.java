@@ -21,6 +21,7 @@ import com.kandi.dell.nscarlauncher.ui.setting.fragment.AboutFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.BlueToothSetFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.DateFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.DisplayFragment;
+import com.kandi.dell.nscarlauncher.ui.setting.fragment.EqFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.LanguageFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.WifiFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.model.SetData;
@@ -40,6 +41,7 @@ public class SetFragment extends BaseFragment {
     DateFragment dateFragment;
     LanguageFragment languageFragment;
     AboutFragment aboutFragment;
+    EqFragment eqFragment;
     @Override
     public int getContentResId() {
         return R.layout.fragment_set;
@@ -68,6 +70,7 @@ public class SetFragment extends BaseFragment {
         dateFragment =new DateFragment();
         languageFragment =new LanguageFragment();
         aboutFragment =new AboutFragment();
+        eqFragment= new EqFragment();
          initRvAdapter(mData.getData());
     }
 
@@ -152,6 +155,9 @@ public class SetFragment extends BaseFragment {
                 case  SetType.RECOVERY:
                     JumpUtils.actAPK(getActivity(), FragmentType.POWERRECOVER);
                     break;
+                    case SetType.EQULIZER:
+                        switchFragment(eqFragment);
+                        break;
 
             }
     }

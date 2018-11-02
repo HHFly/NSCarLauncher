@@ -255,6 +255,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
     /*获取全局模块*/
     private void  getService(){
+        //android系统提供内置的Equalizer支持，我们可以直接声明并且使用。但必须注意，当我们在代码中使用Equalizer的时候，其实就是调整音量(EQ均衡器是改变音频使得声音发生变化，像是洪亮或者低沉)
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         if(audioManager==null) {
             audioManager = App.get().getAudioManager();

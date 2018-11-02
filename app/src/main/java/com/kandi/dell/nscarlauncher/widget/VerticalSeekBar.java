@@ -2,91 +2,199 @@ package com.kandi.dell.nscarlauncher.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;;
 import android.widget.SeekBar;
 
 public class VerticalSeekBar extends SeekBar {
-	
-	public static int progress = 0;
-	public float mCurrentPos = 0;
-	public float mPreviousPos = 0;
-	int addValue = 0;
-	boolean flag_move;
+
+
+	private Drawable mThumb;
+	private int height;
+	private int width;
+
+	public interface OnSeekBarChangeListener {
+		void onProgressChanged(VerticalSeekBar VerticalSeekBar, int progress,
+							   boolean fromUser);
+
+		void onStartTrackingTouch(VerticalSeekBar VerticalSeekBar);
+
+		void onStopTrackingTouch(VerticalSeekBar VerticalSeekBar);
+	}
+
+	private OnSeekBarChangeListener mOnSeekBarChangeListener;
 
 	public VerticalSeekBar(Context context) {
-		super(context);
+		this(context, null);
+	}
+
+	public VerticalSeekBar(Context context, AttributeSet attrs) {
+		this(context, attrs, android.R.attr.seekBarStyle);
 	}
 
 	public VerticalSeekBar(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
-	public VerticalSeekBar(Context context, AttributeSet attrs) {
-		super(context, attrs);
+	public void setOnSeekBarChangeListener(OnSeekBarChangeListener l) {
+		mOnSeekBarChangeListener = l;
+
 	}
 
+	void onStartTrackingTouch() {
+		if (mOnSeekBarChangeListener != null) {
+			mOnSeekBarChangeListener.onStartTrackingTouch(this);
+		}
+	}
+
+	void onStopTrackingTouch() {
+		if (mOnSeekBarChangeListener != null) {
+			mOnSeekBarChangeListener.onStopTrackingTouch(this);
+		}
+	}
+
+	void onProgressRefresh(float scale, boolean fromUser) {
+		Drawable thumb = mThumb;
+		if (thumb != null) {
+			setThumbPos(getHeight(), thumb, scale, Integer.MIN_VALUE);
+			invalidate();
+		}
+		if (mOnSeekBarChangeListener != null) {
+			mOnSeekBarChangeListener.onProgressChanged(this, getProgress(),
+					fromUser);
+		}
+	}
+
+	private void setThumbPos(int w, Drawable thumb, float scale, int gap) {
+		int available = w + getPaddingLeft() - getPaddingRight();
+		int thumbWidth = thumb.getIntrinsicWidth();
+		int thumbHeight = thumb.getIntrinsicHeight();
+		available -= thumbWidth;
+		available += getThumbOffset() / 2;
+		int thumbPos = (int) (scale * available);
+		int topBound, bottomBound;
+		if (gap == Integer.MIN_VALUE) {
+			Rect oldBounds = thumb.getBounds();
+			topBound = oldBounds.top;
+			bottomBound = oldBounds.bottom;
+		} else {
+			topBound = gap;
+			bottomBound = gap + thumbHeight;
+		}
+		thumb.setBounds(thumbPos, topBound, thumbPos + thumbWidth, bottomBound);
+	}
+
+	protected void onDraw(Canvas c) {
+		c.rotate(-90);
+		c.translate(-height, 0);
+		super.onDraw(c);
+	}
+
+	protected synchronized void onMeasure(int widthMeasureSpec,
+										  int heightMeasureSpec) {
+		height = View.MeasureSpec.getSize(heightMeasureSpec) ;
+		width = 20;
+		this.setMeasuredDimension(width, height);
+	}
 
 	@Override
+	public void setThumb(Drawable thumb) {
+		mThumb = thumb;
+		super.setThumb(thumb);
+	}
+
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(h, w, oldw, oldh);
+	}
+
 	public boolean onTouchEvent(MotionEvent event) {
 		if (!isEnabled()) {
 			return false;
 		}
-
 		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			//System.out.println("event.getY(): " + getDownProgress(event.getY()) + " -- " + progress);
-			if (Math.abs(getDownProgress(event.getY()) - progress) > 15) {
-				progress = getDownProgress(event.getY());
-				setProgress(progress);
-				onSizeChanged(getWidth(), getHeight(), 0, 0);
-			}else{
-				mPreviousPos = event.getY();
-				flag_move = true;
-			}
-			break;
-		case MotionEvent.ACTION_MOVE:
-			if (flag_move) {
-				mCurrentPos = event.getY();
-				addValue = (int) ((mPreviousPos -mCurrentPos)/getHeight()*getMax());
-				if (progress + addValue < 0) {
-					setProgress(0);
-				}else if (progress + addValue > 100) {
-					setProgress(100);
-				}else{
-					setProgress(progress + addValue);
-				}
-				onSizeChanged(getWidth(), getHeight(), 0, 0);
-			}
-			break;
-		case MotionEvent.ACTION_UP:
-			if (flag_move) {
-				if (progress + addValue < 0) {
-					progress = 0;
-				}else if (progress + addValue > 100) {
-					progress = 100;
-				}else{
-					progress += addValue;
-				}
-				flag_move = false;
-			}
-			break;
+			case MotionEvent.ACTION_DOWN:
+				setPressed(true);
+				onStartTrackingTouch();
+				trackTouchEvent(event);
+				break;
 
-		case MotionEvent.ACTION_CANCEL:
-			break;
+			case MotionEvent.ACTION_MOVE:
+				trackTouchEvent(event);
+				attemptClaimDrag();
+				break;
+
+			case MotionEvent.ACTION_UP:
+				trackTouchEvent(event);
+				onStopTrackingTouch();
+				setPressed(false);
+				break;
+
+			case MotionEvent.ACTION_CANCEL:
+				onStopTrackingTouch();
+				setPressed(false);
+				break;
 		}
 		return true;
 	}
-	
 
-	public int getDownProgress(float pos){
-		int num = (int)(100 - (pos -25.0)/1.8);
-		if (num < 0) {
-			return 0;
-		}else if (num > 100) {
-			return 100;
-		}else{
-			return num;
+	private void trackTouchEvent(MotionEvent event) {
+		final int Height = getHeight();
+		final int available = Height - getPaddingBottom() - getPaddingTop();
+		int Y = (int) event.getY();
+		float scale;
+		float progress = 0;
+		if (Y > Height - getPaddingBottom()) {
+			scale = 0.0f;
+		} else if (Y < getPaddingTop()) {
+			scale = 1.0f;
+		} else {
+			scale = (float) (Height - getPaddingBottom() - Y)
+					/ (float) available;
 		}
+
+		final int max = getMax();
+		progress = scale * max;
+
+		setProgress((int) progress);
+	}
+
+	private void attemptClaimDrag() {
+		if (getParent() != null) {
+			getParent().requestDisallowInterceptTouchEvent(true);
+		}
+	}
+
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (event.getAction() == KeyEvent.ACTION_DOWN) {
+			KeyEvent newEvent = null;
+			switch (event.getKeyCode()) {
+				case KeyEvent.KEYCODE_DPAD_UP:
+					newEvent = new KeyEvent(KeyEvent.ACTION_DOWN,
+							KeyEvent.KEYCODE_DPAD_RIGHT);
+					break;
+				case KeyEvent.KEYCODE_DPAD_DOWN:
+					newEvent = new KeyEvent(KeyEvent.ACTION_DOWN,
+							KeyEvent.KEYCODE_DPAD_LEFT);
+					break;
+				case KeyEvent.KEYCODE_DPAD_LEFT:
+					newEvent = new KeyEvent(KeyEvent.ACTION_DOWN,
+							KeyEvent.KEYCODE_DPAD_DOWN);
+					break;
+				case KeyEvent.KEYCODE_DPAD_RIGHT:
+					newEvent = new KeyEvent(KeyEvent.ACTION_DOWN,
+							KeyEvent.KEYCODE_DPAD_UP);
+					break;
+				default:
+					newEvent = new KeyEvent(KeyEvent.ACTION_DOWN,
+							event.getKeyCode());
+					break;
+			}
+			return newEvent.dispatch(this);
+		}
+		return false;
 	}
 }

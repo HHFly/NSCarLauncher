@@ -6,6 +6,8 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.audiofx.Equalizer;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.IFmService;
@@ -46,13 +48,14 @@ App extends MultiDexApplication {
     }
 
     private  IFmService radio;  //收音机
-
+    private MediaPlayer mediaPlayer;//本地音乐播放
     private   IKdAudioControlService audioservice = IKdAudioControlService.Stub
             .asInterface(ServiceManager.getService("audioCtrl"));
     AudioManager audioManager;
     private IKdBtService btservice ;
     private BaseActivity mCurActivity;
     private BlueMusicBroadcoast bluetoothReceiver; //蓝牙广播接受
+    private Equalizer mEqualizer;
     public  IFmService getRadio() {
         return radio;
     }
@@ -67,6 +70,10 @@ App extends MultiDexApplication {
 
     public IKdBtService getBtservice() {
         return btservice;
+    }
+
+    public Equalizer getmEqualizer() {
+        return mEqualizer;
     }
 
     //共享handle变量
@@ -97,13 +104,22 @@ App extends MultiDexApplication {
 
     }
     private void initService(){
+        mediaPlayer= new MediaPlayer();
+        mEqualizer = new Equalizer(0, App.get().getMediaPlayer().getAudioSessionId());
+        mEqualizer.setEnabled(true);
+
         initFm();
         btService();
         registMyReceiver();
     }
     /*蓝牙*/
     private  void  btService(){
-        btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
+        try {
+            btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
+        }catch (Exception e){
+
+        }
+
     }
     /*收音机*/
     private void  initFm(){
@@ -180,7 +196,9 @@ App extends MultiDexApplication {
     }
 
 
-
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
 
     /**
      * 获取当前Activity
@@ -196,12 +214,16 @@ App extends MultiDexApplication {
 
     public void PauseService(){
         try {
+
             radio.CloseLocalRadio();
             btservice.btAvrPause();
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
             HomePagerTwoFragment.myHandler.sendEmptyMessage(1);
             pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
             pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
+            mediaPlayer.release();
+            mEqualizer.release();
+            mediaPlayer = null;
 
         } catch (RemoteException e) {
             e.printStackTrace();

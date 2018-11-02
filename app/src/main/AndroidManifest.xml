@@ -53,7 +53,8 @@
     <!--用于申请调用A-GPS模块-->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-
+    <!-- eq -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <application
         android:name=".app.App"
         android:allowBackup="true"

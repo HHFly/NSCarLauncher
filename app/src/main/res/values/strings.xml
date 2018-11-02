@@ -26,7 +26,6 @@
     <string name="显示">显示</string>
     <string name="蓝牙">蓝牙</string>
     <string name="WiFi">WiFi</string>
-
     <string name="均衡器">均衡器</string>
     <string name="车辆设置">车辆设置</string>
     <string name="能量回收">能量回收</string>
@@ -120,6 +119,20 @@
     <string name="新名称">新名称：</string>
     <string name="请输入蓝牙名称">请输入蓝牙名称</string>
     <string name="暂停">暂停</string>
+    <string name="自定义">自定义</string>
+    <string name="关闭">关闭</string>
+    <string name="现场">现场</string>
+    <string name="舞曲">舞曲</string>
+    <string name="古典">古典</string>
+    <string name="柔和">柔和</string>
+    <string name="普通">普通</string>
+    <string name="民族">民族</string>
+    <string name="重金属">重金属</string>
+    <string name="嘻哈">嘻哈</string>
+    <string name="爵士">爵士</string>
+    <string name="流行">流行</string>
+    <string name="摇滚">摇滚</string>
+
 
 
 </resources>

@@ -98,4 +98,5 @@ dependencies {
     implementation 'com.belerweb:pinyin4j:2.5.1'
     implementation project(':jcvideoplayer-lib')
     implementation 'org.apache.httpcomponents:httpcore-nio:4.4.10'
+
 }

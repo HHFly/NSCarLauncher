@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.CursorMusicImage;
@@ -24,13 +25,15 @@ import java.io.FileInputStream;
 public class PlayerService extends Service {
 
 
-	private MediaPlayer mediaPlayer; // 媒体播放器对象
+	  MediaPlayer mediaPlayer; // 媒体播放器对象
 	private int msg;				//播放信息
 	public static boolean isPause; 		//  暂停状态
 	private int currentTime;		//当前播放进度
 	
 	public static boolean is_start_speed = true;  //是否第一次快进播放
-	
+
+
+
 	/**
 	 * handler用来接收消息，来发送广播更新播放时间
 	 */
@@ -50,17 +53,19 @@ public class PlayerService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		Log.d("service", "service created");
-		mediaPlayer = new MediaPlayer();
+		mediaPlayer = App.get().getMediaPlayer();
 		/**
 		 * 设置音乐播放完成时的监听器
 		 */
-		mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+		if(mediaPlayer!=null){
+			mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
 
-			@Override
-			public void onCompletion(MediaPlayer mp) {
-				MusicFragment.bt_next.performClick();
-			}
-		});
+				@Override
+				public void onCompletion(MediaPlayer mp) {
+					MusicFragment.bt_next.performClick();
+				}
+			});
+		}
 	}
 	@Override
 	public IBinder onBind(Intent arg0) {
