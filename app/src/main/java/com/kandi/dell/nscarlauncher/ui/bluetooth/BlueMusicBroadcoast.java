@@ -250,6 +250,8 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 
 //            System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
             try {
+                int blueVolume =  (int) Math.round((float)30/100.0  * 21.0);
+                btservice.btSetVol(String.valueOf(blueVolume));
                 FlagProperty.is_one_oper = true;
                 if (!FlagProperty.flag_phone_ringcall) {
                     FlagProperty.flag_phone_ringcall = true;
