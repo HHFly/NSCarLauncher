@@ -249,7 +249,7 @@ public static void  musicNext(){
             if("".equals(songname)){
                 HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
             }else {
-                HomePagerOneFragment.music_name.setText(songname);
+                HomePagerOneFragment.music_name.setText(songname+"- " + singer);
             }
             tv_bt_music_songname.setText(songname);
             if (!("").equals(singer)) {
