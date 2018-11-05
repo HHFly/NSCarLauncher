@@ -341,7 +341,9 @@ public static void  musicNext(){
                             iv_bt_stop.setVisibility(View.GONE);
                         }
                         isPlay=true;
-                        HomePagerTwoFragment.music_name.setText(context.getString(R.string.本地音乐));
+                        if(HomePagerTwoFragment.music_name!=null) {
+                            HomePagerTwoFragment.music_name.setText(context.getString(R.string.本地音乐));
+                        }
                         break;
                     case MUSCI_BACK:
                         App.get().getBtservice().btAvrLast();

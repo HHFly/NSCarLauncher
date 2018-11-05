@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.ui.fm.FMAdapter;
 import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
 import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
@@ -42,7 +43,7 @@ public class EqFragment extends BaseFragment {
 
     @Override
     public void setListener() {
-        setClickListener(R.id.tv_set_eq_close);
+        setClickListener(R.id.iv_return);
     }
 
     @Override
@@ -54,6 +55,14 @@ public class EqFragment extends BaseFragment {
 
 
     private void initEqList() {
+        EqData custom =new EqData();
+        custom.setSelect(false);
+        custom.setPreset(getString(R.string.自定义));
+        custom.setPosition((short) 100);
+
+//        Equalizer.Settings settings =
+//        custom.setSettings();
+        mData.add(custom);
         for (int i=0; i<mEqualizer.getNumberOfPresets();i++) {
             EqData data =new EqData();
 
@@ -67,7 +76,7 @@ public class EqFragment extends BaseFragment {
 private String getName(String name){
         switch (name){
             case "Normal":
-                return getString(R.string.普通);
+                return getString(R.string.eq关闭);
               
             case "Classical":
                 return getString(R.string.古典);
@@ -105,7 +114,7 @@ private String getName(String name){
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_set_eq_close:
+            case R.id.iv_return:
                 SetFragment.hideFragment();
 
                
