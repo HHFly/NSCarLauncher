@@ -309,22 +309,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 startButtonLogic();
             }
         } else if (i == R.id.fullscreen) {
-            if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) return;
-            if (mIfCurrentIsFullscreen) {
-                //quit fullscreen
-                backFullscreen();
-            } else {
-                Log.d(TAG, "toFullscreenActivity [" + this.hashCode() + "] ");
-                if (JC_BURIED_POINT != null && JCMediaManager.instance().listener == this) {
-                    JC_BURIED_POINT.onEnterFullscreen(mUrl, mObjects);
-                }
-                //to fullscreen
-                JCMediaManager.instance().setDisplay(null);
-                JCMediaManager.instance().lastListener = this;
-                JCMediaManager.instance().listener = null;
-                IF_FULLSCREEN_FROM_NORMAL = true;
-                IF_RELEASE_WHEN_ON_PAUSE = false;
-                JCFullScreenActivity.startActivityFromNormal(getContext(), mCurrentState, mUrl, JCVideoPlayer.this.getClass(), this.mObjects);
+            textureView.onSizeChanged();
+            if(textureView.getIsFull()){
+                fullscreenButton.setImageResource(R.drawable.btn_narrow);
+            }else{
+                fullscreenButton.setImageResource(R.drawable.btn_narrow_off);
             }
         } else if (i == R.id.surface_container && mCurrentState == CURRENT_STATE_ERROR) {
             if (JC_BURIED_POINT != null) {
