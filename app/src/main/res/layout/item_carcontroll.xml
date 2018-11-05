@@ -138,7 +138,7 @@
             android:layout_marginTop="34px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLength="5"
+            android:maxLength="6"
             android:text="@string/开窗"
             android:textColor="@drawable/select_text_press_white_blue"
             android:textSize="20px" />

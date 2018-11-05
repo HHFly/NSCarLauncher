@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">NSCarLauncher</string>
-    <string name="电台">FM</string>
+    <string name="电台">Radio</string>
     <string name="天气">Weather</string>
     <string name="杭州交通经济广播">杭州交通经济广播</string>
-    <string name="车辆未授权">Unauthorized Car</string>
+    <string name="车辆未授权">Vehicle Not Authorized</string>
     <string name="天">Day</string>
     <string name="一">One</string>
     <string name="二">Two</string>
@@ -12,7 +12,7 @@
     <string name="四">Four</string>
     <string name="五">Five</string>
     <string name="六">Six</string>
-    <string name="蓝牙音乐">BT Music</string>
+    <string name="蓝牙音乐">BTMusic</string>
     <string name="bt_tip">Bluetooth is not connected, please connect it first</string>
     <string name="暂无音乐">No music</string>
     <string name="本地音乐">Local music</string>
@@ -23,13 +23,13 @@
     <string name="通话记录">Call Records </string>
     <string name="保持通话">Keep call：</string>
     <string name="设置">Setting</string>
-    <string name="应用中心">Application</string>
+    <string name="应用中心">App Center</string>
     <string name="显示">Display</string>
     <string name="蓝牙">Bluetooth</string>
     <string name="WiFi">WiFi</string>
 
     <string name="均衡器">Equalizer</string>
-    <string name="车辆设置">Car Setting</string>
+    <string name="车辆设置">Vehicle Setting</string>
     <string name="能量回收">Energy Recovery</string>
     <string name="升级">Update</string>
     <string name="关于">About</string>
@@ -37,10 +37,10 @@
     <string name="我的设备">About My Device</string>
     <string name="整车控制">Car Control</string>
     <string name="导航">Navigation</string>
-    <string name="空调">Air-conditioning</string>
+    <string name="空调">Air Conditioning</string>
     <string name="室内">Indoor</string>
     <string name="usb">USB Music</string>
-    <string name="MusicCol">收藏音乐</string>
+    <string name="MusicCol">Collection</string>
     <string name="刷新列表">Refresh List</string>
     <string name="暂无本地音乐">No Local Music</string>
     <string name="新密码">New Password：</string>
@@ -110,10 +110,10 @@
     <string name="拨号">Dial</string>
     <string name="后备箱">Trunk</string>
     <string name="中控锁">Lock</string>
-    <string name="开窗">Windowing</string>
+    <string name="开窗">Window</string>
     <string name="回家">Home</string>
     <string name="上班">Office</string>
-    <string name="商城">Store</string>
+    <string name="商城">Mall</string>
     <string name="剩余里程">remainkon</string>
     <string name="是否将文件导入本地">Whether to import the file locally</string>
     <string name="更改蓝牙名称">Change bluetooth name</string>

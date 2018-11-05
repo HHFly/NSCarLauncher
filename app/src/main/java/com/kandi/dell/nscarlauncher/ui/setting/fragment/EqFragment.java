@@ -76,7 +76,7 @@ private String getName(String name){
                 return getString(R.string.舞曲);
             
             case "Flat":
-                return getString(R.string.普通);
+                return getString(R.string.柔和);
            
             case "Folk":
                 return getString(R.string.民族);
