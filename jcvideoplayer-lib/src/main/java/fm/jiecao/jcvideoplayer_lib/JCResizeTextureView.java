@@ -2,6 +2,7 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.TextureView;
 
 /**
@@ -14,6 +15,9 @@ import android.view.TextureView;
  * On 2016/06/02 00:01
  */
 public class JCResizeTextureView extends TextureView {
+
+    boolean isFull = false;
+
     public JCResizeTextureView(Context context) {
         super(context);
     }
@@ -24,8 +28,17 @@ public class JCResizeTextureView extends TextureView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int videoWidth = JCMediaManager.instance().currentVideoWidth;
-        int videoHeight = JCMediaManager.instance().currentVideoHeight;
+//        int videoWidth = JCMediaManager.instance().currentVideoWidth;
+//        int videoHeight = JCMediaManager.instance().currentVideoHeight;
+        Log.i("testtest","onMeasure-->"+widthMeasureSpec+"   "+heightMeasureSpec);
+        int videoWidth,videoHeight;
+        if(isFull){
+            videoWidth = widthMeasureSpec;
+            videoHeight = heightMeasureSpec;
+        }else{
+            videoWidth = JCMediaManager.instance().currentVideoWidth;
+            videoHeight = JCMediaManager.instance().currentVideoHeight;
+        }
 
         int width = getDefaultSize(videoWidth, widthMeasureSpec);
         int height = getDefaultSize(videoHeight, heightMeasureSpec);
@@ -82,5 +95,18 @@ public class JCResizeTextureView extends TextureView {
             // no size yet, just adopt the given spec sizes
         }
         setMeasuredDimension(width, height);
+    }
+
+    public void onSizeChanged() {
+        if(isFull){
+            isFull = false;
+        }else{
+            isFull = true;
+        }
+        requestLayout();
+    }
+
+    public boolean getIsFull(){
+        return isFull;
     }
 }

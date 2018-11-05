@@ -38,7 +38,7 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard{
     }
 
     protected void initView(final Context context) {
-        fullscreenButton.setVisibility(View.GONE);
+//        fullscreenButton.setVisibility(View.GONE);
         adapter = new FruitAdapter(context, R.layout.list_item, VideoFragment.mData);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
