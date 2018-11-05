@@ -10,6 +10,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.kandi.dell.nscarlauncher.R;
+import com.kandi.dell.nscarlauncher.common.util.JsonUtils;
+import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 
 public class EqSeekBarView extends LinearLayout {
     private TextView  tv_eq_hz,tv_eq_band;
@@ -17,7 +19,7 @@ public class EqSeekBarView extends LinearLayout {
      short band ;
     private Equalizer mEqualizer;
 
-    public EqSeekBarView(Context context , final short band, final Equalizer mEqualizer) {
+    public EqSeekBarView(final Context context , final short band, final Equalizer mEqualizer) {
         super(context);
         LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.item_eq_seekbar, this);
@@ -38,16 +40,19 @@ public class EqSeekBarView extends LinearLayout {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mEqualizer.setBandLevel(band, (short) (progress + minEqualizer));
                 tv_eq_hz.setText( (mEqualizer.getBandLevel(band)/100)+"dB");
+
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                if (onItemClickListener != null) {
+                    onItemClickListener.onClickMode();
+                }
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                SPUtil.getInstance(context).putString("EQ", JsonUtils.toJson(mEqualizer.getProperties()));
             }
         });
 //        verticalSeekBar.setOnSeekBarChangeListener(new VerticalSeekBar.OnSeekBarChangeListener() {
@@ -90,5 +95,20 @@ public class EqSeekBarView extends LinearLayout {
     }
     public void  setMax(int max){
         verticalSeekBar.setMax(max);
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        onItemClickListener = listener;
+    }
+    public interface OnItemClickListener {
+        /**
+         * 点击
+         *
+         *
+         */
+        void onClickMode();
+
     }
 }

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.common.util.JsonUtils;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.ui.fm.FMAdapter;
 import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
@@ -59,9 +60,9 @@ public class EqFragment extends BaseFragment {
         custom.setSelect(false);
         custom.setPreset(getString(R.string.自定义));
         custom.setPosition((short) 100);
-
-//        Equalizer.Settings settings =
-//        custom.setSettings();
+        String set =SPUtil.getInstance(getContext()).getString("EQ");
+        Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
+        custom.setSettings(settings);
         mData.add(custom);
         for (int i=0; i<mEqualizer.getNumberOfPresets();i++) {
             EqData data =new EqData();
@@ -131,7 +132,14 @@ private String getName(String name){
             final short band = i;
 
             EqSeekBarView eqSeekBarView =new EqSeekBarView(getContext(),band,mEqualizer);
-
+            eqSeekBarView.setOnItemClickListener(new EqSeekBarView.OnItemClickListener() {
+                @Override
+                public void onClickMode() {
+                    mAdapter.DataClear();
+                   mAdapter.getData().get(0).setSelect(true);
+                    mAdapter.notifyDataSetChanged();
+                }
+            });
             mView.add(eqSeekBarView);
             mLayout.addView(eqSeekBarView);
         }
@@ -171,6 +179,19 @@ private String getName(String name){
                         mAdapter.DataClear();
                         data.setSelect(true);
                        mAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onClickCutsom(EqData data) {
+                    String set =SPUtil.getInstance(getContext()).getString("EQ");
+                    Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
+                    if(settings!=null) {
+                        mEqualizer.setProperties(settings);
+                    }
+                    refreshSeekbar();
+                    mAdapter.DataClear();
+                    data.setSelect(true);
+                    mAdapter.notifyDataSetChanged();
                 }
 
             });

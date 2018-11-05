@@ -32,11 +32,15 @@ public class EqAdapter extends BaseListRvAdapter<EqData> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                if(onItemClickListener!=null){
+            if(100==data.getPosition()) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onClickCutsom(data);
+                }
+            }else {
+                if (onItemClickListener != null) {
                     onItemClickListener.onClickMode(data);
                 }
+            }
             }
         });
     }
@@ -53,7 +57,7 @@ public class EqAdapter extends BaseListRvAdapter<EqData> {
          *
          */
         void onClickMode(EqData data);
-
-
+/*自定义*/
+            void onClickCutsom(EqData data);
     }
 }

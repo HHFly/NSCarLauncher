@@ -9,7 +9,7 @@
      android:orientation="horizontal"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
-     android:layout_marginLeft="267px"
+     android:layout_marginLeft="40px"
      android:layout_marginRight="293px"
      android:layout_centerHorizontal="true"
      android:layout_marginTop="132px">
@@ -17,11 +17,11 @@
       android:id="@+id/iv_return"
       android:layout_width="40px"
       android:layout_height="31px"
-      android:layout_marginLeft="30px"
       android:src="@mipmap/set_button_return"
       android:layout_centerVertical="true"
       />
   <android.support.v7.widget.RecyclerView
+      android:layout_marginLeft="50px"
       android:id="@+id/rv_eq_nameList"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
