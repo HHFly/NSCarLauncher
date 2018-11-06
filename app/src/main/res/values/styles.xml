@@ -79,11 +79,11 @@
     <!--自定义switch的按钮和轨迹颜色theme-->
     <style name="mySwitch" parent="Theme.AppCompat.Light">
         <!-- switch 打开时的按钮的颜色 轨迹颜色默认为30%（看效果就明白30%是怎么回事了）这个颜色 -->
-        <item name="colorControlActivated">@color/colormusicblue</item>
+        <item name="colorControlActivated">@color/green</item>
         <!--  switch关闭时的按钮的颜色 -->
-        <item name="colorSwitchThumbNormal">@color/colormusic999999</item>
+        <item name="colorSwitchThumbNormal">@color/white</item>
         <!-- switch关闭时的轨迹的颜色 30%这个颜色 -->
-        <item name="android:colorForeground">@color/colorPrimaryDark</item>
+        <item name="android:colorForeground">@color/colormusicblue</item>
 
     </style>
 </resources>

@@ -1,5 +1,6 @@
 package com.kandi.dell.nscarlauncher.ui.home.fragment;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
@@ -11,6 +12,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,7 +59,11 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private static TextView tv_w_time;
     private static TextView tv_w_date;
     private static TextView tv_w_week;
+
     public static TextView tv_w_speed,tv_w_authorize,tv_work,music_name;
+
+    private LinearLayout layout_home;
+
 
     private HomePagerActivity homePagerActivity;
     private HashMap<String, Integer> mWeatherMap; // 天气类型与对应的图标
@@ -76,6 +82,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private float channel;
     private boolean isON=true;// 空调
     public static int isAirOpen =0  ;
+    public String PicIndex ="picindex";
     public void setFragment(HomePagerActivity homePagerActivity,FMFragment fmFragment) {
         this.homePagerActivity = homePagerActivity;
         this.fmFragment =fmFragment;
@@ -99,7 +106,10 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         tv_w_authorize =getView(R.id.tv_w_authorize);
         tv_work =getView(R.id.tv_work);
         controll_air= getView(R.id.controll_air);
+
         music_name=getView(R.id.music_name);
+        layout_home = getView(R.id.layout_home);
+
     }
 
     @Override
@@ -110,6 +120,8 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         setClickListener(R.id.rl_air);
         setClickListener(R.id.controll_air);
         setClickListener(R.id.wave_view);
+        setClickListener(R.id.tv_w_time);
+        setClickListener(R.id.tv_w_date);
         setPalyListen();
 
 
@@ -307,6 +319,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 //        circleView.startWave();
         setFmMHZ();
         setBT();
+        changBgView(SPUtil.getInstance(getContext(),PicIndex).getInt(PicIndex,0));
     }
     /*初始化fm*/
     private void setFmMHZ(){
@@ -348,6 +361,12 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             case R.id.wave_view:
                 JumpUtils.actAPK(getActivity(),FragmentType.CARPOWER);
                 JumpUtils.actRightIn(getActivity());
+                break;
+            case R.id.tv_w_time:
+                startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));
+                break;
+            case R.id.tv_w_date:
+                startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));
                 break;
 
         }
@@ -618,6 +637,15 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     @Override
     public void onWeatherForecastSearched(LocalWeatherForecastResult localWeatherForecastResult, int i) {
 
+    }
+
+    /*设置背景param int resid*/
+    public void changBgView(int resid){
+        if(resid == 0){
+            layout_home.setBackgroundResource(R.color.dfbackground);
+        }else{
+            layout_home.setBackgroundResource(resid);
+        }
     }
 
 }

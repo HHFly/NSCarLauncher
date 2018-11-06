@@ -6,12 +6,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.JumpUtils;
+import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
@@ -30,8 +32,13 @@ public class HomePagerTwoFragment extends BaseFragment {
     public static  int backbox =0x02;//0x01为开启状态，0x02为关闭状态。
     public static int  centerlock =0x02;//0x01为开启状态，0x02为关闭状态。
     private static ImageView iv_backbox,iv_cenlock;
+
     public static MarqueTextView music_name;
+
+    public LinearLayout layout_home;
+
     public static  boolean isBackboxOpen,isCenterlockOpen;
+    public String PicIndex ="picindex";
     @Override
     public int getContentResId() {
         return R.layout.fragment_home2;
@@ -48,7 +55,11 @@ public class HomePagerTwoFragment extends BaseFragment {
         musicPaly=getView(R.id.music_playcontroll);
         iv_backbox=getView(R.id.iv_backbox);
         iv_cenlock =getView(R.id.iv_cenlock);
+
         music_name=getView(R.id.music_name);
+
+        layout_home=getView(R.id.layout_home);
+
     }
     @Override
     public void setListener() {
@@ -221,6 +232,7 @@ public class HomePagerTwoFragment extends BaseFragment {
     public void initView() {
 //        MusicFragment.dialogLocalMusic.ScanMusic(getContext(),false);
 //        MusicFragment.dialogLocalMusic.ScanVideoMusic(getContext(),false,1);
+        changBgView(SPUtil.getInstance(getContext(),PicIndex).getInt(PicIndex,0));
     }
 
 
@@ -286,5 +298,14 @@ public class HomePagerTwoFragment extends BaseFragment {
         intent.putExtra("KEY_TYPE", 10070);
         intent.putExtra("EXTRA_TYPE", type);
         getActivity().sendBroadcast(intent);
+    }
+
+    /*设置背景param int resid*/
+    public void changBgView(int resid){
+        if(resid == 0){
+            layout_home.setBackgroundResource(R.color.dfbackground);
+        }else{
+            layout_home.setBackgroundResource(resid);
+        }
     }
 }

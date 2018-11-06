@@ -1,75 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@mipmap/ic_f_fm_bg">
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="96px"
-        android:layout_marginTop="82px"
-        android:layout_marginLeft="90px"
-        android:layout_marginRight="90px">
-        <ImageView
-            android:id="@+id/iv_return"
-            android:layout_width="40px"
-            android:layout_height="31px"
-            android:layout_marginLeft="30px"
-            android:src="@mipmap/set_button_return"
-            android:layout_centerVertical="true"
-            />
-        <TextView style="@style/BaseText.Tv"
-            android:textSize="36px"
-            android:text="@string/显示"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="110px"/>
-
-        <View style="@style/BaseLine.Horizontal"
-            android:background="#3c3c3c"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:orientation="horizontal"
-        android:layout_height="96px"
-        android:layout_marginLeft="90px"
-        android:layout_marginRight="90px">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/ic_f_fm_bg"
+        android:orientation="vertical">
 
-        <TextView style="@style/BaseText.Tv"
-            android:textSize="36px"
-            android:text="@string/亮度"
-            android:layout_gravity="center_vertical"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="110px"/>
-        <ImageView
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_dispaly_small"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="73px"
-            android:layout_centerVertical="true"
-            />
-        <SeekBar
-            android:id="@+id/seekbar_display"
-            android:layout_marginLeft="10px"
-            android:layout_gravity="center_vertical"
-            android:layout_width="700px"
-            android:layout_height="wrap_content"
-            android:maxHeight="3.4dp"
-            android:minHeight="3.4dp"
-            android:progressDrawable="@drawable/seekbar_style"
-            android:thumb="@mipmap/ic_volume"
-            />
-        <ImageView
+            android:layout_height="96px"
+            android:layout_marginLeft="90px"
+            android:layout_marginRight="90px"
+            android:layout_marginTop="82px">
+
+            <ImageView
+                android:id="@+id/iv_return"
+                android:layout_width="40px"
+                android:layout_height="31px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30px"
+                android:src="@mipmap/set_button_return" />
+
+            <TextView
+                style="@style/BaseText.Tv"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="110px"
+                android:text="@string/显示"
+                android:textSize="36px" />
+
+            <View
+                style="@style/BaseLine.Horizontal"
+                android:layout_alignParentBottom="true"
+                android:background="#3c3c3c" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_display_big"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10px"
-            android:layout_centerVertical="true"
-            />
-        <View style="@style/BaseLine.Horizontal"
-            android:background="#3C3C3C"
-            android:layout_alignParentBottom="true"/>
+            android:layout_height="96px"
+            android:layout_marginLeft="90px"
+            android:layout_marginRight="90px">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="96px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/BaseText.Tv"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="110px"
+                    android:text="@string/autolight"
+                    android:textSize="36px" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:visibility="visible"
+                    android:id="@+id/autolight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:theme="@style/mySwitch"
+                    app:thumbTint="@color/white"
+                    app:trackTint="@drawable/select_switch_bg"
+                    android:layout_marginLeft="650px"/>
+            </LinearLayout>
+
+            <View
+                style="@style/BaseLine.Horizontal"
+                android:layout_alignParentBottom="true"
+                android:background="#3C3C3C" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="96px"
+            android:layout_marginLeft="90px"
+            android:layout_marginRight="90px">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="96px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/BaseText.Tv"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="110px"
+                    android:text="@string/亮度"
+                    android:textSize="36px" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="73px"
+                    android:src="@mipmap/ic_dispaly_small" />
+
+                <SeekBar
+                    android:id="@+id/seekbar_display"
+                    android:layout_width="700px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10px"
+                    android:maxHeight="3.4dp"
+                    android:minHeight="3.4dp"
+                    android:progressDrawable="@drawable/seekbar_style"
+                    android:thumb="@mipmap/ic_volume" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10px"
+                    android:src="@mipmap/ic_display_big" />
+            </LinearLayout>
+
+            <View
+                style="@style/BaseLine.Horizontal"
+                android:layout_alignParentBottom="true"
+                android:background="#3C3C3C" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/setWallpaper"
+            android:layout_width="wrap_content"
+            android:layout_height="96px"
+            android:layout_marginRight="90px"
+            android:layout_marginLeft="90px">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/BaseText.Tv"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="110px"
+                    android:text="@string/wallpaper"
+                    android:textSize="36px" />
+                <ImageView
+                    android:layout_width="27px"
+                    android:layout_height="48px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="1460px"
+                    android:src="@mipmap/set_button_return_pre" />
+            </LinearLayout>
+            <View
+                style="@style/BaseLine.Horizontal"
+                android:layout_alignParentBottom="true"
+                android:background="#3C3C3C" />
+        </RelativeLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_set_wallpaper"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/set_wallpaper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -53,6 +53,7 @@ import com.kandi.dell.nscarlauncher.common.util.JumpUtils;
 import com.kandi.dell.nscarlauncher.common.util.LanguageUtil;
 import com.kandi.dell.nscarlauncher.common.util.LogUtils;
 import com.kandi.dell.nscarlauncher.common.util.NetUtils;
+import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.common.util.TimeUtils;
 import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
 import com.kandi.dell.nscarlauncher.receiver.CarMFLReceiver;
@@ -142,6 +143,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             intentFilter.addAction("phone.iscoming");
             intentFilter.addAction("3gphone.iscoming");
             intentFilter.addAction("phone.isgone");
+            intentFilter.addAction("com.changeBg");
             registerReceiver(comingReceiver, intentFilter);
         }
         /*usb插拔接受*/
@@ -329,6 +331,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
      */
     private void createFragment() {
 
+
             fmFragment = new FMFragment();
 
 
@@ -339,6 +342,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
 
          musicFragment= new MusicFragment();
+
 
 
         phoneFragment = new PhoneFragment();
@@ -352,8 +356,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
         videoFragment =new VideoFragment();
 
-
-         blueToothSetFragment = new BlueToothSetFragment();
+        blueToothSetFragment = new BlueToothSetFragment();
 
 
     }
@@ -967,6 +970,12 @@ public int getSim(int num) {
 //                dimissShow();
             } else if (intent.getAction() == "3gphone.iscoming") {
 //                incoming3gShow(intent.getStringExtra("number"));
+            } else if(intent.getAction() == "com.changeBg"){
+                int picindex = SPUtil.getInstance(getActivity(),"picindex").getInt("picindex",0);//存放图片数组存入对应资源
+                Log.i("testtes","com.changeBg-->"+picindex);
+                homePagerOneFragment.changBgView(picindex);
+                homePagerTwoFragment.changBgView(picindex);
+                homePagerThreeFragment.changBgView(picindex);
             }
         }
     }

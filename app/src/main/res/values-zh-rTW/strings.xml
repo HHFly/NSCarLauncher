@@ -48,6 +48,7 @@
     <string name="请输入蓝牙密码">請輸入藍牙密碼</string>
     <string name="请输入无线密码">請輸入無線密碼</string>
     <string name="亮度">亮度</string>
+    <string name="autolight">自動調節亮度</string>
     <string name="语言和输入法">語言和輸入法</string>
     <string name="语言">語言</string>
     <string name="键盘和输入法">鍵盤和輸入法</string>
@@ -121,6 +122,7 @@
     <string name="旧名称">舊名稱：</string>
     <string name="新名称">新名稱：</string>
     <string name="请输入蓝牙名称">請輸入藍牙名稱</string>
+
     <string name="暂停">暫停</string>
     <string name="自定义">自定義</string>
     <string name="关闭">關閉</string>
@@ -136,6 +138,6 @@
     <string name="流行">流行</string>
     <string name="摇滚">搖滾</string>
     <string name="eq关闭">關閉</string>
-
+    <string name="wallpaper">壁紙</string>
 
 </resources>
