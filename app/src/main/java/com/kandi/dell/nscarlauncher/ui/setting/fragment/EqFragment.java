@@ -31,6 +31,7 @@ public class EqFragment extends BaseFragment {
     private ArrayList<EqData> mData =new ArrayList<>();
     private ArrayList<EqSeekBarView> mView =new ArrayList<>();
     public static  int postion=1;
+    RecyclerView rv;
     @Override
     public int getContentResId() {
         return R.layout.fragment_set_eq;
@@ -40,6 +41,13 @@ public class EqFragment extends BaseFragment {
     public void findView() {
         mLayout =getView(R.id.ll_seekbar);
 
+    }
+
+    @Override
+    public void Resume() {
+        if(isSecondResume) {
+            refreshSeekbar();
+        }
     }
 
     @Override
@@ -55,6 +63,13 @@ public class EqFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mEqualizer=null;
+        mData=null;
+        mView=null;
+    }
 
     private void initEqList() {
         EqData custom =new EqData();
@@ -123,6 +138,8 @@ private String getName(String name){
         }
     }
 
+
+
     private void setEqualize() {
 
         mEqualizer =App.get().getmEqualizer();
@@ -138,7 +155,28 @@ private String getName(String name){
                 public void onClickMode() {
                     mAdapter.DataClear();
                    mAdapter.getData().get(0).setSelect(true);
+                    rv.smoothScrollToPosition(0);
                     mAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onClickStop(short nowBandLevel,short band) {
+                    short bands = mEqualizer.getNumberOfBands();
+                     short[] bandLevels=new short[bands];;
+
+                    for (short i = 0; i < bands; i++) {
+                        if(i==band){
+                            bandLevels[i] =nowBandLevel;
+                        }else {
+                            bandLevels[i]= mEqualizer.getBandLevel(i);
+                        }
+
+                    }
+
+                    Equalizer.Settings settings =mEqualizer.getProperties();
+                    settings.bandLevels=bandLevels;
+                SPUtil.getInstance(getContext(),"EQ").putString("EQSet", JsonUtils.toJson(settings));
+                SPUtil.getInstance(getContext(),"EQ").putInt("EQPosition", EqFragment.postion );
                 }
             });
             mView.add(eqSeekBarView);
@@ -167,7 +205,7 @@ private String getName(String name){
      */
     private void initRvAdapter( ArrayList<EqData> data) {
         if (mAdapter == null) {
-            RecyclerView rv = getView(R.id.rv_eq_nameList);
+             rv = getView(R.id.rv_eq_nameList);
             mAdapter =new EqAdapter(data);
 
             if (rv != null) {
@@ -175,6 +213,7 @@ private String getName(String name){
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                 rv.setLayoutManager(linearLayoutManager);
                 rv.setAdapter(mAdapter);
+
             }
             mAdapter.setOnItemClickListener(new EqAdapter.OnItemClickListener() {
                 @Override
@@ -194,10 +233,13 @@ private String getName(String name){
                     if(settings!=null) {
                         mEqualizer.setProperties(settings);
                     }
+
                     postion=0;
                     refreshSeekbar();
                     mAdapter.DataClear();
                     data.setSelect(true);
+
+
                     mAdapter.notifyDataSetChanged();
                 }
 

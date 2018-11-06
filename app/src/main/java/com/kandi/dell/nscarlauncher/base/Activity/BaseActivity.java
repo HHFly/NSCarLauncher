@@ -231,6 +231,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public void initImmersionBar() {
         //在BaseActivity里初始化
         mImmersionBar = ImmersionBar.with(this);
+
         initBarAll();
 
     }

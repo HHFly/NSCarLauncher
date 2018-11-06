@@ -21,8 +21,27 @@ public class VerticalSeekBarII extends SeekBar {
     public VerticalSeekBarII(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
+    public interface OnBarIIChangeListener {
 
+        void onStartTracking();
 
+        void onStopTracking();
+    }
+    private OnBarIIChangeListener mOnBarIIChangeListener;
+    void onStartTrackingTouch() {
+        if (mOnBarIIChangeListener != null) {
+            mOnBarIIChangeListener.onStartTracking();
+        }
+    }
+
+    void onStopTrackingTouch() {
+        if (mOnBarIIChangeListener != null) {
+            mOnBarIIChangeListener.onStopTracking();
+        }
+    }
+    public void setmOnBarIIChangeListener(OnBarIIChangeListener mOnBarIIChangeListener) {
+        this.mOnBarIIChangeListener = mOnBarIIChangeListener;
+    }
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(h, w, oldh, oldw);
@@ -46,16 +65,17 @@ public class VerticalSeekBarII extends SeekBar {
         onSizeChanged(getWidth(), getHeight(), 0, 0);
     }
 
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        super.onTouchEvent(event);
+//        super.onTouchEvent(event);
         if (!isEnabled()) {
             return false;
         }
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-
+                onStartTrackingTouch();
             case MotionEvent.ACTION_MOVE:
             case MotionEvent.ACTION_UP:
                 int i=0;
@@ -63,9 +83,11 @@ public class VerticalSeekBarII extends SeekBar {
                 setProgress(i);
 //                Log.i("Progress",getProgress()+"");
                 onSizeChanged(getWidth(),getHeight(), 0, 0);
+                onStopTrackingTouch();
                 break;
 
             case MotionEvent.ACTION_CANCEL:
+                onStopTrackingTouch();
                 break;
         }
         return true;
