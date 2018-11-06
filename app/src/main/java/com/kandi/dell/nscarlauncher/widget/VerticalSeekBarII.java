@@ -48,18 +48,20 @@ public class VerticalSeekBarII extends SeekBar {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        super.onTouchEvent(event);
         if (!isEnabled()) {
             return false;
         }
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+
             case MotionEvent.ACTION_MOVE:
             case MotionEvent.ACTION_UP:
                 int i=0;
                 i=getMax() - (int)(getMax() * event.getY() / getHeight());
                 setProgress(i);
-                Log.i("Progress",getProgress()+"");
+//                Log.i("Progress",getProgress()+"");
                 onSizeChanged(getWidth(),getHeight(), 0, 0);
                 break;
 

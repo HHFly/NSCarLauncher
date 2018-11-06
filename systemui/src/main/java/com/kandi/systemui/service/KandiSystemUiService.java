@@ -95,7 +95,10 @@ public class KandiSystemUiService extends Service {
         initHeader();
         Receiver();
         /*初始化蓝牙*/
-        btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
+        try {
+            btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
+        }catch (Exception e){}
+
     }
     @Override
     public void onDestroy() {
@@ -475,9 +478,9 @@ public class KandiSystemUiService extends Service {
     //设置语言
     public void setLocal(String local){
         switch (local){
-            case "ch":tv_home.setText("首页");tv_t_volume.setText("音量");break;
-            case "en": tv_home.setText("Home");tv_t_volume.setText("Volume");break;
-            default: tv_home.setText("首页");tv_t_volume.setText("音量");break;
+            case "ch":tv_home.setText("首页");tv_t_volume.setText("音量");tv_hangup.setText("挂断");tv_answser.setText("接听");break;
+            case "en": tv_home.setText("Home");tv_t_volume.setText("Volume");tv_hangup.setText("refuse");tv_answser.setText("answer");break;
+            default: tv_home.setText("首页");tv_t_volume.setText("音量");tv_hangup.setText("挂断");tv_answser.setText("接听");break;
         }
     }
   /*判断是顶部app是否是桌面*/

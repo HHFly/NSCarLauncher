@@ -7,6 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
        android:layout_centerHorizontal="true"
+        android:singleLine="true"
         android:textSize="36px"
         android:textColor="@drawable/select_music_local_text_bg2"/>
     <ImageView

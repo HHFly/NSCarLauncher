@@ -9,9 +9,8 @@
      android:orientation="horizontal"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
-     android:layout_marginLeft="40px"
+     android:layout_marginLeft="120px"
      android:layout_marginRight="293px"
-     android:layout_centerHorizontal="true"
      android:layout_marginTop="132px">
   <ImageView
       android:id="@+id/iv_return"

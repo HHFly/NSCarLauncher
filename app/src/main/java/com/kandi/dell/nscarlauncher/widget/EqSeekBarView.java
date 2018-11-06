@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.audiofx.Equalizer;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -12,12 +13,14 @@ import android.widget.TextView;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.common.util.JsonUtils;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
+import com.kandi.dell.nscarlauncher.ui.setting.fragment.EqFragment;
 
 public class EqSeekBarView extends LinearLayout {
     private TextView  tv_eq_hz,tv_eq_band;
     private VerticalSeekBarII verticalSeekBar;
      short band ;
     private Equalizer mEqualizer;
+    private int position;
 
     public EqSeekBarView(final Context context , final short band, final Equalizer mEqualizer) {
         super(context);
@@ -45,6 +48,7 @@ public class EqSeekBarView extends LinearLayout {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                Log.d("onStartTrackingTouch", "onStartTrackingTouch:  ");
                 if (onItemClickListener != null) {
                     onItemClickListener.onClickMode();
                 }
@@ -52,7 +56,10 @@ public class EqSeekBarView extends LinearLayout {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                SPUtil.getInstance(context).putString("EQ", JsonUtils.toJson(mEqualizer.getProperties()));
+                Log.d("onStopTrackingTouch", "onStopTrackingTouch:  ");
+                Equalizer.Settings settings =mEqualizer.getProperties();
+                SPUtil.getInstance(context,"EQ").putString("EQSet", JsonUtils.toJson(mEqualizer.getProperties()));
+                SPUtil.getInstance(context,"EQ").putInt("EQPosition", EqFragment.postion );
             }
         });
 //        verticalSeekBar.setOnSeekBarChangeListener(new VerticalSeekBar.OnSeekBarChangeListener() {

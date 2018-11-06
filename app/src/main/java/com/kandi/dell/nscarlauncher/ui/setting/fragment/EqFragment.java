@@ -30,7 +30,7 @@ public class EqFragment extends BaseFragment {
     private EqAdapter mAdapter ;
     private ArrayList<EqData> mData =new ArrayList<>();
     private ArrayList<EqSeekBarView> mView =new ArrayList<>();
-
+    public static  int postion=1;
     @Override
     public int getContentResId() {
         return R.layout.fragment_set_eq;
@@ -52,6 +52,7 @@ public class EqFragment extends BaseFragment {
         setEqualize();
         /*初始化数据*/
         initEqList();
+
     }
 
 
@@ -60,18 +61,18 @@ public class EqFragment extends BaseFragment {
         custom.setSelect(false);
         custom.setPreset(getString(R.string.自定义));
         custom.setPosition((short) 100);
-        String set =SPUtil.getInstance(getContext()).getString("EQ");
-        Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
-        custom.setSettings(settings);
+
         mData.add(custom);
         for (int i=0; i<mEqualizer.getNumberOfPresets();i++) {
             EqData data =new EqData();
 
             data.setPosition((short) i);
             data.setPreset(getName(mEqualizer.getPresetName((short) i)));
-            data.setSelect("Normal".equals(mEqualizer.getPresetName((short) i)));
+
             mData.add(data);
         }
+        postion=  SPUtil.getInstance(getContext(),"EQ").getInt("EQPosition", 1);
+        mData.get(postion).setSelect(true);
             initRvAdapter(mData);
     }
 private String getName(String name){
@@ -143,6 +144,11 @@ private String getName(String name){
             mView.add(eqSeekBarView);
             mLayout.addView(eqSeekBarView);
         }
+        String set =SPUtil.getInstance(getContext(),"EQ").getString("EQSet");
+        Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
+        if(settings!=null) {
+            mEqualizer.setProperties(settings);
+        }
     }
     private  void refreshSeekbar(){
 
@@ -173,7 +179,7 @@ private String getName(String name){
             mAdapter.setOnItemClickListener(new EqAdapter.OnItemClickListener() {
                 @Override
                 public void onClickMode(EqData data) {
-
+                            postion=data.getPosition()+1;
                         mEqualizer.usePreset(data.getPosition());
                         refreshSeekbar();
                         mAdapter.DataClear();
@@ -183,11 +189,12 @@ private String getName(String name){
 
                 @Override
                 public void onClickCutsom(EqData data) {
-                    String set =SPUtil.getInstance(getContext()).getString("EQ");
+                    String set =SPUtil.getInstance(getContext(),"EQ").getString("EQSet");
                     Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
                     if(settings!=null) {
                         mEqualizer.setProperties(settings);
                     }
+                    postion=0;
                     refreshSeekbar();
                     mAdapter.DataClear();
                     data.setSelect(true);
