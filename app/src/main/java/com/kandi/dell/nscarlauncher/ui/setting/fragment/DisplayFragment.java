@@ -75,10 +75,8 @@ public class DisplayFragment extends BaseFragment implements CompoundButton.OnCh
             case R.id.autolight:
                 if(isChecked){
                     LightnessControl.startAutoBrightness(getActivity());
-                    seekBar.setEnabled(false);
                 }else {
                     LightnessControl.stopAutoBrightness(getActivity());
-                    seekBar.setEnabled(true);
                 }
                 break;
 
