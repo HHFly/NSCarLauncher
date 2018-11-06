@@ -1,5 +1,6 @@
 package com.kandi.dell.nscarlauncher.ui.home.fragment;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
@@ -113,6 +114,8 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         setClickListener(R.id.rl_air);
         setClickListener(R.id.controll_air);
         setClickListener(R.id.wave_view);
+        setClickListener(R.id.tv_w_time);
+        setClickListener(R.id.tv_w_date);
         setPalyListen();
 
 
@@ -352,6 +355,12 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             case R.id.wave_view:
                 JumpUtils.actAPK(getActivity(),FragmentType.CARPOWER);
                 JumpUtils.actRightIn(getActivity());
+                break;
+            case R.id.tv_w_time:
+                startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));
+                break;
+            case R.id.tv_w_date:
+                startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));
                 break;
 
         }

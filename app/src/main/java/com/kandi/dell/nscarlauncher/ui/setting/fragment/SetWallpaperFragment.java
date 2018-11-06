@@ -49,8 +49,7 @@ public class SetWallpaperFragment extends BaseFragment {
         initData();
         //创建适配器adapter对象 参数1.上下文 2.数据加载集合
         RecyclerViewGridAdapter recyclerViewGridAdapter = new RecyclerViewGridAdapter(getContext(), mDatas);
-//        adapter = new WallPaperAdapter(mDatas);
-//        //4.设置适配器
+        //4.设置适配器
         recyclerView.setAdapter(recyclerViewGridAdapter);
         //布局管理器对象 参数1.上下文 2.规定显示的行数
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
@@ -58,7 +57,6 @@ public class SetWallpaperFragment extends BaseFragment {
         gridLayoutManager.setReverseLayout(false);
         //设置RecycleView显示的方向是水平还是垂直
         //GridLayout.HORIZONTAL水平 GridLayout.VERTICAL默认垂直
-        // 三元运算符
         gridLayoutManager.setOrientation(GridLayout.HORIZONTAL);
         //设置布局管理器， 参数linearLayoutManager对象
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -71,14 +69,9 @@ public class SetWallpaperFragment extends BaseFragment {
                 Intent intent = new Intent();
                 intent.setAction("com.changeBg");
                 getActivity().sendBroadcast(intent);
+                DisplayFragment.hideFragment();
             }
         });
-//        adapter.setOnItemClickListener(new WallPaperAdapter.OnItemClickListener() {
-//            @Override
-//            public void onClick(WallPaperInfo data) {
-//                Log.i("testtest","==========="+data.getImgId());
-//            }
-//        });
     }
 
     @Override

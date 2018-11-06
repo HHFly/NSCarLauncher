@@ -54,6 +54,42 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="110px"
+                    android:text="@string/autolight"
+                    android:textSize="36px" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:visibility="visible"
+                    android:id="@+id/autolight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:theme="@style/mySwitch"
+                    android:layout_marginLeft="650px"/>
+            </LinearLayout>
+
+            <View
+                style="@style/BaseLine.Horizontal"
+                android:layout_alignParentBottom="true"
+                android:background="#3C3C3C" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="96px"
+            android:layout_marginLeft="90px"
+            android:layout_marginRight="90px">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="96px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/BaseText.Tv"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="110px"
                     android:text="@string/亮度"
                     android:textSize="36px" />
 
