@@ -200,6 +200,7 @@ public class PlayerService extends Service {
 			BitmapDrawable bmpDraw = new BitmapDrawable(bm);
 			if(MusicFragment.circle_image!=null) {
 				MusicFragment.circle_image.setImageDrawable(bmpDraw);
+
 			}
 //			String albumArt = CursorMusicImage.getImage(PlayerService.this, ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).url);
 //			if (albumArt == null) {

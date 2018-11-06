@@ -4,20 +4,27 @@ import android.content.Context;
 import android.media.audiofx.Equalizer;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.kandi.dell.nscarlauncher.R;
+import com.kandi.dell.nscarlauncher.common.util.JsonUtils;
+import com.kandi.dell.nscarlauncher.common.util.SPUtil;
+import com.kandi.dell.nscarlauncher.ui.setting.fragment.EqFragment;
 
 public class EqSeekBarView extends LinearLayout {
     private TextView  tv_eq_hz,tv_eq_band;
     private VerticalSeekBarII verticalSeekBar;
      short band ;
     private Equalizer mEqualizer;
-
-    public EqSeekBarView(Context context , final short band, final Equalizer mEqualizer) {
+    private int position;
+    private short nowBandLevel;
+     short minEqualizer ;
+     short maxEqualizer;
+    public EqSeekBarView(final Context context , final short band, final Equalizer mEqualizer) {
         super(context);
         LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.item_eq_seekbar, this);
@@ -26,28 +33,59 @@ public class EqSeekBarView extends LinearLayout {
         tv_eq_hz=findViewById(R.id.tv_eq_hz);
         tv_eq_band=findViewById(R.id.tv_eq_band);
         verticalSeekBar =findViewById(R.id.eq_seekbar);
-        final short minEqualizer = mEqualizer.getBandLevelRange()[0];
-        final short maxEqualizer = mEqualizer.getBandLevelRange()[1];
+
+        try {
+            minEqualizer = mEqualizer.getBandLevelRange()[0];
+            maxEqualizer = mEqualizer.getBandLevelRange()[1];
+        }catch (Exception e){}
+
         tv_eq_band.setText((mEqualizer.getCenterFreq(band) / 1000) + "HZ");
         tv_eq_hz.setText( (mEqualizer.getBandLevel(band)/100)+"dB");
         verticalSeekBar.setMax(maxEqualizer -minEqualizer);
 
         verticalSeekBar.setProgress(mEqualizer.getBandLevel(band)-minEqualizer);
+        verticalSeekBar.setmOnBarIIChangeListener(new VerticalSeekBarII.OnBarIIChangeListener() {
+            @Override
+            public void onStartTracking() {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onClickMode();
+                }
+            }
+
+            @Override
+            public void onStopTracking() {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onClickStop(nowBandLevel,band);
+                }
+            }
+        });
         verticalSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mEqualizer.setBandLevel(band, (short) (progress + minEqualizer));
-                tv_eq_hz.setText( (mEqualizer.getBandLevel(band)/100)+"dB");
+                nowBandLevel =mEqualizer.getBandLevel(band);
+//                Log.d("onProgressChanged", "onProgressChanged: "+String.valueOf(mEqualizer.getBandLevel(band)));
+                tv_eq_hz.setText( (nowBandLevel/100)+"dB");
+
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+//                Log.d("onStartTrackingTouch", "onStartTrackingTouch:  ");
+                if (onItemClickListener != null) {
+                    onItemClickListener.onClickMode();
+                }
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+                if (onItemClickListener != null) {
+                    onItemClickListener.onClickStop(nowBandLevel,band);
+                }
+//                Equalizer.Settings settings =mEqualizer.getProperties();
+//                SPUtil.getInstance(context,"EQ").putString("EQSet", JsonUtils.toJson(mEqualizer.getProperties()));
+//                SPUtil.getInstance(context,"EQ").putInt("EQPosition", EqFragment.postion );
             }
         });
 //        verticalSeekBar.setOnSeekBarChangeListener(new VerticalSeekBar.OnSeekBarChangeListener() {
@@ -72,8 +110,8 @@ public class EqSeekBarView extends LinearLayout {
 
 
     public void  refreshSeekbar(final short band, final Equalizer mEqualizer){
-        final short minEqualizer = mEqualizer.getBandLevelRange()[0];
-        final short maxEqualizer = mEqualizer.getBandLevelRange()[1];
+//        final short minEqualizer = mEqualizer.getBandLevelRange()[0];
+//        final short maxEqualizer = mEqualizer.getBandLevelRange()[1];
         verticalSeekBar.setMax(maxEqualizer -minEqualizer);
         verticalSeekBar.setProgress(mEqualizer.getBandLevel(band)-minEqualizer);
         tv_eq_hz.setText( (mEqualizer.getBandLevel(band)/100)+"dB");
@@ -90,5 +128,25 @@ public class EqSeekBarView extends LinearLayout {
     }
     public void  setMax(int max){
         verticalSeekBar.setMax(max);
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        onItemClickListener = listener;
+    }
+    public interface OnItemClickListener {
+        /**
+         * 点击
+         *
+         *
+         */
+        void onClickMode();
+        /**
+         * 点击
+         *
+         *
+         */
+        void onClickStop(short nowBandLevel,short band);
     }
 }

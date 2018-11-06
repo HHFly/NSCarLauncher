@@ -146,6 +146,7 @@ public class MusicFragment extends BaseFragment {
                 BitmapDrawable bmpDraw = new BitmapDrawable(bm);
                 if(MusicFragment.circle_image!=null) {
                     MusicFragment.circle_image.setImageDrawable(bmpDraw);
+                    circle_image.roatateStart();
                 }
             }
         }else{

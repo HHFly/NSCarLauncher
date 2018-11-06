@@ -135,6 +135,7 @@
     <string name="爵士">爵士</string>
     <string name="流行">流行</string>
     <string name="摇滚">搖滾</string>
+    <string name="eq关闭">關閉</string>
 
 
 </resources>

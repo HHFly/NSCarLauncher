@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/ic_f_fm_bg"
    >
 <android.support.v7.widget.RecyclerView
     android:layout_marginTop="86px"
@@ -9,7 +10,7 @@
     android:overScrollMode="never"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/ic_f_fm_bg">
+   >
 </android.support.v7.widget.RecyclerView>
     <RelativeLayout
         android:id="@+id/rl_f_set"

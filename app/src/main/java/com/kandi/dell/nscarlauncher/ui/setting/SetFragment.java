@@ -115,6 +115,7 @@ public class SetFragment extends BaseFragment {
     private void switchFragment(Fragment fragment) {
 
         mCurFragment = FragmentUtils.selectFragment(getActivity(), mCurFragment, fragment, R.id.frame_set);
+        mCurFragment.Resume();
         setVisibilityGone(R.id.rl_f_set,true);
     }
     public  static void hideFragment(){

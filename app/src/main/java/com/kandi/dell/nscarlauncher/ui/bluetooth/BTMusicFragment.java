@@ -247,7 +247,7 @@ public static void  musicNext(){
     public static void setMusicInfo(String songname, String singer) {
         if (tv_bt_music_songname != null) {
             if("".equals(songname)){
-                HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
+                HomePagerOneFragment.music_name.setText(App.get().getString(R.string.蓝牙音乐));
             }else {
                 HomePagerOneFragment.music_name.setText(songname+"- " + singer);
             }
@@ -341,7 +341,9 @@ public static void  musicNext(){
                             iv_bt_stop.setVisibility(View.GONE);
                         }
                         isPlay=true;
-                        HomePagerTwoFragment.music_name.setText(context.getString(R.string.本地音乐));
+                        if(HomePagerTwoFragment.music_name!=null) {
+                            HomePagerTwoFragment.music_name.setText(App.get().getString(R.string.本地音乐));
+                        }
                         break;
                     case MUSCI_BACK:
                         App.get().getBtservice().btAvrLast();
@@ -399,7 +401,7 @@ public static void  musicNext(){
                             App.get().getBtservice().btAvrPlay();
                             HomePagerOneFragment.btPaly.setPlay(true);
                             isPlay=true;
-                            HomePagerTwoFragment.music_name.setText(context.getString(R.string.本地音乐));
+                            HomePagerTwoFragment.music_name.setText(App.get().getString(R.string.本地音乐));
                         }
 //                        }
                     }catch (RemoteException e) {

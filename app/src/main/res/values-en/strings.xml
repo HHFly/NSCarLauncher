@@ -122,7 +122,6 @@
     <string name="请输入蓝牙名称">Please enter bluetooth name</string>
     <string name="暂停">Stop</string>
     <string name="自定义">Custom</string>
-    <string name="关闭">Close</string>
     <string name="舞曲">Dance</string>
     <string name="古典">Classical</string>
     <string name="柔和">Flat</string>
@@ -133,5 +132,6 @@
     <string name="爵士">Jazz</string>
     <string name="流行">Pop</string>
     <string name="摇滚">Rock</string>
+    <string name="eq关闭">OFF</string>
 
 </resources>

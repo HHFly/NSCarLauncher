@@ -1,10 +1,12 @@
 package com.kandi.dell.nscarlauncher.ui.setting.model;
 
+import android.media.audiofx.Equalizer;
+
 public class EqData  {
    private short position;
     private String  preset;
     private Boolean isSelect=false;
-
+    private Equalizer.Settings settings;
     public Boolean getSelect() {
         return isSelect;
     }
@@ -27,5 +29,13 @@ public class EqData  {
 
     public void setPreset(String preset) {
         this.preset = preset;
+    }
+
+    public Equalizer.Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Equalizer.Settings settings) {
+        this.settings = settings;
     }
 }
