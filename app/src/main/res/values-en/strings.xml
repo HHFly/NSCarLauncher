@@ -47,7 +47,7 @@
     <string name="请输入蓝牙密码">Please enter bluetooth password</string>
     <string name="请输入无线密码">Please enter the wireless password</string>
     <string name="亮度">Brightness</string>
-    <string name="autolight">自动调节亮度</string>
+    <string name="autolight">Automatic backlight</string>
     <string name="语言和输入法">Language &amp; input </string>
     <string name="语言">Language</string>
     <string name="键盘和输入法">Keyboard &amp; input </string>
