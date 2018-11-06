@@ -1,6 +1,5 @@
 package com.kandi.dell.nscarlauncher.ui.home.fragment;
 
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
@@ -624,24 +623,12 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     }
 
     /*设置背景param int resid*/
-    public void changBgView(int index){
-        switch (index){
-            case 0:
-                layout_home.setBackgroundResource(R.color.dfbackground);
-                break;
-            case 1:
-                layout_home.setBackgroundColor(Color.YELLOW);
-                break;
-            case 2:
-                layout_home.setBackgroundColor(Color.BLUE);
-                break;
-            case 3:
-                layout_home.setBackgroundColor(Color.GREEN);
-                break;
-            default:
-                break;
+    public void changBgView(int resid){
+        if(resid == 0){
+            layout_home.setBackgroundResource(R.color.dfbackground);
+        }else{
+            layout_home.setBackgroundResource(resid);
         }
-        //layout_home.setBackgroundResource(resid);
     }
 
 }
