@@ -21,6 +21,7 @@ import android.os.SystemProperties;
 import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -488,10 +489,17 @@ public class KandiSystemUiService extends Service {
   /*判断是顶部app是否是桌面*/
 
     private boolean isHome() {
-        ActivityManager mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> rti = mActivityManager.getRunningTasks(1);
-        Log.d("SystemUI",rti.get(0).topActivity.getPackageName());
-        return !"com.kandi.nscarlauncher".equals(rti.get(0).topActivity.getPackageName());
+
+        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(1);
+//        boolean flag=false;
+        for (ActivityManager.RunningTaskInfo taskInfo : list) {
+            if (taskInfo.topActivity.getShortClassName().contains("HomePagerActivity")) { // 说明它已经启动了
+//                flag = true;
+                return false;
+            }
+        }
+        return true;
     }
     /*创建浮窗*/
     private void createFloatView() {
