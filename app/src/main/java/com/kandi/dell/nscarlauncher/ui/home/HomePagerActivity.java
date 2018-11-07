@@ -415,7 +415,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
     }
     public  static void  jumpFragment(@FragmentType int type ){
-        if(IsHomeUtils.isHome(context)&&IsHomeUtils.isForeground(context,"HomePagerActivity"))
+        if(IsHomeUtils.isForeground(context,"HomePagerActivity"))
         switch (type){
             case  FragmentType.FM:
                 switchFragment(fmFragment);
