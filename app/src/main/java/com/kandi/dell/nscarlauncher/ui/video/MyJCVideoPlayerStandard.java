@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
-import android.media.AudioManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -21,7 +20,6 @@ import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 import java.util.List;
 
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
-import fm.jiecao.jcvideoplayer_lib.JCMediaManager;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
@@ -128,26 +126,7 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard{
 
     @Override
     public void onAutoCompletion() {
-        //make me normal first
-        if (JC_BURIED_POINT != null && JCMediaManager.instance().listener == this) {
-            if (mIfCurrentIsFullscreen) {
-                JC_BURIED_POINT.onAutoCompleteFullscreen(mUrl, mObjects);
-            } else {
-                JC_BURIED_POINT.onAutoComplete(mUrl, mObjects);
-            }
-        }
-        setStateAndUi(CURRENT_STATE_AUTO_COMPLETE);
-        if (textureViewContainer.getChildCount() > 0) {
-            textureViewContainer.removeAllViews();
-        }
-        finishFullscreenActivity();
-        if (IF_FULLSCREEN_FROM_NORMAL) {//如果在进入全屏后播放完就初始化自己非全屏的控件
-            IF_FULLSCREEN_FROM_NORMAL = false;
-            JCMediaManager.instance().lastListener.onAutoCompletion();
-        }
-        JCMediaManager.instance().lastListener = null;
-        AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-        mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
+        super.onAutoCompletion();
         ((Activity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         VideoFragment.position = VideoFragment.position + 1;
         if(VideoFragment.position < VideoFragment.mData.size()){
@@ -160,35 +139,11 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard{
 
     }
 
-
-
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         super.onTouch(v, event);
         return  true;
     }
-
-
-
-    private static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
-        @Override
-        public void onAudioFocusChange(int focusChange) {
-            switch (focusChange) {
-                case AudioManager.AUDIOFOCUS_GAIN:
-                    break;
-                case AudioManager.AUDIOFOCUS_LOSS:
-                    releaseAllVideos();
-                    break;
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                    if (JCMediaManager.instance().mediaPlayer.isPlaying()) {
-                        JCMediaManager.instance().mediaPlayer.pause();
-                    }
-                    break;
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                    break;
-            }
-        }
-    };
 
     class FruitAdapter extends ArrayAdapter{
         private final int resourceId;
