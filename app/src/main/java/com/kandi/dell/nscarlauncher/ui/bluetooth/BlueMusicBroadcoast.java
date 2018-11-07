@@ -247,6 +247,10 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_RINGCALL)) {
 
 //            System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
+            if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
+                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                //MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 拨打时时进入电话页面
+            }
             try {
                 int blueVolume =  (int) Math.round((float)30/100.0  * 21.0);
                 btservice.btSetVol(String.valueOf(blueVolume));

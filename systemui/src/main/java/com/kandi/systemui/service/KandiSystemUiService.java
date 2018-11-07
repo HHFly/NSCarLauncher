@@ -21,7 +21,6 @@ import android.os.SystemProperties;
 import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -570,7 +569,10 @@ public class KandiSystemUiService extends Service {
     }
     public void  showPhone(String num,int index){
         if(isHome()){
-
+            if (audioManager.requestAudioFocus(afChangeListener, 11,
+                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                //MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 拨打时时进入电话页面
+            }
             if(phoneFloatLayout!=null){
                 phoneFloatLayout.setVisibility(View.VISIBLE);
             }
