@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.IBinder;
@@ -72,7 +73,7 @@ public class KandiSystemUiService extends Service {
 
     DialogPowerIn dialogPowerIn;
 
-
+    AudioManager audioManager;
 
     @Nullable
     @Override
@@ -97,8 +98,9 @@ public class KandiSystemUiService extends Service {
         /*初始化蓝牙*/
         try {
             btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
+            audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         }catch (Exception e){}
-
+        setBluetoothState(SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0);
     }
     @Override
     public void onDestroy() {
@@ -486,10 +488,17 @@ public class KandiSystemUiService extends Service {
   /*判断是顶部app是否是桌面*/
 
     private boolean isHome() {
-        ActivityManager mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> rti = mActivityManager.getRunningTasks(1);
-        Log.d("SystemUI",rti.get(0).topActivity.getPackageName());
-        return !"com.kandi.nscarlauncher".equals(rti.get(0).topActivity.getPackageName());
+
+        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(1);
+//        boolean flag=false;
+        for (ActivityManager.RunningTaskInfo taskInfo : list) {
+            if (taskInfo.topActivity.getShortClassName().contains("HomePagerActivity")) { // 说明它已经启动了
+//                flag = true;
+                return false;
+            }
+        }
+        return true;
     }
     /*创建浮窗*/
     private void createFloatView() {
@@ -558,9 +567,12 @@ public class KandiSystemUiService extends Service {
 
 
     }
-    public void  showPhone(String num){
+    public void  showPhone(String num,int index){
         if(isHome()){
-
+            if (audioManager.requestAudioFocus(afChangeListener, 11,
+                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                //MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 拨打时时进入电话页面
+            }
             if(phoneFloatLayout!=null){
                 phoneFloatLayout.setVisibility(View.VISIBLE);
             }
@@ -573,8 +585,59 @@ public class KandiSystemUiService extends Service {
             if(tv_answser!=null){
                 tv_answser.setVisibility(View.VISIBLE);
             }
+        }else {
+            Intent intent  =new Intent();
+            intent.putExtra("com.kangdi.key.phonenum",num);
+            intent.putExtra("com.kangdi.key.callindex",index);
+            intent.setAction("com.kangdi.BroadCast.RingCall.Launcher");
+            sendBroadcast(intent);
         }
     }
+
+    public void CALLSTART(String num,int index){
+        if(!isHome()){
+            Intent intent  =new Intent();
+            intent.putExtra("com.kangdi.key.phonenum",num);
+            intent.putExtra("com.kangdi.key.callindex",index);
+            intent.setAction("com.kangdi.BroadCast.CallStart.Launcher");
+            sendBroadcast(intent);
+        }
+    }
+    public void CALLEND(int index){
+        if(!isHome()){
+            Intent intent  =new Intent();
+            intent.putExtra("com.kangdi.key.callindex",index);
+            intent.setAction("com.kangdi.BroadCast.CallEnd.Launcher");
+            sendBroadcast(intent);
+        }
+        audioManager.abandonAudioFocus(afChangeListener) ;
+    }
+    public void CALLOUT(String num){
+        if(!isHome()){
+            Intent intent  =new Intent();
+            intent.putExtra("com.kangdi.key.phonenum",num);
+            intent.setAction("com.kangdi.BroadCast.CallOutGoing.Launcher");
+            sendBroadcast(intent);
+        }else {
+            if (audioManager.requestAudioFocus(afChangeListener, 11,
+                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                Log.d("kondi", "BtPhone get AudioFocus");
+                //MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 拨打时时进入电话页面
+            }
+        }
+    }
+    /*音频焦点管理*/
+    public static AudioManager.OnAudioFocusChangeListener afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        public void onAudioFocusChange(int focusChange) {
+            if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
+
+            } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+
+            } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+            }
+
+        }
+    };
     public void  hidePhone(){
         if(phoneFloatLayout!=null){
             phoneFloatLayout.setVisibility(View.GONE);

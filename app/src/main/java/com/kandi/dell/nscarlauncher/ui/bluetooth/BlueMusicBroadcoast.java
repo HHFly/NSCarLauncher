@@ -47,10 +47,10 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
     public final static String ACTION_PINCODE            = "com.kangdi.BroadCast.PinCode";// 输入的pin
     // code
     // 事件
-    public final static String ACTION_RINGCALL           = "com.kangdi.BroadCast.RingCall";// 来电事件
-    public final static String ACTION_CALLSTART          = "com.kangdi.BroadCast.CallStart";// 接通事件
-    public final static String ACTION_CALLEND            = "com.kangdi.BroadCast.CallEnd";// 挂断事件
-    public final static String ACTION_CALLOUT            = "com.kangdi.BroadCast.CallOutGoing";// 电话拨出事件
+    public final static String ACTION_RINGCALL           = "com.kangdi.BroadCast.RingCall.Launcher";// 来电事件
+    public final static String ACTION_CALLSTART          = "com.kangdi.BroadCast.CallStart.Launcher";// 接通事件
+    public final static String ACTION_CALLEND            = "com.kangdi.BroadCast.CallEnd.Launcher";// 挂断事件
+    public final static String ACTION_CALLOUT            = "com.kangdi.BroadCast.CallOutGoing.Launcher";// 电话拨出事件
     public final static String ACTION_HC                 = "com.kangdi.BroadCast.HandsFreeConnect";// 手机蓝牙已连接
     public final static String ACTION_HD                 = "com.kangdi.BroadCast.HandsFreeDisconnect";// 手机蓝牙未连接
     public final static String ACTION_AC                 = "com.kangdi.BroadCast.AudioConnect";// 音频蓝牙已连接
@@ -175,12 +175,10 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 }
                 if (FlagProperty.flag_phone_ringcall) { // 来电
                     if (FlagProperty.flag_phone_incall_click) { // 板接
-                        PhoneFragment.phoneStart();
+                        new CallThread().start(); // 电话页面转换
                         FlagProperty.flag_phone_incall_click = false;
                     } else { // 手接
-                        Intent i = new Intent();
-                        i.setAction("phone.isgone");// 发出自定义广播
-                        context.sendBroadcast(i);
+
                         new CallThread().start(); // 电话页面转换
                     }
                 } else {
@@ -249,6 +247,10 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_RINGCALL)) {
 
 //            System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
+            if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
+                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                //MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 拨打时时进入电话页面
+            }
             try {
                 int blueVolume =  (int) Math.round((float)30/100.0  * 21.0);
                 btservice.btSetVol(String.valueOf(blueVolume));
