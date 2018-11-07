@@ -34,6 +34,7 @@ public class AboutFragment extends BaseFragment {
         setTvText(R.id.about_6, SystemProperties.get("ro.baseband"));//基频版本
         setTvText(R.id.about_7, SystemProperties.get("ro.qiyang.sys_version") );//核心版本
         setTvText(R.id.about_8, android.os.Build.DISPLAY);
+        setTvText(R.id.about_9,SystemProperties.get("ro.build.date"));
     }
 
     @Override

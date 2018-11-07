@@ -134,6 +134,7 @@
     <string name="流行">Pop</string>
     <string name="摇滚">Rock</string>
     <string name="eq关闭">OFF</string>
-    <string name="wallpaper">壁纸</string>
->>>>>>> feature/更改背景图片
+    <string name="wallpaper">wallpaper</string>
+    <string name="编译时间">Compilation time</string>
+
 </resources>

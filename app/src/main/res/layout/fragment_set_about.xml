@@ -239,6 +239,31 @@
             android:background="#3C3C3C"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
+
+        <RelativeLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="96px"
+            android:layout_marginLeft="90px"
+            android:layout_marginRight="90px">
+
+            <TextView style="@style/BaseText.Tv"
+                android:textSize="36px"
+                android:text="@string/编译时间"
+                android:layout_marginTop="16px"
+                android:layout_marginLeft="110px"/>
+            <TextView style="@style/BaseText.Tv"
+                android:id="@+id/about_9"
+                android:textSize="24px"
+                android:text=""
+                android:textColor="#989898"
+                android:layout_marginTop="59px"
+                android:layout_marginLeft="110px"/>
+
+            <View style="@style/BaseLine.Horizontal"
+                android:background="#3C3C3C"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
     </LinearLayout>
     </ScrollView>
 

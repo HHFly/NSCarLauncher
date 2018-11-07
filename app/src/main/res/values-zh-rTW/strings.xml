@@ -139,5 +139,6 @@
     <string name="摇滚">搖滾</string>
     <string name="eq关闭">關閉</string>
     <string name="wallpaper">壁紙</string>
+    <string name="编译时间">編譯時間</string>
 
 </resources>
