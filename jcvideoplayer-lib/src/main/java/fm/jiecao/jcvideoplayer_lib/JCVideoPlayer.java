@@ -347,18 +347,41 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         setStateAndUi(CURRENT_STATE_PREPAREING);
     }
 
-    private static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+    private AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
         public void onAudioFocusChange(int focusChange) {
             switch (focusChange) {
                 case AudioManager.AUDIOFOCUS_GAIN:
+                    if (JC_BURIED_POINT != null && JCMediaManager.instance().listener == JCVideoPlayer.this) {
+                        if (mIfCurrentIsFullscreen) {
+                            JC_BURIED_POINT.onClickResumeFullscreen(mUrl, mObjects);
+                        } else {
+                            JC_BURIED_POINT.onClickResume(mUrl, mObjects);
+                        }
+                    }
+                    JCMediaManager.instance().mediaPlayer.start();
+                    setStateAndUi(CURRENT_STATE_PLAYING);
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS:
-                    releaseAllVideos();
+                    JCMediaManager.instance().mediaPlayer.pause();
+                    setStateAndUi(CURRENT_STATE_PAUSE);
+                    if (JC_BURIED_POINT != null && JCMediaManager.instance().listener == JCVideoPlayer.this) {
+                        if (mIfCurrentIsFullscreen) {
+                            JC_BURIED_POINT.onClickStopFullscreen(mUrl, mObjects);
+                        } else {
+                            JC_BURIED_POINT.onClickStop(mUrl, mObjects);
+                        }
+                    }
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                    if (JCMediaManager.instance().mediaPlayer.isPlaying()) {
-                        JCMediaManager.instance().mediaPlayer.pause();
+                    JCMediaManager.instance().mediaPlayer.pause();
+                    setStateAndUi(CURRENT_STATE_PAUSE);
+                    if (JC_BURIED_POINT != null && JCMediaManager.instance().listener == JCVideoPlayer.this) {
+                        if (mIfCurrentIsFullscreen) {
+                            JC_BURIED_POINT.onClickStopFullscreen(mUrl, mObjects);
+                        } else {
+                            JC_BURIED_POINT.onClickStop(mUrl, mObjects);
+                        }
                     }
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
