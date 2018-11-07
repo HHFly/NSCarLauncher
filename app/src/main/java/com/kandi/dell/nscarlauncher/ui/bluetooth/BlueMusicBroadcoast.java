@@ -314,6 +314,11 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_MUSIC_INFO_CHANGED)) {
             if(FMFragment.isPlay || MusicFragment.flag_play || JCVideoPlayer.mCurrentState == 2){
                 HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
+                try{
+                    btservice.btAvrPause();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 return;
             }
             String music_info = intent.getStringExtra(KEY_MUSICINFO);
@@ -343,6 +348,11 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_BT_STREAM_START)) {
             LogUtils.log("BT:"+ACTION_BT_STREAM_START);
             if(FMFragment.isPlay || MusicFragment.flag_play || JCVideoPlayer.mCurrentState == 2){
+                try{
+                    btservice.btAvrPause();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 return;
             }
 //            int  intent.getStringExtra(KEY_MEDIA_STATUS)
