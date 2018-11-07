@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import static com.kandi.systemui.service.KandiSystemUiService.btservice;
+
 public class BluetoothController extends BroadcastReceiver {
 
     private static final String BluetoothService = "android.os.IKdBtService";
@@ -60,7 +62,8 @@ public class BluetoothController extends BroadcastReceiver {
 
 //            System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
             try {
-
+                int blueVolume =  (int) Math.round((float)30/100.0  * 21.0);
+                btservice.btSetVol(String.valueOf(blueVolume));
                 String num = intent.getStringExtra(KEY_PHONENUM).trim();
                 int index =intent.getIntExtra(KEY_CALLINDEX, 0);
 

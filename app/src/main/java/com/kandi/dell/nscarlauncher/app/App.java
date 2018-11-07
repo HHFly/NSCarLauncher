@@ -30,6 +30,10 @@ import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.white.lib.utils.UtilsConfig;
 
+import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_CALLEND;
+import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_CALLOUT;
+import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_CALLSTART;
+import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_RINGCALL;
 import static com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty.PAUSE_MSG;
 import static com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment.broadcastMusicInfo;
 
@@ -153,10 +157,10 @@ App extends MultiDexApplication {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.kangdi.BroadCast.RequestPinCode");
         intentFilter.addAction("com.kangdi.BroadCast.PinCode");
-        intentFilter.addAction("com.kangdi.BroadCast.RingCall");
-        intentFilter.addAction("com.kangdi.BroadCast.CallStart");
-        intentFilter.addAction("com.kangdi.BroadCast.CallEnd");
-        intentFilter.addAction("com.kangdi.BroadCast.CallOutGoing");
+        intentFilter.addAction(ACTION_RINGCALL);
+        intentFilter.addAction(ACTION_CALLSTART);
+        intentFilter.addAction(ACTION_CALLEND);
+        intentFilter.addAction(ACTION_CALLOUT);
         intentFilter.addAction("com.kangdi.BroadCast.HandsFreeConnect");
         intentFilter.addAction("com.kangdi.BroadCast.HandsFreeDisconnect");
         intentFilter.addAction("com.kangdi.BroadCast.AudioConnect");
