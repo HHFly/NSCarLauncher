@@ -15,7 +15,9 @@ public class BluetoothController extends BroadcastReceiver {
     public final static String ACTION_RINGCALL = "com.kangdi.BroadCast.RingCall";
     public final static String ACTION_CALLSTART = "com.kangdi.BroadCast.CallStart";
     public final static String ACTION_CALLEND = "com.kangdi.BroadCast.CallEnd";
+    public final static String ACTION_CALLOUT            = "com.kangdi.BroadCast.CallOutGoing";// 电话拨出事件
     public final static String ACTION_HC = "com.kangdi.BroadCast.HandsFreeConnect";
+
     public final static String ACTION_HD = "com.kangdi.BroadCast.HandsFreeDisconnect";
     public final static String ACTION_AC = "com.kangdi.BroadCast.AudioConnect";
     public final static String ACTION_AD = "com.kangdi.BroadCast.AudioDisconnect";
@@ -45,7 +47,7 @@ public class BluetoothController extends BroadcastReceiver {
          * ().equals(ACTION_HD)||intent.getAction().equals(ACTION_AD)){
          * mService.setBluetoothState(false); }
          */
-        Log.d("huachao","BluetoothController:"+intent.getAction());
+        Log.d("Bt","BluetoothController:"+intent.getAction());
         if (intent.getAction().equals(ACTION_REQUEST_PINCODE)) {
             return ;
         }
@@ -68,17 +70,29 @@ public class BluetoothController extends BroadcastReceiver {
                 int index =intent.getIntExtra(KEY_CALLINDEX, 0);
 
                 if(2!=index) {
-                    mService.showPhone(num);
+                    mService.showPhone(num,index);
                 }
             }catch (Exception e){}
 
         }else if(intent.getAction().equals(ACTION_CALLSTART)){
+            String num = intent.getStringExtra(KEY_PHONENUM).trim();
+            int index =intent.getIntExtra(KEY_CALLINDEX, 0);
+            mService.wheelAnswser();
+            mService.CALLSTART(num,index);
             isRingCall=true;
         }
         else if (intent.getAction().equals(ACTION_CALLEND)) {
+//            String num = intent.getStringExtra(KEY_PHONENUM).trim();
+            int index =intent.getIntExtra(KEY_CALLINDEX, 0);
             isRingCall=false;
+            mService.CALLEND(index);
             mService.hidePhone();
-        }else if (intent.getAction().equals(ACTION_WHEEL_CALL)) {
+        }else if(intent.getAction().equals(ACTION_CALLOUT)){
+            String num = intent.getStringExtra(KEY_PHONENUM).trim();
+            mService.CALLOUT(num);
+        }
+
+        else if (intent.getAction().equals(ACTION_WHEEL_CALL)) {
             mService.wheelAnswser();
         }else if (intent.getAction().equals(ACTION_WHEEL_HANGUP)) {
             mService.wheelHangup();
@@ -99,6 +113,7 @@ public class BluetoothController extends BroadcastReceiver {
         iFilter.addAction(ACTION_CALLEND);
         iFilter.addAction(ACTION_WHEEL_CALL);
         iFilter.addAction(ACTION_WHEEL_HANGUP);
+        iFilter.addAction(ACTION_CALLOUT);
         mService.registerReceiver(this, iFilter);
     }
 
