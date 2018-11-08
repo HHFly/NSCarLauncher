@@ -50,7 +50,7 @@ public class KandiSystemUiService extends Service {
     WindowManager mWindowManager,wm;
     LayoutParams wmParams; // WindowManager.LayoutParams
     FrameLayout mFloatLayout ,phoneFloatLayout;
-    private ImageView status_bar_wifi_btn,status_bar_3g_level_btn,status_bar_bluetooth_image,status_bar_3g_type_btn,status_bar_battery_imageView,center_img,iv_power,title_iv_sound;
+    private ImageView status_bar_wifi_btn,status_bar_3g_level_btn,status_bar_bluetooth_image,status_bar_3g_type_btn,status_bar_battery_imageView,center_img,iv_power,title_iv_sound,iv_car_tbox;
     private  TextView tv_t_power,status_bar_time_textview,tv_hangup,tv_answser,tv_phone_number,tv_home,tv_t_volume;
     private RelativeLayout Rlcenter;
     private TextView ll_volume,ll_power;
@@ -157,6 +157,8 @@ public class KandiSystemUiService extends Service {
         //电池
         status_bar_battery_imageView = (ImageView) mFloatLayout.findViewById(R.id.iv_t_power);
         tv_t_power= (TextView)mFloatLayout.findViewById(R.id.tv_t_power);
+        //tbox
+        iv_car_tbox =mFloatLayout.findViewById(R.id.iv_car_tbox);
 //        时间
         status_bar_time_textview = (TextView) mFloatLayout.findViewById(R.id.tv_title_date);
 
@@ -346,6 +348,8 @@ public class KandiSystemUiService extends Service {
         }
         return dialogPowerIn;
     }
+
+
     public void TopRefreshNetworkEvent(int asu, int type) {
         // int asu = event.data; //getGsmSignalStrength();
         if (asu <= 2 || asu == 99) {
@@ -461,7 +465,22 @@ public class KandiSystemUiService extends Service {
         }
 
     }
-
+        public void setTbox(int mode){
+            switch (mode){
+                case 0 :
+                case 3 :
+                   iv_car_tbox.setVisibility(View.INVISIBLE);
+                    break;
+                case 1:
+                    iv_car_tbox.setVisibility(View.VISIBLE);
+                    iv_car_tbox.setImageResource(R.mipmap.ic_tbox_close);
+                    break;
+                case 2:
+                    iv_car_tbox.setVisibility(View.VISIBLE);
+                    iv_car_tbox.setImageResource(R.mipmap.ic_tbox_wirless);
+                    break;
+            }
+        }
     public void setBluetoothState(boolean isBluetoothEnable) {
         if (isBluetoothEnable) {
             status_bar_bluetooth_image.setImageResource(R.mipmap.home_top_btn4_on);
@@ -653,7 +672,12 @@ public class KandiSystemUiService extends Service {
             phoneFloatLayout.setVisibility(View.GONE);
         }
     }
-/*来电广播接听*/
+
+    public void setVolume(int volume){
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
+    }
+
+    /*来电广播接听*/
 
     public class ComingReceiver extends BroadcastReceiver {
         @Override
