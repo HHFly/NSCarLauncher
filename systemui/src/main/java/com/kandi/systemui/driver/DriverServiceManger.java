@@ -31,7 +31,7 @@ public class DriverServiceManger {
 	ConfigDriver38MgnUpgrade m_configDriver38MgnUpgrade = null;
 	EnergyInfoDriver m_energyInfoDriver = null;
 	EcocEnergyInfoDriver m_ecocEnergyInfoDriver = null;
-	
+	TBoxInfoDriver m_tBoxInfoDriver =null;
 	void initDrivers(IECarDriver R_service) {
 		m_carSettingDriver = (R_service==null)?null:(new CarSettingDriver(R_service));
 		m_airCondiDriver = (R_service==null)?null:(new AirConditionDriver(R_service));;
@@ -44,6 +44,7 @@ public class DriverServiceManger {
 		m_configDriver38MgnUpgrade = (R_service==null)?null:(new ConfigDriver38MgnUpgrade(R_service));
 		m_energyInfoDriver = (R_service==null)?null:(new EnergyInfoDriver(R_service));
 		m_ecocEnergyInfoDriver = (R_service==null)?null:(new EcocEnergyInfoDriver(R_service));
+		m_tBoxInfoDriver =(R_service==null)?null:(new TBoxInfoDriver(R_service));
 	}
 	
 	String sDrvSvrVersion = "(后台服务不可用)";
@@ -263,6 +264,11 @@ public class DriverServiceManger {
 //	public EnergyInfoDetailsDriver getEnergyInfoDetailsDriver(int nBattaryNum) {
 //		return (R_service == null)? null : (new EnergyInfoDetailsDriver(R_service, nBattaryNum));
 //	}
-	
+	/*
+	* h获取tbox
+	* */
 
+	public TBoxInfoDriver getM_tBoxInfoDriver() {
+		return m_tBoxInfoDriver;
+	}
 }
