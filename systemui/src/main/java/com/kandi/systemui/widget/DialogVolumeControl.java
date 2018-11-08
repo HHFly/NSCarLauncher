@@ -224,7 +224,6 @@ public void  show(){
     };
 
 
-
 	//
     public void setVolumeImage(int volume){
     	if (volume == 0) {

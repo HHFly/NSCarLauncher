@@ -672,7 +672,12 @@ public class KandiSystemUiService extends Service {
             phoneFloatLayout.setVisibility(View.GONE);
         }
     }
-/*来电广播接听*/
+
+    public void setVolume(int volume){
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
+    }
+
+    /*来电广播接听*/
 
     public class ComingReceiver extends BroadcastReceiver {
         @Override

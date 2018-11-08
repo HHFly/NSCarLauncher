@@ -66,6 +66,7 @@ public class BluetoothController extends BroadcastReceiver {
             try {
                 int blueVolume =  (int) Math.round((float)30/100.0  * 21.0);
                 btservice.btSetVol(String.valueOf(blueVolume));
+                mService.setVolume(8);//max =15
                 String num = intent.getStringExtra(KEY_PHONENUM).trim();
                 int index =intent.getIntExtra(KEY_CALLINDEX, 0);
 
