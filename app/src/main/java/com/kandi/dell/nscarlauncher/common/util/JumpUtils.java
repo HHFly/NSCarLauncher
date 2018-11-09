@@ -68,4 +68,17 @@ public class JumpUtils {
     public static void actRightIn(Activity activity) {
         activity.overridePendingTransition(R.anim.app_out, R.anim.activity_none);
     }
+    public static void act20In(Activity activity) {
+        activity.overridePendingTransition(R.anim.app_enter_20, R.anim.activity_none);
+    }
+    public static void act40In(Activity activity) {
+        activity.overridePendingTransition(R.anim.app_enter_40, R.anim.activity_none);
+    }
+    public static void act60In(Activity activity) {
+        activity.overridePendingTransition(R.anim.app_enter_60, R.anim.activity_none);
+    }
+    public static void act80In(Activity activity) {
+        activity.overridePendingTransition(R.anim.app_enter_80, R.anim.activity_none);
+    }
+
 }

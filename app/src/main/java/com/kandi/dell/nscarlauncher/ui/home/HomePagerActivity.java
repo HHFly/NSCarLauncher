@@ -35,6 +35,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -213,7 +214,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 //        setWifiLevel();//状态栏wifi
         initBluetooth();//蓝牙
 //        init_time();//状态栏时间
-        initAnim();
+//        initAnim();
         context =this;
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         viewPager.setOffscreenPageLimit(mFragments.size());
@@ -385,12 +386,30 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         homePagerOneFragment.freshlayout(fmFragment);
     }
     /*显示fragment*/
-
+    private static int fragemntType;
     public static void showFragemnt(){
 //        frameLayout.setAlpha(0f);
+        int anim = 0;
+        switch (fragemntType){
+            case 1:
+                anim= R.anim.app_enter_20;
+                break;
+            case 2:
+                anim= R.anim.app_enter_40;
+                break;
+            case 3:
+                anim= R.anim.app_enter_60;
+                break;
+            case 4:
+                anim= R.anim.app_enter_80;
+                break;
+
+        }
+        Animation animBottomIN = AnimationUtils.loadAnimation(context,
+                anim);
         frameLayout.setVisibility(View.VISIBLE);
 //        frameLayout.animate().alpha(1f).setDuration(500).setListener(null);
-//        frameLayout.startAnimation(mShowAction);
+        frameLayout.startAnimation(animBottomIN);
 
     }
 
@@ -418,27 +437,38 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         if(IsHomeUtils.isForeground(context,"HomePagerActivity"))
         switch (type){
             case  FragmentType.FM:
+                fragemntType=1;
                 switchFragment(fmFragment);
+
                 break;
             case  FragmentType.BTMUSIC:
                 blueToothSetFragment.setOriginId(1);
+                fragemntType=2;
                 switchFragment(btMusicFragment);
+
                 break;
             case  FragmentType.MUSIC:
+                fragemntType=2;
                 switchFragment(musicFragment);
+
                 break;
              case  FragmentType.PHONE:
                  blueToothSetFragment.setOriginId(2);
+                 fragemntType=1;
                  switchFragment(phoneFragment);
+
                  break;
             case  FragmentType.SET:
                 blueToothSetFragment.setOriginId(0);
+                fragemntType=3;
                 switchFragment(setFragment);
                 break;
             case  FragmentType.APPLICATION:
+                fragemntType=1;
                 switchFragment(appFragment);
                 break;
             case  FragmentType.VIDEO:
+                fragemntType=2;
                 switchFragment(videoFragment);
                 break;
             case FragmentType.BTSET:
