@@ -282,7 +282,8 @@ public class AppFragment extends BaseFragment {
                     }
                 }
                 for (ApplicationInfo app : listAppcations) {
-                    if("org.mozilla.firefox".equals(app.packageName)) {
+//                    if("org.mozilla.firefox".equals(app.packageName)) {
+                    if("com.android.browser".equals(app.packageName)) {
                         AppInfo appBo =new AppInfo();
                         appBo.setName(app.processName);
                         appBo.setPkgName(app.packageName);
