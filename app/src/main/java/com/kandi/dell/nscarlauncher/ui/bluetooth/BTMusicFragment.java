@@ -26,7 +26,7 @@ import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 
 public class BTMusicFragment extends BaseFragment {
-    private ImageView mGifImageView;
+    private static ImageView mGifImageView;
 
     public static boolean isPlay;
 
@@ -101,6 +101,20 @@ public class BTMusicFragment extends BaseFragment {
     public void Resume() {
         getService();
         requestAudioFocus();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+            Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
+        }else{
+            if(isPlay){
+                Glide.with(context).load(gifPath).into(mGifImageView);
+            }else{
+                Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
+            }
+        }
     }
 
     @Override
@@ -260,18 +274,19 @@ public static void  musicNext(){
         }
     }
 
-
+    static String gifPath = "file:///android_asset/bt_music.gif";
     /*初始化gif控制*/
     private void initGif(){
-        String gifPath = "file:///android_asset/bt_music.gif";
         Glide.with(this).load(gifPath).into(mGifImageView);
 
         if (isPlay) {
 //                gifDrawable.start();
                 iv_bt_stop.setVisibility(View.GONE);
+                Glide.with(this).load(gifPath).into(mGifImageView);
             } else {
 //                gifDrawable.stop();
                 iv_bt_stop.setVisibility(View.VISIBLE);
+                Glide.with(this).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
             }
 //            mGifImageView.setImageDrawable(gifDrawable);
 
@@ -290,6 +305,7 @@ public static void  musicNext(){
             isPlay=false;
             if(iv_bt_stop!=null) {
                 iv_bt_stop.setVisibility(View.VISIBLE);
+                Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
             }
 
     }
@@ -328,6 +344,7 @@ public static void  musicNext(){
                         }
                         if(iv_bt_stop!=null) {
                             iv_bt_stop.setVisibility(View.VISIBLE);
+                            Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
                         }
                         isPlay=false;
                         break;
@@ -339,6 +356,7 @@ public static void  musicNext(){
                         }
                         if(iv_bt_stop!=null) {
                             iv_bt_stop.setVisibility(View.GONE);
+                            Glide.with(context).load(gifPath).into(mGifImageView);
                         }
                         isPlay=true;
                         if(HomePagerTwoFragment.music_name!=null) {

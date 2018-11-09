@@ -2,7 +2,6 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.TextureView;
 
 /**
@@ -28,9 +27,6 @@ public class JCResizeTextureView extends TextureView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        int videoWidth = JCMediaManager.instance().currentVideoWidth;
-//        int videoHeight = JCMediaManager.instance().currentVideoHeight;
-        Log.i("testtest","onMeasure-->"+widthMeasureSpec+"   "+heightMeasureSpec);
         int videoWidth,videoHeight;
         if(isFull){
             videoWidth = widthMeasureSpec;

@@ -1002,7 +1002,6 @@ public int getSim(int num) {
 //                incoming3gShow(intent.getStringExtra("number"));
             } else if(intent.getAction() == "com.changeBg"){
                 int picindex = SPUtil.getInstance(getActivity(),"picindex").getInt("picindex",0);//存放图片数组存入对应资源
-                Log.i("testtes","com.changeBg-->"+picindex);
                 homePagerOneFragment.changBgView(picindex);
                 homePagerTwoFragment.changBgView(picindex);
                 homePagerThreeFragment.changBgView(picindex);

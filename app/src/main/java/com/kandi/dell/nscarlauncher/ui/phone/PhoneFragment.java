@@ -31,18 +31,14 @@ import com.kandi.dell.nscarlauncher.ui.phone.model.PhoneRecordInfo;
 import com.kandi.dell.nscarlauncher.ui.phone.mvp.MvpMainView;
 import com.kandi.dell.nscarlauncher.ui.phone.mvp.mpl.MainPresenter;
 
-import net.sourceforge.pinyin4j.PinyinHelper;
-import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
-import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
-import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
-import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.regex.Pattern;
 
 
 public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChangeListener,MvpMainView {
@@ -354,9 +350,16 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                         Collections.sort(phoneBookInfos, new Comparator<PhoneBookInfo>() {
                             @Override
                             public int compare(PhoneBookInfo o1, PhoneBookInfo o2) {
-                                String name1 = getPingYin(o1.getName());
-                                String name2 = getPingYin(o2.getName());
-                                return name1.compareTo(name2);
+                                Collator collator = Collator.getInstance(java.util.Locale.CHINA);
+                                String name1 = getDuoYin(o1.getName());
+                                String name2 = getDuoYin(o2.getName());
+                                if (isStartWithLetter(name1)) {
+                                    name1 = "9" + name1;
+                                }
+                                if (isStartWithLetter(name2)) {
+                                    name2 = "9" + name2;
+                                }
+                                return collator.getCollationKey(name1).compareTo(collator.getCollationKey(name2));
                             }
                         });
                         myHandler.sendEmptyMessage(BOOKBUSY);
@@ -367,44 +370,31 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
             }
         }
     }
-
-    /**
-     * 将字符串中的中文转化为拼音,其他字符不变
-     *
-     * @param inputString
-     * @return
-     */
-    private static String getPingYin(String inputString) {
-        HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
-        format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
-        format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-        format.setVCharType(HanyuPinyinVCharType.WITH_V);
-
-        char[] input = inputString.trim().toCharArray();// 把字符串转化成字符数组
-        String output = "";
-
-        try {
-            for (int i = 0; i < input.length; i++) {
-                // \\u4E00是unicode编码，判断是不是中文
-                if (java.lang.Character.toString(input[i]).matches(
-                        "[\\u4E00-\\u9FA5]+")) {
-                    // 将汉语拼音的全拼存到temp数组
-                    String[] temp = PinyinHelper.toHanyuPinyinStringArray(
-                            input[i], format);
-                    // 取拼音的第一个读音
-                    output += temp[0];
-                }
-                // 大写字母转化成小写字母
-                else if (input[i] > 'A' && input[i] < 'Z') {
-                    output += java.lang.Character.toString(input[i]);
-                    output = output.toLowerCase();
-                }
-                output += java.lang.Character.toString(input[i]);
+    static StringBuffer stringBuffer;
+    static String[] arrays = new String[]{"贾","单","沈","仇","解","翟","查","曾","晟","乐","区","冯","繁","长","石","柏","朴","缪"};
+    static String[] toarrays = new String[]{"甲","善","深","求","谢","宅","乍","增","成","月","欧","逢","婆","帐","时","摆","普","秒"};
+    private static String getDuoYin(String inputString){
+        stringBuffer = new StringBuffer(inputString);
+        for(int i=0;i<arrays.length;i++){
+            if(stringBuffer.indexOf(arrays[i]) == 0){
+                stringBuffer.replace(0,1,toarrays[i]);
+                break;
             }
-        } catch (Exception e) {
-            Log.e("Exception", e.toString());
         }
-        return output;
+        return stringBuffer.toString();
+    }
+
+    private static String regex = "^[a-zA-Z].*$";
+
+    private static Pattern pattern = Pattern.compile(regex);
+
+    public static boolean isStartWithLetter(String str){
+        if (str != null) {
+            if (pattern.matcher(str).matches()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // 改时间为标准格式
