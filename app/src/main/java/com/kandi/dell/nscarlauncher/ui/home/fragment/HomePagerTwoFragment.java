@@ -2,6 +2,7 @@ package com.kandi.dell.nscarlauncher.ui.home.fragment;
 
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -126,9 +127,7 @@ public class HomePagerTwoFragment extends BaseFragment {
                 }
                 break;
             case R.id.rl_navigation:
-                if(homePagerActivity!=null){
-                    homePagerActivity.openNavi();
-                }
+                openNavi();
                 break;
             case R.id.music:
                 HomePagerActivity.jumpFragment(FragmentType.MUSIC);
@@ -141,6 +140,21 @@ public class HomePagerTwoFragment extends BaseFragment {
                 break;
         }
     }
+    /*打开高德*/
+    public void  openNavi(){
+        PackageManager packageManager = getActivity().getPackageManager();
+
+        String packageName = "com.autonavi.amapauto";//高德地图
+        Intent launchIntentForPackage = packageManager.getLaunchIntentForPackage(packageName);
+        if (launchIntentForPackage != null) {
+            startActivity(launchIntentForPackage);
+            JumpUtils.act80In(getActivity());
+        }
+        else {
+            Toast.makeText(getContext(), R.string.未安装该应用, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void setPalyListen(){
         musicPaly.setOnItemClickListener(new PlayControllView.OnItemClickListener() {
             @Override

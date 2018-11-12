@@ -1,5 +1,7 @@
 package com.kandi.dell.nscarlauncher.ui.home;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -36,6 +38,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -130,6 +133,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public  static IECarDriver ieCarDriver;//车辆aidl服务
     public static  TextView tv_speed,tv_power,tv_title_date,tv_t_power;
     static  TranslateAnimation mHiddenAction,mShowAction;
+    static ScaleAnimation  scaleAnimation;
     public  static HomePagerActivity homePagerActivity;
 
     @Override
@@ -214,7 +218,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 //        setWifiLevel();//状态栏wifi
         initBluetooth();//蓝牙
 //        init_time();//状态栏时间
-//        initAnim();
+        initAnim();
         context =this;
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         viewPager.setOffscreenPageLimit(mFragments.size());
@@ -239,6 +243,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
                 -1.0f);
         mHiddenAction.setDuration(500);
+//        scaleAnimation =(ScaleAnimation) AnimationUtils.loadAnimation(getBaseContext(), R.anim.app_enter_out);
     }
 
     @Override
@@ -365,14 +370,16 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public static void  hideFragment(){
 //        frameLayout.animate()
 //                .alpha(0f)
-//                .setDuration(500)
+//                .setDuration(200)
 //                .setListener(new AnimatorListenerAdapter() {
 //                    @Override
 //                    public void onAnimationEnd(Animator animation) {
 //                        frameLayout.setVisibility(View.GONE);
 //                    }
 //                });
-//        frameLayout.startAnimation(mHiddenAction);
+//        Animation animBottomIN = AnimationUtils.loadAnimation(context,
+//                R.anim.app_enter_out);
+//        frameLayout.startAnimation(animBottomIN);
         frameLayout.setVisibility(View.GONE);
         if(homePagerActivity!=null){
             homePagerActivity.hideLoadingDialog();
@@ -402,6 +409,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 break;
             case 4:
                 anim= R.anim.app_enter_80;
+            case 5:
+                anim= R.anim.app_enter_in;
                 break;
 
         }
@@ -464,7 +473,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 switchFragment(setFragment);
                 break;
             case  FragmentType.APPLICATION:
-                fragemntType=1;
+                fragemntType=5;
                 switchFragment(appFragment);
                 break;
             case  FragmentType.VIDEO:
