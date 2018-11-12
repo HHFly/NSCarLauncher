@@ -263,7 +263,9 @@ public static void  musicNext(){
             if("".equals(songname)){
                 HomePagerOneFragment.music_name.setText(App.get().getString(R.string.蓝牙音乐));
             }else {
-                HomePagerOneFragment.music_name.setText(songname+"- " + singer);
+                if(!(songname+(!("").equals(singer)?"- " + singer:"")).equals(HomePagerOneFragment.music_name.getText().toString())){
+                    HomePagerOneFragment.music_name.setText(songname+(!("").equals(singer)?"- " + singer:""));
+                }
             }
             tv_bt_music_songname.setText(songname);
             if (!("").equals(singer)) {
