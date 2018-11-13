@@ -252,8 +252,8 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 //MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 拨打时时进入电话页面
             }
             try {
-                int blueVolume =  (int) Math.round((float)30/100.0  * 21.0);
-                btservice.btSetVol(String.valueOf(blueVolume));
+//                int blueVolume =  (int) Math.round((float)30/100.0  * 21.0);
+//                btservice.btSetVol(String.valueOf(blueVolume));
                 FlagProperty.is_one_oper = true;
                 if (!FlagProperty.flag_phone_ringcall) {
                     FlagProperty.flag_phone_ringcall = true;

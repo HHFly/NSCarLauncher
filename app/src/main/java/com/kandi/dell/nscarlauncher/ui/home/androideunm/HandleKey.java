@@ -12,7 +12,9 @@ import android.support.annotation.IntDef;
         HandleKey.BTMUSICCOLSE,
         HandleKey.BTMUSICOPEN,
         HandleKey.AIROPEN,
-        HandleKey.AIRCLOSE
+        HandleKey.AIRCLOSE,
+        HandleKey.FMNEXT,
+        HandleKey.FMPREV
 })
 public @interface HandleKey  {
 //    时间
@@ -38,4 +40,6 @@ public @interface HandleKey  {
 
     /*fm关*/
     int  OPEMFM =12;
+    int FMNEXT = 13;
+    int FMPREV = 14;
 }

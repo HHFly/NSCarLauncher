@@ -305,7 +305,7 @@ public void openFm(){
                 new Thread() {
                     public void run() {
                         try {
-//                            System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
+                            System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
                             App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
 //
 //                        System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 开机初始化为频道93.0
@@ -325,7 +325,7 @@ public void openFm(){
             new Thread() {
                 public void run() {
                     try {
-//                        System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
+                        System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                         App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.FM));
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -59,6 +59,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private static TextView tv_w_time;
     private static TextView tv_w_date;
     private static TextView tv_w_week;
+    private static TextView tv_fm_hz;
 
     public static TextView tv_w_speed,tv_w_authorize,tv_work,music_name;
 
@@ -77,9 +78,9 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     public static PlayControllView  btPaly;
     public static PlayControllFMView fmPaly ;
     //fragment
-    private  FMFragment fmFragment;
+    public static FMFragment fmFragment;
 
-    private float channel;
+    public static float channel;
     private boolean isON=true;// 空调
     public static int isAirOpen =0  ;
     public String PicIndex ="picindex";
@@ -106,7 +107,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         tv_w_authorize =getView(R.id.tv_w_authorize);
         tv_work =getView(R.id.tv_work);
         controll_air= getView(R.id.controll_air);
-
+        tv_fm_hz = getView(R.id.tv_fm_hz);
         music_name=getView(R.id.music_name);
         layout_home = getView(R.id.layout_home);
 
@@ -226,7 +227,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         });
     }
 // 加载电台
-    private  void isFmFragment(){
+    private static void isFmFragment(){
             if(FragmentType.FM!=HomePagerActivity.mCurFragment.getmType()){
                 HomePagerActivity.switchFragmenthide(HomePagerActivity.fmFragment);
                 if(HomePagerActivity.fmFragment!=null) {
@@ -312,7 +313,6 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     }
     @Override
     public void initView() {
-
         init_time();
         init_Location();
         circleView.setProgress(0);
@@ -322,13 +322,13 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         changBgView(SPUtil.getInstance(getContext(),PicIndex).getInt(PicIndex,0));
     }
     /*初始化fm*/
-    private void setFmMHZ(){
+    private static void setFmMHZ(){
         if(HomePagerActivity.fmFragment.isSecondResume){
             channel=FMFragment.channel;
         }else {
             channel= SPUtil.getInstance(HomePagerActivity.context,FMCHANNEL).getFloat(FMCHANNEL,93.0f);
         }
-        setTvText(R.id.tv_fm_hz,String.valueOf(channel));
+        tv_fm_hz.setText(String.valueOf(channel));
 //        Log.d("Fm","Chennl1   "+String.valueOf(channel));
         SPUtil.getInstance(App.get(),FMCHANNEL).putFloat(FMCHANNEL,channel);
     }
@@ -468,6 +468,20 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                     break;
                 case  HandleKey.AIRCLOSE:
                     controll_air.setImageResource(R.mipmap.ic_off);
+                    break;
+                case HandleKey.FMNEXT:
+                    isFmFragment();
+                    if(fmFragment!=null){
+                        fmFragment.rightFm(channel);
+                        setFmMHZ();
+                    }
+                    break;
+                case HandleKey.FMPREV:
+                    isFmFragment();
+                    if(fmFragment!=null){
+                        fmFragment.leftFm(channel);
+                        setFmMHZ();
+                    }
                     break;
             }
             super.handleMessage(msg);
