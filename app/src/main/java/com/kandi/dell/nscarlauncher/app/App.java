@@ -121,8 +121,12 @@ App extends MultiDexApplication {
         mEqualizer = new Equalizer(0, App.get().getMediaPlayer().getAudioSessionId());
         mEqualizer.setEnabled(true);
         String set = SPUtil.getInstance(this,"EQ").getString("EQSet");
-        Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
-        mEqualizer.setProperties(settings);
+        if(set!=null) {
+            Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
+            if (settings != null) {
+                mEqualizer.setProperties(settings);
+            }
+        }
     }
 
     /*蓝牙*/
