@@ -1,7 +1,5 @@
 package com.kandi.dell.nscarlauncher.ui.home;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -385,6 +383,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             homePagerActivity.hideLoadingDialog();
         }if(FragmentType.BTSET==mCurFragment.getmType()){
             blueToothSetFragment.hideDialog();
+        }
+        if(btMusicFragment != null){
+            btMusicFragment.onDisplay();
         }
         freshlayout();
     }

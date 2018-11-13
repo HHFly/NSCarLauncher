@@ -21,6 +21,7 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
+import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
@@ -101,6 +102,9 @@ public class BTMusicFragment extends BaseFragment {
     public void Resume() {
         getService();
         requestAudioFocus();
+        if(isPlay){
+            Glide.with(context).load(gifPath).into(mGifImageView);
+        }
     }
 
     @Override
@@ -112,6 +116,19 @@ public class BTMusicFragment extends BaseFragment {
             if(isPlay){
                 Glide.with(context).load(gifPath).into(mGifImageView);
             }else{
+                Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
+            }
+        }
+    }
+
+    @Override
+    public void setmType(int mType) {
+        super.setmType(FragmentType.BTMUSIC);
+    }
+
+    public static void onDisplay(){
+        if(isPlay) {
+            if(context != null && mGifImageView!= null) {
                 Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
             }
         }
@@ -347,6 +364,7 @@ public static void  musicNext(){
                             Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
                         }
                         isPlay=false;
+                        App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.BTMUSICCOLSE));
                         break;
 
                     case MUSIC_BLUETOOTH_OPEN:
@@ -362,6 +380,7 @@ public static void  musicNext(){
                         if(HomePagerTwoFragment.music_name!=null) {
                             HomePagerTwoFragment.music_name.setText(App.get().getString(R.string.本地音乐));
                         }
+                        App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.BTMUSICOPEN));
                         break;
                     case MUSCI_BACK:
                         App.get().getBtservice().btAvrLast();
