@@ -14,6 +14,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.IBinder;
+import android.os.IFmService;
 import android.os.IKdBtService;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -74,7 +75,7 @@ public class KandiSystemUiService extends Service {
     DialogPowerIn dialogPowerIn;
 
     AudioManager audioManager;
-
+    private IFmService radio;  //收音机
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -99,6 +100,8 @@ public class KandiSystemUiService extends Service {
         try {
             btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
             audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            // radio初始化
+            radio = IFmService.Stub.asInterface(ServiceManager.getService("fm"));
         }catch (Exception e){}
         setBluetoothState(SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0);
     }
@@ -677,6 +680,9 @@ public class KandiSystemUiService extends Service {
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
     }
 
+    public IFmService getRadio() {
+        return radio;
+    }
     /*来电广播接听*/
 
     public class ComingReceiver extends BroadcastReceiver {
