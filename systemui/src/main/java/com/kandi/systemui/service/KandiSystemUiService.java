@@ -68,6 +68,7 @@ public class KandiSystemUiService extends Service {
     public final static String ACTION_WHEEL_VOLUMEADD = "com.kangdi.BroadCast.WheelVolumeAdd";/*音量+*/
     public final static  String ACTION_WHEEL_VOLUMEREDUCE ="com.kangdi.BroadCast.WheelVolumeReduce";//音量-
     public final static String ACTION_WHEEL_MUTE ="com.kangdi.BroadCast.Mute";//静音
+    public final static String ACTION_RESET_CLEAR ="com.kandi.MASTER_CLEAR";//恢复出厂设置
     private float mPosX,mPosY,mCurPosX,mCurPosY;
   public   static IKdBtService btservice;//蓝牙服务
     private WindowManager.LayoutParams wmParamDiaglogs = null;
@@ -270,6 +271,7 @@ public class KandiSystemUiService extends Service {
             intentFilter.addAction(ACTION_WHEEL_VOLUMEADD);
             intentFilter.addAction(ACTION_WHEEL_VOLUMEREDUCE);
             intentFilter.addAction(ACTION_WHEEL_MUTE);
+            intentFilter.addAction(ACTION_RESET_CLEAR);
             registerReceiver(comingReceiver, intentFilter);
         }
     }
@@ -723,6 +725,8 @@ public class KandiSystemUiService extends Service {
                     showVolumeDialog();
                     dialogVolumeControl.setVolumeMute();
                 }
+            }else if (intent.getAction().equals(ACTION_RESET_CLEAR)) {
+                sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));
             }
         }
     }

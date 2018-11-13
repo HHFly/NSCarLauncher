@@ -3,7 +3,6 @@ package com.kandi.dell.nscarlauncher.ui.setting;
 
 import android.content.Intent;
 import android.provider.Settings;
-
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +22,7 @@ import com.kandi.dell.nscarlauncher.ui.setting.fragment.DateFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.DisplayFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.EqFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.LanguageFragment;
+import com.kandi.dell.nscarlauncher.ui.setting.fragment.UpgradeFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.WifiFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.model.SetData;
 import com.kandi.dell.nscarlauncher.ui.setting.model.SetModel;
@@ -42,6 +42,7 @@ public class SetFragment extends BaseFragment {
     LanguageFragment languageFragment;
     AboutFragment aboutFragment;
     EqFragment eqFragment;
+    UpgradeFragment upgradeFragment;
     @Override
     public int getContentResId() {
         return R.layout.fragment_set;
@@ -71,6 +72,7 @@ public class SetFragment extends BaseFragment {
         languageFragment =new LanguageFragment();
         aboutFragment =new AboutFragment();
         eqFragment= new EqFragment();
+        upgradeFragment = new UpgradeFragment();
          initRvAdapter(mData.getData());
     }
 
@@ -156,10 +158,12 @@ public class SetFragment extends BaseFragment {
                 case  SetType.RECOVERY:
                     JumpUtils.actAPK(getActivity(), FragmentType.POWERRECOVER);
                     break;
-                    case SetType.EQULIZER:
-                        switchFragment(eqFragment);
-                        break;
-
+                case SetType.EQULIZER:
+                    switchFragment(eqFragment);
+                    break;
+                case SetType.UPDATE:
+                    switchFragment(upgradeFragment);
+                    break;
             }
     }
 }
