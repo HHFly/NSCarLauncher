@@ -86,6 +86,7 @@ public class EqFragment extends BaseFragment {
 
             mData.add(data);
         }
+
         postion=  SPUtil.getInstance(getContext(),"EQ").getInt("EQPosition", 1);
         mData.get(postion).setSelect(true);
             initRvAdapter(mData);
@@ -154,9 +155,11 @@ private String getName(String name){
                 @Override
                 public void onClickMode() {
                     mAdapter.DataClear();
+                    postion=0;
                    mAdapter.getData().get(0).setSelect(true);
                     rv.smoothScrollToPosition(0);
                     mAdapter.notifyDataSetChanged();
+
                 }
 
                 @Override
@@ -176,7 +179,7 @@ private String getName(String name){
                     Equalizer.Settings settings =mEqualizer.getProperties();
                     settings.bandLevels=bandLevels;
                 SPUtil.getInstance(getContext(),"EQ").putString("EQSet", JsonUtils.toJson(settings));
-                SPUtil.getInstance(getContext(),"EQ").putInt("EQPosition", EqFragment.postion );
+                    SPUtil.getInstance(getContext(),"EQ").putInt("EQPosition", EqFragment.postion );
                 }
             });
             mView.add(eqSeekBarView);
@@ -197,6 +200,8 @@ private String getName(String name){
 
            mView.get(i).refreshSeekbar(band,mEqualizer);
         }
+        Equalizer.Settings settings =mEqualizer.getProperties();
+        SPUtil.getInstance(getContext(),"EQ").putString("EQSet", JsonUtils.toJson(settings));
     }
     /**
      * 初始化adapter
@@ -224,6 +229,7 @@ private String getName(String name){
                         mAdapter.DataClear();
                         data.setSelect(true);
                        mAdapter.notifyDataSetChanged();
+                    SPUtil.getInstance(getContext(),"EQ").putInt("EQPosition", EqFragment.postion );
                 }
 
                 @Override
@@ -238,9 +244,8 @@ private String getName(String name){
                     refreshSeekbar();
                     mAdapter.DataClear();
                     data.setSelect(true);
-
-
                     mAdapter.notifyDataSetChanged();
+                    SPUtil.getInstance(getContext(),"EQ").putInt("EQPosition", EqFragment.postion );
                 }
 
             });
