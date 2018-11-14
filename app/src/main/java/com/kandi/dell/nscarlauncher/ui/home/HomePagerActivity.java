@@ -1118,10 +1118,10 @@ public int getSim(int num) {
                     if (homePagerOneFragment != null) {
                         switch (work) {
                             case 0x01:
-                                homePagerOneFragment.tv_work.setText(R.string.Sport);
-                                break;
-                            case 0x00:
                                 homePagerOneFragment.tv_work.setText(R.string.Economic);
+                                break;
+                            case 0x02:
+                                homePagerOneFragment.tv_work.setText(R.string.Sport);
                                 break;
                             case 0x03:
                                 homePagerOneFragment.tv_work.setText(R.string.Irascible);
@@ -1129,9 +1129,9 @@ public int getSim(int num) {
                             case 0x04:
                                 homePagerOneFragment.tv_work.setText(R.string.NEDC);
                                 break;
-                                default:
-                                    homePagerOneFragment.tv_work.setText(R.string.Economic);
-                                    break;
+                            default:
+                                homePagerOneFragment.tv_work.setText(R.string.Sport);
+                                break;
                         }
                     }
 
