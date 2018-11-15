@@ -142,6 +142,8 @@
     <string name="resetcar">重置车载</string>
     <string name="warninfo">要清除所有个人信息和下载的应用吗？请注意，此操作无法撤销！</string>
     <string name="clearall">清除全部内容</string>
+    <string name="导入">导入</string>
+    <string name="删除">删除</string>
 
 
 </resources>

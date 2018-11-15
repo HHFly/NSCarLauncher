@@ -240,7 +240,7 @@ public class MusicFragment extends BaseFragment {
                     circle_image.roatateStart();
                     bt_play.setBackgroundResource(R.mipmap.ic_play_big);
                     flag_play = true;
-                    HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
+//                    HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
                 }
 
                 Intent i = new Intent(getActivity(), PlayerService.class);
