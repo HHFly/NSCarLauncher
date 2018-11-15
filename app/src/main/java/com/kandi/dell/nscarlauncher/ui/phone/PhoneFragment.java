@@ -192,6 +192,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         new Thread() {
             public void run() {
                 myHandler.sendMessage(myHandler.obtainMessage(PHONE_END));
+                myHandler.sendMessage(myHandler.obtainMessage(PHONE_OVER));
             }
         }.start();
 
@@ -508,7 +509,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                         break;
                     case PHONE_END:
                         btservice.btHungupCall();
-                        
+
                         break;
                     case PHONE_ANSWER:
 
@@ -685,7 +686,12 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         tv_phone_number.setText(getName(number));
         tv_phone_info.setText("正在呼叫...");
         bt_call.setVisibility(View.GONE);
-
+        if(rl_call!=null) {
+            rl_call.setVisibility(View.VISIBLE);//显示界面
+        }
+        if(ll_calling_controll!=null){
+            ll_calling_controll.setVisibility(View.VISIBLE);
+        }
     }
     //
     public static void callIn(String num,String addre,String ty){

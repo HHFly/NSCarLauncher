@@ -103,7 +103,9 @@ public class BTMusicFragment extends BaseFragment {
         getService();
         requestAudioFocus();
         if(isPlay){
-            Glide.with(context).load(gifPath).into(mGifImageView);
+            if(context != null){
+                Glide.with(context).load(gifPath).into(mGifImageView);
+            }
         }
     }
 
@@ -277,13 +279,6 @@ public static void  musicNext(){
     // 设置歌曲信息
     public static void setMusicInfo(String songname, String singer) {
         if (tv_bt_music_songname != null) {
-            if("".equals(songname)){
-                HomePagerOneFragment.music_name.setText(App.get().getString(R.string.蓝牙音乐));
-            }else {
-                if(!(songname+(!("").equals(singer)?"- " + singer:"")).equals(HomePagerOneFragment.music_name.getText().toString())){
-                    HomePagerOneFragment.music_name.setText(songname+(!("").equals(singer)?"- " + singer:""));
-                }
-            }
             tv_bt_music_songname.setText(songname);
             if (!("").equals(singer)) {
                 tv_bt_music_singer.setText("- " + singer);
