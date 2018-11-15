@@ -778,7 +778,7 @@ public class MusicFragment extends BaseFragment {
         if (musicLocalAdapter == null) {
             RecyclerView rv = getView(R.id.recyclerView_musiclocoal);
             musicLocalAdapter =new MusicLocalAdapter(data);
-
+            musicLocalAdapter.setMode(dataMode);
             if (rv != null) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                 rv.setLayoutManager(linearLayoutManager);
@@ -803,10 +803,21 @@ public class MusicFragment extends BaseFragment {
                     }
                 }
 
+                @Override
+                public void onClickDelete(Mp3Info data, int Pos) {
+
+                }
+
+                @Override
+                public void onClickCopy(Mp3Info data, int Pos) {
+
+                }
+
 
             });
 
         }else {
+            musicLocalAdapter.setMode(dataMode);
             musicLocalAdapter.notifyData(data,true);
         }
         setViewVisibilityGone(R.id.rl_music_local_nodata,data==null||data.size()==0);
