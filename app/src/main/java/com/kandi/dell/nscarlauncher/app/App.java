@@ -21,7 +21,9 @@ import android.support.multidex.MultiDexApplication;
 import com.kandi.dell.nscarlauncher.BuildConfig;
 import com.kandi.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.kandi.dell.nscarlauncher.common.util.FrescoUtils;
+import com.kandi.dell.nscarlauncher.common.util.JsonUtils;
 import com.kandi.dell.nscarlauncher.common.util.NSLifecycleHandle;
+import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.common.util.TimeUtils;
 import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast;
@@ -108,14 +110,25 @@ App extends MultiDexApplication {
 
     }
     private void initService(){
-        mediaPlayer= new MediaPlayer();
-        mEqualizer = new Equalizer(0, App.get().getMediaPlayer().getAudioSessionId());
-        mEqualizer.setEnabled(true);
-
+       initMusic();
         initFm();
         btService();
         registMyReceiver();
     }
+/*音乐均衡器*/
+    private void initMusic() {
+        mediaPlayer= new MediaPlayer();
+        mEqualizer = new Equalizer(0, App.get().getMediaPlayer().getAudioSessionId());
+        mEqualizer.setEnabled(true);
+        String set = SPUtil.getInstance(this,"EQ").getString("EQSet");
+        if(set!=null) {
+            Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
+            if (settings != null) {
+                mEqualizer.setProperties(settings);
+            }
+        }
+    }
+
     /*蓝牙*/
     private  void  btService(){
         try {

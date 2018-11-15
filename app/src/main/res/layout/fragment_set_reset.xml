@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@mipmap/ic_f_fm_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/ic_f_fm_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="96px"
+            android:layout_marginLeft="90px"
+            android:layout_marginRight="90px"
+            android:layout_marginTop="82px">
+
+            <ImageView
+                android:id="@+id/iv_return"
+                android:layout_width="40px"
+                android:layout_height="31px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30px"
+                android:src="@mipmap/set_button_return" />
+
+            <TextView
+                style="@style/BaseText.Tv"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="110px"
+                android:text="@string/reset"
+                android:textSize="36px" />
+
+            <View
+                style="@style/BaseLine.Horizontal"
+                android:layout_alignParentBottom="true"
+                android:background="#3c3c3c" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/sys_upgrade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="90px"
+            android:layout_marginLeft="90px">
+            <TextView
+                style="@style/BaseText.Tv"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="30px"
+                android:layout_marginLeft="110px"
+                android:text="@string/resetupgradeinfo"
+                android:lineSpacingExtra="6dp"
+                android:textSize="34px" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/bt_resetcar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="490px"
+        android:background="@drawable/shape_rectagle_darkblue_5rd"
+        android:gravity="center"
+        android:paddingLeft="10px"
+        android:paddingRight="10px"
+        android:paddingTop="14px"
+        android:paddingBottom="14px"
+        android:text="@string/resetcar"
+        android:textSize="34px"
+        android:textColor="@color/white"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_set_reset"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/set_reset"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+    </RelativeLayout>
+</RelativeLayout>

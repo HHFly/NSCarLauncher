@@ -136,7 +136,12 @@
     <string name="eq关闭">关闭</string>
     <string name="wallpaper">壁纸</string>
     <string name="编译时间">编译时间</string>
-    >>>>>>> feature/更改背景图片
+    <string name="reset">恢复出厂设置</string>
+    <string name="sysupgrade">系统升级</string>
+    <string name="resetupgradeinfo">此操作会清除您车载内存设备中的所有数据，包括：\n\n您的Google账户\n系统及应用数据和设置\n已下载应用\n音乐\n照片\n其他用户数据</string>
+    <string name="resetcar">重置车载</string>
+    <string name="warninfo">要清除所有个人信息和下载的应用吗？请注意，此操作无法撤销！</string>
+    <string name="clearall">清除全部内容</string>
 
 
 </resources>

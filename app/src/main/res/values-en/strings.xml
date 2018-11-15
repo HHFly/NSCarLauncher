@@ -136,5 +136,11 @@
     <string name="eq关闭">OFF</string>
     <string name="wallpaper">wallpaper</string>
     <string name="编译时间">Compilation time</string>
+    <string name="reset">Factory data reset</string>
+    <string name="sysupgrade">System upgrade</string>
+    <string name="resetupgradeinfo">This will erase all data from your deviece\'s internal storage,including:\n\n·Your Google account\n·System and app data and settings\n·Downloaded apps\nmusic\nphoto\nother user data</string>
+    <string name="resetcar">RESET SEVICE</string>
+    <string name="warninfo">Erase all your persional information and downloaded apps?You can\'t reverse this action!</string>
+    <string name="clearall">FACTORY RESET</string>
 
 </resources>

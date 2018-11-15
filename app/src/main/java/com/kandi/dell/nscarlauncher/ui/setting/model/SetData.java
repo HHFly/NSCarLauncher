@@ -59,12 +59,12 @@ public class SetData {
         setModel8.setItem(SetType.RECOVERY);
         setModel8.setLogo(R.mipmap.ic_set_recovery);
         data.add(setModel8);
-//
-//        SetModel setModel9 =new SetModel();
-//        setModel9.setName(getString(R.string.升级));
-//        setModel9.setItem(SetType.UPDATE);
-//        setModel9.setLogo(R.mipmap.ic_set_update);
-//        data.add(setModel9);
+
+        SetModel setModel9 =new SetModel();
+        setModel9.setName(getString(R.string.升级));
+        setModel9.setItem(SetType.UPDATE);
+        setModel9.setLogo(R.mipmap.ic_set_update);
+        data.add(setModel9);
 
         SetModel setModel10 =new SetModel();
         setModel10.setName(getString(R.string.关于));
