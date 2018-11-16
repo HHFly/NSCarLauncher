@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.kandi.dell.nscarlauncher.app.App;
+import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.CursorMusicImage;
@@ -43,6 +44,7 @@ public class PlayerService extends Service {
 				if(mediaPlayer != null) {
 					currentTime = mediaPlayer.getCurrentPosition(); // 获取当前音乐播放的位置
 					MusicFragment.setMusicProgress(currentTime);
+					SPUtil.getInstance(getApplicationContext(),MusicFragment.MUSICPROGRESS).putInt(MusicFragment.MUSICPROGRESS,currentTime);
 					handler.sendEmptyMessageDelayed(1, 1000);
 				}
 			}
@@ -112,6 +114,9 @@ public class PlayerService extends Service {
 				mediaPlayer.reset();//把各项参数恢复到初始状态
 				DialogLocalMusic.playnow =new Mp3Info(DialogLocalMusic.data.get(DialogLocalMusic.musicID));
 				File file = new File(DialogLocalMusic.data.get(DialogLocalMusic.musicID).url);
+				SPUtil.getInstance(getApplicationContext(),MusicFragment.MUSICPATH).putString(MusicFragment.MUSICPATH,DialogLocalMusic.data.get(DialogLocalMusic.musicID).url);
+				SPUtil.getInstance(getApplicationContext(),MusicFragment.MUSICID).putInt(MusicFragment.MUSICID,DialogLocalMusic.musicID);
+				SPUtil.getInstance(getApplicationContext(),MusicFragment.MUSICDATAMODE).putInt(MusicFragment.MUSICDATAMODE,MusicFragment.dataMode);
 				FileInputStream fis = new FileInputStream(file);
 				mediaPlayer.setDataSource(fis.getFD());
 				mediaPlayer.prepareAsync(); // 进行缓冲

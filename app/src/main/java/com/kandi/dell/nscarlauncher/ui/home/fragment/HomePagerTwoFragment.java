@@ -174,6 +174,7 @@ public class HomePagerTwoFragment extends BaseFragment {
                         // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
                     }
                     musicPaly.center.performClick();
+                    MusicFragment.recoveryLast = false;
                     MusicModel.getPrevMusic(getContext(), MusicFragment.music_model);
                 }
 
@@ -202,6 +203,7 @@ public class HomePagerTwoFragment extends BaseFragment {
                         // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
                     }
                     musicPaly.center.performClick();
+                    MusicFragment.recoveryLast = false;
                     MusicModel.getNextMusic(getContext(),  MusicFragment.music_model);
                 }
 

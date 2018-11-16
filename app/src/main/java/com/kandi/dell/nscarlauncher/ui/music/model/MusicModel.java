@@ -61,7 +61,7 @@ public class MusicModel {
 		int num = 0;
 		do {
 			num = (int) (Math.random()*sum);
-		} while (num == DialogLocalMusic.musicID);
+		} while (num == DialogLocalMusic.musicID && sum > 1);
 		DialogLocalMusic.musicID = num;
 	}
 
