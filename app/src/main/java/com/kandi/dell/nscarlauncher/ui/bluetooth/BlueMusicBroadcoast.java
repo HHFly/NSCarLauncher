@@ -331,7 +331,13 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 //if (FragmentMusic.flag_bluetooth_music) {
 //                    MusicFragment.setMusicInfo(obj.getString("SongName"), obj.getString("SingerName"));
                     BTMusicFragment.setMusicInfo(obj.getString("SongName"), obj.getString("SingerName"));
-
+                    if("".equals(obj.getString("SongName"))){
+                        HomePagerOneFragment.music_name.setText(App.get().getString(R.string.蓝牙音乐));
+                    }else {
+                        if(!(obj.getString("SongName")+(!("").equals(obj.getString("SingerName"))?"- " + obj.getString("SingerName"):"")).equals(HomePagerOneFragment.music_name.getText().toString())){
+                            HomePagerOneFragment.music_name.setText(obj.getString("SongName")+(!("").equals(obj.getString("SingerName"))?"- " + obj.getString("SingerName"):""));
+                        }
+                    }
                     if (obj.getString("SongTotalTime").compareTo("") == 0) {
 
                     } else {
