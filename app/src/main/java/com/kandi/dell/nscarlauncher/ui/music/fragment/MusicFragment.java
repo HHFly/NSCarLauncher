@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.common.util.FileUtil;
 import com.kandi.dell.nscarlauncher.db.dao.MusicCollectionDao;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
@@ -798,19 +799,33 @@ public class MusicFragment extends BaseFragment {
 
                 @Override
                 public void onLongClickMusic(Mp3Info data, int Pos) {
-                    if(dataMode==2){
-                        ShowDialog(data);
-                    }
+//                    if(dataMode==2){
+//                        ShowDialog(data);
+//                    }
                 }
 
                 @Override
                 public void onClickDelete(Mp3Info data, int Pos) {
-
+                    showLoadingDialog();
+                    FileUtil.deleteFile(new File(data.url));
+                    MusicCollectionDao.deleteFavByUrl(getContext(),data.url);
+                    Intent intent  =new Intent();
+                    intent.setAction("nscar_fresh_sdcard");
+                    context.sendBroadcast(intent);
+                    DialogLocalMusic.updateLocalMusic(context);
+                    myHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideLoadingDialog();
+                        }
+                    },3500);
                 }
 
                 @Override
                 public void onClickCopy(Mp3Info data, int Pos) {
-
+                    File sourse = new File(data.url);
+                    long len = sourse.length();
+                    new CopyFileThread(data.url,PATH_SDCARDMUSIC+data.displayName,0,len).start();
                 }
 
 
