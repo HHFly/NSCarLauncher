@@ -120,12 +120,17 @@ App extends MultiDexApplication {
         mediaPlayer= new MediaPlayer();
         mEqualizer = new Equalizer(0, App.get().getMediaPlayer().getAudioSessionId());
         mEqualizer.setEnabled(true);
-        String set = SPUtil.getInstance(this,"EQ").getString("EQSet");
-        if(set!=null) {
-            Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
-            if (settings != null) {
-                mEqualizer.setProperties(settings);
+        int postion=  SPUtil.getInstance(this,"EQ").getInt("EQPosition", 1);
+        if(0==postion) {
+            String set = SPUtil.getInstance(this, "EQ").getString("EQSet");
+            if (set != null) {
+                Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
+                if (settings != null) {
+                    mEqualizer.setProperties(settings);
+                }
             }
+        }else {
+            mEqualizer.usePreset((short) (postion-1));
         }
     }
 

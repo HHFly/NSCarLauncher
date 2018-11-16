@@ -200,8 +200,8 @@ private String getName(String name){
 
            mView.get(i).refreshSeekbar(band,mEqualizer);
         }
-        Equalizer.Settings settings =mEqualizer.getProperties();
-        SPUtil.getInstance(getContext(),"EQ").putString("EQSet", JsonUtils.toJson(settings));
+//        Equalizer.Settings settings =mEqualizer.getProperties();
+//        SPUtil.getInstance(getContext(),"EQ").putString("EQSet", JsonUtils.toJson(settings));
     }
     /**
      * 初始化adapter
