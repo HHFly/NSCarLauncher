@@ -142,5 +142,7 @@
     <string name="resetcar">RESET SEVICE</string>
     <string name="warninfo">Erase all your persional information and downloaded apps?You can\'t reverse this action!</string>
     <string name="clearall">FACTORY RESET</string>
+    <string name="导入">导入</string>
+    <string name="删除">删除</string>
 
 </resources>

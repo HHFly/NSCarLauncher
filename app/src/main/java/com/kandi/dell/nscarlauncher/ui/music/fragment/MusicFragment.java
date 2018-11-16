@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.common.util.FileUtil;
 import com.kandi.dell.nscarlauncher.db.dao.MusicCollectionDao;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
@@ -240,7 +241,7 @@ public class MusicFragment extends BaseFragment {
                     circle_image.roatateStart();
                     bt_play.setBackgroundResource(R.mipmap.ic_play_big);
                     flag_play = true;
-                    HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
+//                    HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
                 }
 
                 Intent i = new Intent(getActivity(), PlayerService.class);
@@ -778,7 +779,7 @@ public class MusicFragment extends BaseFragment {
         if (musicLocalAdapter == null) {
             RecyclerView rv = getView(R.id.recyclerView_musiclocoal);
             musicLocalAdapter =new MusicLocalAdapter(data);
-
+            musicLocalAdapter.setMode(dataMode);
             if (rv != null) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                 rv.setLayoutManager(linearLayoutManager);
@@ -798,15 +799,40 @@ public class MusicFragment extends BaseFragment {
 
                 @Override
                 public void onLongClickMusic(Mp3Info data, int Pos) {
-                    if(dataMode==2){
-                        ShowDialog(data);
-                    }
+//                    if(dataMode==2){
+//                        ShowDialog(data);
+//                    }
+                }
+
+                @Override
+                public void onClickDelete(Mp3Info data, int Pos) {
+                    showLoadingDialog();
+                    FileUtil.deleteFile(new File(data.url));
+                    MusicCollectionDao.deleteFavByUrl(getContext(),data.url);
+                    Intent intent  =new Intent();
+                    intent.setAction("nscar_fresh_sdcard");
+                    context.sendBroadcast(intent);
+                    DialogLocalMusic.updateLocalMusic(context);
+                    myHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideLoadingDialog();
+                        }
+                    },3500);
+                }
+
+                @Override
+                public void onClickCopy(Mp3Info data, int Pos) {
+                    File sourse = new File(data.url);
+                    long len = sourse.length();
+                    new CopyFileThread(data.url,PATH_SDCARDMUSIC+data.displayName,0,len).start();
                 }
 
 
             });
 
         }else {
+            musicLocalAdapter.setMode(dataMode);
             musicLocalAdapter.notifyData(data,true);
         }
         setViewVisibilityGone(R.id.rl_music_local_nodata,data==null||data.size()==0);
