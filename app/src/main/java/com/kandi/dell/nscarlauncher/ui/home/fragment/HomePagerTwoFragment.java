@@ -104,12 +104,14 @@ public class HomePagerTwoFragment extends BaseFragment {
                 HomePagerActivity.OneKeyWindowOpen();
                 break;
             case R.id.rl_phone:
+                HomePagerActivity.isShowPhoneAnim=true;
                 HomePagerActivity.jumpFragment(FragmentType.PHONE);
 //                if(homePagerActivity!=null){
 //                    homePagerActivity.jumpFragment(FragmentType.PHONE);
 //                }
                 break;
             case  R.id.iv_phone_logo:
+                HomePagerActivity.isShowPhoneAnim=true;
                 HomePagerActivity.jumpFragment(FragmentType.PHONE);
                 break;
             case R.id.rl_set:

@@ -133,7 +133,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     static  TranslateAnimation mHiddenAction,mShowAction;
     static ScaleAnimation  scaleAnimation;
     public  static HomePagerActivity homePagerActivity;
-
+    public static boolean isShowPhoneAnim =false ;//电话界面是否显示动画
     @Override
     protected void onResume() {
         super.onResume();
@@ -399,6 +399,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 //        frameLayout.setAlpha(0f);
         int anim = 0;
         switch (fragemntType){
+            case 0:anim=R.anim.activity_none;
+            break;
             case 1:
                 anim= R.anim.app_enter_20;
                 break;
@@ -413,13 +415,13 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             case 5:
                 anim= R.anim.app_enter_in;
                 break;
-
         }
         Animation animBottomIN = AnimationUtils.loadAnimation(context,
                 anim);
         frameLayout.setVisibility(View.VISIBLE);
 //        frameLayout.animate().alpha(1f).setDuration(500).setListener(null);
-        frameLayout.startAnimation(animBottomIN);
+
+            frameLayout.startAnimation(animBottomIN);
 
     }
 
@@ -464,7 +466,12 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 break;
              case  FragmentType.PHONE:
                  blueToothSetFragment.setOriginId(2);
-                 fragemntType=1;
+                if(isShowPhoneAnim){
+                    fragemntType = 1;
+                }else {
+                    fragemntType = 0;
+                }
+
                  switchFragment(phoneFragment);
 
                  break;
