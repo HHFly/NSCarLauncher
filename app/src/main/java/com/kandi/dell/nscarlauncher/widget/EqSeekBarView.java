@@ -112,9 +112,14 @@ public class EqSeekBarView extends LinearLayout {
     public void  refreshSeekbar(final short band, final Equalizer mEqualizer){
 //        final short minEqualizer = mEqualizer.getBandLevelRange()[0];
 //        final short maxEqualizer = mEqualizer.getBandLevelRange()[1];
-        verticalSeekBar.setMax(maxEqualizer -minEqualizer);
-        verticalSeekBar.setProgress(mEqualizer.getBandLevel(band)-minEqualizer);
-        tv_eq_hz.setText( (mEqualizer.getBandLevel(band)/100)+"dB");
+        try {
+            verticalSeekBar.setMax(maxEqualizer -minEqualizer);
+            verticalSeekBar.setProgress(mEqualizer.getBandLevel(band)-minEqualizer);
+            tv_eq_hz.setText( (mEqualizer.getBandLevel(band)/100)+"dB");
+        }catch (Exception e){
+
+        }
+
     }
     public void  setTv_eq_hz(String hz){
         tv_eq_hz.setText(hz);

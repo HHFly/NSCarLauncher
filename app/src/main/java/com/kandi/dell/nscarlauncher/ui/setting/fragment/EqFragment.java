@@ -188,7 +188,11 @@ private String getName(String name){
         String set =SPUtil.getInstance(getContext(),"EQ").getString("EQSet");
         Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
         if(settings!=null) {
-            mEqualizer.setProperties(settings);
+            try {
+                mEqualizer.setProperties(settings);
+            }catch (Exception e){
+
+            }
         }
     }
     private  void refreshSeekbar(){
@@ -224,7 +228,9 @@ private String getName(String name){
                 @Override
                 public void onClickMode(EqData data) {
                             postion=data.getPosition()+1;
+                    try {
                         mEqualizer.usePreset(data.getPosition());
+                    }catch (Exception e){}
                         refreshSeekbar();
                         mAdapter.DataClear();
                         data.setSelect(true);

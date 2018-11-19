@@ -44,10 +44,30 @@ public class PlayerService extends Service {
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == 1) {
 				if(mediaPlayer != null) {
-					currentTime = mediaPlayer.getCurrentPosition(); // 获取当前音乐播放的位置
-					MusicFragment.setMusicProgress(currentTime);
-					SPUtil.getInstance(getApplicationContext(),MusicFragment.MUSICPROGRESS).putInt(MusicFragment.MUSICPROGRESS,currentTime);
-					handler.sendEmptyMessageDelayed(1, 1000);
+					try {
+						currentTime = mediaPlayer.getCurrentPosition(); // 获取当前音乐播放的位置
+						MusicFragment.setMusicProgress(currentTime);
+						SPUtil.getInstance(getApplicationContext(),MusicFragment.MUSICPROGRESS).putInt(MusicFragment.MUSICPROGRESS,currentTime);
+						handler.sendEmptyMessageDelayed(1, 1000);
+					}catch (Exception e){
+						MusicFragment.stopView();
+						HomePagerTwoFragment.myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
+						App.get().reSetMusic();
+						mediaPlayer=App.get().getMediaPlayer();
+						/**
+						 * 设置音乐播放完成时的监听器
+						 */
+						if(mediaPlayer!=null){
+							mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+
+								@Override
+								public void onCompletion(MediaPlayer mp) {
+									MusicFragment.bt_next.performClick();
+								}
+							});
+						}
+					}
+
 				}
 			}
 		};
@@ -69,8 +89,26 @@ public class PlayerService extends Service {
 					MusicFragment.bt_next.performClick();
 				}
 			});
+				mediaPlayer.setOnErrorListener(onErrorListener);
 		}
 	}
+	private  MediaPlayer.OnErrorListener onErrorListener =new MediaPlayer.OnErrorListener() {
+		@Override
+		public boolean onError(MediaPlayer mp, int what, int extra) {
+			switch (what) {
+				case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
+					MusicFragment.stopView();
+					HomePagerTwoFragment.myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
+					App.get().reSetMusic();
+					mediaPlayer=App.get().getMediaPlayer();
+					mediaPlayer.setOnErrorListener(onErrorListener);
+					Log.d("MediaPlayer", "onError");
+					break;
+			}
+
+			return false;
+		}
+	};
 	@Override
 	public IBinder onBind(Intent arg0) {
 		return null;
@@ -127,9 +165,23 @@ public class PlayerService extends Service {
 			} catch (Exception e) {
 				e.printStackTrace();
 //				DialogLocalMusic.data.clear();
-				DialogLocalMusic.ScanAllDaTa(this);
+//				DialogLocalMusic.ScanAllDaTa(this);
 				MusicFragment.stopView();
 				HomePagerTwoFragment.myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
+				App.get().reSetMusic();
+				mediaPlayer=App.get().getMediaPlayer();
+				/**
+				 * 设置音乐播放完成时的监听器
+				 */
+				if(mediaPlayer!=null){
+					mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+
+						@Override
+						public void onCompletion(MediaPlayer mp) {
+							MusicFragment.bt_next.performClick();
+						}
+					});
+				}
 			}
 		}
 	}
@@ -138,10 +190,30 @@ public class PlayerService extends Service {
 	 * 暂停音乐
 	 */
 	private void pause() {
-		if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-			mediaPlayer.pause();
-			isPause = true;
-		}
+	    try {
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                isPause = true;
+            }
+        }catch (Exception e){
+            MusicFragment.stopView();
+            HomePagerTwoFragment.myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
+            App.get().reSetMusic();
+            mediaPlayer=App.get().getMediaPlayer();
+            /**
+             * 设置音乐播放完成时的监听器
+             */
+            if(mediaPlayer!=null){
+                mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        MusicFragment.bt_next.performClick();
+                    }
+                });
+            }
+        }
+
 	}
 
 	/**
@@ -170,6 +242,11 @@ public class PlayerService extends Service {
 				mediaPlayer.prepare(); //在调用stop后如果需要再次通过start进行播放,需要之前调用prepare函数
 			} catch (Exception e) {
 				e.printStackTrace();
+				MusicFragment.stopView();
+				HomePagerTwoFragment.myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
+				App.get().reSetMusic();
+				mediaPlayer=App.get().getMediaPlayer();
+
 			}
 		}
 	}

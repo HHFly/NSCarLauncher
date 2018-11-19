@@ -64,10 +64,6 @@ App extends MultiDexApplication {
     private BlueMusicBroadcoast bluetoothReceiver; //蓝牙广播接受
     private Equalizer mEqualizer;
 
-    public FrameLayout getFrameLayout() {
-        return frameLayout;
-    }
-
     public  IFmService getRadio() {
         return radio;
     }
@@ -85,7 +81,39 @@ App extends MultiDexApplication {
     }
 
     public Equalizer getmEqualizer() {
-        return mEqualizer;
+        try {
+            mEqualizer.getBandLevel((short) 0);
+            return mEqualizer;
+        }catch (Exception e){
+            mEqualizer=null;
+            mEqualizer = new Equalizer(0, App.get().getMediaPlayer().getAudioSessionId());
+            mEqualizer.setEnabled(true);
+            int postion=  SPUtil.getInstance(this,"EQ").getInt("EQPosition", 1);
+            if(0==postion) {
+                String set = SPUtil.getInstance(this, "EQ").getString("EQSet");
+                if (set != null) {
+                    Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
+                    if (settings != null) {
+                        try {
+                            mEqualizer.setProperties(settings);
+                        }catch (Exception ex){
+
+                        }
+
+                    }
+                }
+            }else {
+                try {
+                    mEqualizer.usePreset((short) (postion-1));
+                }catch (Exception e1){
+
+                }
+
+            }
+            return mEqualizer;
+        }
+
+
     }
 
     //共享handle变量
@@ -121,6 +149,13 @@ App extends MultiDexApplication {
         btService();
         registMyReceiver();
     }
+    public void reSetMusic(){
+        mediaPlayer.release();
+        mediaPlayer=null;
+        mEqualizer.release();
+        mEqualizer=null;
+        initMusic();
+    }
 /*音乐均衡器*/
     private void initMusic() {
         mediaPlayer= new MediaPlayer();
@@ -132,11 +167,19 @@ App extends MultiDexApplication {
             if (set != null) {
                 Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
                 if (settings != null) {
-                    mEqualizer.setProperties(settings);
+                    try {
+                        mEqualizer.setProperties(settings);
+                    }catch (Exception e){
+
+                    }
+
                 }
             }
         }else {
-            mEqualizer.usePreset((short) (postion-1));
+            try {
+                mEqualizer.usePreset((short) (postion-1));
+            }catch (Exception e){}
+
         }
     }
 
