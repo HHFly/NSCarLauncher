@@ -1052,31 +1052,31 @@ public int getSim(int num) {
     /*电量车程*/
     private  static void setCarPoewr(){
 
-        int[] power =new int[12];
+        int[] power =new int[10];
         try {
             if(ieCarDriver!=null) {
-               ieCarDriver.getPowerManager(power);
-                if (!tv_power.getText().equals(String.valueOf(power[10]))) {
-                    int i =power[10]%10;
-                    FlagProperty.CarPower =power[10]/10;
-//                    setTvText(R.id.tv_t_power, String.valueOf(power[0])+"%");
-                    tv_t_power.setText(FlagProperty.CarPower +"%");
-                    iv_t_power.setImageResource(getPower(power[10]));
-//                    setIvImage(R.id.iv_t_power, getPower(power[0]));
-                }
+               ieCarDriver.Ecoc_getGeneral_Car(power);
+//                if (!tv_power.getText().equals(String.valueOf(power[10]))) {
+//                    int i =power[10]%10;
+//                    FlagProperty.CarPower =power[10]/10;
+////                    setTvText(R.id.tv_t_power, String.valueOf(power[0])+"%");
+//                    tv_t_power.setText(FlagProperty.CarPower +"%");
+//                    iv_t_power.setImageResource(getPower(power[10]));
+////                    setIvImage(R.id.iv_t_power, getPower(power[0]));
+//                }
                     FlagProperty.Speed =power[7];
                     /*剩余里程*/
                 if (homePagerOneFragment != null) {
-                    if (homePagerOneFragment.tv_w_speed.getText().toString().equals(String.valueOf(power[11]))) {
+                    if (homePagerOneFragment.tv_w_speed.getText().toString().equals(String.valueOf(power[1]))) {
                         return;
                     }
-                    if (0 == power[11]) {
+                    if (0 == power[1]) {
                         homePagerOneFragment.tv_w_speed.setTextColor(Color.parseColor("#F03A53"));
                     } else {
                         homePagerOneFragment.tv_w_speed.setTextColor(Color.parseColor("#FFFFFF"));
                     }
 
-                    homePagerOneFragment.tv_w_speed.setText(String.valueOf(power[11]));
+                    homePagerOneFragment.tv_w_speed.setText(String.valueOf(power[1]));
                 }
             }else {
 
