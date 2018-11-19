@@ -17,6 +17,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.support.multidex.MultiDexApplication;
+import android.widget.FrameLayout;
 
 import com.kandi.dell.nscarlauncher.BuildConfig;
 import com.kandi.dell.nscarlauncher.base.Activity.BaseActivity;
@@ -52,7 +53,7 @@ App extends MultiDexApplication {
     public static App get() {
         return s_app;
     }
-
+    private  FrameLayout frameLayout;//主界面
     private  IFmService radio;  //收音机
     private MediaPlayer mediaPlayer;//本地音乐播放
     private   IKdAudioControlService audioservice = IKdAudioControlService.Stub
@@ -62,6 +63,11 @@ App extends MultiDexApplication {
     private BaseActivity mCurActivity;
     private BlueMusicBroadcoast bluetoothReceiver; //蓝牙广播接受
     private Equalizer mEqualizer;
+
+    public FrameLayout getFrameLayout() {
+        return frameLayout;
+    }
+
     public  IFmService getRadio() {
         return radio;
     }

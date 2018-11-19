@@ -6,10 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.widget.ImageView;
 
 import com.kandi.dell.nscarlauncher.R;
+
+import java.util.HashMap;
 
 public class CursorMusicImage {
 
@@ -55,23 +58,45 @@ public class CursorMusicImage {
 		cur = null;
 		return album_art;
 	}
-	public static Bitmap setArtwork(Context context, String url) {
-		Uri selectedAudio = Uri.parse(url);
-		MediaMetadataRetriever myRetriever = new MediaMetadataRetriever();
-		myRetriever.setDataSource(context, selectedAudio); // the URI of audio file
-		byte[] artwork;
+	public static Bitmap setArtwork(Context context, String url) throws Throwable{
+		Bitmap bMap= null;
+		MediaMetadataRetriever myRetriever = null;
+		try {
+			myRetriever = new MediaMetadataRetriever();
+			if (Build.VERSION.SDK_INT >= 14)
+				myRetriever.setDataSource(url, new HashMap<String, String>());
+			else
+				myRetriever.setDataSource(url);
 
-		artwork = myRetriever.getEmbeddedPicture();
+//		myRetriever.setDataSource(context, selectedAudio); // the URI of audio file
 
-		if (artwork != null) {
-			Bitmap bMap = BitmapFactory.decodeByteArray(artwork, 0, artwork.length);
+			byte[] artwork;
 
-			return bMap;
-		} else {
+			artwork = myRetriever.getEmbeddedPicture();
 
-			return BitmapFactory.decodeResource(context.getResources(), R.mipmap.one);
+			if (artwork != null) {
+				 bMap = BitmapFactory.decodeByteArray(artwork, 0, artwork.length);
+
+
+			} else {
+
+				bMap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.one);
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+			throw new Throwable(
+					"Exception in retriveVideoFrameFromVideo(String videoPath)"
+							+ e.getMessage());
+		}finally
+		{
+			if (myRetriever != null)
+			{
+				myRetriever.release();
+			}
 		}
+		return  bMap;
 	}
+
 	public static String getImage(Context context, String filePath) {
 		Cursor currentCursor = getCursor(context, filePath);
 		if(currentCursor.getColumnCount()!=0) {

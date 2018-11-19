@@ -2,6 +2,7 @@ package com.kandi.dell.nscarlauncher.ui.music.Service;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -10,6 +11,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
@@ -201,7 +203,13 @@ public class PlayerService extends Service {
 			String artist = ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).artist;
 			
 			//设置歌曲专辑内置图片
-			Bitmap bm = CursorMusicImage.setArtwork(PlayerService.this,DialogLocalMusic.playnow.url);
+			Bitmap bm = null;
+			try {
+				bm = CursorMusicImage.setArtwork(PlayerService.this, DialogLocalMusic.playnow.url);
+			} catch (Throwable throwable) {
+				bm = BitmapFactory.decodeResource(PlayerService.this.getResources(), R.mipmap.one);
+				throwable.printStackTrace();
+			}
 			BitmapDrawable bmpDraw = new BitmapDrawable(bm);
 			if(MusicFragment.circle_image!=null) {
 				MusicFragment.circle_image.setImageDrawable(bmpDraw);
