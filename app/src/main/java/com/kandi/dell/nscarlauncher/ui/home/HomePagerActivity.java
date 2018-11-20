@@ -41,6 +41,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,7 +96,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public static final int CALL_HUNGUP = 5; // 挂断来电
     private  static FrameLayout frameLayout;//主界面
    static HomePagerOneFragment homePagerOneFragment;
-
+    private RelativeLayout bg_home;
     HomePagerTwoFragment homePagerTwoFragment;
     HomePagerThreeFragment homePagerThreeFragment;
     private DialogVolumeControl dialogVolumeControl ;
@@ -222,6 +223,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         initBluetooth();//蓝牙
 //        init_time();//状态栏时间
         initAnim();
+        changBgView();
         context =this;
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         viewPager.setOffscreenPageLimit(mFragments.size());
@@ -263,6 +265,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         tv_title_date=getView(R.id.tv_title_date);
         tv_t_power=getView(R.id.tv_t_power);
         iv_t_power=getView(R.id.iv_t_power);
+        bg_home=getView(R.id.bg_home);
     }
     /*获取全局模块*/
     private void  getService(){
@@ -1023,10 +1026,7 @@ public int getSim(int num) {
             } else if (intent.getAction() == "3gphone.iscoming") {
 //                incoming3gShow(intent.getStringExtra("number"));
             } else if(intent.getAction() == "com.changeBg"){
-                int picindex = SPUtil.getInstance(getActivity(),"picindex").getInt("picindex",0);//存放图片数组存入对应资源
-                homePagerOneFragment.changBgView(picindex);
-                homePagerTwoFragment.changBgView(picindex);
-                homePagerThreeFragment.changBgView(picindex);
+                changBgView();
             }
         }
     }
@@ -1351,5 +1351,15 @@ public int getSim(int num) {
             }
         }
     };
+
+    /*设置背景param int resid*/
+    public void changBgView(){
+        int resid = SPUtil.getInstance(getActivity(),"picindex").getInt("picindex",0);//存放图片数组存入对应资源
+        if(resid == 0){
+            bg_home.setBackgroundResource(R.color.dfbackground);
+        }else{
+            bg_home.setBackgroundResource(resid);
+        }
+    }
 
 }
