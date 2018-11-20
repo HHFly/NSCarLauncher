@@ -243,7 +243,10 @@ private String getName(String name){
                     String set =SPUtil.getInstance(getContext(),"EQ").getString("EQSet");
                     Equalizer.Settings settings = JsonUtils.fromJson(set, Equalizer.Settings.class);
                     if(settings!=null) {
-                        mEqualizer.setProperties(settings);
+                        try {
+                            mEqualizer.setProperties(settings);
+                        }catch (Exception e){}
+
                     }
 
                     postion=0;

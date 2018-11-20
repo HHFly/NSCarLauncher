@@ -64,7 +64,8 @@ public class CursorMusicImage {
 		try {
 			myRetriever = new MediaMetadataRetriever();
 			if (Build.VERSION.SDK_INT >= 14)
-				myRetriever.setDataSource(url, new HashMap<String, String>());
+//				myRetriever.setDataSource(url, new HashMap<String, String>());
+					myRetriever.setDataSource(context, Uri.parse(url)); // the URI of audio file
 			else
 				myRetriever.setDataSource(url);
 
