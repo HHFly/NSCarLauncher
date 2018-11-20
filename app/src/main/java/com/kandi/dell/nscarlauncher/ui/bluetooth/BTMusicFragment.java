@@ -298,11 +298,13 @@ public static void  musicNext(){
     // 设置歌曲信息
     private static void setMusicInfo(String songname, String singer) {
         if (tv_bt_music_songname != null) {
-            tv_bt_music_songname.setText(songname);
-            if (!("").equals(singer)) {
-                tv_bt_music_singer.setText("- " + singer);
-            } else {
+            if(!"null".equals(songname)) {
+                tv_bt_music_songname.setText(songname);
+            }
+            if (("").equals(singer)||"null".equals(singer)) {
                 tv_bt_music_singer.setText("");
+            } else {
+                tv_bt_music_singer.setText("- " + singer);
             }
         }
     }
