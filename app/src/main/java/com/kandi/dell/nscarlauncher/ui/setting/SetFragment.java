@@ -109,6 +109,10 @@ public class SetFragment extends BaseFragment {
         }
 
     }
+    public void dissDialog(){
+        if(blueToothSetFragment!=null)
+        blueToothSetFragment.hideDialog();
+    }
     /**
      * 选择Fragment
      *

@@ -450,7 +450,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                     Bundle bundle =msg.getData();
                     String songname=bundle.getString("songname");
                     String singer =bundle.getString("singer");
-                    if("".equals(songname)){
+                    if("".equals(songname)||"null".equals(songname)){
                         HomePagerOneFragment.music_name.setText(App.get().getString(R.string.蓝牙音乐));
                     }else {
                         if(!(songname+(!("").equals(singer)?"- " + singer:"")).equals(HomePagerOneFragment.music_name.getText().toString())){
