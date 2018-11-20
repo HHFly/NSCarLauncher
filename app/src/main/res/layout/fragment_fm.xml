@@ -22,8 +22,8 @@
     android:id="@+id/iv_search"
     android:layout_width="46px"
     android:layout_height="46px"
-    android:src="@mipmap/ic_f_fm_search"
-    android:background="?android:attr/selectableItemBackground"
+    android:src="@drawable/select_fm_search"
+
     android:layout_alignParentRight="true"
    android:layout_marginTop="13px"/>
 
