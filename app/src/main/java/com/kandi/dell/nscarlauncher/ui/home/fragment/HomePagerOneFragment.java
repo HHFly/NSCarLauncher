@@ -1,6 +1,7 @@
 package com.kandi.dell.nscarlauncher.ui.home.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
@@ -430,7 +431,17 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             }
         });
     }
+    public static  void setMusicInfoHanle(String songname, String singer){
 
+        Message message = App.pagerOneHnadler.obtainMessage();
+        Bundle bundle =new Bundle();
+        bundle.putString("songname",songname);
+        bundle.putString("singer",singer);
+        message.what=HandleKey.WEATHAER;
+        message.setData(bundle);
+        App.pagerOneHnadler.sendMessage(message); //发送消息
+
+    }
     public static class PagerOneHnadler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -442,6 +453,17 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                     tv_w_week.setText(TimeUtils.getDayOfWeek());
                     break;
                 case HandleKey.WEATHAER:
+                    Bundle bundle =msg.getData();
+                    String songname=bundle.getString("songname");
+                    String singer =bundle.getString("singer");
+                    if("".equals(songname)){
+                        HomePagerOneFragment.music_name.setText(App.get().getString(R.string.蓝牙音乐));
+                    }else {
+                        if(!(songname+(!("").equals(singer)?"- " + singer:"")).equals(HomePagerOneFragment.music_name.getText().toString())){
+                            HomePagerOneFragment.music_name.setText(songname+(!("").equals(singer)?"- " + singer:""));
+                        }
+                    }
+
                     break;
                 case HandleKey.SPEED:
 
@@ -483,6 +505,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                         setFmMHZ();
                     }
                     break;
+
             }
             super.handleMessage(msg);
 

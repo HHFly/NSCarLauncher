@@ -2,6 +2,7 @@ package com.kandi.dell.nscarlauncher.ui.bluetooth;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IKdAudioControlService;
 import android.os.IKdBtService;
@@ -38,6 +39,8 @@ public class BTMusicFragment extends BaseFragment {
     public final static int MUSIC_BLUETOOTH_OPEN = 5; // 蓝牙音乐打开
     private final static int MUSCI_BACK = 6; // 蓝牙音乐上一首
     private final static int MUSIC_NEXT = 7; // 蓝牙音乐下一首
+    private final static int MUSIC_SONGNAME = 15;//蓝牙歌曲名
+
     static int music_model = 1; // 音乐播放循环模式
     static SeekBar music_progress_bar; // 音乐播放进度条
     static int progress = 0; // 记录进度
@@ -83,8 +86,14 @@ public class BTMusicFragment extends BaseFragment {
     public void initView() {
         initGif();
         initSeekBar();
-
+        initName();
         setVisibilityGone(R.id.bt_mic_null,!FlagProperty.flag_bluetooth);
+    }
+
+    private void initName() {
+       if(!("").equals(FlagProperty.SongName)){
+           setMusicInfo(FlagProperty.SongName,FlagProperty.SingerName);
+       }
     }
 
     @Override
@@ -274,10 +283,20 @@ public static void  musicNext(){
     }
 
 
+    public static  void setMusicInfoHanle(String songname, String singer){
 
+        Message message = myHandler.obtainMessage();
+        Bundle bundle =new Bundle();
+        bundle.putString("songname",songname);
+        bundle.putString("singer",singer);
+        message.what=MUSIC_SONGNAME;
+       message.setData(bundle);
+        myHandler.sendMessage(message); //发送消息
+
+    }
 
     // 设置歌曲信息
-    public static void setMusicInfo(String songname, String singer) {
+    private static void setMusicInfo(String songname, String singer) {
         if (tv_bt_music_songname != null) {
             tv_bt_music_songname.setText(songname);
             if (!("").equals(singer)) {
@@ -394,6 +413,12 @@ public static void  musicNext(){
 
 
                      musicPause();
+                        break;
+                    case MUSIC_SONGNAME:
+                       Bundle bundle =msg.getData();
+                       String songname=bundle.getString("songname");
+                       String singer =bundle.getString("singer");
+                        setMusicInfo(songname,singer);
                         break;
                     default:
                         break;

@@ -328,27 +328,10 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             try {
                 JSONArray jsonArr = new JSONArray(music_info);
                 JSONObject obj = (JSONObject) jsonArr.get(0);
-                //if (FragmentMusic.flag_bluetooth_music) {
-//                    MusicFragment.setMusicInfo(obj.getString("SongName"), obj.getString("SingerName"));
-                    BTMusicFragment.setMusicInfo(obj.getString("SongName"), obj.getString("SingerName"));
-                    if("".equals(obj.getString("SongName"))){
-                        HomePagerOneFragment.music_name.setText(App.get().getString(R.string.蓝牙音乐));
-                    }else {
-                        if(!(obj.getString("SongName")+(!("").equals(obj.getString("SingerName"))?"- " + obj.getString("SingerName"):"")).equals(HomePagerOneFragment.music_name.getText().toString())){
-                            HomePagerOneFragment.music_name.setText(obj.getString("SongName")+(!("").equals(obj.getString("SingerName"))?"- " + obj.getString("SingerName"):""));
-                        }
-                    }
-                    if (obj.getString("SongTotalTime").compareTo("") == 0) {
-
-                    } else {
-//                        music_total_time = Integer.parseInt(obj.getString("SongTotalTime"));
-//                        music_total_time /= 1000;
-                        // FragmentMusic.music_total_time1
-                        // .setText(getTime(music_total_time / 60) + ":" +
-                        // getTime(music_total_time % 60));
-                    }
-
-                //}
+                FlagProperty.SongName =obj.getString("SongName");
+                FlagProperty.SingerName =obj.getString("SingerName");
+                BTMusicFragment.setMusicInfoHanle( FlagProperty.SongName, FlagProperty.SingerName);
+                HomePagerOneFragment.setMusicInfoHanle(  FlagProperty.SongName, FlagProperty.SingerName);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

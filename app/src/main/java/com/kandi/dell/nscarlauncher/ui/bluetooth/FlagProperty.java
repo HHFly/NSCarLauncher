@@ -36,4 +36,6 @@ public class FlagProperty {
     public static int BCMStaus =1; //	0表示BCM正常;1表示BCM掉线
 	public static  int CarPower =0;//汽车电量
 	public static  int  Speed =0; //车速
+	public static String SongName="";//蓝牙歌曲名字
+	public static String SingerName="";//蓝牙歌曲歌手名字
 }
