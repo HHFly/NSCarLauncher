@@ -31,7 +31,6 @@ public class DisplayFragment extends BaseFragment implements CompoundButton.OnCh
     public void findView() {
         seekBar = getView(R.id.seekbar_display);
         setWallpaper = getView(R.id.setWallpaper);
-        setWallpaper.setVisibility(View.GONE);
         fragmentShow = getView(R.id.rl_set_wallpaper);
         autolight = getView(R.id.autolight);
     }

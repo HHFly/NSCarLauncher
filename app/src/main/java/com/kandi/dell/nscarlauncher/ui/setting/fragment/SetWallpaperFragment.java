@@ -22,12 +22,12 @@ public class SetWallpaperFragment extends BaseFragment {
     private List<WallPaperInfo> mDatas;
     RecyclerView recyclerView;
     public String PicIndex ="picindex";
-    private int[] imgBgArrays = new int[]{R.color.dfbackground,R.color.red_fo3a53,R.color.color_main_blue,
-            R.mipmap.ic_f_fm_bg,R.mipmap.home_icon_weather_05,R.mipmap.home_icon_weather_06,
-            R.mipmap.home_icon_weather_07,R.mipmap.home_icon_weather_08,R.mipmap.home_icon_weather_09,
-            R.mipmap.home_icon_weather_10,R.mipmap.home_icon_weather_11,R.mipmap.home_icon_weather_12,
-            R.mipmap.home_icon_weather_07,R.mipmap.home_icon_weather_08,R.mipmap.home_icon_weather_09,
-            R.mipmap.home_icon_weather_10,R.mipmap.home_icon_weather_11,R.mipmap.home_icon_weather_12};
+    private int[] imgBgArrays = new int[]{R.mipmap.bg1,R.mipmap.bg2,R.mipmap.bg3,
+            R.mipmap.bg4,R.mipmap.bg5,R.mipmap.bg6,
+            R.mipmap.bg7,R.mipmap.bg8,R.mipmap.bg9};
+    private int[] imgBgSmallArrays = new int[]{R.mipmap.bg1_small,R.mipmap.bg2_small,R.mipmap.bg3_small,
+            R.mipmap.bg4_small,R.mipmap.bg5_small,R.mipmap.bg6_small,
+            R.mipmap.bg7_small,R.mipmap.bg8_small,R.mipmap.bg9_small};
 
     @Override
     public int getContentResId() {
@@ -88,6 +88,7 @@ public class SetWallpaperFragment extends BaseFragment {
         for(int i=0;i<imgBgArrays.length;i++){
             WallPaperInfo info = new WallPaperInfo();
             info.imgId = imgBgArrays[i];
+            info.smallImgId = imgBgSmallArrays[i];
             mDatas.add(info);
         }
     }
