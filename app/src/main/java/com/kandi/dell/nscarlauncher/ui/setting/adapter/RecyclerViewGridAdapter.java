@@ -57,7 +57,7 @@ public class RecyclerViewGridAdapter extends RecyclerView.Adapter<RecyclerViewGr
         }
         public void setData(final WallPaperInfo data) {
             //给imageView设置图片数据
-            mImageView.setBackgroundResource(data.getImgId());
+            mImageView.setBackgroundResource(data.getSmallImgId());
             mImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
