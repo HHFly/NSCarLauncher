@@ -187,8 +187,10 @@ public class MusicFragment extends BaseFragment {
                 int music_id = SPUtil.getInstance(getContext(),MUSICID).getInt(MUSICID,DialogLocalMusic.musicID);
                 try{
                     if((mData.get(music_id).url).equals(musicpath)){
-                        recoveryLast = true;
-                        DialogLocalMusic.musicID = music_id;
+                        if(!flag_play && HomePagerTwoFragment.onceLoad){
+                            recoveryLast = true;
+                            DialogLocalMusic.musicID = music_id;
+                        }
                     }
                 }catch (IndexOutOfBoundsException e){
                     DialogLocalMusic.musicID = 0;

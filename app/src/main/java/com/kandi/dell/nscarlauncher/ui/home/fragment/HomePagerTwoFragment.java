@@ -13,6 +13,8 @@ import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.JumpUtils;
+import com.kandi.dell.nscarlauncher.common.util.SPUtil;
+import com.kandi.dell.nscarlauncher.db.dao.MusicCollectionDao;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
@@ -21,6 +23,8 @@ import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.music.model.MusicModel;
 import com.kandi.dell.nscarlauncher.widget.MarqueTextView;
 import com.kandi.dell.nscarlauncher.widget.PlayControllView;
+
+import java.io.File;
 
 import static com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment.circle_image;
 
@@ -31,6 +35,7 @@ public class HomePagerTwoFragment extends BaseFragment {
     public static  int backbox =0x02;//0x01为开启状态，0x02为关闭状态。
     public static int  centerlock =0x02;//0x01为开启状态，0x02为关闭状态。
     private static ImageView iv_backbox,iv_cenlock;
+    public static boolean onceLoad = true;
 
     public static MarqueTextView music_name;
 
@@ -83,7 +88,7 @@ public class HomePagerTwoFragment extends BaseFragment {
                     Toast.makeText(getActivity(), R.string.BCM未连接, Toast.LENGTH_SHORT).show();
                 }
 
-                    break;
+                break;
             case R.id.iv_cenlock:
 //
                 if(FlagProperty.BCMStaus==0) {
@@ -194,7 +199,7 @@ public class HomePagerTwoFragment extends BaseFragment {
                     }
                     if ( MusicFragment.music_model == 2) { // 单曲循环模式不变换音乐图片
                         if(circle_image!=null)
-                        circle_image.resetRoatate();
+                            circle_image.resetRoatate();
                     } else { // 其他模式
                         // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
                     }
@@ -210,12 +215,25 @@ public class HomePagerTwoFragment extends BaseFragment {
     private void  MusicPaly(boolean isPlay){
         if(isPlay){
             App.get().PauseServiceFMBTMUSic();
-
+            if(onceLoad){
+                getMusicData();
+                String musicpath = SPUtil.getInstance(getContext(),MusicFragment.MUSICPATH).getString(MusicFragment.MUSICPATH);
+                if(musicpath !=null && !musicpath.equals("")){
+                    if(new File(musicpath).exists()){
+                        int music_id = SPUtil.getInstance(getContext(),MusicFragment.MUSICID).getInt(MusicFragment.MUSICID,DialogLocalMusic.musicID);
+                        if(!MusicFragment.flag_play){
+                            MusicFragment.recoveryLast = true;
+                        }
+                        DialogLocalMusic.musicID = music_id;
+                    }
+                }
+                onceLoad = false;
+            }
             MusicFragment.musicPlay(getActivity());
 
         }else {
 
-          MusicFragment.musicPause(getActivity());
+            MusicFragment.musicPause(getActivity());
         }
         setPlayControll(isPlay,2);
     }
@@ -310,5 +328,20 @@ public class HomePagerTwoFragment extends BaseFragment {
         intent.putExtra("KEY_TYPE", 10070);
         intent.putExtra("EXTRA_TYPE", type);
         getActivity().sendBroadcast(intent);
+    }
+
+    private  void getMusicData(){
+        DialogLocalMusic.ColData = MusicCollectionDao.getAllFav(getContext());
+        switch (SPUtil.getInstance(getContext(),MusicFragment.MUSICDATAMODE).getInt(MusicFragment.MUSICDATAMODE,0)){
+            case 3:
+                DialogLocalMusic.transport(DialogLocalMusic.data, DialogLocalMusic.ColData);
+                break;
+            case 2:
+                DialogLocalMusic.transport(DialogLocalMusic.data, DialogLocalMusic.USBData);
+                break;
+            default:
+                DialogLocalMusic.transport(DialogLocalMusic.data, DialogLocalMusic.SDData);
+                break;
+        }
     }
 }
