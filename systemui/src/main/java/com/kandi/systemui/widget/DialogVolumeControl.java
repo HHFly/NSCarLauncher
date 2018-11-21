@@ -161,10 +161,14 @@ public void  show(){
 
 	}
 
+
 	public void setVolumeProgress(int progress){
 		thumb_volume.setProgress(progress);
 	}
-
+    public void setVolumeProgressV(int volume){
+       int  progressV = Math.round(volume * 100 / STREAM_MAX_MUSIC);
+        thumb_volume.setProgress(progressV);
+    }
 	public int getVolumeProgress(){
 		return thumb_volume.getProgress();
 	}

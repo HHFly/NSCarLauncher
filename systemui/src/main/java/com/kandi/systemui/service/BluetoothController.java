@@ -95,6 +95,7 @@ public class BluetoothController extends BroadcastReceiver {
             isRingCall=false;
             mService.CALLEND(index);
             mService.hidePhone();
+            mService.reSetVolume();
         }else if(intent.getAction().equals(ACTION_CALLOUT)){
             String num = intent.getStringExtra(KEY_PHONENUM).trim();
             mService.CALLOUT(num);

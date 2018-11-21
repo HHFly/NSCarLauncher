@@ -92,6 +92,7 @@ public class KandiSystemUiService extends Service {
         window = new Dialog(this, R.style.nodarken_style).getWindow();
         //设置Window为全透明
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
         createFloatView();
         createView();
         setListen();
@@ -101,9 +102,13 @@ public class KandiSystemUiService extends Service {
         try {
             btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
             audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            volumelast=audioManager.getStreamVolume(AudioManager.STREAM_MUSIC );
             // radio初始化
             radio = IFmService.Stub.asInterface(ServiceManager.getService("fm"));
         }catch (Exception e){}
+        dialogVolumeControl =new DialogVolumeControl();
+        dialogVolumeControl.setContent(this);
+        dialogVolumeControl.incomingShow();
         setBluetoothState(SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0);
     }
     @Override
@@ -666,6 +671,7 @@ public class KandiSystemUiService extends Service {
         if(phoneFloatLayout!=null){
             phoneFloatLayout.setVisibility(View.GONE);
         }
+
     }
     /*多功能方向盘接听蓝牙电话*/
     public void  wheelAnswser(){
@@ -676,12 +682,21 @@ public class KandiSystemUiService extends Service {
         if(phoneFloatLayout!=null) {
             phoneFloatLayout.setVisibility(View.GONE);
         }
-    }
 
+    }
+    private  int volumelast =0;
     public void setVolume(int volume){
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
+        volumelast=audioManager.getStreamVolume(AudioManager.STREAM_MUSIC );
+        if(dialogVolumeControl!=null){
+            dialogVolumeControl.setVolumeProgressV(volume);
+        }
     }
-
+    public void reSetVolume(){
+//        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volumelast, 0);
+        if(dialogVolumeControl!=null){
+            dialogVolumeControl.setVolumeProgressV(volumelast);
+        }
+    }
     public IFmService getRadio() {
         return radio;
     }
