@@ -22,10 +22,10 @@ public class SetWallpaperFragment extends BaseFragment {
     private List<WallPaperInfo> mDatas;
     RecyclerView recyclerView;
     public String PicIndex ="picindex";
-    private int[] imgBgArrays = new int[]{R.mipmap.bg1,R.mipmap.bg2,R.mipmap.bg3,
+    private int[] imgBgArrays = new int[]{R.color.dfbackground,R.mipmap.bg1,R.mipmap.bg2,R.mipmap.bg3,
             R.mipmap.bg4,R.mipmap.bg5,R.mipmap.bg6,
             R.mipmap.bg7,R.mipmap.bg8,R.mipmap.bg9};
-    private int[] imgBgSmallArrays = new int[]{R.mipmap.bg1_small,R.mipmap.bg2_small,R.mipmap.bg3_small,
+    private int[] imgBgSmallArrays = new int[]{R.color.dfbackground,R.mipmap.bg1_small,R.mipmap.bg2_small,R.mipmap.bg3_small,
             R.mipmap.bg4_small,R.mipmap.bg5_small,R.mipmap.bg6_small,
             R.mipmap.bg7_small,R.mipmap.bg8_small,R.mipmap.bg9_small};
 
