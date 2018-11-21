@@ -94,7 +94,7 @@ import static com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty.staus;
 public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
     public static final int CALL_ANSWER = 4; // 接听来电
     public static final int CALL_HUNGUP = 5; // 挂断来电
-    private  static FrameLayout frameLayout;//主界面
+    private   FrameLayout frameLayout;//主界面
    static HomePagerOneFragment homePagerOneFragment;
     private RelativeLayout bg_home;
     HomePagerTwoFragment homePagerTwoFragment;
@@ -385,8 +385,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 //        Animation animBottomIN = AnimationUtils.loadAnimation(context,
 //                R.anim.app_enter_out);
 //        frameLayout.startAnimation(animBottomIN);
+        homePagerActivity.hideFragmentNonstatic();
 
-        frameLayout.setVisibility(View.GONE);
         if(homePagerActivity!=null){
             homePagerActivity.hideLoadingDialog();
         }if(FragmentType.BTSET==mCurFragment.getmType()||FragmentType.SET==mCurFragment.getmType()){
@@ -400,7 +400,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         }
         freshlayout();
     }
-
+    public void hideFragmentNonstatic(){
+        frameLayout.setVisibility(View.GONE);
+    }
     private static void freshlayout() {
         homePagerOneFragment.freshlayout(fmFragment);
     }
@@ -408,10 +410,15 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private static int fragemntType;
     public static void showFragemnt(){
 //        frameLayout.setAlpha(0f);
+
+            homePagerActivity.showFragemntNonstatic();
+    }
+    public void showFragemntNonstatic(){
+        frameLayout.setVisibility(View.VISIBLE);
         int anim = 0;
         switch (fragemntType){
             case 0:anim=R.anim.activity_none;
-            break;
+                break;
             case 1:
                 anim= R.anim.app_enter_20;
                 break;
@@ -432,10 +439,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         frameLayout.setVisibility(View.VISIBLE);
 //        frameLayout.animate().alpha(1f).setDuration(500).setListener(null);
 
-            frameLayout.startAnimation(animBottomIN);
-
+        frameLayout.startAnimation(animBottomIN);
     }
-
 
 
     /**

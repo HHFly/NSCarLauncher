@@ -1,9 +1,8 @@
 package com.kandi.dell.nscarlauncher.ui.phone.mvp.mpl;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.kandi.dell.nscarlauncher.common.util.HttpUtil;
+import com.kandi.dell.nscarlauncher.common.util.NumberUtil;
 import com.kandi.dell.nscarlauncher.ui.phone.mvp.MvpMainView;
 
 import java.util.HashMap;
@@ -45,7 +44,7 @@ public class MainPresenter {
     }
 
     public void searchPhoneInfo(String phoneString){
-         if (phoneString.length() != 11){
+         if (!NumberUtil.isCellPhone(phoneString)){
              return;
          }
         //http request method
@@ -60,7 +59,9 @@ public class MainPresenter {
             @Override
             public void onSuccess(Object obj) {
                 String json = obj.toString();
-                Log.i("onSuccess-----",""+json);
+                if(json.contains("没有此号码记录")){
+                    return;
+                }
                 int index = json.indexOf(phoneString)+phoneString.length()+1;
                 json = json.substring(index,json.lastIndexOf(" "));
                 phoneInfo = json + "," + isChinaMobilePhoneNum(phoneString);
