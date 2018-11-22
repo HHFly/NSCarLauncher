@@ -107,7 +107,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public static FMFragment fmFragment ;//收音机
     public static  BTMusicFragment btMusicFragment;//蓝牙音乐
     public static MusicFragment musicFragment;//本地音乐
-    public static PhoneFragment phoneFragment;//电话
+    public PhoneFragment phoneFragment;//电话
     public static SetFragment setFragment;//设置
     public  static AppFragment appFragment;//应用
     public  static VideoFragment videoFragment;//视频
@@ -488,7 +488,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                     fragemntType = 0;
                 }
 
-                 switchFragment(phoneFragment);
+                 switchFragment(homePagerActivity.getPhoneFragment());
 
                  break;
             case  FragmentType.SET:
@@ -578,7 +578,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
     // 来电显示弹出框
     public void incomingShow(String number, final int index) {
-        if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
+        if (audioManager.requestAudioFocus(homePagerActivity.getPhoneFragment().afChangeListener, 11,
                 AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             alertDialog = new Dialog(this, R.style.nodarken_style);
 
@@ -586,7 +586,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             Window window = alertDialog.getWindow();
             window.setContentView(R.layout.dialog_phone_incalling);
             TextView tv_info = (TextView) window.findViewById(R.id.dialog_text);
-            tv_info.setText(PhoneFragment.getName(number));
+            tv_info.setText(homePagerActivity.getPhoneFragment().getName(number));
             Button bt_answer = (Button) window.findViewById(R.id.dialog_btn_answer);
             Button bt_refuse = (Button) window.findViewById(R.id.dialog_btn_refuse);
             bt_answer.setOnClickListener(new View.OnClickListener() {
@@ -1021,11 +1021,11 @@ public int getSim(int num) {
                 int  index =intent.getIntExtra("index", 0);
                 if(2!=index) {
 //                    incomingShow(intent.getStringExtra("number"), intent.getIntExtra("index", 0));
-                    if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
+                    if (audioManager.requestAudioFocus(homePagerActivity.getPhoneFragment().afChangeListener, 11,
                             AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                         jumpFragment(FragmentType.PHONE);
 
-                        PhoneFragment.callIn(intent.getStringExtra("number"),intent.getStringExtra("address"),intent.getStringExtra("type"));
+                        homePagerActivity.getPhoneFragment().callIn(intent.getStringExtra("number"),intent.getStringExtra("address"),intent.getStringExtra("type"));
                     }
 
                 }
@@ -1370,4 +1370,7 @@ public int getSim(int num) {
         }
     }
 
+    public PhoneFragment getPhoneFragment() {
+        return phoneFragment;
+    }
 }

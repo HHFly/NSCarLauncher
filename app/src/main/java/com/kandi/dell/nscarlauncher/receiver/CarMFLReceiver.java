@@ -16,7 +16,6 @@ import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.music.model.MusicModel;
-import com.kandi.dell.nscarlauncher.ui.phone.PhoneFragment;
 
 import static com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment.circle_image;
 
@@ -121,8 +120,8 @@ public class CarMFLReceiver extends BroadcastReceiver {
                 LogUtils.log(ACTION_WHEEL_CALL);
                 HomePagerActivity.jumpFragment(FragmentType.PHONE);
                 FlagProperty.flag_phone_incall_click = true;
-                PhoneFragment.answerPhone();
-                PhoneFragment.phoneStart();
+                HomePagerActivity.homePagerActivity.getPhoneFragment().answerPhone();
+                HomePagerActivity.homePagerActivity.getPhoneFragment().phoneStart();
             }
 
         }
@@ -130,7 +129,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_WHEEL_HANGUP)) {
             LogUtils.log(ACTION_WHEEL_HANGUP);
             FlagProperty.flag_phone_ringcall = false;
-            PhoneFragment.hangDownphone();
+            HomePagerActivity.homePagerActivity.getPhoneFragment().hangDownphone();
         }
 
     }

@@ -6,9 +6,8 @@ import android.view.View;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
-import com.kandi.dell.nscarlauncher.ui.phone.adapter.PMemberAdapter;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.phone.adapter.PRecordAdapter;
-import com.kandi.dell.nscarlauncher.ui.phone.model.PhoneBookInfo;
 import com.kandi.dell.nscarlauncher.ui.phone.model.PhoneRecordInfo;
 
 import java.util.ArrayList;
@@ -67,7 +66,7 @@ public class PRecordFragment extends BaseFragment {
 
                 @Override
                 public void onClickMem(PhoneRecordInfo data) {
-                    PhoneFragment.callphone(data.getNumber());
+                    HomePagerActivity.homePagerActivity.getPhoneFragment().callphone(data.getNumber());
                 }
 
 

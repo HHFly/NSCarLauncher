@@ -23,7 +23,6 @@ import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
-import com.kandi.dell.nscarlauncher.ui.phone.PhoneFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -107,7 +106,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             new Thread() {
                 public void run() {
                     try {
-                        PhoneFragment.getPhoneBookStr(btservice.getContactsJsonString());
+                        HomePagerActivity.homePagerActivity.getPhoneFragment().getPhoneBookStr(btservice.getContactsJsonString());
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -121,7 +120,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             new Thread() {
                 public void run() {
                     try {
-                        PhoneFragment.getPhoneRecord();
+                        HomePagerActivity.homePagerActivity.getPhoneFragment().getPhoneRecord();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -139,9 +138,9 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 //            }
             HomePagerActivity.initBluetooth();
 
-            PhoneFragment.setNullViewGone(false);
-            PhoneFragment.getPhoneBook();
-            PhoneFragment.getPhoneRecord();
+            HomePagerActivity.homePagerActivity.getPhoneFragment().setNullViewGone(false);
+            HomePagerActivity.homePagerActivity.getPhoneFragment().getPhoneBook();
+            HomePagerActivity.homePagerActivity.getPhoneFragment().getPhoneRecord();
         }
         if (intent.getAction().equals(ACTION_HD)) {
 //            if (MainKondi.fragment_now instanceof FragmentPhone) {
@@ -155,7 +154,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 
             }*/
 
-            PhoneFragment.setNullViewGone(true);
+            HomePagerActivity.homePagerActivity.getPhoneFragment().setNullViewGone(true);
             FlagProperty.flag_bluetooth = false;
             HomePagerActivity.initBluetooth();
         }
@@ -168,7 +167,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 FlagProperty.is_callindex_one = true;
                 if (!FlagProperty.is_one_oper) {
                     Log.d("calltest", "no outgoing or ring, requestaudiofocus");
-                    if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
+                    if (audioManager.requestAudioFocus(HomePagerActivity.homePagerActivity.getPhoneFragment().afChangeListener, 11,
                             AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
 
                     }
@@ -213,18 +212,18 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             if (index == 1) {
                 FlagProperty.is_callindex_one = false;
                 if (FlagProperty.is_callindex_two) {
-                    PhoneFragment.hideThirdCallShow(2);
+                    HomePagerActivity.homePagerActivity.getPhoneFragment().hideThirdCallShow(2);
                 }
             } else if (index == 2) {
                 FlagProperty.is_callindex_two = false;
                 if (FlagProperty.is_callindex_one) {
-                    PhoneFragment.hideThirdCallShow(1);
+                    HomePagerActivity.homePagerActivity.getPhoneFragment().hideThirdCallShow(1);
                 }
             }
             if (!FlagProperty.is_callindex_one && !FlagProperty.is_callindex_two) {
                 FlagProperty.is_one_oper = false;
                 FlagProperty.is_calling = false;
-                PhoneFragment.flag_phone = false;
+                HomePagerActivity.homePagerActivity.getPhoneFragment().flag_phone = false;
             }
             if (FlagProperty.flag_phone_ringcall) { // 来电时挂电话情况
                 Intent i = new Intent();
@@ -233,21 +232,21 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 FlagProperty.flag_phone_ringcall = false; // 拨打电话结束情况
                 if (!FlagProperty.is_callindex_one && !FlagProperty.is_callindex_two) {
                     Log.d("kondi", "BtPhone abandon audioFocus");
-                    PhoneFragment.phoneStop(context);
-                    if (audioManager.abandonAudioFocus(PhoneFragment.afChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                    HomePagerActivity.homePagerActivity.getPhoneFragment().phoneStop(context);
+                    if (audioManager.abandonAudioFocus(HomePagerActivity.homePagerActivity.getPhoneFragment().afChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
 
                     }
                 }
             } else {
                 if (!FlagProperty.is_callindex_one && !FlagProperty.is_callindex_two) {
-                    PhoneFragment.phoneStop(context);
+                    HomePagerActivity.homePagerActivity.getPhoneFragment().phoneStop(context);
                 }
             }
         }
         if (intent.getAction().equals(ACTION_RINGCALL)) {
 
 //            System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
-            if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
+            if (audioManager.requestAudioFocus(HomePagerActivity.homePagerActivity.getPhoneFragment().afChangeListener, 11,
                     AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                 //MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 拨打时时进入电话页面
             }
@@ -280,7 +279,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             int index = intent.getIntExtra(KEY_CALLINDEX, 0);
             System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
             if (FlagProperty.is_callindex_one && FlagProperty.is_callindex_two) {
-                PhoneFragment.changeCallInPhone(index);
+                HomePagerActivity.homePagerActivity.getPhoneFragment().changeCallInPhone(index);
             }
         }
         if (intent.getAction().equals(ACTION_CALLOUT)) {
@@ -290,7 +289,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 FlagProperty.phone_number_one = FlagProperty.phone_number;
                 new Thread() {
                     public void run() {
-                        if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
+                        if (audioManager.requestAudioFocus(HomePagerActivity.homePagerActivity.getPhoneFragment().afChangeListener, 11,
                                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                             Log.d("kondi", "BtPhone get AudioFocus");
                             //MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 拨打时时进入电话页面
@@ -438,11 +437,11 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         if(intent.getAction().equals(ACTION_CALL_TRIPARTITE_COMMING)){
             String numtwo  = intent.getStringExtra(KEY_PHONENUM_TRIPARTITE);
             FlagProperty.phone_number_two =numtwo;
-            PhoneFragment.showCalling(numtwo);
+            HomePagerActivity.homePagerActivity.getPhoneFragment().showCalling(numtwo);
         }
     // 挂断
         if(intent.getAction().equals(ACTION_CALL_TRIPARTITE_HANGUP)){
-            PhoneFragment.showCallhangup();
+            HomePagerActivity.homePagerActivity.getPhoneFragment().showCallhangup();
         }
         //接听
         if(intent.getAction().equals(ACTION_CALL_TRIPARTITE_TALKING)){
@@ -486,7 +485,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case PHONE_START:
-                    PhoneFragment.phoneStart();
+                    HomePagerActivity.homePagerActivity.getPhoneFragment().phoneStart();
                     break;
                 case PIN_CODE:
                     try {
@@ -496,7 +495,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                     }
                     break;
                 case PHONE_OUT:
-                    PhoneFragment.phoneCall(FlagProperty.phone_number);
+                    HomePagerActivity.homePagerActivity.getPhoneFragment().phoneCall(FlagProperty.phone_number);
                     Log.d("kondi", "BtPhone show Callout");
                     break;
                 default:
