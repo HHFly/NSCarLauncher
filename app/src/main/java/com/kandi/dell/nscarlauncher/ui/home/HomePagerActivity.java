@@ -104,11 +104,13 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private ViewPager viewPager;
     private  CircleIndicator indicator;//viewpager指示器
     public static BaseFragment mCurFragment;//当前页
-    public static FMFragment fmFragment ;//收音机
+
 
     public  MusicFragment musicFragment;//本地音乐
 
     public   BTMusicFragment btMusicFragment;//蓝牙音乐
+
+    public FMFragment fmFragment ;//收音机
 
     public static PhoneFragment phoneFragment;//电话
     public static SetFragment setFragment;//设置
@@ -410,7 +412,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         frameLayout.setVisibility(View.GONE);
     }
     private static void freshlayout() {
-        homePagerOneFragment.freshlayout(fmFragment);
+        homePagerOneFragment.freshlayout(homePagerActivity.getFmFragment());
     }
     /*显示fragment*/
     private static int fragemntType;
@@ -472,7 +474,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         switch (type){
             case  FragmentType.FM:
                 fragemntType=1;
-                switchFragment(fmFragment);
+                switchFragment(homePagerActivity.getFmFragment());
 
                 break;
             case  FragmentType.BTMUSIC:
@@ -1376,6 +1378,7 @@ public int getSim(int num) {
         }
     }
 
+
     public MusicFragment getMusicFragment() {
         return musicFragment;
     }
@@ -1389,5 +1392,9 @@ public int getSim(int num) {
     }
     public BTMusicFragment getBtMusicFragment() {
         return btMusicFragment;
+    }
+    public FMFragment getFmFragment() {
+        return fmFragment;
+
     }
 }

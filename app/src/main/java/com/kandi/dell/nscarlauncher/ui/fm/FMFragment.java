@@ -27,18 +27,18 @@ import java.util.ArrayList;
 public class FMFragment extends BaseFragment implements RadioRulerView.OnValueChangeListener{
     private FMAdapter mAdapter ;
     private RadioRulerView mRule;
-    public static ArrayList<Float> fm_list = new ArrayList<>();
+    public ArrayList<Float> fm_list = new ArrayList<>();
     private  ArrayList<Float> mData =new ArrayList<>();
     private HomePagerActivity homePagerActivity;
 
     private IFmService radio;  //收音机
-    public static boolean isPlay,isSearch;
-    public static   float channel = 93.0f;// 默认初始的波段
+    public boolean isPlay,isSearch;
+    public float channel = 93.0f;// 默认初始的波段
     private IKdAudioControlService audioservice ;
     AudioManager audioManager;
-   public static String FMCHANNEL ="channel";
-    public static String FMCHANNELLIST ="channellist";
-   private  boolean mIsAuto =false; //是否处于自动搜索
+    public String FMCHANNEL ="channel";
+    public String FMCHANNELLIST ="channellist";
+    private boolean mIsAuto =false; //是否处于自动搜索
 
     @Override
     public void setmType(int mType) {
@@ -49,7 +49,7 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
         this.homePagerActivity = homePagerActivity;
     }
 
-    public static float getChannel() {
+    public float getChannel() {
         return channel;
     }
 

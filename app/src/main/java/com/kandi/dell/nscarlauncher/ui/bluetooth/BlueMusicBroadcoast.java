@@ -17,7 +17,6 @@ import android.util.Log;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.common.util.LogUtils;
-import com.kandi.dell.nscarlauncher.ui.fm.FMFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
@@ -315,7 +314,11 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             App.pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
         }
         if (intent.getAction().equals(ACTION_MUSIC_INFO_CHANGED)) {
-            if(FMFragment.isPlay || homePagerActivity.getMusicFragment().flag_play || JCVideoPlayer.mCurrentState == 2){
+
+   
+
+            if(HomePagerActivity.homePagerActivity.getFmFragment().isPlay || homePagerActivity.getMusicFragment().flag_play || JCVideoPlayer.mCurrentState == 2){
+
                 HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
                 try{
                     btservice.btAvrPause();
@@ -339,7 +342,9 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         }
         if (intent.getAction().equals(ACTION_BT_STREAM_START)) {
             LogUtils.log("BT:"+ACTION_BT_STREAM_START);
-            if(FMFragment.isPlay || homePagerActivity.getMusicFragment().flag_play || JCVideoPlayer.mCurrentState == 2){
+
+            if(HomePagerActivity.homePagerActivity.getFmFragment().isPlay || homePagerActivity.getMusicFragment().flag_play || JCVideoPlayer.mCurrentState == 2){
+
                 try{
                     btservice.btAvrPause();
                 }catch (Exception e){

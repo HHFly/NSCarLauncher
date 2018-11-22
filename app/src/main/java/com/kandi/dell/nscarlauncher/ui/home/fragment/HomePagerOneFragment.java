@@ -51,7 +51,6 @@ import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static com.kandi.dell.nscarlauncher.ui.fm.FMFragment.FMCHANNEL;
 
 public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch.OnWeatherSearchListener {
     private WaveView circleView;
@@ -225,9 +224,9 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 // 加载电台
     private static void isFmFragment(){
             if(FragmentType.FM!=HomePagerActivity.mCurFragment.getmType()){
-                HomePagerActivity.switchFragmenthide(HomePagerActivity.fmFragment);
-                if(HomePagerActivity.fmFragment!=null) {
-                    HomePagerActivity.fmFragment.isSecondResume = true;
+                HomePagerActivity.switchFragmenthide(HomePagerActivity.homePagerActivity.getFmFragment());
+                if(HomePagerActivity.homePagerActivity.getFmFragment()!=null) {
+                    HomePagerActivity.homePagerActivity.getFmFragment().isSecondResume = true;
                 }
             }
     }
@@ -318,14 +317,14 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     }
     /*初始化fm*/
     private static void setFmMHZ(){
-        if(HomePagerActivity.fmFragment.isSecondResume){
-            channel=FMFragment.channel;
+        if(HomePagerActivity.homePagerActivity.getFmFragment().isSecondResume){
+            channel=HomePagerActivity.homePagerActivity.getFmFragment().channel;
         }else {
-            channel= SPUtil.getInstance(HomePagerActivity.context,FMCHANNEL).getFloat(FMCHANNEL,93.0f);
+            channel= SPUtil.getInstance(HomePagerActivity.context,HomePagerActivity.homePagerActivity.getFmFragment().FMCHANNEL).getFloat(HomePagerActivity.homePagerActivity.getFmFragment().FMCHANNEL,93.0f);
         }
         tv_fm_hz.setText(String.valueOf(channel));
 //        Log.d("Fm","Chennl1   "+String.valueOf(channel));
-        SPUtil.getInstance(App.get(),FMCHANNEL).putFloat(FMCHANNEL,channel);
+        SPUtil.getInstance(App.get(),HomePagerActivity.homePagerActivity.getFmFragment().FMCHANNEL).putFloat(HomePagerActivity.homePagerActivity.getFmFragment().FMCHANNEL,channel);
     }
     /*初始化蓝牙*/
     private void setBT(){
@@ -465,11 +464,11 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 case  HandleKey.FM:
 
                     fmPaly.setPlay(false);
-                    FMFragment.isPlay=false;
+                    HomePagerActivity.homePagerActivity.getFmFragment().isPlay=false;
                     break;
                 case  HandleKey.OPEMFM:
                     fmPaly.setPlay(true);
-                    FMFragment.isPlay=true;
+                    HomePagerActivity.homePagerActivity.getFmFragment().isPlay=true;
                     HomePagerOneFragment.music_name.setText(App.get().getString(R.string.蓝牙音乐));
                     HomePagerTwoFragment.music_name.setText(App.get().getString(R.string.本地音乐));
                     break;
