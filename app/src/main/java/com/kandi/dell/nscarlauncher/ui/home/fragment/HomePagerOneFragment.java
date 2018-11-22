@@ -223,7 +223,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     }
 // 加载电台
     private static void isFmFragment(){
-            if(FragmentType.FM!=HomePagerActivity.mCurFragment.getmType()){
+            if(FragmentType.FM!=HomePagerActivity.homePagerActivity.mCurFragment.getmType()){
                 HomePagerActivity.homePagerActivity.switchFragmenthide(HomePagerActivity.homePagerActivity.getFmFragment());
                 if(HomePagerActivity.homePagerActivity.getFmFragment()!=null) {
                     HomePagerActivity.homePagerActivity.getFmFragment().isSecondResume = true;
@@ -232,7 +232,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     }
 //  加载蓝牙
     private  void isBtFragment(){
-        if(FragmentType.BTMUSIC!=HomePagerActivity.mCurFragment.getmType()){
+        if(FragmentType.BTMUSIC!=HomePagerActivity.homePagerActivity.mCurFragment.getmType()){
             homePagerActivity.switchFragmenthide(  homePagerActivity.getBtMusicFragment());
         }
     }
@@ -470,7 +470,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                     fmPaly.setPlay(true);
                     HomePagerActivity.homePagerActivity.getFmFragment().isPlay=true;
                     HomePagerOneFragment.music_name.setText(App.get().getString(R.string.蓝牙音乐));
-                    HomePagerTwoFragment.music_name.setText(App.get().getString(R.string.本地音乐));
+                    HomePagerActivity.homePagerActivity.getHomePagerTwoFragment().music_name.setText(App.get().getString(R.string.本地音乐));
                     break;
                 case  HandleKey.BTMUSICCOLSE:
                     btPaly.setPlay(false);

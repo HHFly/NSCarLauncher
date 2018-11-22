@@ -35,7 +35,7 @@ public class HomePagerTwoFragment extends BaseFragment {
     private static ImageView iv_backbox,iv_cenlock;
     public static boolean onceLoad = true;
 
-    public static MarqueTextView music_name;
+    public  MarqueTextView music_name;
 
     public   boolean isBackboxOpen,isCenterlockOpen;
     public String PicIndex ="picindex";

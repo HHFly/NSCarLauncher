@@ -33,11 +33,11 @@ public class USBBroadcastReceiver extends BroadcastReceiver {
         }
         else  if(action.equals("android.intent.action.PACKAGE_ADDED")){
             AppFragment.refreshAppInfo();
-                if(FragmentType.APPLICATION== HomePagerActivity.mCurFragment.getmType()){
+                if(FragmentType.APPLICATION== homePagerActivity.mCurFragment.getmType()){
 
                 }
         }else if(action.equals("com.kangdi.home.hide")){
-            HomePagerActivity.hideFragment();
+            homePagerActivity.hideFragment();
         }
 
     }

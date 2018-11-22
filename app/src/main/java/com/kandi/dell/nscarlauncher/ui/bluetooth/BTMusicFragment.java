@@ -397,8 +397,8 @@ public  void  musicNext(){
                             Glide.with(context).load(gifPath).into(mGifImageView);
                         }
                         isPlay=true;
-                        if(HomePagerTwoFragment.music_name!=null) {
-                            HomePagerTwoFragment.music_name.setText(App.get().getString(R.string.本地音乐));
+                        if(homePagerActivity.getHomePagerTwoFragment().music_name!=null) {
+                            homePagerActivity.getHomePagerTwoFragment().music_name.setText(App.get().getString(R.string.本地音乐));
                         }
                         App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.BTMUSICOPEN));
                         break;
@@ -464,7 +464,7 @@ public  void  musicNext(){
                             App.get().getBtservice().btAvrPlay();
                             HomePagerOneFragment.btPaly.setPlay(true);
                             isPlay=true;
-                            HomePagerTwoFragment.music_name.setText(App.get().getString(R.string.本地音乐));
+                            homePagerActivity.getHomePagerTwoFragment().music_name.setText(App.get().getString(R.string.本地音乐));
                         }
 //                        }
                     }catch (RemoteException e) {

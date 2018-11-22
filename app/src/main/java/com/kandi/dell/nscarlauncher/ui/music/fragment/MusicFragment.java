@@ -488,7 +488,7 @@ public class MusicFragment extends BaseFragment {
 
                 case VIEWFRESH:
 //                    Log.d("Music ", "getMusiType: " +String.valueOf( HomePagerActivity.mCurFragment.getmType()));
-                    if(FragmentType.MUSIC== HomePagerActivity.mCurFragment.getmType()){
+                    if(FragmentType.MUSIC== homePagerActivity.mCurFragment.getmType()){
                         getMusicData();
                     }
                     break;

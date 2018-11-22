@@ -427,8 +427,8 @@ public void  changeChannel(float value){
 //                                Log.d("Fm","Channel  set "+String.valueOf(channel));
                                 App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
                                 isPlay=true;
-                                HomePagerOneFragment.music_name.setText(getContext().getString(R.string.蓝牙音乐));
-                                HomePagerTwoFragment.music_name.setText(getContext().getString(R.string.本地音乐));
+                                homePagerActivity.getHomePagerOneFragment().music_name.setText(getContext().getString(R.string.蓝牙音乐));
+                                homePagerActivity.getHomePagerTwoFragment().music_name.setText(getContext().getString(R.string.本地音乐));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

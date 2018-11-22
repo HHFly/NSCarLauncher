@@ -95,7 +95,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public static final int CALL_ANSWER = 4; // 接听来电
     public static final int CALL_HUNGUP = 5; // 挂断来电
     private   FrameLayout frameLayout;//主界面
-   static HomePagerOneFragment homePagerOneFragment;
+    HomePagerOneFragment homePagerOneFragment;
     private RelativeLayout bg_home;
     HomePagerTwoFragment homePagerTwoFragment;
     HomePagerThreeFragment homePagerThreeFragment;
@@ -103,7 +103,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private ArrayList<Fragment> mFragments;
     private ViewPager viewPager;
     private  CircleIndicator indicator;//viewpager指示器
-    public static BaseFragment mCurFragment;//当前页
+    public  BaseFragment mCurFragment;//当前页
 
 
     public  MusicFragment musicFragment;//本地音乐
@@ -381,7 +381,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
 
     /*隐藏fragemt*/
-    public static void  hideFragment(){
+    public  void  hideFragment(){
 //        frameLayout.animate()
 //                .alpha(0f)
 //                .setDuration(200)
@@ -412,7 +412,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public void hideFragmentNonstatic(){
         frameLayout.setVisibility(View.GONE);
     }
-    private static void freshlayout() {
+    private  void freshlayout() {
         homePagerOneFragment.freshlayout(homePagerActivity.getFmFragment());
     }
     /*显示fragment*/
@@ -646,7 +646,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
 
 
-    public static Handler myHandler = new Handler() {
+    public  Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
 
             try {
@@ -1016,7 +1016,7 @@ public int getSim(int num) {
 
                     break;
                 case ACTIONHOME:
-                    HomePagerActivity.hideFragment();
+                    hideFragment();
                     break;
             }
         }
@@ -1063,7 +1063,7 @@ public int getSim(int num) {
         }
     };
     /*车辆服务*/
-    private static void  aidlService(){
+    private  void  aidlService(){
 
         setCarWork();
         setCarMode();
@@ -1072,7 +1072,7 @@ public int getSim(int num) {
         getCarState();
     }
     /*电量车程*/
-    private  static void setCarPoewr(){
+    private   void setCarPoewr(){
 
         int[] power =new int[10];
         try {
@@ -1108,7 +1108,7 @@ public int getSim(int num) {
         }
     }
     /*车辆模式*/
-    public static void setCarMode(){
+    public  void setCarMode(){
         int[] mode =new int[2];
         try {
             if(ieCarDriver!=null){
@@ -1138,7 +1138,7 @@ public int getSim(int num) {
     }
 
     /*车辆模式*/
-    public static void setCarWork(){
+    public  void setCarWork(){
         int work;
         try {
             if(ieCarDriver!=null) {
@@ -1173,7 +1173,7 @@ public int getSim(int num) {
         }
     }
     /*空调*/
-    public static void setAir(){
+    public  void setAir(){
         int[] air=new int[8];
 
         try {
@@ -1410,5 +1410,9 @@ public int getSim(int num) {
     public SetFragment getSetFragment() {
         return setFragment;
 
+    }
+
+    public HomePagerOneFragment getHomePagerOneFragment() {
+        return homePagerOneFragment;
     }
 }

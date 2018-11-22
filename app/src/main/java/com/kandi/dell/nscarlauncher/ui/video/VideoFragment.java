@@ -94,7 +94,7 @@ public class VideoFragment extends BaseFragment{
                 changeData(2);
                 break;
             case R.id.video_local_return:
-                HomePagerActivity.hideFragment();
+                homePagerActivity.hideFragment();
                 break;
         }
     }
@@ -150,7 +150,7 @@ public class VideoFragment extends BaseFragment{
 
                 case VIEWFRESH:
 
-                    if(FragmentType.VIDEO==HomePagerActivity.mCurFragment.getmType()) {
+                    if(FragmentType.VIDEO==homePagerActivity.mCurFragment.getmType()) {
                         getMusicData();
                     }
                     break;
@@ -198,7 +198,7 @@ public class VideoFragment extends BaseFragment{
 //                        imageView.setVisibility(View.GONE);
 //                    }
                     position = Pos;
-                    HomePagerTwoFragment.music_name.setText(getContext().getString(R.string.本地音乐));
+                    homePagerActivity.getHomePagerTwoFragment().music_name.setText(getContext().getString(R.string.本地音乐));
                     JCFullScreenActivity.startActivity(getContext(),
                             data.url,
                             MyJCVideoPlayerStandard.class,
