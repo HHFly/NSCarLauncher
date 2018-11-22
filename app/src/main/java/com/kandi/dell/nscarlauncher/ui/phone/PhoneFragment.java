@@ -24,7 +24,6 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.StringUtils;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
-import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.phone.model.PhoneBookInfo;
 import com.kandi.dell.nscarlauncher.ui.phone.model.PhoneRecordInfo;
@@ -266,8 +265,10 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     /*获取通话记录*/
     public void getPhoneRecord(){
         try {
-          String PhoneRecordStr=  btservice.getCallHistoryJsonString();
-            getPhoneRecordStr(PhoneRecordStr);
+            if(btservice != null){
+                String PhoneRecordStr=  btservice.getCallHistoryJsonString();
+                getPhoneRecordStr(PhoneRecordStr);
+            }
 //            LogUtils.log(PhoneRecordStr);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -310,8 +311,10 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     // 使蓝牙获取到的电话本存储起来
     public void getPhoneBook() {
         try {
-            String  ContactsJsonString =btservice.getContactsJsonString();
-            getPhoneBookStr(ContactsJsonString);
+            if(btservice != null){
+                String  ContactsJsonString =btservice.getContactsJsonString();
+                getPhoneBookStr(ContactsJsonString);
+            }
 //            LogUtils.log(ContactsJsonString);
         } catch (RemoteException e) {
             e.printStackTrace();

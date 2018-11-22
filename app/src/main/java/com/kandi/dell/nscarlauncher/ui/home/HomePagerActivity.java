@@ -115,10 +115,10 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
     public PhoneFragment phoneFragment;//电话
     public SetFragment setFragment;//设置
-    public  static AppFragment appFragment;//应用
-    public  static VideoFragment videoFragment;//视频
+    public AppFragment appFragment;//应用
+    public VideoFragment videoFragment;//视频
     public BlueToothSetFragment blueToothSetFragment;//蓝牙设置
-    public  static  BaseActivity context;
+    public BaseActivity context;
     private ArrayList<HomeModel> mData;
     static Dialog alertDialog;//来电弹框
     public ComingReceiver comingReceiver;
@@ -339,7 +339,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         mFragments.add(homePagerOneFragment);
         mFragments.add(homePagerTwoFragment);
         mFragments.add(homePagerThreeFragment);
-        mCurFragment = FragmentUtils.selectFragment(this, mCurFragment, phoneFragment, R.id.frame_main);
+        mCurFragment = phoneFragment;
         App.get().setmCurActivity(this);
 
     }

@@ -18,8 +18,6 @@ import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
-import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
-import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.widget.RadioRulerView;
 
 import java.util.ArrayList;
@@ -427,8 +425,6 @@ public void  changeChannel(float value){
 //                                Log.d("Fm","Channel  set "+String.valueOf(channel));
                                 App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
                                 isPlay=true;
-                                homePagerActivity.getHomePagerOneFragment().music_name.setText(getContext().getString(R.string.蓝牙音乐));
-                                homePagerActivity.getHomePagerTwoFragment().music_name.setText(getContext().getString(R.string.本地音乐));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

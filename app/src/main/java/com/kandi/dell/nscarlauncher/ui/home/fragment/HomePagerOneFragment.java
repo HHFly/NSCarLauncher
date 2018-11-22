@@ -33,7 +33,6 @@ import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.JumpUtils;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.common.util.TimeUtils;
-import com.kandi.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.fm.FMFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
@@ -320,7 +319,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         if(HomePagerActivity.homePagerActivity.getFmFragment().isSecondResume){
             channel=HomePagerActivity.homePagerActivity.getFmFragment().channel;
         }else {
-            channel= SPUtil.getInstance(HomePagerActivity.context,HomePagerActivity.homePagerActivity.getFmFragment().FMCHANNEL).getFloat(HomePagerActivity.homePagerActivity.getFmFragment().FMCHANNEL,93.0f);
+            channel= SPUtil.getInstance(HomePagerActivity.homePagerActivity.context,HomePagerActivity.homePagerActivity.getFmFragment().FMCHANNEL).getFloat(HomePagerActivity.homePagerActivity.getFmFragment().FMCHANNEL,93.0f);
         }
         tv_fm_hz.setText(String.valueOf(channel));
 //        Log.d("Fm","Chennl1   "+String.valueOf(channel));
@@ -465,6 +464,8 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 
                     fmPaly.setPlay(false);
                     HomePagerActivity.homePagerActivity.getFmFragment().isPlay=false;
+                    HomePagerActivity.homePagerActivity.getHomePagerOneFragment().music_name.setText(App.get().getString(R.string.蓝牙音乐));
+                    HomePagerActivity.homePagerActivity.getHomePagerTwoFragment().music_name.setText(App.get().getString(R.string.本地音乐));
                     break;
                 case  HandleKey.OPEMFM:
                     fmPaly.setPlay(true);
