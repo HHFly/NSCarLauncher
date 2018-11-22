@@ -36,7 +36,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_WHEEL_MODE)) {
             LogUtils.log(ACTION_WHEEL_MODE);
             if( SystemProperties.getInt("sys.kd.revers",0)==0) {
-                HomePagerActivity.jumpFragment(nowFragment);
+                HomePagerActivity.homePagerActivity.jumpFragment(nowFragment);
               switch (nowFragment){
                   case FragmentType.FM:
                       nowFragment=FragmentType.BTMUSIC;
@@ -118,7 +118,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
             if( FlagProperty.flag_phone_ringcall ) {
                 FlagProperty.flag_phone_ringcall=false;
                 LogUtils.log(ACTION_WHEEL_CALL);
-                HomePagerActivity.jumpFragment(FragmentType.PHONE);
+                HomePagerActivity.homePagerActivity.jumpFragment(FragmentType.PHONE);
                 FlagProperty.flag_phone_incall_click = true;
                 HomePagerActivity.homePagerActivity.getPhoneFragment().answerPhone();
                 HomePagerActivity.homePagerActivity.getPhoneFragment().phoneStart();

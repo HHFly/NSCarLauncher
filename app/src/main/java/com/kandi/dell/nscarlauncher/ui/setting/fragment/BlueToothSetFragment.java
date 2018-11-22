@@ -91,9 +91,9 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
                 if(getOriginId() == 0){
                     HomePagerActivity.homePagerActivity.getSetFragment().hideFragment();
                 }else if(getOriginId() == 1){
-                    HomePagerActivity.jumpFragment(FragmentType.BTMUSIC);
+                    HomePagerActivity.homePagerActivity.jumpFragment(FragmentType.BTMUSIC);
                 }else{
-                    HomePagerActivity.jumpFragment(FragmentType.PHONE);
+                    HomePagerActivity.homePagerActivity.jumpFragment(FragmentType.PHONE);
                 }
                 break;
             case R.id.ll_name:

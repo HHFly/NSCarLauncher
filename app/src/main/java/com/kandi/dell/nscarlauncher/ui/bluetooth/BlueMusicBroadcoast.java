@@ -32,7 +32,7 @@ import java.util.List;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
-import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.jumpFragment;
+
 
 public class BlueMusicBroadcoast extends BroadcastReceiver {
     public final static int    PHONE_START               = 1;
@@ -293,7 +293,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                             Log.d("kondi", "BtPhone get AudioFocus");
                             //MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 拨打时时进入电话页面
-                            jumpFragment(FragmentType.PHONE);
+                            homePagerActivity.jumpFragment(FragmentType.PHONE);
                             FlagProperty.flag_phone_incall_click = true;
                             myHandler.sendMessage(myHandler.obtainMessage(PHONE_OUT));
                             Log.d("kondi", "BtPhone change to PhonePage");

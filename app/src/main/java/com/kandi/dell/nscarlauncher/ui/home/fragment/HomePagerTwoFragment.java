@@ -29,7 +29,7 @@ import java.io.File;
 public class HomePagerTwoFragment extends BaseFragment {
     private HomePagerActivity homePagerActivity;
     // 播发控制
-    public static PlayControllView musicPaly;
+    public  PlayControllView musicPaly;
     public static  int backbox =0x02;//0x01为开启状态，0x02为关闭状态。
     public static int  centerlock =0x02;//0x01为开启状态，0x02为关闭状态。
     private static ImageView iv_backbox,iv_cenlock;
@@ -37,7 +37,7 @@ public class HomePagerTwoFragment extends BaseFragment {
 
     public static MarqueTextView music_name;
 
-    public static  boolean isBackboxOpen,isCenterlockOpen;
+    public   boolean isBackboxOpen,isCenterlockOpen;
     public String PicIndex ="picindex";
     @Override
     public int getContentResId() {
@@ -102,20 +102,20 @@ public class HomePagerTwoFragment extends BaseFragment {
                 break;
             case R.id.rl_phone:
                 HomePagerActivity.isShowPhoneAnim=true;
-                HomePagerActivity.jumpFragment(FragmentType.PHONE);
+                homePagerActivity.jumpFragment(FragmentType.PHONE);
 //                if(homePagerActivity!=null){
 //                    homePagerActivity.jumpFragment(FragmentType.PHONE);
 //                }
                 break;
             case  R.id.iv_phone_logo:
                 HomePagerActivity.isShowPhoneAnim=true;
-                HomePagerActivity.jumpFragment(FragmentType.PHONE);
+                homePagerActivity.jumpFragment(FragmentType.PHONE);
                 break;
             case R.id.rl_set:
-                HomePagerActivity.jumpFragment(FragmentType.SET);
+                homePagerActivity.jumpFragment(FragmentType.SET);
                 break;
             case R.id.rl_app:
-                HomePagerActivity.jumpFragment(FragmentType.APPLICATION);
+                homePagerActivity.jumpFragment(FragmentType.APPLICATION);
                 break;
             case R.id.rl_carcontroll:
                 if(FlagProperty.BCMStaus==0) {
@@ -129,7 +129,7 @@ public class HomePagerTwoFragment extends BaseFragment {
                 openNavi();
                 break;
             case R.id.music:
-                HomePagerActivity.jumpFragment(FragmentType.MUSIC);
+                homePagerActivity.jumpFragment(FragmentType.MUSIC);
                 break;
             case R.id.nav_home:
                 NavBroasd(0);

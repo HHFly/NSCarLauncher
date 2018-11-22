@@ -40,6 +40,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
+
 
 public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChangeListener,MvpMainView {
     public final int                    PHONE_OVER     = 1;//结束
@@ -848,7 +850,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                 addphoneDtmf("#");
                 break;
             case R.id.bt_blueSet:
-                HomePagerActivity.jumpFragment(FragmentType.BTSET);
+                homePagerActivity.jumpFragment(FragmentType.BTSET);
                 break;
         }
     }

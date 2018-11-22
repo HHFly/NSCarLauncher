@@ -458,7 +458,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
      * @param fragment
      */
 
-    private  static void switchFragment(BaseFragment fragment) {
+    private   void switchFragment(BaseFragment fragment) {
 
         mCurFragment = FragmentUtils.selectFragment(context, mCurFragment, fragment, R.id.frame_main);
         mCurFragment.setmType(fragment.getmType());
@@ -466,11 +466,11 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         myHandler.sendMessage(myHandler.obtainMessage(HandleKey.FRAME));
     }
 
-    public static   void   switchFragmenthide(Fragment fragment) {
+    public    void   switchFragmenthide(Fragment fragment) {
         mCurFragment = FragmentUtils.selectFragment(context, mCurFragment, fragment, R.id.frame_main);
 
     }
-    public  static void  jumpFragment(@FragmentType int type ){
+    public   void  jumpFragment(@FragmentType int type ){
         if(IsHomeUtils.isForeground(context,"HomePagerActivity"))
         switch (type){
             case  FragmentType.FM:

@@ -224,7 +224,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 // 加载电台
     private static void isFmFragment(){
             if(FragmentType.FM!=HomePagerActivity.mCurFragment.getmType()){
-                HomePagerActivity.switchFragmenthide(HomePagerActivity.homePagerActivity.getFmFragment());
+                HomePagerActivity.homePagerActivity.switchFragmenthide(HomePagerActivity.homePagerActivity.getFmFragment());
                 if(HomePagerActivity.homePagerActivity.getFmFragment()!=null) {
                     HomePagerActivity.homePagerActivity.getFmFragment().isSecondResume = true;
                 }
@@ -233,7 +233,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 //  加载蓝牙
     private  void isBtFragment(){
         if(FragmentType.BTMUSIC!=HomePagerActivity.mCurFragment.getmType()){
-            HomePagerActivity.switchFragmenthide(  homePagerActivity.getBtMusicFragment());
+            homePagerActivity.switchFragmenthide(  homePagerActivity.getBtMusicFragment());
         }
     }
 //    电台播放
@@ -283,7 +283,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 
         btPaly.setPlay(false);
 
-        HomePagerTwoFragment.musicPaly.setPlay(false);
+        homePagerActivity.getHomePagerTwoFragment().musicPaly.setPlay(false);
         switch (mode){
             case 1:
                 fmPaly.setPlay(isPlay);
@@ -334,13 +334,13 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.FM:
-                HomePagerActivity.jumpFragment(FragmentType.FM);
+                homePagerActivity.jumpFragment(FragmentType.FM);
                 break;
             case R.id.bt_music:
-                HomePagerActivity.jumpFragment(FragmentType.BTMUSIC);
+                homePagerActivity.jumpFragment(FragmentType.BTMUSIC);
                 break;
             case R.id.music:
-                HomePagerActivity.jumpFragment(FragmentType.MUSIC);
+                homePagerActivity.jumpFragment(FragmentType.MUSIC);
                 break;
             case R.id.rl_air:
                 if(FlagProperty.staus==0) {
