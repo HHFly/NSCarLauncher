@@ -307,11 +307,11 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         }
         if (intent.getAction().equals(ACTION_AC)) {
             // Toast.makeText(context, "音频蓝牙已连接", Toast.LENGTH_LONG);
-            BTMusicFragment.setNullViewGone(false);
+            HomePagerActivity.homePagerActivity.getBtMusicFragment().setNullViewGone(false);
         }
         if (intent.getAction().equals(ACTION_AD)) {
             // Toast.makeText(context, "音频蓝牙已断开", Toast.LENGTH_LONG);
-            BTMusicFragment.setNullViewGone(true);
+            HomePagerActivity.homePagerActivity.getBtMusicFragment().setNullViewGone(true);
             App.pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
         }
         if (intent.getAction().equals(ACTION_MUSIC_INFO_CHANGED)) {
@@ -331,7 +331,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 JSONObject obj = (JSONObject) jsonArr.get(0);
                 FlagProperty.SongName =obj.getString("SongName");
                 FlagProperty.SingerName =obj.getString("SingerName");
-                BTMusicFragment.setMusicInfoHanle( FlagProperty.SongName, FlagProperty.SingerName);
+                HomePagerActivity.homePagerActivity.getBtMusicFragment().setMusicInfoHanle( FlagProperty.SongName, FlagProperty.SingerName);
                 HomePagerOneFragment.setMusicInfoHanle(  FlagProperty.SongName, FlagProperty.SingerName);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -350,7 +350,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 //            int  intent.getStringExtra(KEY_MEDIA_STATUS)
             App.get().PauseServiceFMMUSic();
 //            App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.BTMUSICOPEN));
-            BTMusicFragment.myHandler.sendMessage(BTMusicFragment.myHandler.obtainMessage(11));
+            HomePagerActivity.homePagerActivity.getBtMusicFragment().myHandler.sendMessage( HomePagerActivity.homePagerActivity.getBtMusicFragment().myHandler.obtainMessage(11));
 //            BTMusicFragment.isPlay=true;
 //            BTMusicFragment.gifPlayShow();
 //            HomePagerOneFragment.btPaly.setPlay(true);
@@ -364,7 +364,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 //            BTMusicFragment.isPlay=false;
 //            BTMusicFragment.gifPlayShow();
 //            HomePagerOneFragment.btPaly.setPlay(false);
-            BTMusicFragment.myHandler.sendMessage(BTMusicFragment.myHandler.obtainMessage(12));
+            HomePagerActivity.homePagerActivity.getBtMusicFragment().myHandler.sendMessage( HomePagerActivity.homePagerActivity.getBtMusicFragment().myHandler.obtainMessage(12));
 
 //            App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.BTMUSICCOLSE));
         }
@@ -393,7 +393,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         if(intent.getAction().equals(ACTION_MUSIC_CURRENT_POSITION)){
             int current = intent.getIntExtra("current",0);
             music_total_time =intent.getIntExtra("total",0);
-            BTMusicFragment.setBlueMusicProgress(current);
+            HomePagerActivity.homePagerActivity.getBtMusicFragment().setBlueMusicProgress(current);
 //            LogUtils.log("BT:"+"current:"+current+"total"+ music_total_time);
 //            if(!BTMusicFragment.isPlay){
 //                BTMusicFragment.isPlay=true;
