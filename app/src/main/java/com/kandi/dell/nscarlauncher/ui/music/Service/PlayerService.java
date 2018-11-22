@@ -17,12 +17,14 @@ import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.CursorMusicImage;
-import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
+
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 
 import java.io.File;
 import java.io.FileInputStream;
+
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
 
 
 public class PlayerService extends Service {
@@ -46,12 +48,12 @@ public class PlayerService extends Service {
 				if(mediaPlayer != null) {
 					try {
 						currentTime = mediaPlayer.getCurrentPosition(); // 获取当前音乐播放的位置
-						MusicFragment.setMusicProgress(currentTime);
+						homePagerActivity.getMusicFragment().setMusicProgress(currentTime);
 						SPUtil.getInstance(getApplicationContext(),MusicFragment.MUSICPROGRESS).putInt(MusicFragment.MUSICPROGRESS,currentTime);
 						handler.sendEmptyMessageDelayed(1, 1000);
 					}catch (Exception e){
-						MusicFragment.stopView();
-						HomePagerTwoFragment.myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
+						homePagerActivity.getMusicFragment().stopView();
+						homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
 						App.get().reSetMusic();
 						mediaPlayer=App.get().getMediaPlayer();
 						/**
@@ -62,7 +64,7 @@ public class PlayerService extends Service {
 
 								@Override
 								public void onCompletion(MediaPlayer mp) {
-									MusicFragment.bt_next.performClick();
+									homePagerActivity.getMusicFragment().bt_next.performClick();
 								}
 							});
 						}
@@ -86,7 +88,7 @@ public class PlayerService extends Service {
 
 				@Override
 				public void onCompletion(MediaPlayer mp) {
-					MusicFragment.bt_next.performClick();
+					homePagerActivity.getMusicFragment().bt_next.performClick();
 				}
 			});
 				mediaPlayer.setOnErrorListener(onErrorListener);
@@ -97,8 +99,8 @@ public class PlayerService extends Service {
 		public boolean onError(MediaPlayer mp, int what, int extra) {
 			switch (what) {
 				case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
-					MusicFragment.stopView();
-					HomePagerTwoFragment.myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
+					homePagerActivity.getMusicFragment().stopView();
+					homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
 					App.get().reSetMusic();
 					mediaPlayer=App.get().getMediaPlayer();
 					mediaPlayer.setOnErrorListener(onErrorListener);
@@ -149,14 +151,14 @@ public class PlayerService extends Service {
 		}else{
 			try {
 				if (currentTime== 0) {
-					MusicFragment.flag_first = false;
+					homePagerActivity.getMusicFragment().flag_first = false;
 				}
 				mediaPlayer.reset();//把各项参数恢复到初始状态
-				DialogLocalMusic.playnow =new Mp3Info(DialogLocalMusic.data.get(DialogLocalMusic.musicID));
-				File file = new File(DialogLocalMusic.data.get(DialogLocalMusic.musicID).url);
-				SPUtil.getInstance(getApplicationContext(),MusicFragment.MUSICPATH).putString(MusicFragment.MUSICPATH,DialogLocalMusic.data.get(DialogLocalMusic.musicID).url);
-				SPUtil.getInstance(getApplicationContext(),MusicFragment.MUSICID).putInt(MusicFragment.MUSICID,DialogLocalMusic.musicID);
-				SPUtil.getInstance(getApplicationContext(),MusicFragment.MUSICDATAMODE).putInt(MusicFragment.MUSICDATAMODE,MusicFragment.dataMode);
+				homePagerActivity.getDialogLocalMusic().playnow =new Mp3Info(homePagerActivity.getDialogLocalMusic().data.get(homePagerActivity.getDialogLocalMusic().musicID));
+				File file = new File(homePagerActivity.getDialogLocalMusic().data.get(homePagerActivity.getDialogLocalMusic().musicID).url);
+				SPUtil.getInstance(getApplicationContext(),MusicFragment.MUSICPATH).putString(MusicFragment.MUSICPATH,homePagerActivity.getDialogLocalMusic().data.get(homePagerActivity.getDialogLocalMusic().musicID).url);
+				SPUtil.getInstance(getApplicationContext(),MusicFragment.MUSICID).putInt(MusicFragment.MUSICID,homePagerActivity.getDialogLocalMusic().musicID);
+				SPUtil.getInstance(getApplicationContext(),MusicFragment.MUSICDATAMODE).putInt(MusicFragment.MUSICDATAMODE, homePagerActivity.getMusicFragment().dataMode);
 				FileInputStream fis = new FileInputStream(file);
 				mediaPlayer.setDataSource(fis.getFD());
 				mediaPlayer.prepareAsync(); // 进行缓冲
@@ -164,10 +166,10 @@ public class PlayerService extends Service {
 				handler.sendEmptyMessage(1);
 			} catch (Exception e) {
 				e.printStackTrace();
-//				DialogLocalMusic.data.clear();
-//				DialogLocalMusic.ScanAllDaTa(this);
-				MusicFragment.stopView();
-				HomePagerTwoFragment.myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
+//				homePagerActivity.getDialogLocalMusic().data.clear();
+//				homePagerActivity.getDialogLocalMusic().ScanAllDaTa(this);
+				homePagerActivity.getMusicFragment().stopView();
+				homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
 				App.get().reSetMusic();
 				mediaPlayer=App.get().getMediaPlayer();
 				/**
@@ -178,7 +180,7 @@ public class PlayerService extends Service {
 
 						@Override
 						public void onCompletion(MediaPlayer mp) {
-							MusicFragment.bt_next.performClick();
+							homePagerActivity.getMusicFragment().bt_next.performClick();
 						}
 					});
 				}
@@ -196,8 +198,8 @@ public class PlayerService extends Service {
                 isPause = true;
             }
         }catch (Exception e){
-            MusicFragment.stopView();
-            HomePagerTwoFragment.myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
+			homePagerActivity.getMusicFragment().stopView();
+			homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
             App.get().reSetMusic();
             mediaPlayer=App.get().getMediaPlayer();
             /**
@@ -208,7 +210,7 @@ public class PlayerService extends Service {
 
                     @Override
                     public void onCompletion(MediaPlayer mp) {
-                        MusicFragment.bt_next.performClick();
+						homePagerActivity.getMusicFragment().bt_next.performClick();
                     }
                 });
             }
@@ -242,8 +244,8 @@ public class PlayerService extends Service {
 				mediaPlayer.prepare(); //在调用stop后如果需要再次通过start进行播放,需要之前调用prepare函数
 			} catch (Exception e) {
 				e.printStackTrace();
-				MusicFragment.stopView();
-				HomePagerTwoFragment.myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
+				homePagerActivity.getMusicFragment().stopView();
+				homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(HomePagerTwoFragment.MUSIC_CLOSE);
 				App.get().reSetMusic();
 				mediaPlayer=App.get().getMediaPlayer();
 
@@ -276,23 +278,23 @@ public class PlayerService extends Service {
 
 		@Override
 		public void onPrepared(MediaPlayer mp) {
-			String musicName = ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).title;
-			String artist = ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).artist;
+			String musicName = ((Mp3Info)homePagerActivity.getDialogLocalMusic().data.get(homePagerActivity.getDialogLocalMusic().musicID)).title;
+			String artist = ((Mp3Info)homePagerActivity.getDialogLocalMusic().data.get(homePagerActivity.getDialogLocalMusic().musicID)).artist;
 			
 			//设置歌曲专辑内置图片
 			Bitmap bm = null;
 			try {
-				bm = CursorMusicImage.setArtwork(PlayerService.this, DialogLocalMusic.playnow.url);
+				bm = CursorMusicImage.setArtwork(PlayerService.this, homePagerActivity.getDialogLocalMusic().playnow.url);
 			} catch (Throwable throwable) {
 				bm = BitmapFactory.decodeResource(PlayerService.this.getResources(), R.mipmap.one);
 				throwable.printStackTrace();
 			}
 			BitmapDrawable bmpDraw = new BitmapDrawable(bm);
-			if(MusicFragment.circle_image!=null) {
-				MusicFragment.circle_image.setImageDrawable(bmpDraw);
+			if( homePagerActivity.getMusicFragment().circle_image!=null) {
+				homePagerActivity.getMusicFragment().circle_image.setImageDrawable(bmpDraw);
 
 			}
-//			String albumArt = CursorMusicImage.getImage(PlayerService.this, ((Mp3Info)DialogLocalMusic.data.get(DialogLocalMusic.musicID)).url);
+//			String albumArt = CursorMusicImage.getImage(PlayerService.this, ((Mp3Info)homePagerActivity.getDialogLocalMusic().data.get(homePagerActivity.getDialogLocalMusic().musicID)).url);
 //			if (albumArt == null) {
 //				if(MusicFragment.circle_image!=null) {
 //					MusicFragment.circle_image.setImageResource(R.mipmap.one);
@@ -302,9 +304,9 @@ public class PlayerService extends Service {
 ////				Bitmap bm = BitmapFactory.decodeFile(albumArt);
 
 //			}
-					
-			MusicFragment.setMusicInfo(musicName, artist);
-            MusicFragment.setMusicCol(DialogLocalMusic.playnow.url);
+
+			homePagerActivity.getMusicFragment().setMusicInfo(musicName, artist);
+			homePagerActivity.getMusicFragment().setMusicCol(homePagerActivity.getDialogLocalMusic().playnow.url);
 			if (!isPause) {
 				mediaPlayer.start(); // 开始播放
 			}

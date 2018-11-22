@@ -18,15 +18,13 @@ import com.kandi.dell.nscarlauncher.db.dao.MusicCollectionDao;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
-import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
+
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.music.model.MusicModel;
 import com.kandi.dell.nscarlauncher.widget.MarqueTextView;
 import com.kandi.dell.nscarlauncher.widget.PlayControllView;
 
 import java.io.File;
-
-import static com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment.circle_image;
 
 public class HomePagerTwoFragment extends BaseFragment {
     private HomePagerActivity homePagerActivity;
@@ -162,21 +160,21 @@ public class HomePagerTwoFragment extends BaseFragment {
             public void onClickLeft() {
                 App.get().PauseServiceFMBTMUSic();
                 isMusicFragment();
-                if(DialogLocalMusic.data.size()>0) {
-                    if ( MusicFragment.flag_play) {
+                if(homePagerActivity.getDialogLocalMusic().data.size()>0) {
+                    if (  homePagerActivity.getMusicFragment().flag_play) {
 
                         musicPaly.center.performClick();
-                        MusicPaly(MusicFragment.flag_play);
+                        MusicPaly( homePagerActivity.getMusicFragment().flag_play);
                     }
-                    if ( MusicFragment.music_model == 2) { // 单曲循环模式不变换音乐图片
-                        if(circle_image!=null)
-                            circle_image.resetRoatate();
+                    if (  homePagerActivity.getMusicFragment().music_model == 2) { // 单曲循环模式不变换音乐图片
+                        if( homePagerActivity.getMusicFragment().circle_image!=null)
+                            homePagerActivity.getMusicFragment().circle_image.resetRoatate();
                     } else { // 其他模式
                         // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
                     }
                     musicPaly.center.performClick();
-                    MusicFragment.recoveryLast = false;
-                    MusicModel.getPrevMusic(getContext(), MusicFragment.music_model);
+                    homePagerActivity.getMusicFragment().recoveryLast = false;
+                    MusicModel.getPrevMusic(getContext(), homePagerActivity.getMusicFragment().music_model);
                 }
 
 //                HomePagerActivity.musicFragment.PreMusic();
@@ -193,19 +191,19 @@ public class HomePagerTwoFragment extends BaseFragment {
                 App.get().PauseServiceFMBTMUSic();
                 isMusicFragment();
 //                HomePagerActivity.musicFragment.NextMusic();
-                if(DialogLocalMusic.data.size()>0) {
-                    if ( MusicFragment.flag_play) {
+                if(homePagerActivity.getDialogLocalMusic().data.size()>0) {
+                    if ( homePagerActivity.getMusicFragment().flag_play) {
                         musicPaly.center.performClick();
                     }
-                    if ( MusicFragment.music_model == 2) { // 单曲循环模式不变换音乐图片
-                        if(circle_image!=null)
-                            circle_image.resetRoatate();
+                    if (  homePagerActivity.getMusicFragment().music_model == 2) { // 单曲循环模式不变换音乐图片
+                        if( homePagerActivity.getMusicFragment().circle_image!=null)
+                            homePagerActivity.getMusicFragment().circle_image.resetRoatate();
                     } else { // 其他模式
                         // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
                     }
                     musicPaly.center.performClick();
-                    MusicFragment.recoveryLast = false;
-                    MusicModel.getNextMusic(getContext(),  MusicFragment.music_model);
+                    homePagerActivity.getMusicFragment().recoveryLast = false;
+                    MusicModel.getNextMusic(getContext(),   homePagerActivity.getMusicFragment().music_model);
                 }
 
             }
@@ -220,20 +218,20 @@ public class HomePagerTwoFragment extends BaseFragment {
                 String musicpath = SPUtil.getInstance(getContext(),MusicFragment.MUSICPATH).getString(MusicFragment.MUSICPATH);
                 if(musicpath !=null && !musicpath.equals("")){
                     if(new File(musicpath).exists()){
-                        int music_id = SPUtil.getInstance(getContext(),MusicFragment.MUSICID).getInt(MusicFragment.MUSICID,DialogLocalMusic.musicID);
-                        if(!MusicFragment.flag_play){
-                            MusicFragment.recoveryLast = true;
+                        int music_id = SPUtil.getInstance(getContext(),MusicFragment.MUSICID).getInt(MusicFragment.MUSICID,homePagerActivity.getDialogLocalMusic().musicID);
+                        if(! homePagerActivity.getMusicFragment().flag_play){
+                            homePagerActivity.getMusicFragment().recoveryLast = true;
                         }
-                        DialogLocalMusic.musicID = music_id;
+                        homePagerActivity.getDialogLocalMusic().musicID = music_id;
                     }
                 }
                 onceLoad = false;
             }
-            MusicFragment.musicPlay(getActivity());
+            homePagerActivity.getMusicFragment().musicPlay(getActivity());
 
         }else {
 
-            MusicFragment.musicPause(getActivity());
+            homePagerActivity.getMusicFragment().musicPause(getActivity());
         }
         setPlayControll(isPlay,2);
     }
@@ -254,15 +252,15 @@ public class HomePagerTwoFragment extends BaseFragment {
     }
     private  void isMusicFragment(){
         if(FragmentType.MUSIC!=homePagerActivity.mCurFragment.getmType()){
-            homePagerActivity.switchFragmenthide(HomePagerActivity.musicFragment);
+            homePagerActivity.switchFragmenthide( homePagerActivity.getMusicFragment());
         }
     }
 
 
     @Override
     public void initView() {
-//        MusicFragment.dialogLocalMusic.ScanMusic(getContext(),false);
-//        MusicFragment.dialogLocalMusic.ScanVideoMusic(getContext(),false,1);
+//        MusicFragment.homePagerActivity.getDialogLocalMusic().ScanMusic(getContext(),false);
+//        MusicFragment.homePagerActivity.getDialogLocalMusic().ScanVideoMusic(getContext(),false,1);
     }
 
 
@@ -292,7 +290,7 @@ public class HomePagerTwoFragment extends BaseFragment {
     public static final  int MUSIC_OPEN =2;
     public static final  int BACKBOX =3;
     public static final  int CENTERLOCK=4;
-    public static Handler myHandler = new Handler() {
+    public  Handler myHandler = new Handler() {
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -302,7 +300,7 @@ public class HomePagerTwoFragment extends BaseFragment {
 
                 case MUSIC_OPEN:
                     try{
-                        music_name.setText((DialogLocalMusic.data.get(DialogLocalMusic.musicID)).title);
+                        music_name.setText((homePagerActivity.getDialogLocalMusic().data.get(homePagerActivity.getDialogLocalMusic().musicID)).title);
                     }catch (Exception e){
                         music_name.setText(App.get().getString(R.string.本地音乐));
                     }
@@ -331,16 +329,16 @@ public class HomePagerTwoFragment extends BaseFragment {
     }
 
     private  void getMusicData(){
-        DialogLocalMusic.ColData = MusicCollectionDao.getAllFav(getContext());
+        homePagerActivity.getDialogLocalMusic().ColData = MusicCollectionDao.getAllFav(getContext());
         switch (SPUtil.getInstance(getContext(),MusicFragment.MUSICDATAMODE).getInt(MusicFragment.MUSICDATAMODE,0)){
             case 3:
-                DialogLocalMusic.transport(DialogLocalMusic.data, DialogLocalMusic.ColData);
+                homePagerActivity.getDialogLocalMusic().transport(homePagerActivity.getDialogLocalMusic().data, homePagerActivity.getDialogLocalMusic().ColData);
                 break;
             case 2:
-                DialogLocalMusic.transport(DialogLocalMusic.data, DialogLocalMusic.USBData);
+                homePagerActivity.getDialogLocalMusic().transport(homePagerActivity.getDialogLocalMusic().data, homePagerActivity.getDialogLocalMusic().USBData);
                 break;
             default:
-                DialogLocalMusic.transport(DialogLocalMusic.data, DialogLocalMusic.SDData);
+                homePagerActivity.getDialogLocalMusic().transport(homePagerActivity.getDialogLocalMusic().data, homePagerActivity.getDialogLocalMusic().SDData);
                 break;
         }
     }

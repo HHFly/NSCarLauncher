@@ -10,6 +10,8 @@ import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 
 import java.util.List;
 
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
+
 public class MusicLocalAdapter extends BaseListRvAdapter<Mp3Info> {
     public MusicLocalAdapter(List<Mp3Info> data) {
         super(data);
@@ -29,7 +31,7 @@ public class MusicLocalAdapter extends BaseListRvAdapter<Mp3Info> {
     public void bindBodyData(AutoViewHolder holder, final int bodyPos,final Mp3Info data) {
         holder.text(R.id.item_songname,data.displayName);
         holder.text(R.id.item_singer,data.artist);
-        holder.itemView.setSelected(DialogLocalMusic.musicID==bodyPos);
+        holder.itemView.setSelected( homePagerActivity.getDialogLocalMusic().musicID==bodyPos);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

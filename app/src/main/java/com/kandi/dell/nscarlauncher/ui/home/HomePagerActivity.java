@@ -106,7 +106,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public static BaseFragment mCurFragment;//当前页
     public static FMFragment fmFragment ;//收音机
     public static  BTMusicFragment btMusicFragment;//蓝牙音乐
-    public static MusicFragment musicFragment;//本地音乐
+    public  MusicFragment musicFragment;//本地音乐
     public static PhoneFragment phoneFragment;//电话
     public static SetFragment setFragment;//设置
     public  static AppFragment appFragment;//应用
@@ -135,7 +135,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     static ScaleAnimation  scaleAnimation;
     public  static HomePagerActivity homePagerActivity;
     public static boolean isShowPhoneAnim =false ;//电话界面是否显示动画
-
+    private  DialogLocalMusic dialogLocalMusic;
 
 
 
@@ -233,7 +233,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         indicator.setViewPager(viewPager);
         //获取usb权限
 //        openUsbDevice();
-        DialogLocalMusic.ScanAllDaTa(this);
+
+
     }
 
     private void initAnim() {
@@ -369,7 +370,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
         blueToothSetFragment = new BlueToothSetFragment();
 
-
+        dialogLocalMusic =new DialogLocalMusic(videoFragment,musicFragment);
+        dialogLocalMusic.ScanAllDaTa(this);
     }
     /*隐藏fragemt*/
     public static void  hideFragment(){
@@ -477,7 +479,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 break;
             case  FragmentType.MUSIC:
                 fragemntType=2;
-                switchFragment(musicFragment);
+                switchFragment(homePagerActivity.getMusicFragment());
 
                 break;
              case  FragmentType.PHONE:
@@ -1225,11 +1227,11 @@ public int getSim(int num) {
             FlagProperty.BCMStaus= ieCarDriver.getCarState(carState);
             if(HomePagerTwoFragment.backbox!=carState[8]){
                 HomePagerTwoFragment.backbox=carState[8];
-                HomePagerTwoFragment.myHandler.sendEmptyMessage(3);
+                homePagerActivity.homePagerTwoFragment.myHandler.sendEmptyMessage(3);
             }
             if (HomePagerTwoFragment.centerlock!=carState[7]){
                 HomePagerTwoFragment.centerlock=carState[7];
-                HomePagerTwoFragment.myHandler.sendEmptyMessage(4);
+                homePagerActivity.homePagerTwoFragment.myHandler.sendEmptyMessage(4);
             }
         }
         } catch (RemoteException e) {
@@ -1370,4 +1372,15 @@ public int getSim(int num) {
         }
     }
 
+    public MusicFragment getMusicFragment() {
+        return musicFragment;
+    }
+
+    public DialogLocalMusic getDialogLocalMusic() {
+        return dialogLocalMusic;
+    }
+
+    public HomePagerTwoFragment getHomePagerTwoFragment() {
+        return homePagerTwoFragment;
+    }
 }

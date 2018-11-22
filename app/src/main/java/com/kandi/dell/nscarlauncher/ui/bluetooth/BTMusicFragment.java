@@ -27,6 +27,8 @@ import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
+
 public class BTMusicFragment extends BaseFragment {
     private static ImageView mGifImageView;
 
@@ -195,7 +197,7 @@ public class BTMusicFragment extends BaseFragment {
 
                             myHandler.sendMessage(myHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
 
-                        MusicFragment.stopView();
+                        homePagerActivity.getMusicFragment().stopView();
 
                     }
 

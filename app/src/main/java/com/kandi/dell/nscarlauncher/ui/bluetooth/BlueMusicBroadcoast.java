@@ -33,6 +33,7 @@ import java.util.List;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
 import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.jumpFragment;
 
 public class BlueMusicBroadcoast extends BroadcastReceiver {
@@ -314,7 +315,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             App.pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
         }
         if (intent.getAction().equals(ACTION_MUSIC_INFO_CHANGED)) {
-            if(FMFragment.isPlay || MusicFragment.flag_play || JCVideoPlayer.mCurrentState == 2){
+            if(FMFragment.isPlay || homePagerActivity.getMusicFragment().flag_play || JCVideoPlayer.mCurrentState == 2){
                 HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
                 try{
                     btservice.btAvrPause();
@@ -338,7 +339,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         }
         if (intent.getAction().equals(ACTION_BT_STREAM_START)) {
             LogUtils.log("BT:"+ACTION_BT_STREAM_START);
-            if(FMFragment.isPlay || MusicFragment.flag_play || JCVideoPlayer.mCurrentState == 2){
+            if(FMFragment.isPlay || homePagerActivity.getMusicFragment().flag_play || JCVideoPlayer.mCurrentState == 2){
                 try{
                     btservice.btAvrPause();
                 }catch (Exception e){
@@ -353,7 +354,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 //            BTMusicFragment.isPlay=true;
 //            BTMusicFragment.gifPlayShow();
 //            HomePagerOneFragment.btPaly.setPlay(true);
-            MusicFragment.stopView();
+            homePagerActivity.getMusicFragment().stopView();
 
         }
         if (intent.getAction().equals(ACTION_BT_STREAM_SUSPEND)) {

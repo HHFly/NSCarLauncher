@@ -38,6 +38,7 @@ import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTI
 import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_CALLSTART;
 import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_RINGCALL;
 import static com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty.PAUSE_MSG;
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
 import static com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment.broadcastMusicInfo;
 
 
@@ -289,7 +290,7 @@ App extends MultiDexApplication {
             radio.CloseLocalRadio();
             btservice.btAvrPause();
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
-            HomePagerTwoFragment.myHandler.sendEmptyMessage(1);
+            homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(1);
             pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
             pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
             mediaPlayer.release();
@@ -304,7 +305,7 @@ App extends MultiDexApplication {
         try {
             radio.CloseLocalRadio();
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
-            HomePagerTwoFragment.myHandler.sendEmptyMessage(1);
+            homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(1);
             pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
 //            pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSIC);
 
@@ -327,7 +328,7 @@ App extends MultiDexApplication {
         try {
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
             btservice.btAvrPause();
-            HomePagerTwoFragment.myHandler.sendEmptyMessage(1);
+            homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(1);
             pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
 
         } catch (RemoteException e) {

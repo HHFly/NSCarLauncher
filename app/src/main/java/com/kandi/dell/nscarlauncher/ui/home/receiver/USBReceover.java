@@ -9,6 +9,8 @@ import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.db.dao.MusicCollectionDao;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
+
 public class USBReceover  extends BroadcastReceiver {
 
 
@@ -23,8 +25,8 @@ public class USBReceover  extends BroadcastReceiver {
         }
         else if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
             Toast.makeText(context, R.string.USB拔出, Toast.LENGTH_SHORT).show();
-            DialogLocalMusic.usbStatus = false;
-            DialogLocalMusic.ScanVideoMusic(context,0);
+            homePagerActivity.getDialogLocalMusic().usbStatus = false;
+            homePagerActivity.getDialogLocalMusic().ScanVideoMusic(context,0);
             MusicCollectionDao.deleteFavByUsbOut(context,"/storage/udisk");
         }
     }

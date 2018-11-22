@@ -18,7 +18,8 @@ import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.music.model.MusicModel;
 import com.kandi.dell.nscarlauncher.ui.phone.PhoneFragment;
 
-import static com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment.circle_image;
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
+
 
 public class CarMFLReceiver extends BroadcastReceiver {
     public static  String ACTION_WHEEL_MODE ="com.kangdi.BroadCast.WheelMode";//多功能模式
@@ -71,17 +72,17 @@ public class CarMFLReceiver extends BroadcastReceiver {
                if(BTMusicFragment.isPlay){
                    BTMusicFragment.myHandler.sendEmptyMessage(6);
                }
-               if(MusicFragment.flag_play){
-                   if(DialogLocalMusic.data.size()>0) {
+               if(homePagerActivity.getMusicFragment().flag_play){
+                   if( homePagerActivity.getDialogLocalMusic().data.size()>0) {
 
-                       if ( MusicFragment.music_model == 2) { // 单曲循环模式不变换音乐图片
-                           if(circle_image!=null)
-                               circle_image.resetRoatate();
+                       if ( homePagerActivity.getMusicFragment().music_model == 2) { // 单曲循环模式不变换音乐图片
+                           if(homePagerActivity.getMusicFragment().circle_image!=null)
+                               homePagerActivity.getMusicFragment().circle_image.resetRoatate();
                        } else { // 其他模式
                            // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
                        }
 
-                       MusicModel.getPrevMusic(context, MusicFragment.music_model);
+                       MusicModel.getPrevMusic(context, homePagerActivity.getMusicFragment().music_model);
                    }
                }
                if(FMFragment.isPlay){
@@ -96,17 +97,17 @@ public class CarMFLReceiver extends BroadcastReceiver {
                 if(BTMusicFragment.isPlay){
                     BTMusicFragment.myHandler.sendEmptyMessage(7);
                 }
-                if(MusicFragment.flag_play){
-                    if(DialogLocalMusic.data.size()>0) {
+                if(homePagerActivity.getMusicFragment().flag_play){
+                    if(homePagerActivity.getDialogLocalMusic().data.size()>0) {
 
-                        if ( MusicFragment.music_model == 2) { // 单曲循环模式不变换音乐图片
-                            if(circle_image!=null)
-                                circle_image.resetRoatate();
+                        if ( homePagerActivity.getMusicFragment().music_model == 2) { // 单曲循环模式不变换音乐图片
+                            if(homePagerActivity.getMusicFragment().circle_image!=null)
+                            homePagerActivity.getMusicFragment().circle_image.resetRoatate();
                         } else { // 其他模式
                             // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
                         }
 
-                        MusicModel.getNextMusic(context,  MusicFragment.music_model);
+                        MusicModel.getNextMusic(context,  homePagerActivity.getMusicFragment().music_model);
                     }
                 }
                 if(FMFragment.isPlay){
