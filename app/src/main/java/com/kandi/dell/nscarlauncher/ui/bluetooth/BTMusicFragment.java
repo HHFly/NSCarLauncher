@@ -165,7 +165,7 @@ public class BTMusicFragment extends BaseFragment {
                 musicPlay();
                 break;
             case R.id.bt_blueSet:
-                HomePagerActivity.jumpFragment(FragmentType.BTSET);
+                homePagerActivity.jumpFragment(FragmentType.BTSET);
                 break;
         }
     }
