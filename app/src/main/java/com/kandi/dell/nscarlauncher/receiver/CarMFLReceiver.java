@@ -9,7 +9,6 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.common.util.LogUtils;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
-import com.kandi.dell.nscarlauncher.ui.fm.FMFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
@@ -84,7 +83,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
                        MusicModel.getPrevMusic(context, MusicFragment.music_model);
                    }
                }
-               if(FMFragment.isPlay){
+               if(HomePagerActivity.homePagerActivity.getFmFragment().isPlay){
                    App.pagerOneHnadler.sendEmptyMessage(HandleKey.FMPREV);
                }
             }
@@ -109,7 +108,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
                         MusicModel.getNextMusic(context,  MusicFragment.music_model);
                     }
                 }
-                if(FMFragment.isPlay){
+                if(HomePagerActivity.homePagerActivity.getFmFragment().isPlay){
                     App.pagerOneHnadler.sendEmptyMessage(HandleKey.FMNEXT);
                 }
             }
