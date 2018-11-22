@@ -108,10 +108,10 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public static  BTMusicFragment btMusicFragment;//蓝牙音乐
     public static MusicFragment musicFragment;//本地音乐
     public PhoneFragment phoneFragment;//电话
-    public static SetFragment setFragment;//设置
+    public SetFragment setFragment;//设置
     public  static AppFragment appFragment;//应用
     public  static VideoFragment videoFragment;//视频
-    public static BlueToothSetFragment blueToothSetFragment;//蓝牙设置
+    public BlueToothSetFragment blueToothSetFragment;//蓝牙设置
     public  static  BaseActivity context;
     private ArrayList<HomeModel> mData;
     static Dialog alertDialog;//来电弹框
@@ -390,9 +390,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         if(homePagerActivity!=null){
             homePagerActivity.hideLoadingDialog();
         }if(FragmentType.BTSET==mCurFragment.getmType()||FragmentType.SET==mCurFragment.getmType()){
-            if(blueToothSetFragment!=null) {
-                blueToothSetFragment.hideDialog();
-                setFragment.dissDialog();
+            if(homePagerActivity.getBlueToothSetFragment()!=null) {
+                homePagerActivity.getBlueToothSetFragment().hideDialog();
+                homePagerActivity.getSetFragment().dissDialog();
             }
         }
         if(btMusicFragment != null){
@@ -470,7 +470,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
                 break;
             case  FragmentType.BTMUSIC:
-                blueToothSetFragment.setOriginId(1);
+                homePagerActivity.getBlueToothSetFragment().setOriginId(1);
                 fragemntType=2;
                 switchFragment(btMusicFragment);
 
@@ -481,7 +481,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
                 break;
              case  FragmentType.PHONE:
-                 blueToothSetFragment.setOriginId(2);
+                 homePagerActivity.getBlueToothSetFragment().setOriginId(2);
                 if(isShowPhoneAnim){
                     fragemntType = 1;
                 }else {
@@ -492,9 +492,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
                  break;
             case  FragmentType.SET:
-                blueToothSetFragment.setOriginId(0);
+                homePagerActivity.getBlueToothSetFragment().setOriginId(0);
                 fragemntType=3;
-                switchFragment(setFragment);
+                switchFragment(homePagerActivity.getSetFragment());
                 break;
             case  FragmentType.APPLICATION:
                 fragemntType=5;
@@ -505,7 +505,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 switchFragment(videoFragment);
                 break;
             case FragmentType.BTSET:
-                switchFragment(blueToothSetFragment);
+                switchFragment(homePagerActivity.getBlueToothSetFragment());
                 break;
         }
     }
@@ -1372,5 +1372,13 @@ public int getSim(int num) {
 
     public PhoneFragment getPhoneFragment() {
         return phoneFragment;
+    }
+
+    public BlueToothSetFragment getBlueToothSetFragment() {
+        return blueToothSetFragment;
+    }
+
+    public SetFragment getSetFragment() {
+        return setFragment;
     }
 }

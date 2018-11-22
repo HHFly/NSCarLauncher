@@ -12,15 +12,11 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.JsonUtils;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
-import com.kandi.dell.nscarlauncher.ui.fm.FMAdapter;
-import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
-import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.setting.adapter.EqAdapter;
 import com.kandi.dell.nscarlauncher.ui.setting.model.EqData;
 import com.kandi.dell.nscarlauncher.widget.EqSeekBarView;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class EqFragment extends BaseFragment {
@@ -30,7 +26,7 @@ public class EqFragment extends BaseFragment {
     private EqAdapter mAdapter ;
     private ArrayList<EqData> mData =new ArrayList<>();
     private ArrayList<EqSeekBarView> mView =new ArrayList<>();
-    public static  int postion=1;
+    public int postion=1;
     RecyclerView rv;
     @Override
     public int getContentResId() {
@@ -133,7 +129,7 @@ private String getName(String name){
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_return:
-                SetFragment.hideFragment();
+                HomePagerActivity.homePagerActivity.getSetFragment().hideFragment();
 
                
         }
@@ -179,7 +175,7 @@ private String getName(String name){
                     Equalizer.Settings settings =mEqualizer.getProperties();
                     settings.bandLevels=bandLevels;
                 SPUtil.getInstance(getContext(),"EQ").putString("EQSet", JsonUtils.toJson(settings));
-                    SPUtil.getInstance(getContext(),"EQ").putInt("EQPosition", EqFragment.postion );
+                    SPUtil.getInstance(getContext(),"EQ").putInt("EQPosition", postion );
                 }
             });
             mView.add(eqSeekBarView);
@@ -235,7 +231,7 @@ private String getName(String name){
                         mAdapter.DataClear();
                         data.setSelect(true);
                        mAdapter.notifyDataSetChanged();
-                    SPUtil.getInstance(getContext(),"EQ").putInt("EQPosition", EqFragment.postion );
+                    SPUtil.getInstance(getContext(),"EQ").putInt("EQPosition", postion );
                 }
 
                 @Override
@@ -254,7 +250,7 @@ private String getName(String name){
                     mAdapter.DataClear();
                     data.setSelect(true);
                     mAdapter.notifyDataSetChanged();
-                    SPUtil.getInstance(getContext(),"EQ").putInt("EQPosition", EqFragment.postion );
+                    SPUtil.getInstance(getContext(),"EQ").putInt("EQPosition", postion );
                 }
 
             });

@@ -6,7 +6,7 @@ import android.widget.CheckBox;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
-import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 
 public class DateFragment extends BaseFragment {
     private CheckBox checkBox ;
@@ -40,7 +40,7 @@ public class DateFragment extends BaseFragment {
                 checkBox.setChecked(FlagProperty.isHourdate);
                 break;
             case R.id.iv_return:
-                SetFragment.hideFragment();
+                HomePagerActivity.homePagerActivity.getSetFragment().hideFragment();
                 break;
             case R.id.cb_date:
                 FlagProperty.isHourdate=! FlagProperty.isHourdate;

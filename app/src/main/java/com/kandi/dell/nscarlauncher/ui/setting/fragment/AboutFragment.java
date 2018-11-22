@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
-import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 
 public class AboutFragment extends BaseFragment {
     @Override
@@ -41,7 +41,7 @@ public class AboutFragment extends BaseFragment {
     public void onClick(View v) {
             switch (v.getId()){
                 case R.id.iv_return:
-                    SetFragment.hideFragment();
+                    HomePagerActivity.homePagerActivity.getSetFragment().hideFragment();
                     break;
             }
     }

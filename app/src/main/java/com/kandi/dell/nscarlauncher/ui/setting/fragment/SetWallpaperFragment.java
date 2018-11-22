@@ -9,6 +9,7 @@ import android.widget.GridLayout;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.setting.adapter.RecyclerViewGridAdapter;
 import com.kandi.dell.nscarlauncher.ui.setting.model.WallPaperInfo;
 
@@ -69,7 +70,7 @@ public class SetWallpaperFragment extends BaseFragment {
                 Intent intent = new Intent();
                 intent.setAction("com.changeBg");
                 getActivity().sendBroadcast(intent);
-                DisplayFragment.hideFragment();
+                HomePagerActivity.homePagerActivity.getSetFragment().getDisplayFragment().hideFragment();
             }
         });
     }
@@ -78,7 +79,7 @@ public class SetWallpaperFragment extends BaseFragment {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_return:
-                DisplayFragment.hideFragment();
+                HomePagerActivity.homePagerActivity.getSetFragment().getDisplayFragment().hideFragment();
                 break;
         }
     }
