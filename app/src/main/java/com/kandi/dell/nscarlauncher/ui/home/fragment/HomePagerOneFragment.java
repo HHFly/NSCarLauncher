@@ -159,7 +159,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 if(!FlagProperty.flag_bluetooth){
                     Toast.makeText(getActivity(), R.string.蓝牙未连接, Toast.LENGTH_SHORT).show();
                 }else {
-                    BTMusicFragment.musicBack();
+                    homePagerActivity.getBtMusicFragment().musicBack();
 //                    try {
 //                        App.get().getBtservice().btAvrLast();
 //                    } catch (RemoteException e) {
@@ -187,7 +187,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 if(!FlagProperty.flag_bluetooth){
                     Toast.makeText(getActivity(), R.string.蓝牙未连接, Toast.LENGTH_SHORT).show();
                 }else {
-                    BTMusicFragment.musicNext();
+                    homePagerActivity.getBtMusicFragment().musicNext();
 //                    try {
 //                        App.get().getBtservice().btAvrNext();
 //                    } catch (RemoteException e) {
@@ -233,7 +233,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 //  加载蓝牙
     private  void isBtFragment(){
         if(FragmentType.BTMUSIC!=HomePagerActivity.mCurFragment.getmType()){
-            HomePagerActivity.switchFragmenthide(HomePagerActivity.btMusicFragment);
+            HomePagerActivity.switchFragmenthide(  homePagerActivity.getBtMusicFragment());
         }
     }
 //    电台播放
@@ -256,10 +256,10 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private void  BtMusicPaly(boolean isPlay){
         if(isPlay){
             App.get().PauseServiceFMMUSic();
-                BTMusicFragment.musicPlay();
+                homePagerActivity.getBtMusicFragment().musicPlay();
 //            try {
 //                App.get().PauseServiceFMMUSic();
-//                BTMusicFragment.musicPlay();
+//                homePagerActivity.getBtMusicFragment().musicPlay();
 ////                App.get().getBtservice().btAvrPlay();
 //            } catch (RemoteException e) {
 //                e.printStackTrace();
@@ -271,7 +271,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 //            } catch (RemoteException e) {
 //                e.printStackTrace();
 //            }
-            BTMusicFragment.musicPause();
+            homePagerActivity.getBtMusicFragment().musicPause();
 
         }
         setPlayControll(isPlay,2);
@@ -328,7 +328,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     }
     /*初始化蓝牙*/
     private void setBT(){
-        btPaly.setPlay(BTMusicFragment.isPlay);
+        btPaly.setPlay(homePagerActivity.getBtMusicFragment().isPlay);
     }
     @Override
     public void onClick(View view) {
