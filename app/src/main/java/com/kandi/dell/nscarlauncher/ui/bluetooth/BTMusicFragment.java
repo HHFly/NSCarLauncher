@@ -28,9 +28,9 @@ import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 
 public class BTMusicFragment extends BaseFragment {
-    private static ImageView mGifImageView;
+    private  ImageView mGifImageView;
 
-    public static boolean isPlay;
+    public  boolean isPlay;
 
     private final static int DIRECTION_PREV = 1; // 向前切歌
     private final static int DIRECTION_NEXT = 2; // 向后切歌
@@ -41,19 +41,19 @@ public class BTMusicFragment extends BaseFragment {
     private final static int MUSIC_NEXT = 7; // 蓝牙音乐下一首
     private final static int MUSIC_SONGNAME = 15;//蓝牙歌曲名
 
-    static int music_model = 1; // 音乐播放循环模式
-    static SeekBar music_progress_bar; // 音乐播放进度条
-    static int progress = 0; // 记录进度
-    static int music_time = 0; // 记录歌曲时间，若无变化，则不更新界面
-    static boolean flag_drag = false; // 是否拖动歌曲进度条
-    public static boolean flag_first = false;
-    static AudioManager audioManager;
-    static IKdAudioControlService audioservice ;
-    public static IKdBtService btservice;
-    public static TextView  music_current_time,tv_bt_music_songname,tv_bt_music_singer,music_total_time,bt_blueSet;
-    public  static ImageView iv_bt_stop;
-    public static RelativeLayout NullView ;//空界面
-    static Context context;
+
+     SeekBar music_progress_bar; // 音乐播放进度条
+     int progress = 0; // 记录进度
+     int music_time = 0; // 记录歌曲时间，若无变化，则不更新界面
+     boolean flag_drag = false; // 是否拖动歌曲进度条
+
+     AudioManager audioManager;
+     IKdAudioControlService audioservice ;
+    public  IKdBtService btservice;
+    public  TextView  music_current_time,tv_bt_music_songname,tv_bt_music_singer,music_total_time,bt_blueSet;
+    public   ImageView iv_bt_stop;
+    public  RelativeLayout NullView ;//空界面
+     Context context;
     @Override
     public int getContentResId() {
         return R.layout.fragment_bt_music;
@@ -137,7 +137,7 @@ public class BTMusicFragment extends BaseFragment {
         super.setmType(FragmentType.BTMUSIC);
     }
 
-    public static void onDisplay(){
+    public  void onDisplay(){
         if(isPlay) {
             if(context != null && mGifImageView!= null) {
                 Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
@@ -169,7 +169,7 @@ public class BTMusicFragment extends BaseFragment {
     }
 
     /*暂停*/
-    public  static void musicPause(){
+    public   void musicPause(){
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
             if (App.get().getAudioManager().abandonAudioFocus(afBTChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                 new Thread() {
@@ -184,7 +184,7 @@ public class BTMusicFragment extends BaseFragment {
         }
     }
     /*播放*/
-    public static void musicPlay(){
+    public  void musicPlay(){
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
             int a =App.get().getAudioManager().requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
@@ -205,7 +205,7 @@ public class BTMusicFragment extends BaseFragment {
         }
     }
     /*上一首*/
-    public static void musicBack(){
+    public  void musicBack(){
 
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
             if (App.get().getAudioManager().requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
@@ -224,7 +224,7 @@ public class BTMusicFragment extends BaseFragment {
         }
     }
 /*下一首*/
-public static void  musicNext(){
+public  void  musicNext(){
     if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
         if (App.get().getAudioManager().requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             new Thread() {
@@ -245,7 +245,7 @@ public static void  musicNext(){
         music_progress_bar.setEnabled(false);
     }
     // 设置蓝牙音乐进度条信息
-    public static void setBlueMusicProgress(int time) {
+    public  void setBlueMusicProgress(int time) {
 //        time /= 1000;
         int total_time = BlueMusicBroadcoast.music_total_time;
         if (time > total_time) {
@@ -283,7 +283,7 @@ public static void  musicNext(){
     }
 
 
-    public static  void setMusicInfoHanle(String songname, String singer){
+    public   void setMusicInfoHanle(String songname, String singer){
 
         Message message = myHandler.obtainMessage();
         Bundle bundle =new Bundle();
@@ -296,7 +296,7 @@ public static void  musicNext(){
     }
 
     // 设置歌曲信息
-    private static void setMusicInfo(String songname, String singer) {
+    private  void setMusicInfo(String songname, String singer) {
         if (tv_bt_music_songname != null) {
             if(!"null".equals(songname)) {
                 tv_bt_music_songname.setText(songname);
@@ -309,7 +309,7 @@ public static void  musicNext(){
         }
     }
 
-    static String gifPath = "file:///android_asset/bt_music.gif";
+     String gifPath = "file:///android_asset/bt_music.gif";
     /*初始化gif控制*/
     private void initGif(){
         Glide.with(this).load(gifPath).into(mGifImageView);
@@ -328,14 +328,14 @@ public static void  musicNext(){
 
     }
     /*开启gif*/
-    public  static  void startGif(){
+    public    void startGif(){
 
             isPlay=true;
             iv_bt_stop.setVisibility(View.GONE);
 
     }
     /*关闭gif*/
-    public  static  void stopGif(){
+    public    void stopGif(){
 
             isPlay=false;
             if(iv_bt_stop!=null) {
@@ -352,7 +352,7 @@ public static void  musicNext(){
             musicPlay();
         }
     }
-    public  static  void gifPlayShow(){
+    public    void gifPlayShow(){
         if(isPlay){
 
                 iv_bt_stop.setVisibility(View.GONE);
@@ -363,7 +363,7 @@ public static void  musicNext(){
 
         }
     }
-    public  static  Handler myHandler = new Handler() {
+    public    Handler myHandler = new Handler() {
 
         public void handleMessage(Message msg) {
             try {
@@ -435,7 +435,7 @@ public static void  musicNext(){
     /**
      * 蓝牙音乐监听器
      */
-    public static AudioManager.OnAudioFocusChangeListener afBTChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+    public  AudioManager.OnAudioFocusChangeListener afBTChangeListener = new AudioManager.OnAudioFocusChangeListener() {
 
         @Override
         public void onAudioFocusChange(int i) {
@@ -517,7 +517,7 @@ public static void  musicNext(){
             setNullViewGone(true);
         }
     }
-    public static  void setNullViewGone(boolean isShow){
+    public   void setNullViewGone(boolean isShow){
         if(NullView!=null){
         NullView.setVisibility(isShow ? View.VISIBLE : View.GONE);}
         if(isShow){

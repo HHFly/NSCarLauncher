@@ -105,7 +105,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private  CircleIndicator indicator;//viewpager指示器
     public static BaseFragment mCurFragment;//当前页
     public static FMFragment fmFragment ;//收音机
-    public static  BTMusicFragment btMusicFragment;//蓝牙音乐
+    public   BTMusicFragment btMusicFragment;//蓝牙音乐
     public static MusicFragment musicFragment;//本地音乐
     public static PhoneFragment phoneFragment;//电话
     public static SetFragment setFragment;//设置
@@ -371,6 +371,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
 
     }
+
     /*隐藏fragemt*/
     public static void  hideFragment(){
 //        frameLayout.animate()
@@ -395,8 +396,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 setFragment.dissDialog();
             }
         }
-        if(btMusicFragment != null){
-            btMusicFragment.onDisplay();
+        if(homePagerActivity.getBtMusicFragment() != null){
+            homePagerActivity.getBtMusicFragment().onDisplay();
         }
         freshlayout();
     }
@@ -472,7 +473,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             case  FragmentType.BTMUSIC:
                 blueToothSetFragment.setOriginId(1);
                 fragemntType=2;
-                switchFragment(btMusicFragment);
+                switchFragment(homePagerActivity.getBtMusicFragment());
 
                 break;
             case  FragmentType.MUSIC:
@@ -1370,4 +1371,7 @@ public int getSim(int num) {
         }
     }
 
+    public BTMusicFragment getBtMusicFragment() {
+        return btMusicFragment;
+    }
 }
