@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.phone.adapter.PMemberAdapter;
 import com.kandi.dell.nscarlauncher.ui.phone.model.PhoneBookInfo;
 
@@ -68,7 +69,7 @@ public class PMemberFragment extends BaseFragment{
                 @Override
                 public void onClickMem(PhoneBookInfo data) {
 
-                    PhoneFragment.callphone(data.getNumber());
+                    HomePagerActivity.homePagerActivity.getPhoneFragment().callphone(data.getNumber());
                 }
 
 

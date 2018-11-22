@@ -34,7 +34,7 @@ public class SetFragment extends BaseFragment {
     private SetData  mData =new SetData();
     private SetAdapter mAdapter;
     private BaseFragment mCurFragment;//当前页
-    private static RelativeLayout fragmentShow;
+    private RelativeLayout fragmentShow;
     BlueToothSetFragment blueToothSetFragment;
     WifiFragment wifiFragment;
     DisplayFragment displayFragment;
@@ -124,7 +124,7 @@ public class SetFragment extends BaseFragment {
         mCurFragment.Resume();
         setVisibilityGone(R.id.rl_f_set,true);
     }
-    public  static void hideFragment(){
+    public void hideFragment(){
         fragmentShow.setVisibility(View.GONE);
     }
     private void Click(SetModel data){
@@ -169,5 +169,13 @@ public class SetFragment extends BaseFragment {
                     switchFragment(upgradeFragment);
                     break;
             }
+    }
+
+    public UpgradeFragment getUpgradeFragment() {
+        return upgradeFragment;
+    }
+
+    public DisplayFragment getDisplayFragment() {
+        return displayFragment;
     }
 }

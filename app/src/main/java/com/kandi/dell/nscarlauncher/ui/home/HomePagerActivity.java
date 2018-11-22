@@ -112,11 +112,12 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
     public FMFragment fmFragment ;//收音机
 
-    public static PhoneFragment phoneFragment;//电话
-    public static SetFragment setFragment;//设置
+
+    public PhoneFragment phoneFragment;//电话
+    public SetFragment setFragment;//设置
     public  static AppFragment appFragment;//应用
     public  static VideoFragment videoFragment;//视频
-    public static BlueToothSetFragment blueToothSetFragment;//蓝牙设置
+    public BlueToothSetFragment blueToothSetFragment;//蓝牙设置
     public  static  BaseActivity context;
     private ArrayList<HomeModel> mData;
     static Dialog alertDialog;//来电弹框
@@ -398,9 +399,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         if(homePagerActivity!=null){
             homePagerActivity.hideLoadingDialog();
         }if(FragmentType.BTSET==mCurFragment.getmType()||FragmentType.SET==mCurFragment.getmType()){
-            if(blueToothSetFragment!=null) {
-                blueToothSetFragment.hideDialog();
-                setFragment.dissDialog();
+            if(homePagerActivity.getBlueToothSetFragment()!=null) {
+                homePagerActivity.getBlueToothSetFragment().hideDialog();
+                homePagerActivity.getSetFragment().dissDialog();
             }
         }
         if(homePagerActivity.getBtMusicFragment() != null){
@@ -478,7 +479,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
                 break;
             case  FragmentType.BTMUSIC:
-                blueToothSetFragment.setOriginId(1);
+                homePagerActivity.getBlueToothSetFragment().setOriginId(1);
                 fragemntType=2;
                 switchFragment(homePagerActivity.getBtMusicFragment());
 
@@ -489,20 +490,20 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
                 break;
              case  FragmentType.PHONE:
-                 blueToothSetFragment.setOriginId(2);
+                 homePagerActivity.getBlueToothSetFragment().setOriginId(2);
                 if(isShowPhoneAnim){
                     fragemntType = 1;
                 }else {
                     fragemntType = 0;
                 }
 
-                 switchFragment(phoneFragment);
+                 switchFragment(homePagerActivity.getPhoneFragment());
 
                  break;
             case  FragmentType.SET:
-                blueToothSetFragment.setOriginId(0);
+                homePagerActivity.getBlueToothSetFragment().setOriginId(0);
                 fragemntType=3;
-                switchFragment(setFragment);
+                switchFragment(homePagerActivity.getSetFragment());
                 break;
             case  FragmentType.APPLICATION:
                 fragemntType=5;
@@ -513,7 +514,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 switchFragment(videoFragment);
                 break;
             case FragmentType.BTSET:
-                switchFragment(blueToothSetFragment);
+                switchFragment(homePagerActivity.getBlueToothSetFragment());
                 break;
         }
     }
@@ -586,7 +587,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     }
     // 来电显示弹出框
     public void incomingShow(String number, final int index) {
-        if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
+        if (audioManager.requestAudioFocus(homePagerActivity.getPhoneFragment().afChangeListener, 11,
                 AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             alertDialog = new Dialog(this, R.style.nodarken_style);
 
@@ -594,7 +595,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             Window window = alertDialog.getWindow();
             window.setContentView(R.layout.dialog_phone_incalling);
             TextView tv_info = (TextView) window.findViewById(R.id.dialog_text);
-            tv_info.setText(PhoneFragment.getName(number));
+            tv_info.setText(homePagerActivity.getPhoneFragment().getName(number));
             Button bt_answer = (Button) window.findViewById(R.id.dialog_btn_answer);
             Button bt_refuse = (Button) window.findViewById(R.id.dialog_btn_refuse);
             bt_answer.setOnClickListener(new View.OnClickListener() {
@@ -1029,11 +1030,11 @@ public int getSim(int num) {
                 int  index =intent.getIntExtra("index", 0);
                 if(2!=index) {
 //                    incomingShow(intent.getStringExtra("number"), intent.getIntExtra("index", 0));
-                    if (audioManager.requestAudioFocus(PhoneFragment.afChangeListener, 11,
+                    if (audioManager.requestAudioFocus(homePagerActivity.getPhoneFragment().afChangeListener, 11,
                             AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                         jumpFragment(FragmentType.PHONE);
 
-                        PhoneFragment.callIn(intent.getStringExtra("number"),intent.getStringExtra("address"),intent.getStringExtra("type"));
+                        homePagerActivity.getPhoneFragment().callIn(intent.getStringExtra("number"),intent.getStringExtra("address"),intent.getStringExtra("type"));
                     }
 
                 }
@@ -1379,6 +1380,7 @@ public int getSim(int num) {
     }
 
 
+
     public MusicFragment getMusicFragment() {
         return musicFragment;
     }
@@ -1395,6 +1397,18 @@ public int getSim(int num) {
     }
     public FMFragment getFmFragment() {
         return fmFragment;
+    }
+
+    public PhoneFragment getPhoneFragment() {
+        return phoneFragment;
+    }
+
+    public BlueToothSetFragment getBlueToothSetFragment() {
+        return blueToothSetFragment;
+    }
+
+    public SetFragment getSetFragment() {
+        return setFragment;
 
     }
 }

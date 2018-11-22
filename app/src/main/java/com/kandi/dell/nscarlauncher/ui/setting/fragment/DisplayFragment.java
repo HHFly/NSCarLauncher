@@ -12,14 +12,14 @@ import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.FragmentUtils;
 import com.kandi.dell.nscarlauncher.common.util.LightnessControl;
 import com.kandi.dell.nscarlauncher.common.util.ScreenManager;
-import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 
 public class DisplayFragment extends BaseFragment implements CompoundButton.OnCheckedChangeListener {
     SeekBar seekBar ;
     RelativeLayout setWallpaper;
     SwitchCompat autolight;
     private BaseFragment mCurFragment;//当前页
-    private static RelativeLayout fragmentShow;
+    private RelativeLayout fragmentShow;
     SetWallpaperFragment setWallpaperFragment;
 
     @Override
@@ -95,14 +95,14 @@ public class DisplayFragment extends BaseFragment implements CompoundButton.OnCh
         setVisibilityGone(R.id.rl_set_wallpaper,true);
     }
 
-    public static void hideFragment(){
+    public void hideFragment(){
         fragmentShow.setVisibility(View.GONE);
     }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_return:
-                SetFragment.hideFragment();
+                HomePagerActivity.homePagerActivity.getSetFragment().hideFragment();
                 break;
             case R.id.setWallpaper:
                 switchFragment(setWallpaperFragment);
