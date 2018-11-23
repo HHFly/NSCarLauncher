@@ -18,27 +18,27 @@ import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
-import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
-import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
 import com.kandi.dell.nscarlauncher.widget.RadioRulerView;
 
 import java.util.ArrayList;
 
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
+
 public class FMFragment extends BaseFragment implements RadioRulerView.OnValueChangeListener{
     private FMAdapter mAdapter ;
     private RadioRulerView mRule;
-    public static ArrayList<Float> fm_list = new ArrayList<>();
+    public ArrayList<Float> fm_list = new ArrayList<>();
     private  ArrayList<Float> mData =new ArrayList<>();
     private HomePagerActivity homePagerActivity;
 
     private IFmService radio;  //收音机
-    public static boolean isPlay,isSearch;
-    public static   float channel = 93.0f;// 默认初始的波段
+    public boolean isPlay,isSearch;
+    public float channel = 93.0f;// 默认初始的波段
     private IKdAudioControlService audioservice ;
     AudioManager audioManager;
-   public static String FMCHANNEL ="channel";
-    public static String FMCHANNELLIST ="channellist";
-   private  boolean mIsAuto =false; //是否处于自动搜索
+    public String FMCHANNEL ="channel";
+    public String FMCHANNELLIST ="channellist";
+    private boolean mIsAuto =false; //是否处于自动搜索
 
     @Override
     public void setmType(int mType) {
@@ -49,7 +49,7 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
         this.homePagerActivity = homePagerActivity;
     }
 
-    public static float getChannel() {
+    public float getChannel() {
         return channel;
     }
 
@@ -110,7 +110,7 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
                 homePagerActivity.hideFragment();
                 closeFm();
                SPUtil.getInstance(getContext(),FMCHANNEL).putFloat(FMCHANNEL,channel);
-                App.pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
+                homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
                 break;
             case R.id.iv_search:
                 if(!mIsAuto) {
@@ -306,7 +306,7 @@ public void openFm(){
                     public void run() {
                         try {
                             System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
-                            App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
+                            homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
 //
 //                        System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 开机初始化为频道93.0
                         } catch (Exception e) {
@@ -326,7 +326,7 @@ public void openFm(){
                 public void run() {
                     try {
                         System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
-                        App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.FM));
+                        homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.FM));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -409,7 +409,7 @@ public void  changeChannel(float value){
                             try {
 
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
-                                App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.FM));
+                                homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.FM));
                                 isPlay=false;
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -425,10 +425,8 @@ public void  changeChannel(float value){
 //                                Log.d("Fm","Channel open  "+String.valueOf(channel));
                                 System.out.println("radio.SetRadioFreq():" + channel + "----" + App.get().getRadio().SetRadioFreq(channel)); // 开机初始化为频道93.0
 //                                Log.d("Fm","Channel  set "+String.valueOf(channel));
-                                App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
+                                homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
                                 isPlay=true;
-                                HomePagerOneFragment.music_name.setText(getContext().getString(R.string.蓝牙音乐));
-                                HomePagerTwoFragment.music_name.setText(getContext().getString(R.string.本地音乐));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -440,7 +438,7 @@ public void  changeChannel(float value){
                         public void run() {
                             try {
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
-                                App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.FM));
+                                homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.FM));
                                 isPlay=false;
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -453,7 +451,7 @@ public void  changeChannel(float value){
                         public void run() {
                             try {
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
-                                App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.FM));
+                                homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.FM));
                                 isPlay=false;
                             } catch (Exception e) {
                                 e.printStackTrace();

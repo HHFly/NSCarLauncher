@@ -7,10 +7,11 @@ import android.widget.RelativeLayout;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.FragmentUtils;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 
 public class SetResetFragment extends BaseFragment {
     private BaseFragment mCurFragment;//当前页
-    private static RelativeLayout fragmentShow;
+    private RelativeLayout fragmentShow;
     SetUserResetFragment setUserResetFragment;
     @Override
     public int getContentResId() {
@@ -44,7 +45,7 @@ public class SetResetFragment extends BaseFragment {
         setVisibilityGone(R.id.rl_set_reset,true);
     }
 
-    public static void hideFragment(){
+    public void hideFragment(){
         fragmentShow.setVisibility(View.GONE);
     }
 
@@ -52,7 +53,7 @@ public class SetResetFragment extends BaseFragment {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_return:
-                UpgradeFragment.hideFragment();
+                HomePagerActivity.homePagerActivity.getSetFragment().getUpgradeFragment().hideFragment();
                 break;
             case R.id.bt_resetcar:
                 switchFragment(setUserResetFragment);

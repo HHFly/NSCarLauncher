@@ -25,7 +25,6 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.WifiUtil;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
-import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.adapter.WifiAdpter;
 import com.kandi.dell.nscarlauncher.ui.setting.model.Wifiinfo;
 import com.kandi.dell.nscarlauncher.widget.AddOneEtParamDialog;
@@ -37,13 +36,13 @@ import java.util.HashSet;
 import java.util.List;
 
 public class WifiFragment extends BaseFragment implements CompoundButton.OnCheckedChangeListener {
-    private static final int SCAN_WIFI = 1;
-    private static final int CURRENT_WIFI_ISNULL = 2;
-    private static final int CURRENT_WIFI_NOTNULL = 3;
+    private final int SCAN_WIFI = 1;
+    private final int CURRENT_WIFI_ISNULL = 2;
+    private final int CURRENT_WIFI_NOTNULL = 3;
     private WifiAdpter mAdapter;
     private WifiInfo currentWifiInfo;// 当前所连接的wifi
     List<Wifiinfo> datas = new ArrayList<Wifiinfo>();
-    private static WifiManager wifiManager;
+    private WifiManager wifiManager;
     private List<ScanResult> wifiList;// wifi列表
     private boolean isScan;
     private SwitchCompat aSwitchCompat;
@@ -69,7 +68,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
     public void onClick(View v) {
       switch (v.getId()){
           case R.id.iv_return:
-              SetFragment.hideFragment();
+              HomePagerActivity.homePagerActivity.getSetFragment().hideFragment();
               break;
           case R.id.ll_wifi_current:
               showCurrentWifiInfo(getContext());
@@ -249,7 +248,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
 
         Collections.sort(datas, new ComparatorValues()); // 对获得的文件进行排序
     }
-    public static boolean isWifiConnected(Context context)
+    public boolean isWifiConnected(Context context)
     {   try {
         ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -264,7 +263,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
     }
 
     }
-    public static final class ComparatorValues implements Comparator<Wifiinfo> {
+    public final class ComparatorValues implements Comparator<Wifiinfo> {
 
         @Override
         public int compare(Wifiinfo lhs, Wifiinfo rhs) {
@@ -279,12 +278,12 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
     /**
      * These values are matched in string arrays -- changes must be kept in sync
      */
-    public static final int SECURITY_NONE = 0;
-    public static final int SECURITY_WEP = 1;
-    public static final int SECURITY_PSK = 2;
-    public static final int SECURITY_EAP = 3;
+    public final int SECURITY_NONE = 0;
+    public final int SECURITY_WEP = 1;
+    public final int SECURITY_PSK = 2;
+    public final int SECURITY_EAP = 3;
 
-    private static int getSecurity(ScanResult result) {
+    private int getSecurity(ScanResult result) {
         if (result.capabilities.contains("WEP")) {
             return SECURITY_WEP;
         } else if (result.capabilities.contains("PSK")) {

@@ -8,12 +8,12 @@ import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.FragmentUtils;
-import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.widget.AddOneEtParamDialog;
 
 public class UpgradeFragment extends BaseFragment {
     private BaseFragment mCurFragment;//当前页
-    private static RelativeLayout fragmentShow;
+    private RelativeLayout fragmentShow;
     SetResetFragment setResetFragment;
 
     @Override
@@ -49,14 +49,14 @@ public class UpgradeFragment extends BaseFragment {
         setVisibilityGone(R.id.rl_set_upgrade,true);
     }
 
-    public static void hideFragment(){
+    public void hideFragment(){
         fragmentShow.setVisibility(View.GONE);
     }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_return:
-                SetFragment.hideFragment();
+                HomePagerActivity.homePagerActivity.getSetFragment().hideFragment();
                 break;
             case R.id.sys_upgrade:
 //                switchFragment(setResetFragment);
@@ -87,5 +87,9 @@ public class UpgradeFragment extends BaseFragment {
         });
 
         mAddOneEtParamDialog.show(this.getFragmentManager());
+    }
+
+    public SetResetFragment getSetResetFragment() {
+        return setResetFragment;
     }
 }

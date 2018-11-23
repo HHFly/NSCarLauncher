@@ -42,13 +42,13 @@ public class HomePagerThreeFragment extends BaseFragment {
         switch (view.getId()){
 
             case R.id.rl_set:
-                HomePagerActivity.jumpFragment(FragmentType.SET);
+                homePagerActivity.jumpFragment(FragmentType.SET);
                 break;
             case R.id.rl_app:
-                HomePagerActivity.jumpFragment(FragmentType.APPLICATION);
+                homePagerActivity.jumpFragment(FragmentType.APPLICATION);
                 break;
             case R.id.rl_video:
-                HomePagerActivity.jumpFragment(FragmentType.VIDEO);
+                homePagerActivity.jumpFragment(FragmentType.VIDEO);
                 break;
         }
     }

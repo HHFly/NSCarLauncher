@@ -25,9 +25,12 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard{
     FruitAdapter adapter;
+
+
     public MyJCVideoPlayerStandard(Context context) {
         super(context);
         initView(context);
+
     }
 
     public MyJCVideoPlayerStandard(Context context, AttributeSet attrs) {
@@ -95,7 +98,7 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard{
             VideoFragment.position = VideoFragment.position + 1;
             if(VideoFragment.position < VideoFragment.mData.size()){
                 JCVideoPlayer.WIFI_TIP_DIALOG_SHOWED =true;//关闭网络播放提示
-                JCFullScreenActivity.startActivity(VideoFragment.context,
+                JCFullScreenActivity.startActivity(getContext(),
                         VideoFragment.mData.get(VideoFragment.position).url,
                         MyJCVideoPlayerStandard.class,
                         VideoFragment.mData.get(VideoFragment.position).title);
@@ -104,7 +107,7 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard{
             VideoFragment.position = VideoFragment.position - 1;
             if(VideoFragment.position >= 0){
                 JCVideoPlayer.WIFI_TIP_DIALOG_SHOWED =true;//关闭网络播放提示
-                JCFullScreenActivity.startActivity(VideoFragment.context,
+                JCFullScreenActivity.startActivity(getContext(),
                         VideoFragment.mData.get(VideoFragment.position).url,
                         MyJCVideoPlayerStandard.class,
                         VideoFragment.mData.get(VideoFragment.position).title);
@@ -117,7 +120,7 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard{
         VideoFragment.position = position;
         if(VideoFragment.position >= 0){
             JCVideoPlayer.WIFI_TIP_DIALOG_SHOWED =true;//关闭网络播放提示
-            JCFullScreenActivity.startActivity(VideoFragment.context,
+            JCFullScreenActivity.startActivity(getContext(),
                     VideoFragment.mData.get(VideoFragment.position).url,
                     MyJCVideoPlayerStandard.class,
                     VideoFragment.mData.get(VideoFragment.position).title);
@@ -131,7 +134,7 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard{
         VideoFragment.position = VideoFragment.position + 1;
         if(VideoFragment.position < VideoFragment.mData.size()){
             JCVideoPlayer.WIFI_TIP_DIALOG_SHOWED =true;//关闭网络播放提示
-            JCFullScreenActivity.startActivity(VideoFragment.context,
+            JCFullScreenActivity.startActivity(getContext(),
                     VideoFragment.mData.get(VideoFragment.position).url,
                     MyJCVideoPlayerStandard.class,
                     VideoFragment.mData.get(VideoFragment.position).title);

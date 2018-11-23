@@ -15,7 +15,7 @@ import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
-import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
+
 import com.kandi.dell.nscarlauncher.ui.music.model.Mp3Info;
 import com.kandi.dell.nscarlauncher.widget.AddOneEtParamDialog;
 
@@ -24,18 +24,21 @@ import java.io.RandomAccessFile;
 import java.lang.reflect.Field;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
+import java.util.ArrayList;
 import java.util.List;
 
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
+
 public class VideoFragment extends BaseFragment{
     private VideoAdapter mAdapter;
     public static List<Mp3Info> mData;
-    public static DialogLocalMusic dialogLocalMusic;
+
     public final static int  VIEWFRESH =1;
     public static int position = 0;
-    public static Context context;
+    public   Context context;
     public static int dataMode;
     public static final String PATH_SDCARDMOVIES = "/sdcard/Movies/";
     public int blockCount = 3;
@@ -73,10 +76,12 @@ public class VideoFragment extends BaseFragment{
     @Override
     public void initView() {
         context = getContext();
-        DialogLocalMusic.setVideoFragment(this);
+
         getMusicData();
-//       dialogLocalMusic.ScanVideo(getContext(),false);
-//       dialogLocalMusic.ScanVideoMusic(getContext(),2);
+//       homePagerActivity.getDialogLocalMusic().ScanVideo(getContext(),false);
+//       homePagerActivity.getDialogLocalMusic().ScanVideoMusic(getContext(),2);
+
+
     }
 
     @Override
@@ -89,7 +94,7 @@ public class VideoFragment extends BaseFragment{
                 changeData(2);
                 break;
             case R.id.video_local_return:
-                HomePagerActivity.hideFragment();
+                homePagerActivity.hideFragment();
                 break;
         }
     }
@@ -99,12 +104,12 @@ public class VideoFragment extends BaseFragment{
         switch (dataMode) {
             case 3:
                 dataMode=1;
-                mData =DialogLocalMusic.SDVideoData;
+                mData =homePagerActivity.getDialogLocalMusic().SDVideoData;
                 selectMode(dataMode);
 
                 break;
             case 2:
-                mData =DialogLocalMusic.USBVideoData;
+                mData =homePagerActivity.getDialogLocalMusic().USBVideoData;
                 if(mData!=null||mData.size()!=0) {
 
                     selectMode(2);
@@ -112,10 +117,10 @@ public class VideoFragment extends BaseFragment{
                 break;
             default:
                 dataMode=1;
-                mData =DialogLocalMusic.SDVideoData;
+                mData =homePagerActivity.getDialogLocalMusic().SDVideoData;
                 selectMode(dataMode);
                 if(mData==null||mData.size()==0){
-                    mData =DialogLocalMusic.USBVideoData;
+                    mData =homePagerActivity.getDialogLocalMusic().USBVideoData;
                     if(mData!=null||mData.size()!=0) {
                         dataMode=2;
                         selectMode(dataMode);
@@ -131,9 +136,9 @@ public class VideoFragment extends BaseFragment{
         dataMode = mode;
 
         if(3==dataMode){
-            DialogLocalMusic.updateLocalVideo(context);
+            homePagerActivity.getDialogLocalMusic().updateLocalVideo(context);
         }else {
-            mData =mode==1?DialogLocalMusic.SDVideoData:DialogLocalMusic.USBVideoData;
+            mData =mode==1?homePagerActivity.getDialogLocalMusic().SDVideoData:homePagerActivity.getDialogLocalMusic().USBVideoData;
             selectMode(mode);
             initRvAdapter(mData);
         }
@@ -145,7 +150,7 @@ public class VideoFragment extends BaseFragment{
 
                 case VIEWFRESH:
 
-                    if(FragmentType.VIDEO==HomePagerActivity.mCurFragment.getmType()) {
+                    if(FragmentType.VIDEO==homePagerActivity.mCurFragment.getmType()) {
                         getMusicData();
                     }
                     break;
@@ -193,7 +198,7 @@ public class VideoFragment extends BaseFragment{
 //                        imageView.setVisibility(View.GONE);
 //                    }
                     position = Pos;
-                    HomePagerTwoFragment.music_name.setText(getContext().getString(R.string.本地音乐));
+                    homePagerActivity.getHomePagerTwoFragment().music_name.setText(getContext().getString(R.string.本地音乐));
                     JCFullScreenActivity.startActivity(getContext(),
                             data.url,
                             MyJCVideoPlayerStandard.class,
@@ -318,7 +323,7 @@ public class VideoFragment extends BaseFragment{
                 Intent intent  =new Intent();
                 intent.setAction("nscar_fresh_sdcard");
                 context.sendBroadcast(intent);
-                DialogLocalMusic.updateLocalVideo(context);
+                homePagerActivity.getDialogLocalMusic().updateLocalVideo(context);
                 myHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {

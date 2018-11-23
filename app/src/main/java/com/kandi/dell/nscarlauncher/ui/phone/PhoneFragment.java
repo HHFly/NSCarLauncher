@@ -24,7 +24,6 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.StringUtils;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
-import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.phone.model.PhoneBookInfo;
 import com.kandi.dell.nscarlauncher.ui.phone.model.PhoneRecordInfo;
@@ -40,41 +39,43 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
+
 
 public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChangeListener,MvpMainView {
-    public final static int                    PHONE_OVER     = 1;//结束
-    public final static int                    PHONE_CONTINUE = 2;//
-    public final static int                    PHONE_START    = 3;
-    public final static int                    PHONE_END      = 4;//
-    public final static int                    PHONE_ANSWER     = 9;//接电话
-    public final static int                    DELETE_CLIKE   = 5;
-    public final static int                    BOOKREFRESH   = 6;
-    public final static int                    RECORDREFRESH  =7;
-    public final static int                    PHONE_IN =8;//来电
-    public final static int                    BOOKBUSY = 2000;//拼音比较
+    public final int                    PHONE_OVER     = 1;//结束
+    public final int                    PHONE_CONTINUE = 2;//
+    public final int                    PHONE_START    = 3;
+    public final int                    PHONE_END      = 4;//
+    public final int                    PHONE_ANSWER     = 9;//接电话
+    public final int                    DELETE_CLIKE   = 5;
+    public final int                    BOOKREFRESH   = 6;
+    public final int                    RECORDREFRESH  =7;
+    public final int                    PHONE_IN =8;//来电
+    public final int                    BOOKBUSY = 2000;//拼音比较
 
-    public static boolean flag_phone; //是否通话
-    private static int phone_call_time;//通话时间
-    static String phone_continue_show = "";//通话时间
+    public boolean flag_phone; //是否通话
+    private int phone_call_time;//通话时间
+    String phone_continue_show = "";//通话时间
     private ViewPager viewPager;
     private Fragment mCurFragment;//当前页
     private ArrayList<Fragment> mFragments;
-    private static PNumFragment pNumFragment;//电话页
-    private static PMemberFragment pMemberFragment;//通讯录
-    private static PRecordFragment pRecordFragment;//通话记录
-    private static ArrayList<PhoneBookInfo> phoneBookInfos =new ArrayList<>();//通讯录
-    private static ArrayList<PhoneRecordInfo> phoneRecordInfos =new ArrayList<>();//通讯记录
-    private static  String number,address,type;
-    static TextView tv_phone_number,tv_phone_info,tv_keep_calltext,tv_other_phine,bt_blueSet;
-    static ImageView bt_call,bt_stop;
-    static LinearLayout ll_other,ll_calling_key,ll_calling_controll;
-    static RelativeLayout rl_call;
-    static AudioManager audioManager;
-    static IKdAudioControlService audioservice ;
-    static IKdBtService btservice;
-    static MainPresenter mainPresenter;
+    private PNumFragment pNumFragment;//电话页
+    private PMemberFragment pMemberFragment;//通讯录
+    private PRecordFragment pRecordFragment;//通话记录
+    private ArrayList<PhoneBookInfo> phoneBookInfos =new ArrayList<>();//通讯录
+    private ArrayList<PhoneRecordInfo> phoneRecordInfos =new ArrayList<>();//通讯记录
+    private String number,address,type;
+    TextView tv_phone_number,tv_phone_info,tv_keep_calltext,tv_other_phine,bt_blueSet;
+    ImageView bt_call,bt_stop;
+    LinearLayout ll_other,ll_calling_key,ll_calling_controll;
+    RelativeLayout rl_call;
+    AudioManager audioManager;
+    IKdAudioControlService audioservice ;
+    IKdBtService btservice;
+    MainPresenter mainPresenter;
 
-    public static RelativeLayout NullView ;//空界面
+    public RelativeLayout NullView ;//空界面
     private int callIndex;
 
     @Override
@@ -177,7 +178,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         }
     }
     /*打电话*/
-   public static void callphone(String num){
+   public void callphone(String num){
        number=num;
        new Thread() {
            public void run() {
@@ -187,7 +188,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
    }
    /*挂电话*/
-    public static void hangDownphone(){
+    public void hangDownphone(){
 
         new Thread() {
             public void run() {
@@ -198,7 +199,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
     }
     /*接电话*/
-    public static void answerPhone(){
+    public void answerPhone(){
 
         new Thread() {
             public void run() {
@@ -262,17 +263,19 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         }
     }
     /*获取通话记录*/
-    public  static  void getPhoneRecord(){
+    public void getPhoneRecord(){
         try {
-          String PhoneRecordStr=  btservice.getCallHistoryJsonString();
-            getPhoneRecordStr(PhoneRecordStr);
+            if(btservice != null){
+                String PhoneRecordStr=  btservice.getCallHistoryJsonString();
+                getPhoneRecordStr(PhoneRecordStr);
+            }
 //            LogUtils.log(PhoneRecordStr);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
     // 使蓝牙获取到的通话记录存储起来
-    public static void getPhoneRecordStr(String str) {
+    public void getPhoneRecordStr(String str) {
         if (str != null && str.compareTo("") != 0) {
             if(phoneRecordInfos==null){
                 phoneRecordInfos =new ArrayList<>();
@@ -306,17 +309,19 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         }
     }
     // 使蓝牙获取到的电话本存储起来
-    public static void getPhoneBook() {
+    public void getPhoneBook() {
         try {
-            String  ContactsJsonString =btservice.getContactsJsonString();
-            getPhoneBookStr(ContactsJsonString);
+            if(btservice != null){
+                String  ContactsJsonString =btservice.getContactsJsonString();
+                getPhoneBookStr(ContactsJsonString);
+            }
 //            LogUtils.log(ContactsJsonString);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
     // 使蓝牙获取到的电话本存储起来
-    public static void getPhoneBookStr(String str) {
+    public void getPhoneBookStr(String str) {
         // subStringPrintf(str, 1024);
 //        System.out.println("++++" + str);
         if (str != null && str.compareTo("") != 0) {
@@ -371,10 +376,10 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
             }
         }
     }
-    static StringBuffer stringBuffer;
-    static String[] arrays = new String[]{"贾","单","沈","仇","解","翟","查","曾","晟","乐","区","冯","繁","长","石","柏","朴","缪"};
-    static String[] toarrays = new String[]{"甲","善","深","求","谢","宅","乍","增","成","月","欧","逢","婆","帐","时","摆","普","秒"};
-    private static String getDuoYin(String inputString){
+    StringBuffer stringBuffer;
+    String[] arrays = new String[]{"贾","单","沈","仇","解","翟","查","曾","晟","乐","区","冯","繁","长","石","柏","朴","缪"};
+    String[] toarrays = new String[]{"甲","善","深","求","谢","宅","乍","增","成","月","欧","逢","婆","帐","时","摆","普","秒"};
+    private String getDuoYin(String inputString){
         stringBuffer = new StringBuffer(inputString);
         for(int i=0;i<arrays.length;i++){
             if(stringBuffer.indexOf(arrays[i]) == 0){
@@ -385,11 +390,11 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         return stringBuffer.toString();
     }
 
-    private static String regex = "^[a-zA-Z].*$";
+    private String regex = "^[a-zA-Z].*$";
 
-    private static Pattern pattern = Pattern.compile(regex);
+    private Pattern pattern = Pattern.compile(regex);
 
-    public static boolean isStartWithLetter(String str){
+    public boolean isStartWithLetter(String str){
         if (str != null) {
             if (pattern.matcher(str).matches()) {
                 return true;
@@ -399,7 +404,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     }
 
     // 改时间为标准格式
-    private static String changeTimeToStandard(String time) { // 20160807T183300
+    private String changeTimeToStandard(String time) { // 20160807T183300
         String result = "";
         if (time.length() >= 15) {
             result += time.substring(0, 4) + "-";
@@ -412,7 +417,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         return result;
     }
     // 电话接通开始
-    public static void phoneStart() {
+    public void phoneStart() {
         if (FlagProperty.flag_phone_ringcall) { // 来电显示电话号码
 
 //            bt_call.setVisibility(View.INVISIBLE);
@@ -449,7 +454,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         new CountThread().start();
     }
     // 通话开始开启一个计时线程
-    public static class CountThread extends Thread {
+    public class CountThread extends Thread {
         @Override
         public void run() {
             while (flag_phone) {
@@ -465,21 +470,21 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         }
     }
     // 打电话持续时间转化为hh:mm:ss格式
-    public static String timeToString(long time) {
+    public String timeToString(long time) {
         int hour = (int) (time / 3600);
         int minute = (int) ((time % 3600) / 60);
         int second = (int) (time % 60);
         return getTwoNumbers(hour) + ":" + getTwoNumbers(minute) + ":" + getTwoNumbers(second);
     }
     // 时间格式化标准
-    public static String getTwoNumbers(int num) {
+    public String getTwoNumbers(int num) {
         if (num < 10) {
             return "0" + num;
         } else {
             return "" + num;
         }
     }
-    public static Handler  myHandler = new Handler() {
+    public Handler  myHandler = new Handler() {
         public void handleMessage(Message msg) {
             try {
                 switch (msg.what) {
@@ -566,7 +571,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
     };
     // 手机端切换通话
-    public static void changeCallInPhone(int index) {
+    public void changeCallInPhone(int index) {
         if (index == 1) {
             tv_phone_number.setText(FlagProperty.phone_number_one);
             tv_keep_calltext.setText(FlagProperty.phone_number_two);
@@ -577,12 +582,12 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     }
 
     // 电话接通结束
-    public static void phoneStop(Context context) {
+    public void phoneStop(Context context) {
         Log.d("kondi", "BtPhone abandon audioFocus");
         if (audioManager == null) {
             audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         }
-        if (audioManager.abandonAudioFocus(PhoneFragment.afChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+        if (audioManager.abandonAudioFocus(afChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
 
         }
         if (tv_phone_info != null) {
@@ -593,7 +598,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 
     }
     // 通话结束开启一个线程
-    public static class CallOverThread extends Thread {
+    public class CallOverThread extends Thread {
         @Override
         public void run() {
 //            try {
@@ -605,7 +610,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         }
     }
     // 显示第三方通话来电
-    public static void showKeepCall(String number) {
+    public void showKeepCall(String number) {
         // number = getName(number);
 //        FlagProperty.phone_number_one = tv_phone_number.getText().toString().trim();
 //        FlagProperty.phone_number_two = number;
@@ -615,18 +620,18 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
 //        ll_other.setVisibility(View.VISIBLE);
     }
     // 显示第三方通话来电
-    public static void showCalling(String number) {
+    public void showCalling(String number) {
         String phone = getName(number);
         tv_keep_calltext.setText(phone);
         tv_other_phine.setText(R.string.电话接入);
         ll_other.setVisibility(View.VISIBLE);
     }
     // 挂断第三方通话来电
-    public static void showCallhangup() {
+    public void showCallhangup() {
         ll_other.setVisibility(View.INVISIBLE);
     }
     // 接听第三方通话来电
-    public static void showCallhAnswer() {
+    public void showCallhAnswer() {
         String phone = getName(FlagProperty.phone_number_one);
         String phonetwo =getName(FlagProperty.phone_number_two);
         tv_phone_number.setText(phonetwo);
@@ -635,7 +640,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     }
     //保留第三方通话
 
-    public static void showCallhKeep() {
+    public void showCallhKeep() {
         String phone = getName(FlagProperty.phone_number_one);
         String phonetwo =getName(FlagProperty.phone_number_two);
         tv_phone_number.setText(phone);
@@ -643,7 +648,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         tv_other_phine.setText(R.string.保持通话);
     }
     // 当三方通话中断掉其中一方时
-    public static void hideThirdCallShow(int index) {
+    public void hideThirdCallShow(int index) {
         if (index == 1) {
 
             tv_phone_number.setText(FlagProperty.phone_number_two);
@@ -653,7 +658,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         ll_other.setVisibility(View.INVISIBLE);
     }
     // 根据号码显示电话薄中姓名
-    public static String getName(String number) {
+    public String getName(String number) {
 //        System.out.println("number:" + number);
         if(number!=null) {
             for (int i = 0; i < phoneBookInfos.size(); i++) {
@@ -669,7 +674,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         return number;
     }
     /*音频焦点管理*/
-    public static AudioManager.OnAudioFocusChangeListener afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+    public AudioManager.OnAudioFocusChangeListener afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         public void onAudioFocusChange(int focusChange) {
             if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
 
@@ -681,7 +686,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         }
     };
     // 电话拨打
-    public static void phoneCall(String number) {
+    public void phoneCall(String number) {
         if (tv_phone_number==null) return;
         tv_phone_number.setText(getName(number));
         tv_phone_info.setText("正在呼叫...");
@@ -694,7 +699,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         }
     }
     //
-    public static void callIn(String num,String addre,String ty){
+    public void callIn(String num,String addre,String ty){
         number=num;
         address =addre;
        type =ty;
@@ -848,7 +853,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                 addphoneDtmf("#");
                 break;
             case R.id.bt_blueSet:
-                HomePagerActivity.jumpFragment(FragmentType.BTSET);
+                homePagerActivity.jumpFragment(FragmentType.BTSET);
                 break;
         }
     }
@@ -888,7 +893,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         }
     }
 
-    public static  void setNullViewGone(boolean isShow){
+    public void setNullViewGone(boolean isShow){
         if(NullView!=null) {
             NullView.setVisibility(isShow ? View.VISIBLE : View.GONE);
         }

@@ -8,7 +8,7 @@ import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 
 public class PNumFragment extends BaseFragment {
     private  String number;
-    static TextView TvNum;
+    TextView TvNum;
     @Override
     public int getContentResId() {
         return R.layout.fragment_phone_num;

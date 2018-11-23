@@ -35,23 +35,23 @@ public class DialogLocalMusic  {
     public static final String PATH_MUSIC = "/storage/sdcard0/Music/";
     static int cursor_position = 0;
     ListView listview;
-    public static List<Mp3Info> data = new ArrayList<Mp3Info>();
-    public static Mp3Info playnow = new Mp3Info();
-    public static List<Mp3Info> newdata = new ArrayList<Mp3Info>();
-    public static  List<Mp3Info> SDData = new ArrayList<Mp3Info>();
-    public static List<Mp3Info> USBData = new ArrayList<Mp3Info>();
-    public static List<Mp3Info> ColData = new ArrayList<Mp3Info>();
-    public static  List<Mp3Info> SDVideoData = new ArrayList<Mp3Info>();
-    public static List<Mp3Info> USBVideoData = new ArrayList<Mp3Info>();
-    static	VideoFragment videoFragment;
-    static MusicFragment musicFragment;
-    static String url;
-    static ContentResolver mResolver;
-    public static int musicID;
+    public  List<Mp3Info> data = new ArrayList<Mp3Info>();
+    public  Mp3Info playnow = new Mp3Info();
+    public  List<Mp3Info> newdata = new ArrayList<Mp3Info>();
+    public   List<Mp3Info> SDData = new ArrayList<Mp3Info>();
+    public  List<Mp3Info> USBData = new ArrayList<Mp3Info>();
+    public  List<Mp3Info> ColData = new ArrayList<Mp3Info>();
+    public   List<Mp3Info> SDVideoData = new ArrayList<Mp3Info>();
+    public  List<Mp3Info> USBVideoData = new ArrayList<Mp3Info>();
+    	VideoFragment videoFragment;
+     MusicFragment musicFragment;
+     String url;
+     ContentResolver mResolver;
+    public  int musicID;
     Context context;
-    public static boolean usbStatus = false;
-    public static boolean usedStatus = false;
-    public static void Clear(){
+    public  boolean usbStatus = false;
+    public  boolean usedStatus = false;
+    public  void Clear(){
         SDData.clear();
         USBData.clear();
         data.clear();
@@ -59,12 +59,12 @@ public class DialogLocalMusic  {
 
     }
 
-    public static void setVideoFragment(VideoFragment videoFragment1) {
-        videoFragment = videoFragment1;
+    public  void setVideoFragment(VideoFragment videoFragment1) {
+        this.videoFragment = videoFragment1;
     }
 
-    public static void setMusicFragment(MusicFragment musicFragment) {
-        DialogLocalMusic.musicFragment = musicFragment;
+    public  void setMusicFragment(MusicFragment musicFragment) {
+        this.musicFragment = musicFragment;
     }
 
     private void scanSdCard(){
@@ -100,7 +100,7 @@ public class DialogLocalMusic  {
 
 
 
-    public static List<Mp3Info> getDataMusic(Context context,String path) {
+    public  List<Mp3Info> getDataMusic(Context context,String path) {
 
         newdata.clear();
         ContentResolver	mResolver = context.getContentResolver();
@@ -141,7 +141,7 @@ public class DialogLocalMusic  {
         return data;
     }
     /*获取usb sd */
-    private static  void getSDUSBMusicData(Context context) {
+    private   void getSDUSBMusicData(Context context) {
 
         SDData.clear();
         ContentResolver mResolver = context.getContentResolver();
@@ -187,7 +187,7 @@ public class DialogLocalMusic  {
 
 
     /*获取usb sd */
-    private static  void getSDUSBViedoData(Context context) {
+    private   void getSDUSBViedoData(Context context) {
         SDVideoData.clear();
         ContentResolver mResolver = context.getContentResolver();
         System.out.println("mResolver:" + mResolver);
@@ -229,7 +229,7 @@ public class DialogLocalMusic  {
     }
 
     /*获取usb sd */
-    private static  void getUSBVideoMusicData(Context context,int choose) {
+    private   void getUSBVideoMusicData(Context context,int choose) {
         switch (choose){
             case 0:
                 USBVideoData.clear();
@@ -256,7 +256,7 @@ public class DialogLocalMusic  {
 
     }
 
-    public static void transportData(){
+    public  void transportData(){
         data.clear();
 
         if (SDData != null && SDData.size() != 0) {
@@ -286,7 +286,7 @@ public class DialogLocalMusic  {
             data.add(newdata.get(i));
         }
     }
-    public static void ScanMusic(final Context context ,final boolean isReSet){
+    public  void ScanMusic(final Context context ,final boolean isReSet){
 
         new Thread(){
             public void run() {
@@ -305,7 +305,7 @@ public class DialogLocalMusic  {
         }.start();  //开启一个线程
     }
 
-    public static void ScanVideo(final Context context ,final boolean isReSet){
+    public  void ScanVideo(final Context context ,final boolean isReSet){
 
         new Thread(){
             public void run() {
@@ -327,7 +327,7 @@ public class DialogLocalMusic  {
         }.start();  //开启一个线程
     }
 
-    public static void ScanVideoMusic(final Context context ,final int choose){
+    public  void ScanVideoMusic(final Context context ,final int choose){
 
         new Thread(){
             public void run() {
@@ -358,7 +358,7 @@ public class DialogLocalMusic  {
             }
         }.start();  //开启一个线程
     }
-    public static void updateColMusic(final Context context){
+    public  void updateColMusic(final Context context){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -370,7 +370,7 @@ public class DialogLocalMusic  {
             }
         }).start();
     }
-    public static void updateLocalMusic(final Context context){
+    public  void updateLocalMusic(final Context context){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -386,7 +386,7 @@ public class DialogLocalMusic  {
             }
         }).start();
     }
-    public static void updateLocalMusic(final Context context,boolean isShow){
+    public  void updateLocalMusic(final Context context,boolean isShow){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -401,7 +401,7 @@ public class DialogLocalMusic  {
             }
         }).start();
     }
-    public static void updateLocalVideo(final Context context){
+    public  void updateLocalVideo(final Context context){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -418,7 +418,7 @@ public class DialogLocalMusic  {
             }
         }).start();
     }
-    public static void updateGallery(final Context context){
+    public  void updateGallery(final Context context){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -436,7 +436,7 @@ public class DialogLocalMusic  {
             }
         }).start();
     }
-    public static void ScanAllDaTa(final Context context ){
+    public  void ScanAllDaTa(final Context context ){
 
         new Thread(){
             public void run() {
@@ -454,9 +454,10 @@ public class DialogLocalMusic  {
         }.start();  //开启一个线程
     }
 
-    private static ThreadCallback mThreadCallback;
-    public DialogLocalMusic(ThreadCallback threadCallback){
-        this.mThreadCallback = threadCallback;
+    private  ThreadCallback mThreadCallback;
+    public DialogLocalMusic(VideoFragment videoFragment,MusicFragment musicFragment){
+      this.videoFragment=videoFragment;
+      this.musicFragment=musicFragment;
     }
     public interface ThreadCallback {
 
@@ -475,7 +476,7 @@ public class DialogLocalMusic  {
      * @param choose 0:扫描音视频;1:扫描音乐;2:扫描视频
      * @return
      */
-    private static void getMediaFile(File file, final int choose) {
+    private  void getMediaFile(File file, final int choose) {
 
         file.listFiles(new FileFilter() {
 

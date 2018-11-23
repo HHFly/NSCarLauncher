@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.kandi.dell.nscarlauncher.R;
@@ -22,7 +21,6 @@ import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
-import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
 import com.kandi.dell.nscarlauncher.widget.CustomDialog;
 
 import java.io.File;
@@ -31,19 +29,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class BlueToothSetFragment extends BaseFragment implements CompoundButton.OnCheckedChangeListener{
-    private static final int BLUETOOTH_INFO_NAME = 1;
-    private static final int BLUETOOTH_CHANGE_NAME = 2;
-    private static final int BLUETOOTH_CHANGE_PASSWORD = 3;
-    private static final int BLUETOOTH_ATTACHED = 4;
+    private final int BLUETOOTH_INFO_NAME = 1;
+    private final int BLUETOOTH_CHANGE_NAME = 2;
+    private final int BLUETOOTH_CHANGE_PASSWORD = 3;
+    private final int BLUETOOTH_ATTACHED = 4;
     private SwitchCompat aSwitchCompat;
     File file = new File("/sdcard/kandi/bluetoothPassword.txt");
-    static String[] info = new String[1]; // 获取蓝牙名字传入参数
-    static String newName = "";
+    String[] info = new String[1]; // 获取蓝牙名字传入参数
+    String newName = "";
     String newPassword = "";
-    static IKdBtService btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
+    IKdBtService btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
 
-    static TextView tv_set_bluetooth_name;
-    static TextView tv_set_bluetooth_password;
+    TextView tv_set_bluetooth_name;
+    TextView tv_set_bluetooth_password;
     public int originId = 0;//来源与那个fragment用于隐藏蓝牙设置界面
     public void setOriginId(int originId){
         this.originId = originId;
@@ -91,11 +89,11 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
         switch (v.getId()){
             case R.id.iv_return:
                 if(getOriginId() == 0){
-                    SetFragment.hideFragment();
+                    HomePagerActivity.homePagerActivity.getSetFragment().hideFragment();
                 }else if(getOriginId() == 1){
-                    HomePagerActivity.jumpFragment(FragmentType.BTMUSIC);
+                    HomePagerActivity.homePagerActivity.jumpFragment(FragmentType.BTMUSIC);
                 }else{
-                    HomePagerActivity.jumpFragment(FragmentType.PHONE);
+                    HomePagerActivity.homePagerActivity.jumpFragment(FragmentType.PHONE);
                 }
                 break;
             case R.id.ll_name:
@@ -279,7 +277,7 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
             e.printStackTrace();
         }
     }
-    public static class MyBluetoothStateThread extends Thread{
+    public class MyBluetoothStateThread extends Thread{
         @Override
         public void run() {
             while(!FlagProperty.flag_bluetooth){
@@ -297,7 +295,7 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
             }
         }
     }
-    public static Handler myHandler = new Handler() {
+    public Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case BLUETOOTH_INFO_NAME:

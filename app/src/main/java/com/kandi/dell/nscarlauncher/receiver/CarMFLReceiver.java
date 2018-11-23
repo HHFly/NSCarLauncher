@@ -9,16 +9,15 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.common.util.LogUtils;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
-import com.kandi.dell.nscarlauncher.ui.fm.FMFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.music.model.MusicModel;
-import com.kandi.dell.nscarlauncher.ui.phone.PhoneFragment;
 
-import static com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment.circle_image;
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
+
 
 public class CarMFLReceiver extends BroadcastReceiver {
     public static  String ACTION_WHEEL_MODE ="com.kangdi.BroadCast.WheelMode";//多功能模式
@@ -37,7 +36,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_WHEEL_MODE)) {
             LogUtils.log(ACTION_WHEEL_MODE);
             if( SystemProperties.getInt("sys.kd.revers",0)==0) {
-                HomePagerActivity.jumpFragment(nowFragment);
+                HomePagerActivity.homePagerActivity.jumpFragment(nowFragment);
               switch (nowFragment){
                   case FragmentType.FM:
                       nowFragment=FragmentType.BTMUSIC;
@@ -68,24 +67,24 @@ public class CarMFLReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_WHEEL_MUSIC_PREV)) {
             LogUtils.log(ACTION_WHEEL_MUSIC_PREV);
             if( SystemProperties.getInt("sys.kd.revers",0)==0) {
-               if(BTMusicFragment.isPlay){
-                   BTMusicFragment.myHandler.sendEmptyMessage(6);
+               if(homePagerActivity.getBtMusicFragment().isPlay){
+                   homePagerActivity.getBtMusicFragment().myHandler.sendEmptyMessage(6);
                }
-               if(MusicFragment.flag_play){
-                   if(DialogLocalMusic.data.size()>0) {
+               if(homePagerActivity.getMusicFragment().flag_play){
+                   if( homePagerActivity.getDialogLocalMusic().data.size()>0) {
 
-                       if ( MusicFragment.music_model == 2) { // 单曲循环模式不变换音乐图片
-                           if(circle_image!=null)
-                               circle_image.resetRoatate();
+                       if ( homePagerActivity.getMusicFragment().music_model == 2) { // 单曲循环模式不变换音乐图片
+                           if(homePagerActivity.getMusicFragment().circle_image!=null)
+                               homePagerActivity.getMusicFragment().circle_image.resetRoatate();
                        } else { // 其他模式
                            // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
                        }
 
-                       MusicModel.getPrevMusic(context, MusicFragment.music_model);
+                       MusicModel.getPrevMusic(context, homePagerActivity.getMusicFragment().music_model);
                    }
                }
-               if(FMFragment.isPlay){
-                   App.pagerOneHnadler.sendEmptyMessage(HandleKey.FMPREV);
+               if(HomePagerActivity.homePagerActivity.getFmFragment().isPlay){
+                   homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.FMPREV);
                }
             }
         }
@@ -93,24 +92,24 @@ public class CarMFLReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_WHEEL_MUSIC_NEXT)) {
             LogUtils.log(ACTION_WHEEL_MUSIC_NEXT);
             if( SystemProperties.getInt("sys.kd.revers",0)==0) {
-                if(BTMusicFragment.isPlay){
-                    BTMusicFragment.myHandler.sendEmptyMessage(7);
+                if(homePagerActivity.getBtMusicFragment().isPlay){
+                    homePagerActivity.getBtMusicFragment().myHandler.sendEmptyMessage(7);
                 }
-                if(MusicFragment.flag_play){
-                    if(DialogLocalMusic.data.size()>0) {
+                if(homePagerActivity.getMusicFragment().flag_play){
+                    if(homePagerActivity.getDialogLocalMusic().data.size()>0) {
 
-                        if ( MusicFragment.music_model == 2) { // 单曲循环模式不变换音乐图片
-                            if(circle_image!=null)
-                                circle_image.resetRoatate();
+                        if ( homePagerActivity.getMusicFragment().music_model == 2) { // 单曲循环模式不变换音乐图片
+                            if(homePagerActivity.getMusicFragment().circle_image!=null)
+                            homePagerActivity.getMusicFragment().circle_image.resetRoatate();
                         } else { // 其他模式
                             // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
                         }
 
-                        MusicModel.getNextMusic(context,  MusicFragment.music_model);
+                        MusicModel.getNextMusic(context,  homePagerActivity.getMusicFragment().music_model);
                     }
                 }
-                if(FMFragment.isPlay){
-                    App.pagerOneHnadler.sendEmptyMessage(HandleKey.FMNEXT);
+                if(HomePagerActivity.homePagerActivity.getFmFragment().isPlay){
+                    homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.FMNEXT);
                 }
             }
         }
@@ -119,10 +118,10 @@ public class CarMFLReceiver extends BroadcastReceiver {
             if( FlagProperty.flag_phone_ringcall ) {
                 FlagProperty.flag_phone_ringcall=false;
                 LogUtils.log(ACTION_WHEEL_CALL);
-                HomePagerActivity.jumpFragment(FragmentType.PHONE);
+                HomePagerActivity.homePagerActivity.jumpFragment(FragmentType.PHONE);
                 FlagProperty.flag_phone_incall_click = true;
-                PhoneFragment.answerPhone();
-                PhoneFragment.phoneStart();
+                HomePagerActivity.homePagerActivity.getPhoneFragment().answerPhone();
+                HomePagerActivity.homePagerActivity.getPhoneFragment().phoneStart();
             }
 
         }
@@ -130,7 +129,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_WHEEL_HANGUP)) {
             LogUtils.log(ACTION_WHEEL_HANGUP);
             FlagProperty.flag_phone_ringcall = false;
-            PhoneFragment.hangDownphone();
+            HomePagerActivity.homePagerActivity.getPhoneFragment().hangDownphone();
         }
 
     }

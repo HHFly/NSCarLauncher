@@ -7,6 +7,8 @@ import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
 
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
+
 
 public class MusicModel {
 	public static final int LIST_LOOP = 1;//列表循环
@@ -15,17 +17,17 @@ public class MusicModel {
 
 	// 获取下首歌曲
 	public static void getNextMusic(Context context, int model) {
-		if(DialogLocalMusic.data.size()>0) {
+		if(homePagerActivity.getDialogLocalMusic().data.size()>0) {
 			if (model == LIST_LOOP) {
-				if (DialogLocalMusic.musicID >= (DialogLocalMusic.data.size() - 1)) {
-					DialogLocalMusic.musicID = 0;
+				if (homePagerActivity.getDialogLocalMusic().musicID >= (homePagerActivity.getDialogLocalMusic().data.size() - 1)) {
+					homePagerActivity.getDialogLocalMusic().musicID = 0;
 				} else {
-					DialogLocalMusic.musicID++;
+					homePagerActivity.getDialogLocalMusic().musicID++;
 				}
 			} else if (model == SINGLE_LOOP) {
 
 			} else if (model == RANDOM_PLAY) {
-				getRandom(DialogLocalMusic.data.size());
+				getRandom(homePagerActivity.getDialogLocalMusic().data.size());
 			}
 			broadcastMusicInfo(context, FlagProperty.NEXT_MSG);
 		}
@@ -33,17 +35,17 @@ public class MusicModel {
 
 	//获取上首歌曲
 	public static void getPrevMusic(Context context, int model) {
-		if(DialogLocalMusic.data.size()>0) {
+		if(homePagerActivity.getDialogLocalMusic().data.size()>0) {
 			if (model == LIST_LOOP) {
-				if (DialogLocalMusic.musicID == 0) {
-					DialogLocalMusic.musicID = DialogLocalMusic.data.size() - 1;
+				if (homePagerActivity.getDialogLocalMusic().musicID == 0) {
+					homePagerActivity.getDialogLocalMusic().musicID = homePagerActivity.getDialogLocalMusic().data.size() - 1;
 				} else {
-					DialogLocalMusic.musicID--;
+					homePagerActivity.getDialogLocalMusic().musicID--;
 				}
 			} else if (model == SINGLE_LOOP) {
 
 			} else if (model == RANDOM_PLAY) {
-				getRandom(DialogLocalMusic.data.size());
+				getRandom(homePagerActivity.getDialogLocalMusic().data.size());
 			}
 			broadcastMusicInfo(context, FlagProperty.PRIVIOUS_MSG);
 		}
@@ -61,8 +63,8 @@ public class MusicModel {
 		int num = 0;
 		do {
 			num = (int) (Math.random()*sum);
-		} while (num == DialogLocalMusic.musicID && sum > 1);
-		DialogLocalMusic.musicID = num;
+		} while (num == homePagerActivity.getDialogLocalMusic().musicID && sum > 1);
+		homePagerActivity.getDialogLocalMusic().musicID = num;
 	}
 
 }

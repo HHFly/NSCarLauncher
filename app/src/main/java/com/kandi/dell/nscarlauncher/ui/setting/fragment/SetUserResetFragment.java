@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 
 public class SetUserResetFragment extends BaseFragment {
     @Override
@@ -32,7 +33,7 @@ public class SetUserResetFragment extends BaseFragment {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_return:
-                SetResetFragment.hideFragment();
+                HomePagerActivity.homePagerActivity.getSetFragment().getUpgradeFragment().getSetResetFragment().hideFragment();
                 break;
             case R.id.bt_resetcar:
                 getContext().sendBroadcast(new Intent("com.kandi.MASTER_CLEAR"));
