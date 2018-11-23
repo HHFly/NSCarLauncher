@@ -59,7 +59,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private static TextView tv_w_week;
     private static TextView tv_fm_hz;
 
-    public static TextView tv_w_speed,tv_w_authorize,tv_work,music_name;
+    public  TextView tv_w_speed,tv_w_authorize,tv_work,music_name;
 
     private HomePagerActivity homePagerActivity;
     private HashMap<String, Integer> mWeatherMap; // 天气类型与对应的图标
@@ -73,7 +73,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     public static PlayControllView  btPaly;
     public static PlayControllFMView fmPaly ;
     //fragment
-    public static FMFragment fmFragment;
+    public  FMFragment fmFragment;
 
     public static float channel;
     private boolean isON=true;// 空调
@@ -390,7 +390,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                         //延时一秒作用
                         Message msgtimedata = new Message();
                         msgtimedata.what =HandleKey.TIME;
-                        App.pagerOneHnadler.sendMessage(msgtimedata);
+                        pagerOneHnadler.sendMessage(msgtimedata);
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -423,18 +423,18 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             }
         });
     }
-    public static  void setMusicInfoHanle(String songname, String singer){
+    public   void setMusicInfoHanle(String songname, String singer){
 
-        Message message = App.pagerOneHnadler.obtainMessage();
+        Message message = pagerOneHnadler.obtainMessage();
         Bundle bundle =new Bundle();
         bundle.putString("songname",songname);
         bundle.putString("singer",singer);
         message.what=HandleKey.WEATHAER;
         message.setData(bundle);
-        App.pagerOneHnadler.sendMessage(message); //发送消息
+        pagerOneHnadler.sendMessage(message); //发送消息
 
     }
-    public static class PagerOneHnadler extends Handler {
+    public  Handler pagerOneHnadler =new Handler() {
         @Override
         public void handleMessage(Message msg) {
 
@@ -449,10 +449,10 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                     String songname=bundle.getString("songname");
                     String singer =bundle.getString("singer");
                     if("".equals(songname)||"null".equals(songname)){
-                        HomePagerOneFragment.music_name.setText(App.get().getString(R.string.蓝牙音乐));
+                        homePagerActivity.getHomePagerOneFragment().music_name.setText(App.get().getString(R.string.蓝牙音乐));
                     }else {
-                        if(!(songname+(!("").equals(singer)?"- " + singer:"")).equals(HomePagerOneFragment.music_name.getText().toString())){
-                            HomePagerOneFragment.music_name.setText(songname+(!("").equals(singer)?"- " + singer:""));
+                        if(!(songname+(!("").equals(singer)?"- " + singer:"")).equals(homePagerActivity.getHomePagerOneFragment().music_name.getText().toString())){
+                            homePagerActivity.getHomePagerOneFragment().music_name.setText(songname+(!("").equals(singer)?"- " + singer:""));
                         }
                     }
 
@@ -470,7 +470,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 case  HandleKey.OPEMFM:
                     fmPaly.setPlay(true);
                     HomePagerActivity.homePagerActivity.getFmFragment().isPlay=true;
-                    HomePagerOneFragment.music_name.setText(App.get().getString(R.string.蓝牙音乐));
+                    homePagerActivity.getHomePagerOneFragment().music_name.setText(App.get().getString(R.string.蓝牙音乐));
                     HomePagerActivity.homePagerActivity.getHomePagerTwoFragment().music_name.setText(App.get().getString(R.string.本地音乐));
                     break;
                 case  HandleKey.BTMUSICCOLSE:
@@ -504,7 +504,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             super.handleMessage(msg);
 
         }
-    }
+    };
 
     /*刷新布局*/
     public void  freshlayout(FMFragment fmFragment){

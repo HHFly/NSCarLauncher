@@ -30,8 +30,8 @@ import com.kandi.dell.nscarlauncher.db.dao.MusicCollectionDao;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
-import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
-import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
+
+
 import com.kandi.dell.nscarlauncher.ui.music.CursorMusicImage;
 import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
@@ -397,7 +397,7 @@ public class MusicFragment extends BaseFragment {
                 }
                 flag_play = true;
                 homePagerActivity.getHomePagerTwoFragment().musicPaly.setPlay(true);
-                HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
+                homePagerActivity.getHomePagerOneFragment().music_name.setText(context.getString(R.string.蓝牙音乐));
                 homePagerActivity.getHomePagerTwoFragment().myHandler.sendMessage(homePagerActivity.getHomePagerTwoFragment().myHandler.obtainMessage(MUSIC_OPEN));
             }
         }
@@ -473,7 +473,7 @@ public class MusicFragment extends BaseFragment {
                         circle_image.roatateStart();
                     }
                     flag_play=true;
-                    HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
+                    homePagerActivity.getHomePagerOneFragment().music_name.setText(context.getString(R.string.蓝牙音乐));
                     break;
             }
         }
@@ -522,7 +522,7 @@ public class MusicFragment extends BaseFragment {
                         }
                         broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
                         flag_play = true;
-                        HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
+                        homePagerActivity.getHomePagerOneFragment().music_name.setText(context.getString(R.string.蓝牙音乐));
                         homePagerActivity.getHomePagerTwoFragment().musicPaly.setPlay(true);
                     }
                 }
@@ -575,7 +575,7 @@ public class MusicFragment extends BaseFragment {
                         }
                         broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
                         flag_play = true;
-                        HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
+                        homePagerActivity.getHomePagerOneFragment().music_name.setText(context.getString(R.string.蓝牙音乐));
                         homePagerActivity.getHomePagerTwoFragment().musicPaly.setPlay(true);
                     }
                 }
@@ -632,7 +632,7 @@ public class MusicFragment extends BaseFragment {
             circle_image.roatateStart();
             bt_play.setBackgroundResource(R.mipmap.ic_play_big);
             flag_play = true;
-            HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
+            homePagerActivity.getHomePagerOneFragment().music_name.setText(context.getString(R.string.蓝牙音乐));
             homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(1);
         }
     }

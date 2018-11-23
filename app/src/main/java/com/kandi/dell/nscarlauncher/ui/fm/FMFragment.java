@@ -22,6 +22,8 @@ import com.kandi.dell.nscarlauncher.widget.RadioRulerView;
 
 import java.util.ArrayList;
 
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
+
 public class FMFragment extends BaseFragment implements RadioRulerView.OnValueChangeListener{
     private FMAdapter mAdapter ;
     private RadioRulerView mRule;
@@ -108,7 +110,7 @@ public class FMFragment extends BaseFragment implements RadioRulerView.OnValueCh
                 homePagerActivity.hideFragment();
                 closeFm();
                SPUtil.getInstance(getContext(),FMCHANNEL).putFloat(FMCHANNEL,channel);
-                App.pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
+                homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
                 break;
             case R.id.iv_search:
                 if(!mIsAuto) {
@@ -304,7 +306,7 @@ public void openFm(){
                     public void run() {
                         try {
                             System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
-                            App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
+                            homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
 //
 //                        System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 开机初始化为频道93.0
                         } catch (Exception e) {
@@ -324,7 +326,7 @@ public void openFm(){
                 public void run() {
                     try {
                         System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
-                        App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.FM));
+                        homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.FM));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -407,7 +409,7 @@ public void  changeChannel(float value){
                             try {
 
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
-                                App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.FM));
+                                homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.FM));
                                 isPlay=false;
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -423,7 +425,7 @@ public void  changeChannel(float value){
 //                                Log.d("Fm","Channel open  "+String.valueOf(channel));
                                 System.out.println("radio.SetRadioFreq():" + channel + "----" + App.get().getRadio().SetRadioFreq(channel)); // 开机初始化为频道93.0
 //                                Log.d("Fm","Channel  set "+String.valueOf(channel));
-                                App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
+                                homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
                                 isPlay=true;
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -436,7 +438,7 @@ public void  changeChannel(float value){
                         public void run() {
                             try {
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
-                                App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.FM));
+                                homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.FM));
                                 isPlay=false;
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -449,7 +451,7 @@ public void  changeChannel(float value){
                         public void run() {
                             try {
                                 System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
-                                App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.FM));
+                                homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.FM));
                                 isPlay=false;
                             } catch (Exception e) {
                                 e.printStackTrace();

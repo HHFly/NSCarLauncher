@@ -84,7 +84,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
                    }
                }
                if(HomePagerActivity.homePagerActivity.getFmFragment().isPlay){
-                   App.pagerOneHnadler.sendEmptyMessage(HandleKey.FMPREV);
+                   homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.FMPREV);
                }
             }
         }
@@ -109,7 +109,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
                     }
                 }
                 if(HomePagerActivity.homePagerActivity.getFmFragment().isPlay){
-                    App.pagerOneHnadler.sendEmptyMessage(HandleKey.FMNEXT);
+                    homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.FMNEXT);
                 }
             }
         }

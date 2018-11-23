@@ -1187,13 +1187,13 @@ public int getSim(int num) {
                 if(0x10==(air[4]&0x30)){
                         if(1!=HomePagerOneFragment.isAirOpen){
                             HomePagerOneFragment.isAirOpen=1;
-                            App.pagerOneHnadler.sendEmptyMessage(HandleKey.AIROPEN);
+                            homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.AIROPEN);
                         }
 
                 }else {
                     if(0!=HomePagerOneFragment.isAirOpen){
                         HomePagerOneFragment.isAirOpen=0;
-                        App.pagerOneHnadler.sendEmptyMessage(HandleKey.AIRCLOSE);
+                        homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.AIRCLOSE);
                     }
                 }
             }

@@ -310,7 +310,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_AD)) {
             // Toast.makeText(context, "音频蓝牙已断开", Toast.LENGTH_LONG);
             HomePagerActivity.homePagerActivity.getBtMusicFragment().setNullViewGone(true);
-            App.pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
+            homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
         }
         if (intent.getAction().equals(ACTION_MUSIC_INFO_CHANGED)) {
 
@@ -318,7 +318,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 
             if(HomePagerActivity.homePagerActivity.getFmFragment().isPlay || homePagerActivity.getMusicFragment().flag_play || JCVideoPlayer.mCurrentState == 2){
 
-                HomePagerOneFragment.music_name.setText(context.getString(R.string.蓝牙音乐));
+                homePagerActivity.getHomePagerOneFragment().music_name.setText(context.getString(R.string.蓝牙音乐));
                 try{
                     btservice.btAvrPause();
                 }catch (Exception e){
@@ -334,7 +334,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                 FlagProperty.SongName =obj.getString("SongName");
                 FlagProperty.SingerName =obj.getString("SingerName");
                 HomePagerActivity.homePagerActivity.getBtMusicFragment().setMusicInfoHanle( FlagProperty.SongName, FlagProperty.SingerName);
-                HomePagerOneFragment.setMusicInfoHanle(  FlagProperty.SongName, FlagProperty.SingerName);
+                homePagerActivity.getHomePagerOneFragment().setMusicInfoHanle(  FlagProperty.SongName, FlagProperty.SingerName);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -357,7 +357,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             HomePagerActivity.homePagerActivity.getBtMusicFragment().myHandler.sendMessage( HomePagerActivity.homePagerActivity.getBtMusicFragment().myHandler.obtainMessage(11));
 //            BTMusicFragment.isPlay=true;
 //            BTMusicFragment.gifPlayShow();
-//            HomePagerOneFragment.btPaly.setPlay(true);
+//            homePagerActivity.getHomePagerOneFragment().btPaly.setPlay(true);
             homePagerActivity.getMusicFragment().stopView();
 
         }

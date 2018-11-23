@@ -117,8 +117,7 @@ App extends MultiDexApplication {
 
     }
 
-    //共享handle变量
-    public static HomePagerOneFragment.PagerOneHnadler pagerOneHnadler;
+
 
     @Override
     public void onCreate() {
@@ -136,8 +135,7 @@ App extends MultiDexApplication {
         UtilsConfig
                 .getInstance(this)
                 .setLogOpen(BuildConfig.IS_OPEN_LOG);
-        /*初始化Handle*/
-        pagerOneHnadler = new HomePagerOneFragment.PagerOneHnadler();
+
 
 
         /*初始化驱动模块*/
@@ -291,8 +289,8 @@ App extends MultiDexApplication {
             btservice.btAvrPause();
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
             homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(1);
-            pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
-            pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
+            homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
+            homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
             mediaPlayer.release();
             mEqualizer.release();
             mediaPlayer = null;
@@ -306,7 +304,7 @@ App extends MultiDexApplication {
             radio.CloseLocalRadio();
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
             homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(1);
-            pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
+            homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
 //            pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSIC);
 
         } catch (RemoteException e) {
@@ -317,8 +315,8 @@ App extends MultiDexApplication {
         try {
             radio.CloseLocalRadio();
             btservice.btAvrPause();
-            pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
-            pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
+            homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
+            homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -329,7 +327,7 @@ App extends MultiDexApplication {
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
             btservice.btAvrPause();
             homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(1);
-            pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
+            homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
 
         } catch (RemoteException e) {
             e.printStackTrace();

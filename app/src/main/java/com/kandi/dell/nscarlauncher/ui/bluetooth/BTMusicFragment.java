@@ -384,7 +384,7 @@ public  void  musicNext(){
                             Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
                         }
                         isPlay=false;
-                        App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.BTMUSICCOLSE));
+                        homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.BTMUSICCOLSE));
                         break;
 
                     case MUSIC_BLUETOOTH_OPEN:
@@ -400,7 +400,7 @@ public  void  musicNext(){
                         if(homePagerActivity.getHomePagerTwoFragment().music_name!=null) {
                             homePagerActivity.getHomePagerTwoFragment().music_name.setText(App.get().getString(R.string.本地音乐));
                         }
-                        App.pagerOneHnadler.sendMessage(App.pagerOneHnadler.obtainMessage(HandleKey.BTMUSICOPEN));
+                        homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.BTMUSICOPEN));
                         break;
                     case MUSCI_BACK:
                         App.get().getBtservice().btAvrLast();
