@@ -464,8 +464,6 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 
                     fmPaly.setPlay(false);
                     HomePagerActivity.homePagerActivity.getFmFragment().isPlay=false;
-                    HomePagerActivity.homePagerActivity.getHomePagerOneFragment().music_name.setText(App.get().getString(R.string.蓝牙音乐));
-                    HomePagerActivity.homePagerActivity.getHomePagerTwoFragment().music_name.setText(App.get().getString(R.string.本地音乐));
                     break;
                 case  HandleKey.OPEMFM:
                     fmPaly.setPlay(true);
