@@ -22,8 +22,6 @@ import com.kandi.dell.nscarlauncher.widget.RadioRulerView;
 
 import java.util.ArrayList;
 
-import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
-
 public class FMFragment extends BaseFragment implements RadioRulerView.OnValueChangeListener{
     private FMAdapter mAdapter ;
     private RadioRulerView mRule;
@@ -368,6 +366,7 @@ public void openFm(){
             mRule.setChannel(channel);
         }
         SPUtil.getInstance(getContext(),FMCHANNEL).putFloat(FMCHANNEL,channel);
+        HomePagerActivity.homePagerActivity.getHomePagerOneFragment().setFmMHZ();
     }
     /*变换频道
      **/

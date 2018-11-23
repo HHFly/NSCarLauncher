@@ -129,7 +129,6 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 isFmFragment();
                 if(fmFragment!=null){
                     fmFragment.leftFm(channel);
-                    setFmMHZ();
                 }
             }
 
@@ -145,7 +144,6 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 isFmFragment();
                 if(fmFragment!=null){
                     fmFragment.rightFm(channel);
-                    setFmMHZ();
                 }
             }
         });
@@ -315,7 +313,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         setBT();
     }
     /*初始化fm*/
-    private static void setFmMHZ(){
+    public static void setFmMHZ(){
         if(HomePagerActivity.homePagerActivity.getFmFragment().isSecondResume){
             channel=HomePagerActivity.homePagerActivity.getFmFragment().channel;
         }else {
@@ -487,14 +485,12 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                     isFmFragment();
                     if(fmFragment!=null){
                         fmFragment.rightFm(channel);
-                        setFmMHZ();
                     }
                     break;
                 case HandleKey.FMPREV:
                     isFmFragment();
                     if(fmFragment!=null){
                         fmFragment.leftFm(channel);
-                        setFmMHZ();
                     }
                     break;
 
