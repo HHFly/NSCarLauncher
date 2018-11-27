@@ -72,7 +72,7 @@ public class KandiSystemUiService extends Service {
     private float mPosX,mPosY,mCurPosX,mCurPosY;
   public   static IKdBtService btservice;//蓝牙服务
     private WindowManager.LayoutParams wmParamDiaglogs = null;
-
+    private  boolean isRecord =false;
     DialogPowerIn dialogPowerIn;
 
     AudioManager audioManager;
@@ -696,8 +696,15 @@ public class KandiSystemUiService extends Service {
 
     }
     private  int volumelast =0;
+    public void  recordVolume(){
+        if(!isRecord) {
+            volumelast = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+            isRecord=true;
+        }
+    }
     public void setVolume(int volume){
         volumelast=audioManager.getStreamVolume(AudioManager.STREAM_MUSIC );
+        isRecord=true;
         if(dialogVolumeControl!=null){
             dialogVolumeControl.setVolumeProgressV(volume);
         }
@@ -707,6 +714,7 @@ public class KandiSystemUiService extends Service {
         if(dialogVolumeControl!=null){
             dialogVolumeControl.setVolumeProgressV(volumelast);
         }
+        isRecord=false;
     }
     public IFmService getRadio() {
         return radio;

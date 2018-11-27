@@ -82,6 +82,7 @@ public class BluetoothController extends BroadcastReceiver {
         }else if(intent.getAction().equals(ACTION_CALLSTART)){
             String num = intent.getStringExtra(KEY_PHONENUM).trim();
             int index =intent.getIntExtra(KEY_CALLINDEX, 0);
+            mService.recordVolume();
             mService.wheelAnswser();
             mService.CALLSTART(num,index);
             isRingCall=true;
