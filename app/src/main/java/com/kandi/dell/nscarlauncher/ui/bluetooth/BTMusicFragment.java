@@ -20,12 +20,9 @@ import com.bumptech.glide.Glide;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
-import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
-import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
-import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 
 import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
 
@@ -115,6 +112,7 @@ public class BTMusicFragment extends BaseFragment {
         requestAudioFocus();
         if(isPlay){
             if(context != null){
+                iv_bt_stop.setVisibility(View.GONE);
                 Glide.with(context).load(gifPath).into(mGifImageView);
             }
         }
@@ -124,11 +122,16 @@ public class BTMusicFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if(hidden){
+            iv_bt_stop.setVisibility(View.VISIBLE);
             Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
         }else{
             if(isPlay){
-                Glide.with(context).load(gifPath).into(mGifImageView);
+                if(iv_bt_stop!=null) {
+                    iv_bt_stop.setVisibility(View.GONE);
+                    Glide.with(context).load(gifPath).into(mGifImageView);
+                }
             }else{
+                iv_bt_stop.setVisibility(View.VISIBLE);
                 Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
             }
         }
@@ -142,6 +145,7 @@ public class BTMusicFragment extends BaseFragment {
     public  void onDisplay(){
         if(isPlay) {
             if(context != null && mGifImageView!= null) {
+                iv_bt_stop.setVisibility(View.VISIBLE);
                 Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
             }
         }
@@ -314,7 +318,7 @@ public  void  musicNext(){
      String gifPath = "file:///android_asset/bt_music.gif";
     /*初始化gif控制*/
     private void initGif(){
-        Glide.with(this).load(gifPath).into(mGifImageView);
+//        Glide.with(this).load(gifPath).into(mGifImageView);
 
         if (isPlay) {
 //                gifDrawable.start();
