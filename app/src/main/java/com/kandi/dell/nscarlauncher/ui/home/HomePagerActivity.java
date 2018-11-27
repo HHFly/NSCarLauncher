@@ -50,6 +50,7 @@ import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.base.fragment.NullFragment;
 import com.kandi.dell.nscarlauncher.common.util.FragmentUtils;
 import com.kandi.dell.nscarlauncher.common.util.IsHomeUtils;
 import com.kandi.dell.nscarlauncher.common.util.JumpUtils;
@@ -105,7 +106,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     private  CircleIndicator indicator;//viewpager指示器
     public  BaseFragment mCurFragment;//当前页
 
-
+    public NullFragment nullFragment;//解决bug空页面
     public  MusicFragment musicFragment;//本地音乐
 
     public   BTMusicFragment btMusicFragment;//蓝牙音乐
@@ -140,7 +141,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     static  TranslateAnimation mHiddenAction,mShowAction;
     static ScaleAnimation  scaleAnimation;
     public  static HomePagerActivity homePagerActivity;
-    public static boolean isShowPhoneAnim =false ;//电话界面是否显示动画
+    public static boolean isShowPhoneAnim =true ;//电话界面是否显示动画
     private  DialogLocalMusic dialogLocalMusic;
 
 
@@ -339,7 +340,9 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         mFragments.add(homePagerOneFragment);
         mFragments.add(homePagerTwoFragment);
         mFragments.add(homePagerThreeFragment);
-        mCurFragment = phoneFragment;
+
+        mCurFragment = nullFragment;
+
         App.get().setmCurActivity(this);
 
     }
@@ -348,7 +351,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
      * 初始化fragment
      */
     private void createFragment() {
-
+        nullFragment =new NullFragment();
 
             fmFragment = new FMFragment();
 
@@ -443,6 +446,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 anim= R.anim.app_enter_in;
                 break;
         }
+        isShowPhoneAnim=true;
         Animation animBottomIN = AnimationUtils.loadAnimation(context,
                 anim);
         frameLayout.setVisibility(View.VISIBLE);
@@ -480,7 +484,11 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 break;
             case  FragmentType.BTMUSIC:
                 homePagerActivity.getBlueToothSetFragment().setOriginId(1);
-                fragemntType=2;
+                if(isShowPhoneAnim){
+                    fragemntType = 2;
+                }else {
+                    fragemntType = 0;
+                }
                 switchFragment(homePagerActivity.getBtMusicFragment());
 
                 break;
@@ -514,6 +522,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
                 switchFragment(videoFragment);
                 break;
             case FragmentType.BTSET:
+                fragemntType = 0;
                 switchFragment(homePagerActivity.getBlueToothSetFragment());
                 break;
         }

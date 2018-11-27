@@ -164,6 +164,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
         viewPager.setOffscreenPageLimit(3);
         setViewSelected(R.id.rl_1,true);
         mainPresenter = new MainPresenter(this);
+        requestAudioFocus();
     }
     /*获取全局模块*/
     private void  getService(){

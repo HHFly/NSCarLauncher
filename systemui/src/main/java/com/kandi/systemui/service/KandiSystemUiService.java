@@ -184,6 +184,7 @@ public class KandiSystemUiService extends Service {
 
 
     }
+
     private void setListen(){
         center_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,7 +232,7 @@ public class KandiSystemUiService extends Service {
                         Log.d("systemui","slide " +mCurPosY+"   "+mPosY+"   "+(mCurPosY - mPosY));
                         if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 30)) {
                             //向下滑動
-                            Log.d("systemui","slide down " +mCurPosY+"   "+mPosY+"   "+(mCurPosY - mPosY));
+//                            Log.d("systemui","slide down " +mCurPosY+"   "+mPosY+"   "+(mCurPosY - mPosY));
                             Rlcenter.setVisibility(View.VISIBLE);
                             Rlcenter.animate().alpha(1f).setDuration(500).setListener(null);
 
@@ -239,7 +240,7 @@ public class KandiSystemUiService extends Service {
                         }
                         else if (mCurPosY - mPosY < 0 && (Math.abs(mPosY - mCurPosY) > 30)&&(isHome())) {
                             //向上滑动
-                            Log.d("systemui","slide up " +mCurPosY+"   "+mPosY+"   "+(mCurPosY - mPosY));
+//                            Log.d("systemui","slide up " +mCurPosY+"   "+mPosY+"   "+(mCurPosY - mPosY));
                             Rlcenter.animate()
                                     .alpha(0f)
                                     .setDuration(500)
@@ -281,6 +282,12 @@ public class KandiSystemUiService extends Service {
         }
     }
 //返回首页
+    private boolean isCalling=false;
+
+    public void setCalling(boolean calling) {
+        isCalling = calling;
+    }
+
     void gotoHome() {
         if(isHome()) {
             Intent mHomeIntent = new Intent(Intent.ACTION_MAIN);
@@ -290,9 +297,13 @@ public class KandiSystemUiService extends Service {
                     | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             startActivity(mHomeIntent);
         }
-        Intent intent  =new Intent();
-        intent.setAction("com.kangdi.home.hide");
-        sendBroadcast(intent);
+        Log.d("isCalling", "gotoHome: "+ isCalling);
+        if (!isCalling) {
+
+            Intent intent = new Intent();
+            intent.setAction("com.kangdi.home.hide");
+            sendBroadcast(intent);
+        }
 
     }
     /*打开应用*/

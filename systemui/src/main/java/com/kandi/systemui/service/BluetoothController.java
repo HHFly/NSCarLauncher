@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.util.Log;
 
 import static com.kandi.systemui.service.KandiSystemUiService.btservice;
@@ -65,6 +66,7 @@ public class BluetoothController extends BroadcastReceiver {
 
 //            System.out.println("index:" + intent.getIntExtra(KEY_CALLINDEX, 0));
             try {
+                 mService.setCalling(true);
                 int blueVolume =  (int) Math.round((float)30/100.0  * 21.0);
                 btservice.btSetVol(String.valueOf(blueVolume));
                 mService.setVolume(8);//max =15
@@ -83,6 +85,7 @@ public class BluetoothController extends BroadcastReceiver {
             mService.wheelAnswser();
             mService.CALLSTART(num,index);
             isRingCall=true;
+            mService.setCalling(true);
         }
         else if (intent.getAction().equals(ACTION_CALLEND)) {
 //            String num = intent.getStringExtra(KEY_PHONENUM).trim();
@@ -96,6 +99,7 @@ public class BluetoothController extends BroadcastReceiver {
             mService.CALLEND(index);
             mService.hidePhone();
             mService.reSetVolume();
+            mService.setCalling(false);
         }else if(intent.getAction().equals(ACTION_CALLOUT)){
             String num = intent.getStringExtra(KEY_PHONENUM).trim();
             mService.CALLOUT(num);
