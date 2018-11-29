@@ -79,6 +79,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private boolean isON=true;// 空调
     public static int isAirOpen =0  ;
     public String PicIndex ="picindex";
+    public boolean isFirst = false;
     public void setFragment(HomePagerActivity homePagerActivity,FMFragment fmFragment) {
         this.homePagerActivity = homePagerActivity;
         this.fmFragment =fmFragment;
@@ -239,7 +240,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             if(fmFragment!=null){
                 App.get().PauseServiceMUSic();
                 fmFragment.openFm();
-
+                isFirst=true;
             }
         }else {
             if(fmFragment!=null){
@@ -331,6 +332,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.FM:
+                isFirst = true;
                 homePagerActivity.jumpFragment(FragmentType.FM);
                 break;
             case R.id.bt_music:
@@ -422,7 +424,6 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         });
     }
     public   void setMusicInfoHanle(String songname, String singer){
-
         Message message = pagerOneHnadler.obtainMessage();
         Bundle bundle =new Bundle();
         bundle.putString("songname",songname);
@@ -443,6 +444,10 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                     tv_w_week.setText(TimeUtils.getDayOfWeek());
                     break;
                 case HandleKey.WEATHAER:
+                    if(isFirst){
+                        isFirst = false;
+                        return;
+                    }
                     Bundle bundle =msg.getData();
                     String songname=bundle.getString("songname");
                     String singer =bundle.getString("singer");
