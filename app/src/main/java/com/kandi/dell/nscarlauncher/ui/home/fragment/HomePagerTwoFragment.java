@@ -236,8 +236,8 @@ public class HomePagerTwoFragment extends BaseFragment {
         setPlayControll(isPlay,2);
     }
     public void setPlayControll(boolean isPlay,int mode){
-        HomePagerOneFragment.btPaly.setPlay(false);
-        HomePagerOneFragment.fmPaly.setPlay(false);
+        homePagerActivity.getHomePagerOneFragment().btPaly.setPlay(false);
+        homePagerActivity.getHomePagerOneFragment().fmPaly.setPlay(false);
         musicPaly.setPlay(false);
 
         switch (mode){

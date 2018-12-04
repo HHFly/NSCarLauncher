@@ -53,7 +53,7 @@ import java.util.concurrent.Executors;
 
 public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch.OnWeatherSearchListener {
     private WaveView circleView;
-    private static ImageView controll_air;
+    private  ImageView controll_air;
     private static TextView tv_w_time;
     private static TextView tv_w_date;
     private static TextView tv_w_week;
@@ -70,8 +70,8 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     private volatile boolean timeFlag = true;
     private volatile boolean weatherFlag = true;
   // 播发控制
-    public static PlayControllView  btPaly;
-    public static PlayControllFMView fmPaly ;
+    public  PlayControllView  btPaly;
+    public  PlayControllFMView fmPaly ;
     //fragment
     public  FMFragment fmFragment;
 
@@ -326,7 +326,9 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     }
     /*初始化蓝牙*/
     private void setBT(){
-        btPaly.setPlay(homePagerActivity.getBtMusicFragment().isPlay);
+        if(btPaly!=null) {
+            btPaly.setPlay(homePagerActivity.getBtMusicFragment().isPlay);
+        }
     }
     @Override
     public void onClick(View view) {

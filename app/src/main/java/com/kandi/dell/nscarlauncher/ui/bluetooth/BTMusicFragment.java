@@ -451,7 +451,7 @@ public  void  musicNext(){
 
                     try {
                         App.get().getBtservice().btAvrPause();
-                        HomePagerOneFragment.btPaly.setPlay(false);
+                        homePagerActivity.getHomePagerOneFragment().btPaly.setPlay(false);
                         isPlay=false;
                         stopGif();
                     } catch (RemoteException e) {
@@ -466,7 +466,7 @@ public  void  musicNext(){
                         if(!isPlay) {
                             Log.d("AUDIOFOCUS_GAIN", "run: " +String.valueOf(isPlay));
                             App.get().getBtservice().btAvrPlay();
-                            HomePagerOneFragment.btPaly.setPlay(true);
+                            homePagerActivity.getHomePagerOneFragment().btPaly.setPlay(true);
                             isPlay=true;
                             homePagerActivity.getHomePagerTwoFragment().music_name.setText(App.get().getString(R.string.本地音乐));
                         }
@@ -478,7 +478,7 @@ public  void  musicNext(){
                 case  AudioManager.AUDIOFOCUS_LOSS:
                     try {
                         App.get().getBtservice().btAvrStop();
-                        HomePagerOneFragment.btPaly.setPlay(false);
+                        homePagerActivity.getHomePagerOneFragment().btPaly.setPlay(false);
                         isPlay=false;
                         stopGif();
                     } catch (RemoteException e) {
@@ -488,7 +488,7 @@ public  void  musicNext(){
                 case   AudioManager.AUDIOFOCUS_REQUEST_FAILED:
                     try {
                         App.get().getBtservice().btAvrStop();
-                        HomePagerOneFragment.btPaly.setPlay(false);
+                        homePagerActivity.getHomePagerOneFragment().btPaly.setPlay(false);
                         isPlay=false;
                         stopGif();
                     } catch (RemoteException e) {
