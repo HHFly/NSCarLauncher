@@ -169,7 +169,8 @@ public class MusicFragment extends BaseFragment {
 
     /*记忆上次音乐播放状态*/
     public void recoveryLast(){
-        if(new File(homePagerActivity.getDialogLocalMusic().PATH_USB).list().length == 0){
+        File file_usb = new File(homePagerActivity.getDialogLocalMusic().PATH_USB);
+        if(!file_usb.exists() || (file_usb.exists() && file_usb.list().length == 0)){
             MusicCollectionDao.deleteFavByUsbOut(context,"/storage/udisk");
         }
         homePagerActivity.getDialogLocalMusic().ColData = MusicCollectionDao.getAllFav(getContext());
