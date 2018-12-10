@@ -333,6 +333,7 @@ public class MusicFragment extends BaseFragment {
     /*下一首*/
 
     public  void NextMusic(){
+
         if(homePagerActivity.getDialogLocalMusic().data.size()>0) {
 //            if (flag_play) {
 //                bt_play.performClick();
@@ -377,13 +378,16 @@ public class MusicFragment extends BaseFragment {
     }
     /*播发音乐*/
     public  void musicPlay(Context context){
+        if(homePagerActivity.getDialogLocalMusic().data.size()==0) {
+            return;
+        }
         if (App.get().getAudioManager().requestAudioFocus(afChangeListener, 12,
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
                 && App.get().getAudioManager().requestAudioFocus(afSystemChangeListener, AudioManager.STREAM_MUSIC,
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             system_flag = true;
             am_flag = true;
-            if (homePagerActivity.getDialogLocalMusic().data.size() > 0) {
+//            if (homePagerActivity.getDialogLocalMusic().data.size() > 0) {
                 if(circle_image!=null) {
                     circle_image.roatateStart();
                 }
@@ -401,9 +405,12 @@ public class MusicFragment extends BaseFragment {
                 homePagerActivity.getHomePagerOneFragment().music_name.setText(context.getString(R.string.蓝牙音乐));
                 homePagerActivity.getHomePagerTwoFragment().myHandler.sendMessage(homePagerActivity.getHomePagerTwoFragment().myHandler.obtainMessage(MUSIC_OPEN));
             }
-        }
+//        }
     }
     public   void musicPause(Context context){
+        if(homePagerActivity.getDialogLocalMusic().playnow==null) {
+            return;
+        }
         if (App.get().getAudioManager().abandonAudioFocus(afChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
                 && App.get().getAudioManager().abandonAudioFocus(
                 afSystemChangeListener) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
