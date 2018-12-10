@@ -82,7 +82,8 @@ public void  show(){
             }
         }
     }).start();
-		alertDialog.show();
+	volumeResume();
+	alertDialog.show();
 }
 
 
@@ -183,6 +184,7 @@ public void  show(){
 			STREAM_MUSIC = current;
 			progress = Math.round(STREAM_MUSIC * 100 / STREAM_MAX_MUSIC);
 			thumb_volume.setProgress(progress);
+			setVolumeImage(progress);
 		}
 	}
 //	 滑动监听
