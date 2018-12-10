@@ -22,7 +22,7 @@
         android:layout_height="342px"
         android:secondaryProgress="100"
        android:progressDrawable="@drawable/seekbar_eq"
-        android:thumb="@mipmap/ic_volume_two"
+        android:thumb="@mipmap/ic_volume"
         />
     <TextView
         android:id="@+id/tv_eq_band"
