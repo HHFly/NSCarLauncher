@@ -144,6 +144,7 @@
     <string name="clearall">清除全部内容</string>
     <string name="导入">导入</string>
     <string name="删除">删除</string>
+    <string name="importerr">导入失败</string>
 
 
 </resources>

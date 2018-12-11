@@ -48,7 +48,7 @@ public class SwipeMenuLayout extends ViewGroup {
     //2016 11 03 add,判断手指起始落点，如果距离属于滑动了，就屏蔽一切点击事件。
     //up-down的坐标，判断是否是滑动，如果是，则屏蔽一切点击事件
     private PointF mFirstP = new PointF();
-    private boolean isUserSwiped;
+    public static boolean isUserSwiped;
 
     //存储的是当前正在展开的View
     private static SwipeMenuLayout mViewCache;

@@ -144,5 +144,6 @@
     <string name="clearall">FACTORY RESET</string>
     <string name="导入">导入</string>
     <string name="删除">删除</string>
+    <string name="importerr">Import failed</string>
 
 </resources>

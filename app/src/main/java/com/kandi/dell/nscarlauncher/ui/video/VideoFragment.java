@@ -12,6 +12,9 @@ import android.view.View;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.common.util.FileUtil;
+import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
+import com.kandi.dell.nscarlauncher.db.dao.MusicCollectionDao;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
@@ -180,7 +183,7 @@ public class VideoFragment extends BaseFragment{
         if (mAdapter == null) {
             RecyclerView rv = getView(R.id.recyclerView_videolocoal);
             mAdapter =new VideoAdapter(data);
-
+            mAdapter.setMode(dataMode);
             if (rv != null) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                 rv.setLayoutManager(linearLayoutManager);
@@ -209,16 +212,34 @@ public class VideoFragment extends BaseFragment{
 
                 @Override
                 public void onLongClickMusic(Mp3Info data, int Pos) {
-                    if(dataMode==2){
-                        ShowDialog(data);
-                    }
-
                 }
 
+                @Override
+                public void onClickDelete(Mp3Info data, int Pos) {
+                    showLoadingDialog();
+                    FileUtil.deleteFile(new File(data.url));
+                    Intent intent  =new Intent();
+                    intent.setAction("nscar_fresh_sdcard");
+                    context.sendBroadcast(intent);
+                    homePagerActivity.getDialogLocalMusic().updateLocalVideo(context);
+                    myHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideLoadingDialog();
+                        }
+                    },3500);
+                }
 
+                @Override
+                public void onClickCopy(Mp3Info data, int Pos) {
+                    File sourse = new File(data.url);
+                    long len = sourse.length();
+                    new CopyFileThread(data.url,PATH_SDCARDMOVIES+data.displayName,0,len).start();
+                }
             });
 
         }else {
+            mAdapter.setMode(dataMode);
             mAdapter.notifyData(data,true);
         }
 //        setViewVisibilityGone(R.id.item_music_null,data==null||data.size()==0);
@@ -332,6 +353,14 @@ public class VideoFragment extends BaseFragment{
                 },3500);
             } catch (Exception e) {
                 e.printStackTrace();
+                FileUtil.deleteFile(new File(destPath));
+                myHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.show(getString(R.string.importerr));
+                        hideLoadingDialog();
+                    }
+                },3500);
             }
 
         }
