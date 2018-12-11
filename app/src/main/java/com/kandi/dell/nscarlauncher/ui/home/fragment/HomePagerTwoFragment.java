@@ -233,7 +233,7 @@ public class HomePagerTwoFragment extends BaseFragment {
 
             homePagerActivity.getMusicFragment().musicPause(getActivity());
         }
-        setPlayControll(isPlay,2);
+//        setPlayControll(isPlay,2);
     }
     public void setPlayControll(boolean isPlay,int mode){
         homePagerActivity.getHomePagerOneFragment().btPaly.setPlay(false);

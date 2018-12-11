@@ -5,13 +5,25 @@
 
     android:background="@mipmap/ic_f_fm_bg"
     >
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="80px"
+        android:visibility="gone"
+    >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+            android:src="@mipmap/ic_trash_gray"
+            />
+    </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
         android:overScrollMode="never"
-        android:layout_marginTop="80px"
+        android:layout_marginTop="150px"
         android:layout_marginLeft="73px"
         android:id="@+id/app_rv">
 
