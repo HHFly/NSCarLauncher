@@ -2,6 +2,7 @@ package com.kandi.dell.nscarlauncher.ui.video;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.adapter.AutoViewHolder;
@@ -11,12 +12,15 @@ import com.kandi.dell.nscarlauncher.widget.SwipeMenuLayout;
 
 import java.util.List;
 
+import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
+
 public class VideoAdapter  extends BaseListRvAdapter<Mp3Info> {
     public VideoAdapter(List<Mp3Info> data) {
         super(data);
     }
 
     private int mode=1;//1 local 2 usb 3 collect
+    public boolean isShow = false;
 
     public void setMode(int mode) {
         this.mode = mode;
@@ -37,7 +41,7 @@ public class VideoAdapter  extends BaseListRvAdapter<Mp3Info> {
 
 
                 if (onItemClickListener != null && !SwipeMenuLayout.isUserSwiped) {
-                    onItemClickListener.onClickMusic(data, bodyPos);
+                    onItemClickListener.onClickMusic(v, data, bodyPos);
                 }
             }
         });
@@ -52,24 +56,18 @@ public class VideoAdapter  extends BaseListRvAdapter<Mp3Info> {
 
 
         });
-        holder.get(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onClickDelete(data,bodyPos);
-                }
+        if(isShow){
+            CheckBox checkBox = holder.get(R.id.checkBox);
+            checkBox.setVisibility(View.VISIBLE);
+            Boolean flag = homePagerActivity.getVideoFragment().recodeStatu.get(bodyPos);
+            if (flag == null) {
+                checkBox.setChecked(false);
+            } else {
+                checkBox.setChecked(flag);
             }
-        });
-        holder.get(R.id.btn_copy).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onClickCopy(data,bodyPos);
-                }
-            }
-        });
-        holder.get(R.id.btn_delete).setVisibility(1==mode?View.VISIBLE:View.GONE);
-        holder.get(R.id.btn_copy).setVisibility(2==mode?View.VISIBLE:View.GONE);
+        }else{
+            holder.get(R.id.checkBox).setVisibility(View.INVISIBLE);
+        }
     }
 
     private OnItemClickListener onItemClickListener;
@@ -82,12 +80,8 @@ public class VideoAdapter  extends BaseListRvAdapter<Mp3Info> {
         /**
          * 点击
          */
-        void onClickMusic(Mp3Info data, int Pos);
+        void onClickMusic(View view,Mp3Info data, int Pos);
 
         void  onLongClickMusic(Mp3Info data,int Pos);
-
-        void  onClickDelete(Mp3Info data,int Pos);
-
-        void  onClickCopy(Mp3Info data,int Pos);
     }
 }

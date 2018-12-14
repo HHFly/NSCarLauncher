@@ -8,6 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
@@ -28,7 +32,9 @@ import java.lang.reflect.Field;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -45,6 +51,14 @@ public class VideoFragment extends BaseFragment{
     public static int dataMode;
     public static final String PATH_SDCARDMOVIES = "/sdcard/Movies/";
     public int blockCount = 3;
+    public Map<Integer, Boolean> recodeStatu = new HashMap<Integer, Boolean>();
+    private TextView btn_delete,btn_copy;
+    private CheckBox btn_select_all;
+    private LinearLayout operate_layout;
+    private List<String> operate_path;
+    private int operate_total = 0;
+    private int operate_count_index = 0;
+    private boolean isUserCheck = false;
 
     @Override
     public void setmType(int mType) {
@@ -58,7 +72,10 @@ public class VideoFragment extends BaseFragment{
 
     @Override
     public void findView() {
-
+        btn_delete = getView(R.id.btn_delete);
+        btn_copy = getView(R.id.btn_copy);
+        operate_layout = getView(R.id.operate_layout);
+        btn_select_all = getView(R.id.btn_select_all);
     }
 
     @Override
@@ -74,12 +91,38 @@ public class VideoFragment extends BaseFragment{
         setClickListener(R.id.video_local_1);
         setClickListener(R.id.video_local_2);
         setClickListener(R.id.video_local_return);
+        setClickListener(R.id.btn_delete);
+        setClickListener(R.id.btn_copy);
+        setClickListener(R.id.btn_cancle);
+        btn_select_all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    if(dataMode == 1){
+                        for(int i=0;i<homePagerActivity.getDialogLocalMusic().SDVideoData.size();i++){
+                            recodeStatu.put(i, true);
+                        }
+                    }else if(dataMode == 2){
+                        for(int i=0;i<homePagerActivity.getDialogLocalMusic().USBVideoData.size();i++){
+                            recodeStatu.put(i, true);
+                        }
+                    }
+                }else{
+                    if(recodeStatu != null && !isUserCheck){
+                        recodeStatu.clear();
+                    }else{
+                        isUserCheck = false;
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
     public void initView() {
         context = getContext();
-
+        operate_path = new ArrayList<String>();
         getMusicData();
 //       homePagerActivity.getDialogLocalMusic().ScanVideo(getContext(),false);
 //       homePagerActivity.getDialogLocalMusic().ScanVideoMusic(getContext(),2);
@@ -91,15 +134,82 @@ public class VideoFragment extends BaseFragment{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.video_local_1:
+                if(dataMode != 3){
+                    initOperate();
+                }
                 changeData(3);
                 break;
             case R.id.video_local_2:
+                if(dataMode != 2){
+                    initOperate();
+                }
                 changeData(2);
                 break;
             case R.id.video_local_return:
                 homePagerActivity.hideFragment();
                 break;
+            case R.id.btn_delete:
+                btn_select_all.setChecked(false);
+                operate_path.clear();
+                mAdapter.isShow = false;
+                for (Integer entry : recodeStatu.keySet()) {
+                    operate_path.add(homePagerActivity.getDialogLocalMusic().SDVideoData.get(entry).url);
+                }
+                if(operate_path.size() == 0){
+                    return;
+                }
+                showLoadingDialog();
+                for (int i=0;i<operate_path.size();i++){
+                    FileUtil.deleteFile(new File(operate_path.get(i)));
+                    MusicCollectionDao.deleteFavByUrl(getContext(),operate_path.get(i));
+                }
+                Intent intent  =new Intent();
+                intent.setAction("nscar_fresh_sdcard");
+                context.sendBroadcast(intent);
+                homePagerActivity.getDialogLocalMusic().updateLocalMusic(context);
+                if(recodeStatu != null){
+                    recodeStatu.clear();
+                }
+                operate_layout.setVisibility(View.GONE);
+                mAdapter.notifyDataSetChanged();
+                myHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideLoadingDialog();
+                    }
+                },3500);
+                break;
+            case R.id.btn_copy:
+                operate_total = 0;
+                operate_count_index = 0;
+                isWhile = true;
+                for (Integer entry : recodeStatu.keySet()) {
+                    operate_path.add(homePagerActivity.getDialogLocalMusic().USBVideoData.get(entry).url);
+                }
+                operate_total = operate_path.size();
+                if(operate_total == 0){
+                    return;
+                }
+                new CopyFileThread(operate_path).start();
+                break;
+            case R.id.btn_cancle:
+                initOperate();
+                break;
         }
+    }
+
+    //文件操作初始化
+    public void initOperate(){
+        mAdapter.isShow = false;
+        if(recodeStatu != null){
+            recodeStatu.clear();
+        }
+        if(btn_select_all.isChecked()){
+            isUserCheck = false;
+            btn_select_all.setChecked(false);
+        }
+        operate_layout.setVisibility(View.GONE);
+        mAdapter.notifyDataSetChanged();
     }
 
     /*初始化本地音乐数据*/
@@ -192,7 +302,22 @@ public class VideoFragment extends BaseFragment{
             mAdapter.setOnItemClickListener(new VideoAdapter.OnItemClickListener() {
 
                 @Override
-                public void onClickMusic(Mp3Info data, int Pos) {
+                public void onClickMusic(View view,Mp3Info data, int Pos) {
+                    if(mAdapter.isShow){
+                        CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+                        boolean isCheck = !checkBox.isChecked();
+                        if(isCheck){
+                            recodeStatu.put(Pos, isCheck);
+                        }else{
+                            if(btn_select_all.isChecked()){
+                                isUserCheck = true;
+                                btn_select_all.setChecked(false);
+                            }
+                            recodeStatu.remove(Pos);
+                        }
+                        checkBox.setChecked(isCheck);
+                        return;
+                    }
                     JCVideoPlayer.WIFI_TIP_DIALOG_SHOWED =true;//关闭网络播放提示
 //                   int viewid =getResources().getIdentifier("fullscreen", "id", "fm.jiecao.jcvideoplayer_lib.JCVideoPlayer");
 //                    ImageView imageView =(ImageView) getActivity().findViewById(getResources().getIdentifier("fullscreen", "id", "fm.jiecao.jcvideoplayer_lib.JCVideoPlayer"));
@@ -212,30 +337,37 @@ public class VideoFragment extends BaseFragment{
 
                 @Override
                 public void onLongClickMusic(Mp3Info data, int Pos) {
+                    if(operate_layout != null && operate_layout.getVisibility() == View.GONE){
+                        operate_layout.setVisibility(View.VISIBLE);
+                    }
+                    btn_delete.setVisibility(1==dataMode?View.VISIBLE:View.GONE);
+                    btn_copy.setVisibility(2==dataMode?View.VISIBLE:View.GONE);
+                    mAdapter.isShow = true;
+                    mAdapter.notifyDataSetChanged();
                 }
 
-                @Override
-                public void onClickDelete(Mp3Info data, int Pos) {
-                    showLoadingDialog();
-                    FileUtil.deleteFile(new File(data.url));
-                    Intent intent  =new Intent();
-                    intent.setAction("nscar_fresh_sdcard");
-                    context.sendBroadcast(intent);
-                    homePagerActivity.getDialogLocalMusic().updateLocalVideo(context);
-                    myHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            hideLoadingDialog();
-                        }
-                    },3500);
-                }
-
-                @Override
-                public void onClickCopy(Mp3Info data, int Pos) {
-                    File sourse = new File(data.url);
-                    long len = sourse.length();
-                    new CopyFileThread(data.url,PATH_SDCARDMOVIES+data.displayName,0,len).start();
-                }
+//                @Override
+//                public void onClickDelete(Mp3Info data, int Pos) {
+//                    showLoadingDialog();
+//                    FileUtil.deleteFile(new File(data.url));
+//                    Intent intent  =new Intent();
+//                    intent.setAction("nscar_fresh_sdcard");
+//                    context.sendBroadcast(intent);
+//                    homePagerActivity.getDialogLocalMusic().updateLocalVideo(context);
+//                    myHandler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            hideLoadingDialog();
+//                        }
+//                    },3500);
+//                }
+//
+//                @Override
+//                public void onClickCopy(Mp3Info data, int Pos) {
+//                    File sourse = new File(data.url);
+//                    long len = sourse.length();
+//                    new CopyFileThread(data.url,PATH_SDCARDMOVIES+data.displayName,0,len).start();
+//                }
             });
 
         }else {
@@ -273,96 +405,81 @@ public class VideoFragment extends BaseFragment{
         }
         return -1;
     }
-    //    填写信息dialog
-    private  void  ShowDialog( final Mp3Info info){
-        AddOneEtParamDialog mAddOneEtParamDialog = AddOneEtParamDialog.getInstance(false,"",2);
-
-        mAddOneEtParamDialog.setOnDialogClickListener(new AddOneEtParamDialog.DefOnDialogClickListener() {
-            @Override
-            public void onClickCommit(AddOneEtParamDialog dialog, String data) {
-                File sourse = new File(info.url);
-                long len = sourse.length();
-//                long oneNum = len/blockCount;
-//                for(int i=0;i<blockCount-1;i++){
-//                    new CopyFileThread(info.url,PATH_SDCARDMOVIES+info.displayName,oneNum*i,oneNum*(i+1)).start();
-//                }
-//                new CopyFileThread(info.url,PATH_SDCARDMOVIES+info.displayName,oneNum*(blockCount-1),len).start();
-                new CopyFileThread(info.url,PATH_SDCARDMOVIES+info.displayName,0,len).start();
-                dialog.dismiss();
-                App.get().getCurActivity().initImmersionBar();
-
-            }
-
-            @Override
-            public void onClickCancel(AddOneEtParamDialog dialog) {
-                App.get().getCurActivity().initImmersionBar();
-                dialog.dismiss();
-            }
-        });
-
-        mAddOneEtParamDialog.show(this.getFragmentManager());
-    }
+    boolean isWhile = true;
     class CopyFileThread extends Thread{
-        private String srcPath;//源文件
+        private List<String> strList;//源文件地址组
         private String destPath;//目标文件地址
         private long start,end;//start起始位置,end结束位置
+        File sourse;
 
-        public CopyFileThread(String srcPath,String destPath,long start,long end){
-            this.srcPath = srcPath;
-            this.destPath = destPath;
-            this.start = start;
-            this.end = end;
+        public CopyFileThread(List<String> strList){
+            this.strList = strList;
         }
 
         @Override
         public void run(){
-            try {
-                showLoadingDialog();
-                long beginTimes = System.currentTimeMillis();
-                Log.i("CopyFileThread","start:"+beginTimes);
-                //创建只读的随机访问文件
-                RandomAccessFile in = new RandomAccessFile(srcPath,"r");
-                //创建可读写的随机访问文件
-                RandomAccessFile out = new RandomAccessFile(destPath,"rw");
-                //将输入跳转到指定位置
-                in.seek(start);
-                //从指定位置开始写
-                out.seek(start);
-                //文件输入通道
-                FileChannel inChannel = in.getChannel();
-                //文件输出通道
-                FileChannel outChannel = out.getChannel();
-                //锁住需要操作的区域,false代表锁住
-                FileLock lock = outChannel.lock(start,(end-start),false);
-                //将字节从此通道的文件传输到给定的可写入字节的输出通道
-                inChannel.transferTo(start,(end-start),outChannel);
-                lock.release();
-                out.close();
-                in.close();
-                long endTimes = System.currentTimeMillis();
-                Log.i("CopyFileThread",""+Thread.currentThread().getName()+"-alltime:"+(endTimes-beginTimes));
+            while(isWhile){
+                try {
+                    sourse = new File(operate_path.get(operate_count_index));
+                    start = 0;
+                    end = sourse.length();
+                    if(operate_count_index == 0) {
+                        showLoadingDialog();
+                    }
+                    operate_count_index++;
+                    long beginTimes = System.currentTimeMillis();
+                    Log.i("CopyFileThread","start:"+beginTimes);
+                    //创建只读的随机访问文件
+                    RandomAccessFile in = new RandomAccessFile(sourse.getAbsolutePath(),"r");
+                    //创建可读写的随机访问文件
+                    RandomAccessFile out = new RandomAccessFile(PATH_SDCARDMOVIES+sourse.getName(),"rw");
+                    //将输入跳转到指定位置
+                    in.seek(start);
+                    //从指定位置开始写
+                    out.seek(start);
+                    //文件输入通道
+                    FileChannel inChannel = in.getChannel();
+                    //文件输出通道
+                    FileChannel outChannel = out.getChannel();
+                    //锁住需要操作的区域,false代表锁住
+                    FileLock lock = outChannel.lock(start,(end-start),false);
+                    //将字节从此通道的文件传输到给定的可写入字节的输出通道
+                    inChannel.transferTo(start,(end-start),outChannel);
+                    lock.release();
+                    out.close();
+                    in.close();
+                    long endTimes = System.currentTimeMillis();
+                    Log.i("CopyFileThread",""+Thread.currentThread().getName()+"-alltime:"+(endTimes-beginTimes));
+                    threadEnd();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    FileUtil.deleteFile(new File(PATH_SDCARDMOVIES+sourse.getName()));
+                    threadEnd();
+                }
+            }
+
+        }
+
+        public void threadEnd(){
+            if(operate_count_index == operate_total){
+                isWhile = false;
                 Intent intent  =new Intent();
                 intent.setAction("nscar_fresh_sdcard");
                 context.sendBroadcast(intent);
-                homePagerActivity.getDialogLocalMusic().updateLocalVideo(context);
+                homePagerActivity.getDialogLocalMusic().updateLocalMusic(context);
                 myHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        hideLoadingDialog();
-                    }
-                },3500);
-            } catch (Exception e) {
-                e.printStackTrace();
-                FileUtil.deleteFile(new File(destPath));
-                myHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUtils.show(getString(R.string.importerr));
+                        mAdapter.isShow = false;
+                        if(recodeStatu != null){
+                            recodeStatu.clear();
+                        }
+                        operate_layout.setVisibility(View.GONE);
+                        mAdapter.notifyDataSetChanged();
                         hideLoadingDialog();
                     }
                 },3500);
             }
-
         }
     }
 }
