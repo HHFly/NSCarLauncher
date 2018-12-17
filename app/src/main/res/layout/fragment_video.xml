@@ -61,6 +61,63 @@
         android:layout_alignTop="@+id/video_local_1"
         android:layout_marginBottom="62px"
         android:layout_marginLeft="50px"></View>
+
+    <LinearLayout
+        android:id="@+id/operate_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/recyclerView_videolocoal"
+        android:layout_marginTop="140px"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <CheckBox
+            android:id="@+id/btn_select_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:button="@drawable/check_style" />
+
+        <TextView
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@mipmap/operate_bg"
+            android:textSize="30px"
+            android:text="@string/delete"/>
+
+        <TextView
+            android:id="@+id/btn_copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@mipmap/operate_bg"
+            android:textSize="30px"
+            android:text="@string/copy" />
+
+        <TextView
+            android:id="@+id/btn_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@mipmap/operate_bg"
+            android:textSize="30px"
+            android:text="@string/cancle" />
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_videolocoal"
         android:layout_width="match_parent"

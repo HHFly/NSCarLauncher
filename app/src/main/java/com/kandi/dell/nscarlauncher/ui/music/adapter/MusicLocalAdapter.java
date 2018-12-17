@@ -1,6 +1,7 @@
 package com.kandi.dell.nscarlauncher.ui.music.adapter;
 
 import android.view.View;
+import android.widget.CheckBox;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.adapter.AutoViewHolder;
@@ -17,6 +18,7 @@ public class MusicLocalAdapter extends BaseListRvAdapter<Mp3Info> {
         super(data);
     }
     private int mode=1;//1 local 2 usb 3 collect
+    public boolean isShow = false;
 
     public void setMode(int mode) {
         this.mode = mode;
@@ -31,14 +33,19 @@ public class MusicLocalAdapter extends BaseListRvAdapter<Mp3Info> {
     public void bindBodyData(AutoViewHolder holder, final int bodyPos,final Mp3Info data) {
         holder.text(R.id.item_songname,data.displayName);
         holder.text(R.id.item_singer,data.artist);
-        holder.itemView.setSelected( homePagerActivity.getDialogLocalMusic().musicID==bodyPos);
+        if(homePagerActivity.getDialogLocalMusic().musicID==bodyPos){
+            holder.textColorId(R.id.item_songname,R.color.colormusicblue);
+            holder.textColorId(R.id.item_singer,R.color.colormusicblue);
+        }else{
+            holder.textColorId(R.id.item_songname,R.color.colormusicwhiet);
+            holder.textColorId(R.id.item_singer,R.color.colormusicwhiet);
+        }
+//        holder.itemView.setSelected( homePagerActivity.getDialogLocalMusic().musicID==bodyPos);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 if(onItemClickListener!=null){
-                    onItemClickListener.onClickMusic(data,bodyPos);
+                    onItemClickListener.onClickMusic(v,data,bodyPos);
                 }
             }
         });
@@ -53,24 +60,18 @@ public class MusicLocalAdapter extends BaseListRvAdapter<Mp3Info> {
 
 
         });
-        holder.get(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onClickDelete(data,bodyPos);
-                }
+        if(isShow){
+            CheckBox checkBox = holder.get(R.id.checkBox);
+            checkBox.setVisibility(View.VISIBLE);
+            Boolean flag = homePagerActivity.getMusicFragment().recodeStatu.get(bodyPos);
+            if (flag == null) {
+                checkBox.setChecked(false);
+            } else {
+                checkBox.setChecked(flag);
             }
-        });
-        holder.get(R.id.btn_copy).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onClickCopy(data,bodyPos);
-                }
-            }
-        });
-        holder.get(R.id.btn_delete).setVisibility(1==mode?View.VISIBLE:View.GONE);
-        holder.get(R.id.btn_copy).setVisibility(2==mode?View.VISIBLE:View.GONE);
+        }else{
+            holder.get(R.id.checkBox).setVisibility(View.INVISIBLE);
+        }
     }
     private OnItemClickListener onItemClickListener;
 
@@ -84,12 +85,8 @@ public class MusicLocalAdapter extends BaseListRvAdapter<Mp3Info> {
          *
          *
          */
-        void onClickMusic(Mp3Info data,int Pos);
+        void onClickMusic(View view,Mp3Info data,int Pos);
 
         void  onLongClickMusic(Mp3Info data,int Pos);
-
-        void  onClickDelete(Mp3Info data,int Pos);
-
-        void  onClickCopy(Mp3Info data,int Pos);
     }
 }

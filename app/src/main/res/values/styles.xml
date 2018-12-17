@@ -30,6 +30,13 @@
         <item name="android:background">@color/view_line</item>
     </style>
 
+    <style name="BaseLine.Horizontallist">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/view_line_width</item>
+        <item name="android:background">@color/view_line</item>
+        <item name="android:layout_marginLeft">38px</item>
+    </style>
+
     <style name="BaseLine.Vertical">
         <item name="android:layout_width">@dimen/view_line_width</item>
         <item name="android:layout_height">match_parent</item>

@@ -14,7 +14,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -47,7 +50,9 @@ import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty.PAUSE_MSG;
 import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
@@ -83,7 +88,8 @@ public class MusicFragment extends BaseFragment {
     public  CircleImageView circle_image;
      Context context;
     public  ImageView bt_open, bt_play, bt_back, bt_next, bt_u, bt_music_model, bt_fav;
-    public  TextView tv_music_songname, tv_music_singer, music_current_time, music_total_time;
+    public  TextView tv_music_songname, tv_music_singer, music_current_time, music_total_time,btn_delete,btn_copy;
+    public CheckBox btn_select_all;
     private  int  currentMode ;
     private   List<Mp3Info> mData = new ArrayList<>();//数据源
     private   List<Mp3Info> mLocalData = new ArrayList<>();//缓存数据源
@@ -92,6 +98,12 @@ public class MusicFragment extends BaseFragment {
     public     DialogLocalMusic dialogLocalMusic;
     public  final String PATH_SDCARDMUSIC = "/sdcard/Music/";
     public int blockCount = 4;
+    public Map<Integer, Boolean> recodeStatu = new HashMap<Integer, Boolean>();
+    private LinearLayout operate_layout;
+    private List<String> operate_path;
+    private int operate_total = 0;
+    private int operate_count_index = 0;
+    private boolean isUserCheck = false;
     @Override
     public int getContentResId() {
         return R.layout.fragment_music;
@@ -120,6 +132,10 @@ public class MusicFragment extends BaseFragment {
         bt_music_model=getView(R.id.iv_music_mode);
         bt_next =getView(R.id.music_ringt);
         bt_fav = getView(R.id.music_fav);
+        operate_layout = getView(R.id.operate_layout);
+        btn_select_all = getView(R.id.btn_select_all);
+        btn_delete = getView(R.id.btn_delete);
+        btn_copy = getView(R.id.btn_copy);
         context=  getContext();
     }
 
@@ -136,12 +152,38 @@ public class MusicFragment extends BaseFragment {
         setClickListener(R.id.music_local_3);
         setClickListener(R.id.music_refresh);
         setClickListener(R.id.music_fav);
+        setClickListener(R.id.btn_delete);
+        setClickListener(R.id.btn_copy);
+        setClickListener(R.id.btn_cancle);
+        btn_select_all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    if(dataMode == 1){
+                        for(int i=0;i<homePagerActivity.getDialogLocalMusic().SDData.size();i++){
+                            recodeStatu.put(i, true);
+                        }
+                    }else if(dataMode == 2){
+                        for(int i=0;i<homePagerActivity.getDialogLocalMusic().USBData.size();i++){
+                            recodeStatu.put(i, true);
+                        }
+                    }
+                }else{
+                    if(recodeStatu != null && !isUserCheck){
+                        recodeStatu.clear();
+                    }else{
+                        isUserCheck = false;
+                    }
+                }
+                musicLocalAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
     public void initView() {
         initSeekBar();
-
+        operate_path = new ArrayList<String>();
         homePagerActivity.getDialogLocalMusic().setMusicFragment(this);
         recoveryLast();
 //        dialogLocalMusic.ScanMusic(getContext(),false);
@@ -237,14 +279,23 @@ public class MusicFragment extends BaseFragment {
                 setViewVisibilityGone(R.id.music_local,false);
                 break;
             case  R.id.music_local_1:
+                if(dataMode != 1){
+                    initOperate();
+                }
                 dataMode=1;
                 getLocalMusicData();
                 break;
             case R.id.music_local_2:
+                if(dataMode != 2){
+                    initOperate();
+                }
                 dataMode=2;
                 getUsbMusicData();
                 break;
             case R.id.music_local_3:
+                if(dataMode != 3){
+                    initOperate();
+                }
                 dataMode=3;
                 getMusicColData();
                 break;
@@ -268,9 +319,70 @@ public class MusicFragment extends BaseFragment {
                     e.printStackTrace();
                 }
                 break;
+            case R.id.btn_delete:
+                operate_path.clear();
+                musicLocalAdapter.isShow = false;
+                for (Integer entry : recodeStatu.keySet()) {
+                    operate_path.add(homePagerActivity.getDialogLocalMusic().SDData.get(entry).url);
+                }
+                if(operate_path.size() == 0){
+                    return;
+                }
+                showLoadingDialog();
+                for (int i=0;i<operate_path.size();i++){
+                    FileUtil.deleteFile(new File(operate_path.get(i)));
+                    MusicCollectionDao.deleteFavByUrl(getContext(),operate_path.get(i));
+                }
+                Intent intent  =new Intent();
+                intent.setAction("nscar_fresh_sdcard");
+                context.sendBroadcast(intent);
+                homePagerActivity.getDialogLocalMusic().updateLocalMusic(context);
+                if(recodeStatu != null){
+                    recodeStatu.clear();
+                }
+                operate_layout.setVisibility(View.GONE);
+                musicLocalAdapter.notifyDataSetChanged();
+                myHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideLoadingDialog();
+                    }
+                },3500);
+                break;
+            case R.id.btn_copy:
+                operate_total = 0;
+                operate_count_index = 0;
+                isWhile = true;
+                for (Integer entry : recodeStatu.keySet()) {
+                    operate_path.add(homePagerActivity.getDialogLocalMusic().USBData.get(entry).url);
+                }
+                operate_total = operate_path.size();
+                if(operate_total == 0){
+                    return;
+                }
+                new CopyFileThread(operate_path).start();
+                break;
+            case R.id.btn_cancle:
+                initOperate();
+                break;
 
         }
     }
+
+    //文件操作初始化
+    public void initOperate(){
+        musicLocalAdapter.isShow = false;
+        if(recodeStatu != null){
+            recodeStatu.clear();
+        }
+        if(btn_select_all.isChecked()){
+            isUserCheck = false;
+            btn_select_all.setChecked(false);
+        }
+        operate_layout.setVisibility(View.GONE);
+        musicLocalAdapter.notifyDataSetChanged();
+    }
+
     /*初始化进度条*/
     private void initSeekBar(){
         music_progress_bar.setProgress(0);
@@ -856,46 +968,35 @@ public class MusicFragment extends BaseFragment {
             musicLocalAdapter.setOnItemClickListener(new MusicLocalAdapter.OnItemClickListener() {
 
                 @Override
-                public void onClickMusic(Mp3Info data, int Pos) {
-//                    homePagerActivity.getDialogLocalMusic().musicID=Pos;
-//                    PlayerService.isPause = false;
-//                    Intent i = new Intent(context, PlayerService.class);
-//                    i.putExtra("MSG", FlagProperty.PLAY_MSG);
-//                    context.startService(i);
-//                    listStartPlayMusic();
+                public void onClickMusic(View view,Mp3Info data, int Pos) {
+                    if(musicLocalAdapter.isShow){
+                        CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+                        boolean isCheck = !checkBox.isChecked();
+                        if(isCheck){
+                            recodeStatu.put(Pos, isCheck);
+                        }else{
+                            if(btn_select_all.isChecked()){
+                                isUserCheck = true;
+                                btn_select_all.setChecked(false);
+                            }
+                            recodeStatu.remove(Pos);
+                        }
+                        checkBox.setChecked(isCheck);
+                    }
                 }
 
                 @Override
                 public void onLongClickMusic(Mp3Info data, int Pos) {
-//                    if(dataMode==2){
-//                        ShowDialog(data);
-//                    }
-                }
-
-                @Override
-                public void onClickDelete(Mp3Info data, int Pos) {
-                    showLoadingDialog();
-                    FileUtil.deleteFile(new File(data.url));
-                    MusicCollectionDao.deleteFavByUrl(getContext(),data.url);
-                    Intent intent  =new Intent();
-                    intent.setAction("nscar_fresh_sdcard");
-                    context.sendBroadcast(intent);
-                    homePagerActivity.getDialogLocalMusic().updateLocalMusic(context);
-                    myHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            hideLoadingDialog();
+                    if(dataMode != 3){
+                        if(operate_layout != null && operate_layout.getVisibility() == View.GONE){
+                            operate_layout.setVisibility(View.VISIBLE);
                         }
-                    },3500);
+                        btn_delete.setVisibility(1==dataMode?View.VISIBLE:View.GONE);
+                        btn_copy.setVisibility(2==dataMode?View.VISIBLE:View.GONE);
+                        musicLocalAdapter.isShow = true;
+                        musicLocalAdapter.notifyDataSetChanged();
+                    }
                 }
-
-                @Override
-                public void onClickCopy(Mp3Info data, int Pos) {
-                    File sourse = new File(data.url);
-                    long len = sourse.length();
-                    new CopyFileThread(data.url,PATH_SDCARDMUSIC+data.displayName,0,len).start();
-                }
-
 
             });
 
@@ -925,70 +1026,65 @@ public class MusicFragment extends BaseFragment {
     public   void  stopView(){
         ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
     }
-    //    填写信息dialog
-    private  void  ShowDialog( final Mp3Info info){
-        AddOneEtParamDialog mAddOneEtParamDialog = AddOneEtParamDialog.getInstance(false,"",2);
 
-        mAddOneEtParamDialog.setOnDialogClickListener(new AddOneEtParamDialog.DefOnDialogClickListener() {
-            @Override
-            public void onClickCommit(AddOneEtParamDialog dialog, String data) {
-                File sourse = new File(info.url);
-                long len = sourse.length();
-                new CopyFileThread(info.url,PATH_SDCARDMUSIC+info.displayName,0,len).start();
-                dialog.dismiss();
-                App.get().getCurActivity().initImmersionBar();
-
-            }
-
-            @Override
-            public void onClickCancel(AddOneEtParamDialog dialog) {
-                App.get().getCurActivity().initImmersionBar();
-                dialog.dismiss();
-            }
-        });
-
-        mAddOneEtParamDialog.show(this.getFragmentManager());
-    }
-
+    boolean isWhile = true;
     class CopyFileThread extends Thread{
-        private String srcPath;//源文件
+        private List<String> strList;//源文件地址组
         private String destPath;//目标文件地址
         private long start,end;//start起始位置,end结束位置
+        File sourse;
 
-        public CopyFileThread(String srcPath,String destPath,long start,long end){
-            this.srcPath = srcPath;
-            this.destPath = destPath;
-            this.start = start;
-            this.end = end;
+        public CopyFileThread(List<String> strList){
+            this.strList = strList;
         }
 
         @Override
         public void run(){
-            try {
-                showLoadingDialog();
-                long beginTimes = System.currentTimeMillis();
-                Log.i("CopyFileThread","start:"+beginTimes);
-                //创建只读的随机访问文件
-                RandomAccessFile in = new RandomAccessFile(srcPath,"r");
-                //创建可读写的随机访问文件
-                RandomAccessFile out = new RandomAccessFile(destPath,"rw");
-                //将输入跳转到指定位置
-                in.seek(start);
-                //从指定位置开始写
-                out.seek(start);
-                //文件输入通道
-                FileChannel inChannel = in.getChannel();
-                //文件输出通道
-                FileChannel outChannel = out.getChannel();
-                //锁住需要操作的区域,false代表锁住
-                FileLock lock = outChannel.lock(start,(end-start),false);
-                //将字节从此通道的文件传输到给定的可写入字节的输出通道
-                inChannel.transferTo(start,(end-start),outChannel);
-                lock.release();
-                out.close();
-                in.close();
-                long endTimes = System.currentTimeMillis();
-                Log.i("CopyFileThread",""+Thread.currentThread().getName()+"-alltime:"+(endTimes-beginTimes));
+            while(isWhile){
+                try {
+                    sourse = new File(operate_path.get(operate_count_index));
+                    start = 0;
+                    end = sourse.length();
+                    if(operate_count_index == 0) {
+                        showLoadingDialog();
+                    }
+                    operate_count_index++;
+                    long beginTimes = System.currentTimeMillis();
+                    Log.i("CopyFileThread","start:"+beginTimes);
+                    //创建只读的随机访问文件
+                    RandomAccessFile in = new RandomAccessFile(sourse.getAbsolutePath(),"r");
+                    //创建可读写的随机访问文件
+                    RandomAccessFile out = new RandomAccessFile(PATH_SDCARDMUSIC+sourse.getName(),"rw");
+                    //将输入跳转到指定位置
+                    in.seek(start);
+                    //从指定位置开始写
+                    out.seek(start);
+                    //文件输入通道
+                    FileChannel inChannel = in.getChannel();
+                    //文件输出通道
+                    FileChannel outChannel = out.getChannel();
+                    //锁住需要操作的区域,false代表锁住
+                    FileLock lock = outChannel.lock(start,(end-start),false);
+                    //将字节从此通道的文件传输到给定的可写入字节的输出通道
+                    inChannel.transferTo(start,(end-start),outChannel);
+                    lock.release();
+                    out.close();
+                    in.close();
+                    long endTimes = System.currentTimeMillis();
+                    Log.i("CopyFileThread",""+Thread.currentThread().getName()+"-alltime:"+(endTimes-beginTimes));
+                    threadEnd();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    FileUtil.deleteFile(new File(PATH_SDCARDMUSIC+sourse.getName()));
+                    threadEnd();
+                }
+            }
+
+        }
+
+        public void threadEnd(){
+            if(operate_count_index == operate_total){
+                isWhile = false;
                 Intent intent  =new Intent();
                 intent.setAction("nscar_fresh_sdcard");
                 context.sendBroadcast(intent);
@@ -996,13 +1092,16 @@ public class MusicFragment extends BaseFragment {
                 myHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        musicLocalAdapter.isShow = false;
+                        if(recodeStatu != null){
+                            recodeStatu.clear();
+                        }
+                        operate_layout.setVisibility(View.GONE);
+                        musicLocalAdapter.notifyDataSetChanged();
                         hideLoadingDialog();
                     }
                 },3500);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-
         }
     }
 }

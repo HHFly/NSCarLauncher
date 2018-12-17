@@ -1393,6 +1393,9 @@ public int getSim(int num) {
     public MusicFragment getMusicFragment() {
         return musicFragment;
     }
+    public VideoFragment getVideoFragment() {
+        return videoFragment;
+    }
 
     public DialogLocalMusic getDialogLocalMusic() {
         return dialogLocalMusic;
