@@ -99,7 +99,8 @@ public class DriverServiceManger {
 
 	public void startService(Context context) {
 		this.context = context;
-		Intent it = new Intent(ACTION);
+		Intent it = new Intent(context,ACTION.getClass());
+
 		this.context.bindService(it, serviceConnection,	Context.BIND_AUTO_CREATE);
 		//Toast.makeText(this.context, "启动后台服务", Toast.LENGTH_LONG).show();
 	}
