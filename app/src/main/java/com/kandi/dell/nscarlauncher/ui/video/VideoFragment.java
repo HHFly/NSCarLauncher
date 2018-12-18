@@ -464,7 +464,7 @@ public class VideoFragment extends BaseFragment{
                 Intent intent  =new Intent();
                 intent.setAction("nscar_fresh_sdcard");
                 context.sendBroadcast(intent);
-                homePagerActivity.getDialogLocalMusic().updateLocalMusic(context);
+                homePagerActivity.getDialogLocalMusic().updateLocalVideo(context);
                 myHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
