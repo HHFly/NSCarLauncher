@@ -149,7 +149,6 @@ public class VideoFragment extends BaseFragment{
                 homePagerActivity.hideFragment();
                 break;
             case R.id.btn_delete:
-                btn_select_all.setChecked(false);
                 operate_path.clear();
                 mAdapter.isShow = false;
                 for (Integer entry : recodeStatu.keySet()) {
@@ -161,12 +160,11 @@ public class VideoFragment extends BaseFragment{
                 showLoadingDialog();
                 for (int i=0;i<operate_path.size();i++){
                     FileUtil.deleteFile(new File(operate_path.get(i)));
-                    MusicCollectionDao.deleteFavByUrl(getContext(),operate_path.get(i));
                 }
                 Intent intent  =new Intent();
                 intent.setAction("nscar_fresh_sdcard");
                 context.sendBroadcast(intent);
-                homePagerActivity.getDialogLocalMusic().updateLocalMusic(context);
+                homePagerActivity.getDialogLocalMusic().updateLocalVideo(context);
                 if(recodeStatu != null){
                     recodeStatu.clear();
                 }
