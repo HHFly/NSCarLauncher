@@ -59,6 +59,7 @@
             <!--</intent-filter>-->
         <!--</activity>-->
         <service
+            android:enabled="true"
             android:name="com.kandi.systemui.service.KandiSystemUiService"
             android:exported="true" >
         </service>
