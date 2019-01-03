@@ -91,7 +91,7 @@ public class KandiSystemUiService extends Service {
         mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         window = new Dialog(this, R.style.nodarken_style).getWindow();
         //设置Window为全透明
-//        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         createFloatView();
         createView();
