@@ -94,7 +94,7 @@
     <string name="星期五">星期五</string>
     <string name="星期六">星期六</string>
     <string name="更改蓝牙密码">更改蓝牙密码</string>
-    <string name="旧密码">旧密码</string>
+    <string name="旧密码">旧密码：</string>
     <string name="附近网络">附近网络</string>
     <string name="当前连接网络">当前连接网络</string>
     <string name="更多应用">更多应用</string>
