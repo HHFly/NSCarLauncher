@@ -22,7 +22,7 @@ public class MusicCollectionDao {
     }
     public static List<Mp3Info> findFavByUrl(Context context,String url){
         FinalDb finalDb = FinalDb.create(context);
-        return finalDb.findAllByWhere(Mp3Info.class, "url = '"+url+"'");
+        return finalDb.findAllByWhere(Mp3Info.class, "url = \""+url+"\"");
     }
     public static Mp3Info findFavById(Context context,int id ){
         FinalDb finalDb = FinalDb.create(context);
@@ -34,7 +34,7 @@ public class MusicCollectionDao {
     }
     public static void deleteFavByUrl(Context context,String url){
         FinalDb finalDb = FinalDb.create(context);
-        finalDb.deleteByWhere(Mp3Info.class, "url = '"+url+"'");
+        finalDb.deleteByWhere(Mp3Info.class, "url = \""+url+"\"");
     }
     public static void deleteFavByUsbOut(Context context,String usb){
         FinalDb finalDb = FinalDb.create(context);
