@@ -42,7 +42,7 @@ import com.kandi.dell.nscarlauncher.ui.home.model.WeatherData;
 import com.kandi.dell.nscarlauncher.widget.PlayControllFMView;
 import com.kandi.dell.nscarlauncher.widget.PlayControllView;
 import com.kandi.dell.nscarlauncher.widget.WaveView;
-import com.white.lib.utils.ToastUtil;
+
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -659,7 +659,7 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
                 }
             } else {
 //                KLog.e(getResources().getString(R.string.no_result));
-                ToastUtil.show(getContext(), "");
+//                ToastUtil.show(getContext(), "");
             }
         } else {
 //            Log.d("Liu_Weather", ToastUtil.getErrorMsgByCode(rCode));

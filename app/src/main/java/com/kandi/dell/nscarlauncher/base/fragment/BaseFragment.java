@@ -24,10 +24,10 @@ import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.kandi.dell.nscarlauncher.base.ShowLoadingDialogListener;
 import com.kandi.dell.nscarlauncher.common.util.FrescoUtils;
+import com.kandi.dell.nscarlauncher.common.util.LocationManagerUtil;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import com.white.lib.utils.location.LocationManagerUtil;
 
 /**
  * fragment基类

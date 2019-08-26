@@ -103,7 +103,8 @@
             android:textColor="@color/white"
             android:background="@mipmap/operate_bg"
             android:textSize="30px"
-            android:text="@string/copy" />
+            android:text="@string/copy"
+           />
 
         <TextView
             android:id="@+id/btn_cancle"

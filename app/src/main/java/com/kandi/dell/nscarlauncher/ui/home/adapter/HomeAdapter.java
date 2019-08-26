@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import com.kandi.dell.nscarlauncher.base.adapter.AutoViewHolder;
 import com.kandi.dell.nscarlauncher.base.adapter.MultipleSourcesRvAdapter;
 import com.kandi.dell.nscarlauncher.ui.home.model.HomeModel;
-import com.mark.app.base.recylerview.IndexPath;
+
 
 import java.util.ArrayList;
 

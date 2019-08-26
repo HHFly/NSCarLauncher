@@ -84,7 +84,7 @@ public class JCFullScreenActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         decor = this.getWindow().getDecorView();
 //        decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        mImmersionBar = ImmersionBar.with(this);
+//        mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.hideBar(BarHide.FLAG_HIDE_BAR).init();   //所有子类都将继承这些相同的属性
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 

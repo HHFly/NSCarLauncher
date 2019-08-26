@@ -31,7 +31,7 @@ import com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
-import com.white.lib.utils.UtilsConfig;
+
 
 import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_CALLEND;
 import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_CALLOUT;
@@ -131,10 +131,7 @@ App extends MultiDexApplication {
         registerActivityLifecycleCallbacks(new NSLifecycleHandle());
         //初始化Fresco
         FrescoUtils.initialize(this);
-        //初始化white框架
-        UtilsConfig
-                .getInstance(this)
-                .setLogOpen(BuildConfig.IS_OPEN_LOG);
+
 
 
 
@@ -144,6 +141,7 @@ App extends MultiDexApplication {
     }
     private void initService(){
        initMusic();
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         initFm();
         btService();
         registMyReceiver();
@@ -194,7 +192,7 @@ App extends MultiDexApplication {
     /*收音机*/
     private void  initFm(){
         try {
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
         // radio初始化
         radio = IFmService.Stub.asInterface(ServiceManager.getService("fm"));
 

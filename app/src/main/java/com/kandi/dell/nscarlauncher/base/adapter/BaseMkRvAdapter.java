@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mark.app.base.recylerview.MkViewHolder;
 
 /**
  * Created by hui on 2018/4/14.

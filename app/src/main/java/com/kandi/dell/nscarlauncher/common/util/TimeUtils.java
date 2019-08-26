@@ -1,13 +1,14 @@
 package com.kandi.dell.nscarlauncher.common.util;
 
 import com.kandi.dell.nscarlauncher.R;
+import com.kandi.dell.nscarlauncher.app.App;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import static com.white.lib.utils.AppResUtil.getString;
+
 
 /**
  * Created by Administrator on 2016/1/15.
@@ -25,25 +26,25 @@ public class TimeUtils {
         String mWay = null;
         switch (calendar.get(Calendar.DAY_OF_WEEK)){
             case 1:
-                mWay =  getString(R.string.星期日);
+                mWay =  App.get().getString(R.string.星期日);
                 break;
             case 2:
-                mWay =getString(R.string.星期一);
+                mWay =App.get().getString(R.string.星期一);
                 break;
             case 3:
-                mWay =getString(R.string.星期二);
+                mWay =App.get().getString(R.string.星期二);
                 break;
             case 4:
-                mWay =getString(R.string.星期三);
+                mWay =App.get().getString(R.string.星期三);
                 break;
             case 5:
-                mWay =getString(R.string.星期四);
+                mWay =App.get().getString(R.string.星期四);
                 break;
             case 6:
-                mWay =getString(R.string.星期五);
+                mWay =App.get().getString(R.string.星期五);
                 break;
             case 7:
-                mWay =getString(R.string.星期六);
+                mWay = App.get().getString(R.string.星期六);
                 break;
         }
         return  mWay;
@@ -78,11 +79,11 @@ public class TimeUtils {
         calendar = Calendar.getInstance();
         if (calendar.get(Calendar.HOUR_OF_DAY)>13) {
             hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY) - 12);
-            dayFlag = getString(R.string.下午);
+            dayFlag = App.get().getString(R.string.下午);
         }
         else {
             hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
-            dayFlag = getString(R.string.上午);
+            dayFlag = App.get().getString(R.string.上午);
         }
 
         if (calendar.get(Calendar.MINUTE) < 10)

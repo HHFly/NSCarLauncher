@@ -33,12 +33,12 @@ import com.kandi.dell.nscarlauncher.base.ShowLoadingDialogListener;
 import com.kandi.dell.nscarlauncher.base.dialog.LoadingDialog;
 import com.kandi.dell.nscarlauncher.common.util.FrescoUtils;
 import com.kandi.dell.nscarlauncher.common.util.LanguageUtil;
+import com.kandi.dell.nscarlauncher.common.util.LocationManagerUtil;
 import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gyf.barlibrary.BarHide;
 import com.gyf.barlibrary.ImmersionBar;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
-import com.white.lib.utils.location.LocationManagerUtil;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 //import com.zhy.autolayout.AutoLayoutActivity;

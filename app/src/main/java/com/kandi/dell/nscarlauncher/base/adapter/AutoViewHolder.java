@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.kandi.dell.nscarlauncher.common.util.FrescoUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.mark.app.base.recylerview.MkViewHolder;
+
 
 //import com.zhy.autolayout.utils.AutoUtils;
 
