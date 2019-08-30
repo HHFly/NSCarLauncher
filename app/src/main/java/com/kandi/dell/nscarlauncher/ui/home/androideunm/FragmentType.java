@@ -15,7 +15,8 @@ import android.support.annotation.IntDef;
         FragmentType.CARPOWER,
         FragmentType.POWERRECOVER,
         FragmentType.VIDEO,
-        FragmentType.BTSET
+        FragmentType.BTSET,
+        FragmentType.DVR
 })
 public @interface FragmentType {
     /*电台*/
@@ -44,4 +45,6 @@ public @interface FragmentType {
     int VIDEO =12;
     /*蓝牙设置*/
     int BTSET =13;
+    /*行车记录仪*/
+    int DVR =14;
 }

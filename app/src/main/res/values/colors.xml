@@ -44,4 +44,11 @@
     <color name="colormusic999999">#999999</color>
     <color name="green">#33ff00</color>
     <color name="dark_blue">#2F3654</color>
+
+    <color name="bg">#6A5ACD</color>
+    <color name="before">#FFFFFF</color>
+    <color name="after">#303F9F</color>
+    <color name="bgcolor">#6A5ACD</color>
+    <color name="checked">#FF0000</color>
+    <color name="unchecked">#00FF00</color>
 </resources>

@@ -38,4 +38,5 @@ public class FlagProperty {
 	public static  int  Speed =0; //车速
 	public static String SongName="";//蓝牙歌曲名字
 	public static String SingerName="";//蓝牙歌曲歌手名字
+	public static String extra = null;
 }

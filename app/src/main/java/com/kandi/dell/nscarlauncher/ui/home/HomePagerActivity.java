@@ -79,6 +79,7 @@ import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.phone.PhoneFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.SetFragment;
 import com.kandi.dell.nscarlauncher.ui.setting.fragment.BlueToothSetFragment;
+import com.kandi.dell.nscarlauncher.ui.tachograph.DvrFragment;
 import com.kandi.dell.nscarlauncher.ui.video.VideoFragment;
 import com.kandi.dell.nscarlauncher.widget.DialogVolumeControl;
 import com.kandi.dell.nscarlauncher.widget.ViewPagerScroller;
@@ -119,6 +120,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public AppFragment appFragment;//应用
     public VideoFragment videoFragment;//视频
     public BlueToothSetFragment blueToothSetFragment;//蓝牙设置
+    public DvrFragment dvrFragment;
     public BaseActivity context;
     private ArrayList<HomeModel> mData;
     static Dialog alertDialog;//来电弹框
@@ -381,6 +383,8 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
         dialogLocalMusic =new DialogLocalMusic(videoFragment,musicFragment);
         dialogLocalMusic.ScanAllDaTa(this);
+
+        dvrFragment = new DvrFragment();
     }
 
     /*隐藏fragemt*/
@@ -405,6 +409,11 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             if(homePagerActivity.getBlueToothSetFragment()!=null) {
                 homePagerActivity.getBlueToothSetFragment().hideDialog();
                 homePagerActivity.getSetFragment().dissDialog();
+            }
+        }
+        if(FragmentType.DVR==mCurFragment.getmType()){
+            if(homePagerActivity.getDvrFragment()!=null){
+                homePagerActivity.getDvrFragment().Pause();
             }
         }
         if(homePagerActivity.getBtMusicFragment() != null){
@@ -1422,6 +1431,10 @@ public int getSim(int num) {
     public SetFragment getSetFragment() {
         return setFragment;
 
+    }
+
+    public DvrFragment getDvrFragment() {
+        return dvrFragment;
     }
 
     public HomePagerOneFragment getHomePagerOneFragment() {

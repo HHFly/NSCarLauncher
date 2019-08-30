@@ -55,6 +55,11 @@ android {
 
             }
     }
+    repositories{
+        flatDir{
+            dirs 'libs'
+        }
+    }
 }
 
 dependencies {
@@ -100,4 +105,8 @@ dependencies {
     //    implementation 'fm.jiecao:jiecaovideoplayer:3.6.1'
     implementation project(':jcvideoplayer-lib')
     implementation 'org.apache.httpcomponents:httpcore-nio:4.4.10'
+
+    implementation(name: 'DashcamSDKPre', ext: 'aar')
+    implementation 'com.github.bumptech.glide:glide:4.1.1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
 }

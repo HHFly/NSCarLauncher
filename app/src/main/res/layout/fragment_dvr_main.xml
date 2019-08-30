@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bgcolor"
+              android:orientation="vertical">
+    <FrameLayout
+        android:id="@+id/frame_dvr_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"></FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <Button
+            android:id="@+id/btn_disconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="@string/disconnect"
+            android:textColor="@color/press_color"
+            android:textSize="25sp"/>
+
+        <ImageButton
+            android:id="@+id/ib_photo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/ib_set"
+            android:background="@drawable/photo_preview_title_file"
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/ib_set"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/photo_preview_title_set"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <TextureView
+            android:id="@+id/tv_radio"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/red"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:text="@string/rec"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_fbl"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:text="@string/fbl"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/ib_sd"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@id/tv_fbl"
+            android:background="@drawable/preview_icon_tf"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_yc"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@id/ib_sd"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:visibility="gone"
+            tools:text="@string/yc"/>
+
+        <ImageButton
+            android:id="@+id/ib_sound"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/mic_background"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View style="@style/BaseLine.Horizontallist"
+                android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:id="@+id/bt_rec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/record"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="@color/press_color"
+                android:textSize="25sp"/>
+
+            <View style="@style/BaseLine.Horizontallist"
+                android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:id="@+id/bt_catch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/cat"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="@color/press_color"
+                android:textSize="25sp"/>
+
+            <View style="@style/BaseLine.Horizontallist"
+                android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:id="@+id/bt_five"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/five"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="@color/press_color"
+                android:textSize="25sp"/>
+
+            <View style="@style/BaseLine.Horizontallist"
+                android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:id="@+id/bt_short"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/sslx"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="@color/press_color"
+                android:textSize="25sp"/>
+
+            <View style="@style/BaseLine.Horizontallist"
+                android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:id="@+id/btn_correct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/correct_time"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="@color/press_color"
+                android:textSize="25sp"/>
+
+            <View style="@style/BaseLine.Horizontallist"
+                android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:id="@+id/bt_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/event"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="@color/press_color"
+                android:textSize="25sp"/>
+
+            <View style="@style/BaseLine.Horizontallist"
+                android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:id="@+id/bt_cycle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/cycle"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="@color/press_color"
+                android:textSize="25sp"/>
+
+            <View style="@style/BaseLine.Horizontallist"
+                android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:id="@+id/bt_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/user"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="@color/press_color"
+                android:textSize="25sp"/>
+
+            <View style="@style/BaseLine.Horizontallist"
+                android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:id="@+id/btn_get_capabilities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/capability"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="@color/press_color"
+                android:textSize="25sp"/>
+
+            <View style="@style/BaseLine.Horizontallist"
+                android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:id="@+id/btn_preview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/preview"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="@color/press_color"
+                android:textSize="25sp"/>
+
+            <View style="@style/BaseLine.Horizontallist"
+                android:layout_alignParentBottom="true"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

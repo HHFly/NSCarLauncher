@@ -1,0 +1,848 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bgcolor">
+
+        <ImageButton
+            android:id="@+id/ib_back_main"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/photo_set_back"
+            android:padding="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/set"
+            android:textColor="#708090"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/bgcolor">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/fenbianlv"
+                    android:textColor="#708090"/>
+
+                <RadioGroup
+                    android:id="@+id/rg_switching"
+                    android:layout_width="160dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/photo_set_gshsdk_bg"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_high"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/high"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_low"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="@string/low"/>
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/kg"
+                    android:textColor="#708090"/>
+
+                <Switch
+                    android:id="@+id/st_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:checked="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/kdt"
+                    android:textColor="#708090"/>
+
+                <Switch
+                    android:id="@+id/st_kdt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:checked="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/dist_corr"
+                    android:textColor="#708090"/>
+
+                <Switch
+                    android:id="@+id/st_dist_corr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:checked="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/radio"
+                    android:textColor="#708090"/>
+
+                <Switch
+                    android:id="@+id/st_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:checked="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/jk"
+                    android:textColor="#708090"/>
+
+                <Switch
+                    android:id="@+id/st_rec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:checked="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/sensor"
+                    android:textColor="#708090"/>
+
+                <RadioGroup
+                    android:id="@+id/rg_sensor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/photo_set_gshsdk_bg"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_off"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/close"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_lower"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/lower"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_mid"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/mid"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_higher"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="@string/higher"/>
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/ysgj"
+                    android:textColor="#708090"/>
+
+                <RadioGroup
+                    android:id="@+id/rg_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/photo_set_gshsdk_bg"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_close"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/close"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_ten"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/ten"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_six"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="@string/six"/>
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/timelong"
+                    android:textColor="#708090"/>
+
+                <RadioGroup
+                    android:id="@+id/rg_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/photo_set_gshsdk_bg"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_one_min"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/one_min"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_three_min"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/three_min"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_five_min"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="@string/five_min"/>
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/overwrite"
+                    android:textColor="#708090"/>
+
+                <Switch
+                    android:id="@+id/st_cycle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:checked="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_reset"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/change_background"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/tv_reset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/back_set"
+                    android:textColor="#708090"/>
+
+                <ImageButton
+                    android:id="@+id/ib_reset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/photo_set_arrow"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_shutdown"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/change_background"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/tv_shutdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/shutdown"
+                    android:textColor="#708090"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/photo_set_arrow"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_reboot"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/change_background"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/tv_reboot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/reboot"
+                    android:textColor="#708090"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/photo_set_arrow"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/auto"
+                    android:textColor="#708090"/>
+
+                <Switch
+                    android:id="@+id/st_auto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:checked="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/plus"
+                    android:textColor="#708090"/>
+
+                <Switch
+                    android:id="@+id/st_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:checked="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_sd"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/change_background"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/tv_sd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/sd"
+                    android:textColor="#708090"/>
+
+                <ImageButton
+                    android:id="@+id/ib_sdcard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/photo_set_up"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_kris"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:id="@+id/tv_zrl"
+                    android:layout_width="130dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/zrl"
+                    android:textColor="#708090"/>
+
+                <TextView
+                    android:id="@+id/tv_syrl"
+                    android:layout_width="130dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/syrl"
+                    android:textColor="#708090"/>
+
+                <TextView
+                    android:id="@+id/tv_kzt"
+                    android:layout_width="130dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/kzt"
+                    android:textColor="#708090"/>
+
+                <TextView
+                    android:id="@+id/tv_sysm"
+                    android:layout_width="130dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/sysm"
+                    android:textColor="#708090"/>
+
+                <Button
+                    android:id="@+id/bt_format"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/photo_list_mid_choice_bg"
+                    android:text="@string/format"
+                    android:textColor="#708090"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_info"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/change_background"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/tv_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/info"
+                    android:textColor="#708090"/>
+
+                <ImageButton
+                    android:id="@+id/ib_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/photo_set_up"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_version"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:id="@+id/tv_yj"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/yj"
+                    android:textColor="#708090"/>
+
+                <TextView
+                    android:id="@+id/tv_gj"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/gj"
+                    android:textColor="#708090"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/js"
+                    android:textColor="#708090"/>
+
+                <Switch
+                    android:id="@+id/st_js"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:checked="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/ssp"
+                    android:textColor="#708090"/>
+
+                <RadioGroup
+                    android:id="@+id/rg_camera"
+                    android:layout_width="160dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/photo_set_gshsdk_bg"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_one"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/dp"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_five"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_background"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="@string/flp"/>
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_video"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/change_background"
+                android:clickable="true"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/sslx"
+                    android:textColor="#708090"/>
+
+                <ImageButton
+                    android:id="@+id/ib_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/photo_set_up"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="90dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:text="@string/czjg"
+                                android:textColor="#708090"/>
+
+                            <LinearLayout
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:background="@drawable/photo_set_gshsdk_bg"
+                                android:orientation="horizontal">
+
+                                <ImageButton
+                                    android:id="@+id/ib_minus_jg"
+                                    android:layout_width="35dp"
+                                    android:layout_height="30dp"
+                                    android:background="@drawable/press_minus"/>
+
+                                <EditText
+                                    android:id="@+id/et_jg"
+                                    android:layout_width="30dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@null"
+                                    android:gravity="center"
+                                    android:text="5"
+                                    android:textSize="8sp"/>
+
+                                <ImageButton
+                                    android:id="@+id/ib_plus_jg"
+                                    android:layout_width="35dp"
+                                    android:layout_height="30dp"
+                                    android:background="@drawable/press_plus"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:text="@string/spzs"
+                                android:textColor="#708090"/>
+
+                            <LinearLayout
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:background="@drawable/photo_set_gshsdk_bg"
+                                android:orientation="horizontal">
+
+                                <ImageButton
+                                    android:id="@+id/ib_minus_zs"
+                                    android:layout_width="35dp"
+                                    android:layout_height="30dp"
+                                    android:background="@drawable/press_minus"/>
+
+                                <EditText
+                                    android:id="@+id/et_zs"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:background="@null"
+                                    android:gravity="center"
+                                    android:text="5"
+                                    android:textSize="8sp"/>
+
+                                <ImageButton
+                                    android:id="@+id/ib_plus_zs"
+                                    android:layout_width="35dp"
+                                    android:layout_height="30dp"
+                                    android:background="@drawable/press_plus"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:text="@string/bfzl"
+                                android:textColor="#708090"/>
+
+                            <LinearLayout
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:background="@drawable/photo_set_gshsdk_bg"
+                                android:orientation="horizontal">
+
+                                <ImageButton
+                                    android:id="@+id/ib_minus_zl"
+                                    android:layout_width="35dp"
+                                    android:layout_height="30dp"
+                                    android:background="@drawable/press_minus"/>
+
+                                <EditText
+                                    android:id="@+id/et_zl"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:background="@null"
+                                    android:gravity="center"
+                                    android:text="5"
+                                    android:textSize="8sp"/>
+
+                                <ImageButton
+                                    android:id="@+id/ib_plus_zl"
+                                    android:layout_width="35dp"
+                                    android:layout_height="30dp"
+                                    android:background="@drawable/press_plus"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/bt_certain"
+                            android:layout_width="100dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="30dp"
+                            android:layout_marginTop="30dp"
+                            android:background="@drawable/photo_list_mid_choice_bg"
+                            android:text="@string/certain"
+                            android:textColor="#708090"/>
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

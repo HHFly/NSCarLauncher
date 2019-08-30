@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer-array name="error_code_list">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+
+        <item>101</item>
+        <item>102</item>
+        <item>103</item>
+        <item>104</item>
+        <item>105</item>
+        <item>106</item>
+        <item>107</item>
+
+        <item>201</item>
+        <item>202</item>
+        <item>203</item>
+        <item>204</item>
+        <item>205</item>
+        <item>206</item>
+        <item>207</item>
+        <item>208</item>
+        <item>209</item>
+        <item>210</item>
+        <item>211</item>
+        <item>212</item>
+        <item>213</item>
+        <item>214</item>
+
+        <item>301</item>
+        <item>302</item>
+        <item>303</item>
+        <item>304</item>
+
+        <item>501</item>
+        <item>502</item>
+    </integer-array>
+
+    <string-array name="error_reason_list">
+        <item>连接失败，请稍后重新打开程序（0）</item>
+        <item>未知错误（1）</item>
+        <item>操作失败，请稍后再试（2）</item>
+        <item>系统繁忙，请稍后再试（3）</item>
+        <item>信息异常，请稍后重试（4）</item>
+        <item>信息异常，请稍后重试（5）</item>
+        <item>信息异常，请稍后重试（6）</item>
+        <item>信息异常，请稍后重试（7）</item>
+
+        <item>操作失败，请稍后重新打开程序（101）</item>
+        <item>操作失败，请稍后再试（102）</item>
+        <item>操作失败，请稍后再试（103）</item>
+        <item>操作失败，请稍后再试（104）</item>
+        <item>操作失败，请稍后再试（105）</item>
+        <item>操作失败，请稍后再试（106）</item>
+        <item>暂无文件可操作（107）</item>
+
+        <item>无SD卡，请插入SD卡再操作（201）</item>
+        <item>SD卡损坏，请更换SD卡（202）</item>
+        <item>SD卡异常，请检查SD卡（203）</item>
+        <item>SD卡文件系统异常，请在设置中格式化SD卡（204）</item>
+        <item>SD卡异常，请检测SD卡（205）</item>
+        <item>SD卡异常，请检测SD卡（206）</item>
+        <item>SD卡只读，请检查SD卡（207）</item>
+        <item>SD卡空间不足，请选择设置或删除文件（208）</item>
+        <item>SD卡格式化失败（209）</item>
+        <item>SD卡异常，请检查SD卡（210）</item>
+        <item>紧急录像存储区满，请删除文件后重试（211）</item>
+        <item>图片存储区满，请删除文件后重试（212）</item>
+        <item>SD卡正在初始化（213）</item>
+        <item>卡慢（214）</item>
+
+        <item>重置设备失败，请重试（301）</item>
+        <item>获取文件列表失败，请重试（302）</item>
+        <item>抓拍失败，请重试（303）</item>
+        <item>设备不在预览状态，请重试（304）</item>
+
+        <item>信息异常，请稍后再试（501）</item>
+        <item>信息异常，请稍后再试（502）</item>
+
+    </string-array>
+
+</resources>
