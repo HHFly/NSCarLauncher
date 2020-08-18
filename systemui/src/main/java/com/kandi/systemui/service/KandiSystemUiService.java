@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.ActivityManager;
 import android.app.Dialog;
+import android.app.Instrumentation;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,6 +25,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -50,7 +52,7 @@ public class KandiSystemUiService extends Service {
     public ComingReceiver comingReceiver;
     WindowManager mWindowManager,wm;
     LayoutParams wmParams; // WindowManager.LayoutParams
-    FrameLayout mFloatLayout ,phoneFloatLayout;
+    FrameLayout mFloatLayout ,phoneFloatLayout,mBottomLayout;
     private ImageView status_bar_wifi_btn,status_bar_3g_level_btn,status_bar_bluetooth_image,status_bar_3g_type_btn,status_bar_battery_imageView,center_img,iv_power,title_iv_sound,iv_car_tbox;
     private  TextView tv_t_power,status_bar_time_textview,tv_hangup,tv_answser,tv_phone_number,tv_home,tv_t_volume;
     private RelativeLayout Rlcenter;
@@ -95,6 +97,7 @@ public class KandiSystemUiService extends Service {
 
         createFloatView();
         createView();
+        createBottom();
         setListen();
         initHeader();
         Receiver();
@@ -117,7 +120,9 @@ public class KandiSystemUiService extends Service {
         if (mFloatLayout != null) {
             mWindowManager.removeView(mFloatLayout);
         }
-
+        if(mBottomLayout!=null){
+            mWindowManager.removeView(mBottomLayout);
+        }
         if (phoneFloatLayout != null) {
             wm.removeView(phoneFloatLayout);
         }
@@ -140,6 +145,28 @@ public class KandiSystemUiService extends Service {
         MyListener.setContext(getApplicationContext());
         Tel = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         Tel.listen(MyListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+    }
+    private void createBottom(){
+        wmParams=  new LayoutParams();
+        wmParams.type = LayoutParams.TYPE_STATUS_BAR;
+        wmParams.format = PixelFormat.RGBA_8888;
+        wmParams.flags = LayoutParams.FLAG_NOT_FOCUSABLE;
+        wmParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+        wmParams.x = 0;
+        wmParams.y = 0;
+        wmParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        wmParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        LayoutInflater inflater = LayoutInflater.from(this);
+        mBottomLayout = (FrameLayout) inflater.inflate(R.layout.titlebar_new, null);
+        mWindowManager.addView(mBottomLayout, wmParams);
+
+        //        中间栏
+        center_img =(ImageView) mBottomLayout.findViewById(R.id.center_img);
+        iv_power =(ImageView) mBottomLayout.findViewById(R.id.iv_power);
+        title_iv_sound =(ImageView) mBottomLayout.findViewById(R.id.title_iv_sound);
+        tv_home =(TextView) mBottomLayout.findViewById(R.id.tv_home);
+        tv_t_volume =(TextView) mBottomLayout.findViewById(R.id.tv_t_volume);
+        Rlcenter =(RelativeLayout) mBottomLayout.findViewById(R.id.center);
     }
     private void createView() {
         wmParams=  new LayoutParams();
@@ -171,13 +198,7 @@ public class KandiSystemUiService extends Service {
 //        时间
         status_bar_time_textview = (TextView) mFloatLayout.findViewById(R.id.tv_title_date);
 
-//        中间栏
-        center_img =(ImageView) mFloatLayout.findViewById(R.id.center_img);
-        iv_power =(ImageView) mFloatLayout.findViewById(R.id.iv_power);
-        title_iv_sound =(ImageView) mFloatLayout.findViewById(R.id.title_iv_sound);
-        tv_home =(TextView) mFloatLayout.findViewById(R.id.tv_home);
-        tv_t_volume =(TextView) mFloatLayout.findViewById(R.id.tv_t_volume);
-        Rlcenter =(RelativeLayout) mFloatLayout.findViewById(R.id.center);
+
 
         mFloatLayout.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
@@ -189,20 +210,38 @@ public class KandiSystemUiService extends Service {
         center_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                gotoHome();
+              gotoHome();
 
             }
         });
         iv_power.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoHome();
+                new Thread() {
+                    public void run () {
+                        try {
+                            Instrumentation inst= new Instrumentation();
+                            inst.sendKeyDownUpSync(KeyEvent. KEYCODE_BACK);
+                        } catch(Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
             }
         });
         tv_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoHome();
+                new Thread() {
+                    public void run () {
+                        try {
+                            Instrumentation inst= new Instrumentation();
+                            inst.sendKeyDownUpSync(KeyEvent. KEYCODE_BACK);
+                        } catch(Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
             }
         });
         title_iv_sound.setOnClickListener(new View.OnClickListener() {

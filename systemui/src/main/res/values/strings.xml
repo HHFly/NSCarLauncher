@@ -6,4 +6,7 @@
     <string name="正在充电中">正在充电中...</string>
     <string name="充电异常">充电异常</string>
     <string name="充电已完成">充电已完成</string>
+    <string name="返回">返回</string>
+    <string name="首页">首页</string>
+    <string name="音量">音量</string>
 </resources>

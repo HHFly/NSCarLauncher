@@ -7,4 +7,7 @@
     <string name="正在充电中">On charge...</string>
     <string name="充电异常">Abnormal charge</string>
     <string name="充电已完成">Charging is completed</string>
+    <string name="返回">Back</string>
+    <string name="首页">Home</string>
+    <string name="音量">Volumne</string>
 </resources>
