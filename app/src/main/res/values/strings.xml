@@ -244,5 +244,7 @@
     <string name="setting_success">设置成功</string>
     <string name="setting_failure">设置失败</string>
     <string name="preview">预览</string>
+    <string name="应用">应用</string>
+    <string name="能量">能量</string>
 
 </resources>

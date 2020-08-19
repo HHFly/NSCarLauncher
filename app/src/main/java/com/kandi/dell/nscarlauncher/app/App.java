@@ -31,6 +31,7 @@ import com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
 import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
+import com.kandi.dell.nscarlauncher.ui_portrait.HomePagerActivity;
 
 
 import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_CALLEND;
@@ -61,7 +62,7 @@ App extends MultiDexApplication {
             .asInterface(ServiceManager.getService("audioCtrl"));
     AudioManager audioManager;
     private IKdBtService btservice ;
-    private BaseActivity mCurActivity;
+    private HomePagerActivity mCurActivity;
     private BlueMusicBroadcoast bluetoothReceiver; //蓝牙广播接受
     private Equalizer mEqualizer;
 
@@ -131,8 +132,6 @@ App extends MultiDexApplication {
         registerActivityLifecycleCallbacks(new NSLifecycleHandle());
         //初始化Fresco
         FrescoUtils.initialize(this);
-
-
 
 
         /*初始化驱动模块*/
@@ -276,7 +275,7 @@ App extends MultiDexApplication {
     public BaseActivity getCurActivity() {
         return mCurActivity;
     }
-    public void  setmCurActivity(BaseActivity curActivity){
+    public void  setmCurActivity(HomePagerActivity curActivity){
         this.mCurActivity =curActivity;
     }
 

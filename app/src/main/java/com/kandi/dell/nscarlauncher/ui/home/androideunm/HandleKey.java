@@ -14,7 +14,8 @@ import android.support.annotation.IntDef;
         HandleKey.AIROPEN,
         HandleKey.AIRCLOSE,
         HandleKey.FMNEXT,
-        HandleKey.FMPREV
+        HandleKey.FMPREV,
+        HandleKey.SHOW
 })
 public @interface HandleKey  {
 //    时间
@@ -42,4 +43,5 @@ public @interface HandleKey  {
     int  OPEMFM =12;
     int FMNEXT = 13;
     int FMPREV = 14;
+    int SHOW =15;
 }

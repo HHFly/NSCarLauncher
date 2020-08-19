@@ -2,114 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="373px"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="50px"
-    android:layout_marginRight="50px"
+    android:layout_width="202px"
+    android:layout_height="302px"
     android:background="@mipmap/item_bg">
     <RelativeLayout
-        android:id="@+id/rl_carcontroll"
+        android:id="@+id/item_carcontroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40px">
+        android:layout_marginTop="22px">
 
         <ImageView
             android:id="@+id/iv_fm"
-            android:layout_width="250px"
-            android:layout_height="250px"
+            android:layout_width="124px"
+            android:layout_height="124px"
             android:src="@mipmap/ic_carcontroll" />
 
-        <LinearLayout
-            android:visibility="gone"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="67px"
-            android:layout_marginTop="90px"
-            >
-            <TextView
 
-                android:id="@+id/tv_fm_hz"
-                style="@style/BaseText.Tv"
-                android:textSize="36px"
-                android:text="91.8"
-                />
-            <TextView
-                style="@style/BaseText.Tv"
-                android:textSize="16px"
-                android:text="MHZ"
-                android:layout_toRightOf="@+id/tv_fm_hz"/>
-        </LinearLayout>
 
-        <RelativeLayout
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:layout_below="@+id/ll_fm"
-            android:layout_marginTop="24px">
-
-            <TextView
-                android:id="@+id/tv_fm_name"
-                style="@style/BaseText.Tv"
-                android:layout_marginLeft="49px"
-                android:text="@string/杭州交通经济广播"
-                android:textSize="18px" />
-            <View
-                style="@style/BaseLine.Horizontal"
-                android:layout_width="17px"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10px"
-                android:layout_toLeftOf="@+id/tv_fm_name"
-                />
-            <View
-                style="@style/BaseLine.Horizontal"
-                android:layout_width="17px"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10px"
-                android:layout_toRightOf="@+id/tv_fm_name"
-                />
-        </RelativeLayout>
 
     </RelativeLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="26px"
+        android:layout_marginTop="14px"
         android:text="@string/整车控制"
-        android:textSize="48px"
+        android:textSize="24px"
         android:textColor="#EEEEEE"
         />
     <android.support.constraint.ConstraintLayout
         android:visibility="visible"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32px"
         >
         <ImageView
             android:id="@+id/iv_backbox"
-            android:layout_width="52px"
-            android:layout_height="50px"
+            android:layout_width="30px"
+            android:layout_height="29px"
             android:src="@drawable/select_car_1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="17px"
             />
         <TextView
             app:layout_constraintTop_toBottomOf="@+id/iv_backbox"
             app:layout_constraintLeft_toLeftOf="@+id/iv_backbox"
             app:layout_constraintRight_toRightOf="@+id/iv_backbox"
-            android:layout_marginTop="34px"
+            android:layout_marginTop="16px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/后备箱"
             android:textColor="@drawable/select_text_press_white_blue"
-            android:textSize="20px" />
+            android:textSize="18px" />
         <ImageView
             android:id="@+id/iv_cenlock"
-            android:layout_width="60px"
-            android:layout_height="50px"
-            android:layout_marginLeft="60px"
+            android:layout_width="26px"
+            android:layout_height="30px"
+            android:layout_marginLeft="43px"
             app:layout_constraintLeft_toRightOf="@+id/iv_backbox"
             android:src="@drawable/select_car_2"
            />
@@ -117,17 +69,17 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_cenlock"
             app:layout_constraintLeft_toLeftOf="@+id/iv_cenlock"
             app:layout_constraintRight_toRightOf="@+id/iv_cenlock"
-            android:layout_marginTop="34px"
+            android:layout_marginTop="16px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/中控锁"
             android:textColor="@drawable/select_text_press_white_blue"
-            android:textSize="20px" />
+            android:textSize="18px" />
         <ImageView
             android:id="@+id/iv_window"
-            android:layout_width="50px"
-            android:layout_height="50px"
-            android:layout_marginLeft="60px"
+            android:layout_width="30px"
+            android:layout_height="30px"
+            android:layout_marginLeft="45px"
             app:layout_constraintLeft_toRightOf="@+id/iv_cenlock"
             android:src="@drawable/select_car_3"
            />
@@ -135,13 +87,13 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_window"
             app:layout_constraintLeft_toLeftOf="@+id/iv_window"
             app:layout_constraintRight_toRightOf="@+id/iv_window"
-            android:layout_marginTop="34px"
+            android:layout_marginTop="16px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLength="6"
             android:text="@string/开窗"
             android:textColor="@drawable/select_text_press_white_blue"
-            android:textSize="20px" />
+            android:textSize="18px" />
     </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>

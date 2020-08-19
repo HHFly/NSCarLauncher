@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="686px"
+    android:layout_height="285px"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@mipmap/ic_home_music_bg">
+    <TextView
+        style="@style/BaseText.Tv"
+        android:textSize="24px"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="9px"
+        android:text="@string/本地音乐"
+        />
+    <View
+       style="@style/BaseLine.Horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="40px"
+        android:background="#000"/>
+    <TextView
+        android:id="@+id/tv_music_title"
+        style="@style/BaseText.Tv"
+        android:textSize="36px"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="55px"
+        android:layout_marginLeft="38px"
+        android:text="Say you say me"
+        />
+    <TextView
+        android:id="@+id/tv_music_singer"
+        style="@style/BaseText.Tv"
+        android:textSize="20px"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_music_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_music_title"
+        android:layout_marginTop="12px"
+        android:text="Lionel Richie"
+        />
+
+    <ImageView
+        android:id="@+id/iv_home_music_left"
+        android:layout_width="28px"
+        android:layout_height="30px"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_music_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_music_singer"
+        android:layout_marginTop="36px"
+        android:background="@drawable/select_controll_last"
+        />
+    <ImageView
+        android:id="@+id/iv_home_music_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/ic_home_music_puase"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_home_music_left"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_home_music_left"
+        android:layout_marginLeft="138px"
+        />
+    <ImageView
+        android:id="@+id/iv_home_music_right"
+        android:layout_width="28px"
+        android:layout_height="30px"
+        android:background="@drawable/select_controll_next"
+        app:layout_constraintLeft_toRightOf="@+id/iv_home_music_center"
+        app:layout_constraintTop_toTopOf="@+id/iv_home_music_center"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_home_music_center"
+        android:layout_marginLeft="72px"
+        />
+
+    <ImageView
+        android:id="@+id/iv_music"
+        android:layout_width="153px"
+        android:layout_height="158px"
+        android:src="@mipmap/ic_home_music"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="38px"
+        android:layout_marginTop="54px"/>
+
+    <SeekBar
+        android:id="@+id/music_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="1.4dp"
+        android:minHeight="1.4dp"
+        android:progressDrawable="@drawable/seekbar_style"
+        android:thumb="@mipmap/ic_thumb"
+        android:layout_gravity="center_vertical"
+        android:thumbOffset="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_music"
+        android:layout_marginTop="2px"
+        />
+
+    <TextView style="@style/BaseText.Tv"
+        android:id="@+id/music_current_time"
+        android:textSize="20px"
+        android:text="00.00"
+      app:layout_constraintLeft_toLeftOf="@+id/music_progress_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="46px"
+        android:layout_marginBottom="16px"
+        />
+    <TextView style="@style/BaseText.Tv"
+        android:id="@+id/music_total_time"
+        android:textSize="20px"
+        android:text="00.00"
+        app:layout_constraintRight_toRightOf="@+id/music_progress_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginRight="46px"
+        android:layout_marginBottom="16px"
+        />
+</android.support.constraint.ConstraintLayout>

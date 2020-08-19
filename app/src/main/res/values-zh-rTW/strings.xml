@@ -150,5 +150,7 @@
     <string name="delete">删除</string>
     <string name="cancle">取消</string>
     <string name="importerr">導入失敗</string>
+    <string name="应用">应用</string>
+    <string name="能量">能量</string>
 
 </resources>

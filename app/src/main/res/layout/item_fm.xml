@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="373px"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="35px"
-    android:layout_marginRight="50px"
-    android:background="@mipmap/item_bg">
+    android:orientation="vertical" android:layout_width="202px"
+    android:layout_height="302px"
+
+    android:background="@mipmap/ic_home_fm_bg">
 <RelativeLayout
-    android:id="@+id/FM"
+    android:id="@+id/item_fm"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:layout_marginTop="40px">
+    android:layout_marginTop="20px">
 
     <ImageView
         android:id="@+id/iv_fm"
-        android:layout_width="250px"
-        android:layout_height="250px"
+        android:layout_width="127px"
+        android:layout_height="129px"
         android:src="@mipmap/fm_bg" />
 
     <LinearLayout
@@ -24,67 +23,39 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="67px"
-        android:layout_marginTop="90px"
+        android:layout_centerInParent="true"
        >
-    <TextView
-        android:id="@+id/tv_fm_hz"
-       style="@style/BaseText.Tv"
-        android:textSize="36px"
 
-        />
+        <TextView
+            android:id="@+id/tv_fm_hz"
+            style="@style/BaseText.Tv"
+            android:layout_height="match_parent"
+            android:text="93.0"
+            android:textSize="20px" />
     <TextView
         style="@style/BaseText.Tv"
-        android:textSize="16px"
+        android:textSize="12px"
         android:text="MHZ"
        android:layout_toRightOf="@+id/tv_fm_hz"/>
     </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_below="@+id/ll_fm"
-            android:layout_marginTop="24px">
 
-            <TextView
-                android:id="@+id/tv_fm_name"
-                style="@style/BaseText.Tv"
-                android:layout_marginLeft="49px"
-                android:text="@string/杭州交通经济广播"
-                android:textSize="18px" />
-            <View
-                style="@style/BaseLine.Horizontal"
-                android:layout_width="17px"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="24px"
-                />
-            <View
-                style="@style/BaseLine.Horizontal"
-                android:layout_width="17px"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10px"
-               android:layout_toRightOf="@+id/tv_fm_name"
-                />
-        </RelativeLayout>
 
 </RelativeLayout>
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="26px"
+        style="@style/BaseText.Tv"
+        android:layout_marginTop="9px"
         android:text="@string/电台"
-        android:textSize="48px"
-        android:textColor="#EEEEEE"
+        android:textSize="24px"
+        android:layout_gravity="center_horizontal"
         />
 
     <com.kandi.dell.nscarlauncher.widget.PlayControllFMView
         android:id="@+id/fm_playcontroll"
-        android:layout_width="wrap_content"
+        android:layout_width="202px"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20px" />
+
+        android:layout_marginTop="15px" />
 
 
 </LinearLayout>

@@ -35,12 +35,12 @@ public class FragmentUtils {
                 if (fragment.isAdded()) {
                     transaction.show(fragment).commit();
                 } else {
-                    transaction.add(rootId, fragment).show(fragment).commit();
+                    transaction.add(rootId, fragment).show(fragment).commitAllowingStateLoss();
                 }
             } else if (fragment.isAdded()) {
                 transaction.hide(currentFragment).show(fragment).commit();
             } else {
-                transaction.hide(currentFragment).add(rootId, fragment).show(fragment).commit();
+                transaction.hide(currentFragment).add(rootId, fragment).show(fragment).commitAllowingStateLoss();
             }
         }
         return (T) fragment;
@@ -58,12 +58,12 @@ public class FragmentUtils {
                 if (fragment.isAdded()) {
                     transaction.show(fragment).commit();
                 } else {
-                    transaction.add(rootId, fragment).show(fragment).commit();
+                    transaction.add(rootId, fragment).show(fragment).commitAllowingStateLoss();
                 }
             } else if (fragment.isAdded()) {
                 transaction.hide(currentFragment).show(fragment).commit();
             } else {
-                transaction.hide(currentFragment).add(rootId, fragment).show(fragment).commit();
+                transaction.hide(currentFragment).add(rootId, fragment).show(fragment).commitAllowingStateLoss();
             }
         }
         return (T) fragment;

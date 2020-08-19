@@ -1,6 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+  <TextView
+    android:id="@+id/tv_time"
+   style="@style/BaseText.Tv"
+    android:textSize="48px"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginLeft="40px"
+    android:layout_marginTop="47px"
+    android:text="14:20"
+    />
+    <TextView
+        android:id="@+id/tv_date"
+        style="@style/BaseText.Tv"
+        android:textSize="24px"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time"
+        android:layout_marginLeft="40px"
+        android:layout_marginTop="47px"
+        android:text="2018/10/14 星期二"
+        />
+    <TextView
+        android:id="@+id/tv_1"
+        style="@style/BaseText.Tv"
+        android:textSize="24px"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="245px"
+        android:layout_marginTop="47px"
+        android:text="@string/剩余里程"
+        />
+    <TextView
+        android:id="@+id/tv_remainkon"
+        style="@style/BaseText.Tv"
+        android:textSize="72px"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_1"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_date"
+        android:text="80"
+        />
+    <TextView
+        android:id="@+id/tv_remainkon_km"
+        style="@style/BaseText.Tv"
+        android:textSize="60px"
+        app:layout_constraintLeft_toRightOf="@+id/tv_remainkon"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_remainkon"
+        android:text="Km"/>
+    <TextView
+        android:id="@+id/tv_car_mode"
+        style="@style/BaseText.Tv"
+        android:textSize="24px"
+        android:gravity="center"
+       app:layout_constraintRight_toRightOf="parent"
 
+        app:layout_constraintBottom_toBottomOf="@+id/tv_date"
+
+        android:layout_marginRight="42px"
+        android:text="Economy"
+        android:background="@mipmap/ic_car_mode_bg"
+        />
+
+  <include layout="@layout/item_music_potrait"
+      android:id="@+id/item_music"
+      android:layout_width="686px"
+      android:layout_height="285px"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tv_date"
+      android:layout_marginTop="30px"/>
+
+  <include layout="@layout/item_fm"
+      android:layout_width="202px"
+      android:layout_height="302px"
+      app:layout_constraintLeft_toLeftOf="@id/item_music"
+
+      app:layout_constraintTop_toBottomOf="@id/item_music"
+      android:layout_marginTop="24px"
+      />
+  <include layout="@layout/item_carcontroll"
+      android:layout_width="204px"
+      android:layout_height="304px"
+      app:layout_constraintLeft_toLeftOf="@id/item_music"
+      app:layout_constraintRight_toRightOf="@+id/item_music"
+      app:layout_constraintTop_toBottomOf="@id/item_music"
+      android:layout_marginTop="24px"
+      />
+  <include layout="@layout/item_bt_music"
+      android:layout_width="202px"
+      android:layout_height="302px"
+
+      app:layout_constraintRight_toRightOf="@+id/item_music"
+      app:layout_constraintTop_toBottomOf="@id/item_music"
+      android:layout_marginTop="24px"
+      />
+  
+  <RelativeLayout
+      android:id="@+id/item_app"
+      android:layout_width="80px"
+      android:layout_height="80px"
+      android:background="@mipmap/ic_home_app_bg"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/item_music"
+      android:layout_marginLeft="40px"
+      android:layout_marginTop="350px"
+      >
+    <TextView
+        style="@style/BaseText.Tv"
+        android:layout_marginTop="49px"
+        android:text="@string/应用"
+        android:textSize="18px"
+        android:layout_centerHorizontal="true"
+
+        />
+
+  </RelativeLayout>
+  <RelativeLayout
+      android:id="@+id/item_air"
+      android:layout_width="80px"
+      android:layout_height="80px"
+      android:background="@mipmap/ic_home_air_bg"
+      app:layout_constraintLeft_toRightOf="@+id/item_app"
+      app:layout_constraintTop_toBottomOf="@+id/item_music"
+      android:layout_marginLeft="72px"
+      android:layout_marginTop="350px"
+      >
+    <TextView
+        style="@style/BaseText.Tv"
+        android:layout_marginTop="49px"
+        android:text="@string/空调"
+        android:textSize="18px"
+        android:layout_centerHorizontal="true"
+
+        />
+
+  </RelativeLayout>
+  <RelativeLayout
+      android:id="@+id/item_phone"
+      android:layout_width="80px"
+      android:layout_height="80px"
+      android:background="@mipmap/ic_home_phone_bg"
+      app:layout_constraintLeft_toRightOf="@+id/item_air"
+      app:layout_constraintTop_toBottomOf="@+id/item_music"
+      android:layout_marginLeft="72px"
+      android:layout_marginTop="350px"
+      >
+    <TextView
+        style="@style/BaseText.Tv"
+        android:layout_marginTop="49px"
+        android:text="@string/电话"
+        android:textSize="18px"
+        android:layout_centerHorizontal="true"
+
+        />
+
+  </RelativeLayout>
+  <RelativeLayout
+      android:id="@+id/item_power"
+      android:layout_width="80px"
+      android:layout_height="80px"
+      android:background="@mipmap/ic_home_power_bg"
+      app:layout_constraintLeft_toRightOf="@+id/item_phone"
+      app:layout_constraintTop_toBottomOf="@+id/item_music"
+      android:layout_marginLeft="72px"
+      android:layout_marginTop="350px"
+      >
+    <TextView
+        style="@style/BaseText.Tv"
+        android:layout_marginTop="49px"
+        android:text="@string/能量"
+        android:textSize="18px"
+        android:layout_centerHorizontal="true"
+
+        />
+
+  </RelativeLayout>
+  <RelativeLayout
+      android:id="@+id/item_set"
+      android:layout_width="80px"
+      android:layout_height="80px"
+      android:background="@mipmap/ic_home_set_bg"
+      app:layout_constraintLeft_toRightOf="@+id/item_power"
+      app:layout_constraintTop_toBottomOf="@+id/item_music"
+      android:layout_marginLeft="72px"
+      android:layout_marginTop="350px"
+      >
+    <TextView
+        style="@style/BaseText.Tv"
+        android:layout_marginTop="49px"
+        android:text="@string/设置"
+        android:textSize="18px"
+        android:layout_centerHorizontal="true"
+
+        />
+
+  </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

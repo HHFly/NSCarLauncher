@@ -146,5 +146,7 @@
     <string name="delete">DELETE</string>
     <string name="cancle">CANCEL</string>
     <string name="importerr">Import failed</string>
+    <string name="应用">App</string>
+    <string name="能量">能量</string>
 
 </resources>

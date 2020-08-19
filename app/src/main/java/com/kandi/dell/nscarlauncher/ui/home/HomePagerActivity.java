@@ -345,7 +345,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
 
         mCurFragment = nullFragment;
 
-        App.get().setmCurActivity(this);
+//        App.get().setmCurActivity(this);
 
     }
 
