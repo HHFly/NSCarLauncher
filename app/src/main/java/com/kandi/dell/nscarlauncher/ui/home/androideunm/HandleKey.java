@@ -44,4 +44,6 @@ public @interface HandleKey  {
     int FMNEXT = 13;
     int FMPREV = 14;
     int SHOW =15;
+    int MUSICOPEN =16;
+    int MUSICCOLSE =17;
 }

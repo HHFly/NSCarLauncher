@@ -24,8 +24,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.BIND_CALL_SERVICE"
         tools:ignore="ProtectedPermissions" />
@@ -87,12 +86,9 @@
 
             </intent-filter>
         </activity>
-        <activity android:name=".ui.video.JCPlayerActivity" android:screenOrientation="landscape"/>
+        <!--<activity android:name=".ui.video.JCPlayerActivity" android:screenOrientation="landscape"/>-->
         <service android:name=".ui.music.Service.PlayerService"/>
-        <activity
-            android:name=".MainActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="landscape" /> <!-- or android:screenOrientation="landscape"-->
+
     </application>
 
 </manifest>

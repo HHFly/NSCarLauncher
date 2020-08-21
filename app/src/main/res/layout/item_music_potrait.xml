@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="55px"
         android:layout_marginLeft="38px"
-        android:text="Say you say me"
+        android:text="@string/未知音乐"
         />
     <TextView
         android:id="@+id/tv_music_singer"
@@ -35,7 +35,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/tv_music_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_music_title"
         android:layout_marginTop="12px"
-        android:text="Lionel Richie"
+        android:text="@string/歌手"
         />
 
     <ImageView

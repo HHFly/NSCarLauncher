@@ -150,7 +150,13 @@
     <string name="delete">删除</string>
     <string name="cancle">取消</string>
     <string name="importerr">導入失敗</string>
-    <string name="应用">应用</string>
+    <string name="应用">應用</string>
     <string name="能量">能量</string>
+    <string name="未知音乐">未知音樂</string>
+    <string name="歌手">歌手</string>
+    <string name="文件tip">文件大小超過內存空間！無法複製</string>
+    <string name="未选择文件">未選擇文件</string>
+    <string name="当前无歌曲播放">當前無歌曲播放</string>
+    <string name="暂无歌词">暫無歌詞</string>
 
 </resources>

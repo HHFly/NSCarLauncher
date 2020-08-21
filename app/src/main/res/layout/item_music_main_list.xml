@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="70px"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+    <ImageView
+        android:id="@+id/iv_music_selected"
+        android:layout_width="12px"
+        android:layout_height="14px"
+        android:src="@mipmap/ic_music_dialog_selected"
+        android:visibility="visible"
+        android:layout_marginRight="10px"
+
+        />
+    <TextView
+        android:id="@+id/item_songname"
+        style="@style/BaseText.Tv"
+        android:layout_width="wrap_content"
+        android:ellipsize="marquee"
+        android:maxEms="12"
+        android:singleLine="true"
+        android:text="111111111111111111111111"
+        android:textSize="24px"
+        android:textColor="@drawable/selector_text_select_white_blue"
+
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
+        <TextView
+
+            android:id="@+id/item_songtime"
+            style="@style/BaseText.Tv"
+            android:text="11111111111111111111"
+            android:ellipsize="marquee"
+            android:maxEms="6"
+            android:singleLine="true"
+            android:textColor="#999999"
+            android:textSize="18px" />
+    </LinearLayout>
+
+
+</LinearLayout>

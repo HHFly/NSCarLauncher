@@ -109,4 +109,6 @@ dependencies {
     implementation(name: 'DashcamSDKPre', ext: 'aar')
     implementation 'com.github.bumptech.glide:glide:4.1.1'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    //歌词
+    implementation 'com.github.bifan-wei:LrcView:V1.3'
 }

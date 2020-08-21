@@ -272,7 +272,7 @@ App extends MultiDexApplication {
      *
      * @return
      */
-    public BaseActivity getCurActivity() {
+    public HomePagerActivity getCurActivity() {
         return mCurActivity;
     }
     public void  setmCurActivity(HomePagerActivity curActivity){

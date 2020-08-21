@@ -146,7 +146,13 @@
     <string name="delete">DELETE</string>
     <string name="cancle">CANCEL</string>
     <string name="importerr">Import failed</string>
-    <string name="应用">App</string>
-    <string name="能量">能量</string>
+    <string name="应用">Application</string>
+    <string name="能量">Power</string>
+    <string name="未知音乐">Unknown music</string>
+    <string name="歌手">Singer</string>
+    <string name="文件tip">File size exceeds memory space! Unable to copy</string>
+    <string name="未选择文件">Unselected file!</string>
+    <string name="当前无歌曲播放">No song currently playing</string>
+    <string name="暂无歌词">No lyrics</string>
 
 </resources>
