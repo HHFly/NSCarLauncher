@@ -253,4 +253,37 @@
     <string name="当前无歌曲播放">当前无歌曲播放</string>
     <string name="暂无歌词">暂无歌词</string>
 
+    <!--整车控制-->
+    <string name="近光灯">近光灯</string>
+    <string name="远光灯">远光灯</string>
+    <string name="示宽灯">示宽灯</string>
+    <string name="后雾灯">后雾灯</string>
+
+    <!--空调控制-->
+    <string name="室内温度">室内温度</string>
+    <string name="OFF">OFF</string>
+    <string name="AC">A/C</string>
+    <string name="PTC">PTC</string>
+    <string name="内循环">内循环</string>
+    <string name="外循环">外循环</string>
+    <string name="吹面">吹面</string>
+    <string name="吹脚">吹脚</string>
+    <string name="吹面吹脚">吹面吹脚</string>
+    <string name="吹脚除雾">吹脚除雾</string>
+    <string name="除霜除雾">除霜除雾</string>
+
+    <!--能量管理-->
+    <string name="能量管理">能量管理</string>
+    <string name="剩余电流">剩余电流</string>
+    <string name="总电压">总电压</string>
+    <string name="总电流">总电流</string>
+    <string name="最高温度">最高温度</string>
+    <string name="最低温度">最低温度</string>
+    <string name="单体最高">单体最高</string>
+    <string name="单体最低">单体最低</string>
+    <string name="绝缘电阻">绝缘电阻</string>
+    <string name="电池数量">电池数量</string>
+    <string name="剩余电量">剩余电量</string>
+    <string name="箱">箱</string>
+
 </resources>

@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#13151D">
+
+    <RelativeLayout
+        android:layout_width="50px"
+        android:layout_height="50px"
+        android:layout_marginLeft="23px"
+        android:layout_marginTop="77px">
+        <ImageView
+            android:id="@+id/bt_back"
+            android:layout_width="20px"
+            android:layout_height="36px"
+            android:background="@mipmap/bt_back"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80px"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/color_Text_default"
+        android:textSize="36px"
+        android:text="@string/整车控制"/>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="127px"
+        android:layout_marginBottom="112px">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="614px"
+                android:layout_height="368px"
+                android:layout_marginTop="126px"
+                android:layout_marginLeft="134px"
+                android:background="@mipmap/car"/>
+            
+            <ImageView
+                android:id="@+id/car_right_win_down"
+                android:layout_width="37px"
+                android:layout_height="37px"
+                android:layout_marginLeft="332px"
+                android:layout_marginTop="73px"
+                android:background="@mipmap/main_car_setting_left_window_icon_right_down"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/car_right_win_up"
+                android:layout_width="41px"
+                android:layout_height="39px"
+                android:layout_marginLeft="332px"
+                android:layout_marginTop="73px"
+                android:background="@mipmap/main_car_setting_left_window_icon_right_up"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/car_left_win_down"
+                android:layout_width="37px"
+                android:layout_height="37px"
+                android:layout_marginLeft="476px"
+                android:layout_marginTop="73px"
+                android:background="@mipmap/main_car_setting_left_window_icon_right_down"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/car_left_win_up"
+                android:layout_width="41px"
+                android:layout_height="39px"
+                android:layout_marginLeft="476px"
+                android:layout_marginTop="73px"
+                android:background="@mipmap/main_car_setting_left_window_icon_right_up"
+                android:visibility="invisible"/>
+            
+            <ImageView
+                android:id="@+id/cardoor_unlock"
+                android:layout_width="205px"
+                android:layout_height="220px"
+                android:layout_marginLeft="440px"
+                android:layout_marginTop="122px"
+                android:background="@mipmap/main_car_setting_effect_car_door_unlock"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/cardoor_lock"
+                android:layout_width="202px"
+                android:layout_height="216px"
+                android:layout_marginLeft="443px"
+                android:layout_marginTop="124px"
+                android:background="@mipmap/main_car_setting_effect_car_door_lock"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/car_trunk_lock_on"
+                android:layout_width="120px"
+                android:layout_height="131px"
+                android:layout_marginLeft="549px"
+                android:layout_marginTop="128px"
+                android:background="@mipmap/car_setting_btn_trunk_lock_on"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/car_trunk_lock_off"
+                android:layout_width="120px"
+                android:layout_height="131px"
+                android:layout_marginLeft="549px"
+                android:layout_marginTop="128px"
+                android:background="@mipmap/car_setting_btn_trunk_lock_off"
+                android:visibility="invisible"/>
+            
+            <ImageView
+                android:id="@+id/car_fog_light"
+                android:layout_width="288px"
+                android:layout_height="354px"
+                android:layout_marginTop="24px"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/main_car_setting_effect_fog_light"
+                android:visibility="invisible"/>
+            
+            <ImageView
+                android:id="@+id/car_near_light"
+                android:layout_width="429px"
+                android:layout_height="459px"
+                android:layout_marginTop="199px"
+                android:background="@mipmap/main_car_setting_effect_near_light"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/car_far_light"
+                android:layout_width="415px"
+                android:layout_height="532px"
+                android:layout_marginTop="206px"
+                android:background="@mipmap/main_car_setting_effect_far_light"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/car_alert_light"
+                android:layout_width="92px"
+                android:layout_height="102px"
+                android:layout_marginTop="202px"
+                android:layout_marginLeft="274px"
+                android:background="@mipmap/main_car_setting_effect_position_light"
+                android:visibility="invisible"/>
+
+        </RelativeLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="307px"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/bt_car_near_light_layout"
+                    android:layout_width="168px"
+                    android:layout_height="138px"
+                    android:layout_marginLeft="40px"
+                    android:clickable="true"
+                    android:background="@drawable/select_carctrl_bg">
+                    
+                    <ImageView
+                        android:id="@+id/bt_car_near_light_img"
+                        android:layout_width="40px"
+                        android:layout_height="27px"
+                        android:layout_marginTop="35px"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/select_carctrl_nearlight"/>
+
+                    <TextView
+                        android:id="@+id/bt_car_near_light_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="83px"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@drawable/select_text_color"
+                        android:textSize="24px"
+                        android:text="@string/近光灯"/>
+                    
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/bt_car_far_light_layout"
+                    android:layout_width="168px"
+                    android:layout_height="138px"
+                    android:layout_marginLeft="6px"
+                    android:background="@drawable/select_carctrl_bg">
+
+                    <ImageView
+                        android:id="@+id/bt_car_far_light_img"
+                        android:layout_width="40px"
+                        android:layout_height="23px"
+                        android:layout_marginTop="35px"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/select_carctrl_farlight"/>
+
+                    <TextView
+                        android:id="@+id/bt_car_far_light_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="83px"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@drawable/select_text_color"
+                        android:textSize="24px"
+                        android:text="@string/远光灯"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/bt_car_alert_light_layout"
+                    android:layout_width="168px"
+                    android:layout_height="138px"
+                    android:layout_marginLeft="6px"
+                    android:background="@drawable/select_carctrl_bg">
+
+                    <ImageView
+                        android:id="@+id/bt_car_alert_light_img"
+                        android:layout_width="40px"
+                        android:layout_height="25px"
+                        android:layout_marginTop="35px"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/select_carctrl_alertlight"/>
+
+                    <TextView
+                        android:id="@+id/bt_car_alert_light_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="83px"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@drawable/select_text_color"
+                        android:textSize="24px"
+                        android:text="@string/示宽灯"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/bt_car_backfog_light_layout"
+                    android:layout_width="168px"
+                    android:layout_height="138px"
+                    android:layout_marginLeft="6px"
+                    android:background="@drawable/select_carctrl_bg">
+
+                    <ImageView
+                        android:id="@+id/bt_car_backfog_light_img"
+                        android:layout_width="30px"
+                        android:layout_height="27px"
+                        android:layout_marginTop="35px"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/select_carctrl_backfoglight"/>
+
+                    <TextView
+                        android:id="@+id/bt_car_backfog_light_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="83px"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@drawable/select_text_color"
+                        android:textSize="24px"
+                        android:text="@string/后雾灯"/>
+
+                </RelativeLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5px">
+                <RelativeLayout
+                    android:id="@+id/bt_car_door_layout"
+                    android:layout_width="168px"
+                    android:layout_height="138px"
+                    android:layout_marginLeft="40px"
+                    android:background="@drawable/select_carctrl_bg">
+
+                    <ImageView
+                        android:id="@+id/bt_car_door_img"
+                        android:layout_width="25px"
+                        android:layout_height="29px"
+                        android:layout_marginTop="37px"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/select_carctrl_door"/>
+
+                    <TextView
+                        android:id="@+id/bt_car_door_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="83px"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@drawable/select_text_color"
+                        android:textSize="24px"
+                        android:text="@string/中控锁"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/bt_car_win_layout"
+                    android:layout_width="168px"
+                    android:layout_height="138px"
+                    android:layout_marginLeft="6px"
+                    android:background="@drawable/select_carctrl_bg">
+
+                    <ImageView
+                        android:id="@+id/bt_car_win_img"
+                        android:layout_width="30px"
+                        android:layout_height="28px"
+                        android:layout_marginTop="37px"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/select_carctrl_windown"/>
+
+                    <TextView
+                        android:id="@+id/bt_car_win_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="83px"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@drawable/select_text_color"
+                        android:textSize="24px"
+                        android:text="@string/开窗"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/bt_car_trunk_layout"
+                    android:layout_width="168px"
+                    android:layout_height="138px"
+                    android:layout_marginLeft="6px"
+                    android:background="@drawable/select_carctrl_bg">
+
+                    <ImageView
+                        android:id="@+id/bt_car_trunk_img"
+                        android:layout_width="30px"
+                        android:layout_height="28px"
+                        android:layout_marginTop="36px"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/select_carctrl_trunk"/>
+
+                    <TextView
+                        android:id="@+id/bt_car_trunk_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="83px"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@drawable/select_text_color"
+                        android:textSize="24px"
+                        android:text="@string/后备箱"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/bt_car_lightoff_layout"
+                    android:layout_width="168px"
+                    android:layout_height="138px"
+                    android:layout_marginLeft="6px"
+                    android:background="@drawable/select_carctrl_bg">
+
+                    <ImageView
+                        android:id="@+id/bt_car_lightoff_img"
+                        android:layout_width="30px"
+                        android:layout_height="26px"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="35px"
+                        android:background="@drawable/select_carctrl_light_off" />
+
+                    <TextView
+                        android:id="@+id/bt_car_lightoff_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="83px"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@drawable/select_text_color"
+                        android:textSize="24px"
+                        android:text="@string/关闭"/>
+
+                </RelativeLayout>
+            </TableRow>
+        </TableLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
