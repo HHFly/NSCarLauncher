@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="165px"
-    android:layout_marginLeft="292px"
+
+    android:background="#14151E"
   >
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="400px"
-        android:layout_height="400px">
+        android:layout_width="450px"
+        android:layout_height="300px">
     <LinearLayout
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -72,7 +72,22 @@
             android:layout_gravity="center_horizontal"
             />
     </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_10"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:gravity="center">
 
+            <TextView
+                style="@style/BaseText.Tv"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:text="*"
+                android:textSize="70px" />
+        </LinearLayout>
 </LinearLayout>
 
     <LinearLayout
@@ -139,7 +154,26 @@
                 android:layout_gravity="center_horizontal"
                 />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_11"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="vertical">
+            <TextView style="@style/BaseText.Tv"
+                android:text="0"
+                android:textSize="48px"
+                android:layout_gravity="center"
+                android:layout_marginBottom="-10px"
+                />
 
+            <TextView style="@style/BaseText.Tv"
+                android:textSize="20px"
+                android:text="*"
+                android:layout_gravity="center_horizontal"
+                />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -204,61 +238,25 @@
                 android:layout_gravity="center_horizontal"
                 />
         </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1">
-        <LinearLayout
-            android:id="@+id/ll_10"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:orientation="vertical">
-            <TextView style="@style/BaseText.Tv"
-                android:text="*"
-                android:textSize="48px"
-                android:layout_gravity="center"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_11"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            android:orientation="vertical">
-            <TextView style="@style/BaseText.Tv"
-                android:text="0"
-                android:textSize="48px"
-                android:layout_gravity="center"
-                />
-        </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_12"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:orientation="vertical">
-            <TextView style="@style/BaseText.Tv"
-                android:text="#"
-                android:textSize="36px"
-                android:layout_gravity="center"
-                />
+            android:orientation="vertical"
+            android:gravity="center">
+         <ImageView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@mipmap/ic_btphone_key12"
+             android:layout_marginTop="-20px"/>
         </LinearLayout>
     </LinearLayout>
+
+
     </LinearLayout>
     
-    <ImageView
-        android:id="@+id/iv_call"
-        android:layout_width="72px"
-        android:layout_height="72px"
-        android:layout_gravity="center_horizontal"
-        android:src="@mipmap/ic_phone_call"/>
+
     
 </LinearLayout>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#14161E"
+    android:id="@+id/item_phone_calling">
+    <TextView style="@style/BaseText.Tv"
+        android:id="@+id/call_number"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:text=""
+        android:textSize="56px"
+        android:textColor="#EEEEEE"
+       app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="193px"
+        />
+
+    <TextView
+        android:id="@+id/call_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#989898"
+        android:textSize="30px"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/call_number"
+        android:layout_marginTop="24px"
+        />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_marginTop="99px"
+        android:id="@+id/ll_calling_controll"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/call_time">
+        <ImageView
+            android:id="@+id/call_mic"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:src="@mipmap/ic_btphone_mic_play"
+        android:layout_marginRight="98px"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/call_key"/>
+
+        <ImageView
+            android:id="@+id/call_key"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:layout_marginRight="98px"
+            android:src="@mipmap/ic_btphone_calling_key"
+            app:layout_constraintLeft_toRightOf="@+id/call_mic"
+            app:layout_constraintRight_toLeftOf="@+id/call_volume"/>
+        <ImageView
+            android:id="@+id/call_volume"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:src="@mipmap/ic_btphone_vloume_play"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/call_key"/>
+        
+        <TextView
+                style="@style/BaseText.Tv"
+            android:textColor="#EEEEEE"
+            android:textSize="30px"
+            android:text="@string/麦克风"
+            app:layout_constraintLeft_toLeftOf="@+id/call_mic"
+            app:layout_constraintRight_toRightOf="@+id/call_mic"
+            app:layout_constraintTop_toBottomOf="@+id/call_mic"
+            android:layout_marginTop="15px"/>
+
+        <TextView
+            style="@style/BaseText.Tv"
+            android:textColor="#EEEEEE"
+            android:textSize="30px"
+            android:text="@string/拨号键盘"
+            app:layout_constraintLeft_toLeftOf="@+id/call_key"
+            app:layout_constraintRight_toRightOf="@+id/call_key"
+            app:layout_constraintTop_toBottomOf="@+id/call_key"
+            android:layout_marginTop="15px"/>
+
+        <TextView
+            style="@style/BaseText.Tv"
+            android:textColor="#EEEEEE"
+            android:textSize="30px"
+            android:text="@string/音量"
+            app:layout_constraintLeft_toLeftOf="@+id/call_volume"
+            app:layout_constraintRight_toRightOf="@+id/call_volume"
+            app:layout_constraintTop_toBottomOf="@+id/call_volume"
+            android:layout_marginTop="15px"/>
+    </android.support.constraint.ConstraintLayout>
+
+    <include layout="@layout/item_calling_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/call_time"
+        android:layout_marginTop="78px"
+        android:visibility="gone"/>
+    <LinearLayout
+        android:layout_marginTop="467px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/call_time">
+
+        <ImageView
+            android:id="@+id/call_start"
+            android:layout_width="96px"
+            android:layout_height="96px"
+            android:visibility="visible"
+            android:layout_marginRight="255px"
+            android:src="@mipmap/ic_call_start"/>
+
+        <ImageView
+            android:id="@+id/call_stop"
+            android:layout_width="96px"
+            android:layout_height="96px"
+
+            android:src="@mipmap/ic_calling_stop"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

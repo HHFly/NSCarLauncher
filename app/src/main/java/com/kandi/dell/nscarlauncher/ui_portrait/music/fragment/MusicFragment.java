@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,9 +18,7 @@ import android.widget.TextView;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
-import com.kandi.dell.nscarlauncher.common.util.FragmentUtils;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
-import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
@@ -34,11 +31,6 @@ import com.kandi.dell.nscarlauncher.ui_portrait.music.service.PlayerService;
 
 import java.io.File;
 import java.util.List;
-
-import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-
-import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerActivity;
 
 
 public class MusicFragment extends BaseFragment {
@@ -69,7 +61,7 @@ public class MusicFragment extends BaseFragment {
 
     @Override
     public int getContentResId() {
-        return R.layout.fragment_music_main;
+        return R.layout.fragment_music_por;
     }
 
     @Override
@@ -307,9 +299,8 @@ public class MusicFragment extends BaseFragment {
 
                 broadcastMusicInfo(getContext(), FlagProperty.PAUSE_MSG);
                 flag_play = false;
-//                if(homePagerActivity.getHomePagerOneFragment().getHomePagerMusicDriverFragment()!=null) {
-//                    homePagerActivity.getHomePagerOneFragment().getHomePagerMusicDriverFragment().myHandler.sendEmptyMessage(HomePagerMusicDriverFragment.MUSIC_CLOSE);
-//                }
+                ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
+
             } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
                 Log.d("audioTest", "3 gain");
                 system_flag = true;
@@ -324,6 +315,7 @@ public class MusicFragment extends BaseFragment {
                         flag_play = true;
 
                     }
+                    ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
                 }
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
 
@@ -334,6 +326,7 @@ public class MusicFragment extends BaseFragment {
                 }
                 broadcastMusicInfo(getContext(), FlagProperty.PAUSE_MSG);
                 flag_play = false;
+                ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
 
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
                 Log.d("audioTest", "3 loss transient can duck");
@@ -344,7 +337,7 @@ public class MusicFragment extends BaseFragment {
                 }
                 broadcastMusicInfo(getContext(), FlagProperty.PAUSE_MSG);
                 flag_play = false;
-
+                ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
             }
         }
     };

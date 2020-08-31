@@ -45,7 +45,8 @@ import static com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity.homePagerAc
 public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChangeListener,MvpMainView {
     public final int                    PHONE_OVER     = 1;//结束
     public final int                    PHONE_CONTINUE = 2;//
-    public final int                    PHONE_START    = 3;
+    public final int                    PHONE_START    = 3;//打出电话
+
     public final int                    PHONE_END      = 4;//
     public final int                    PHONE_ANSWER     = 9;//接电话
     public final int                    DELETE_CLIKE   = 5;

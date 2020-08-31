@@ -47,8 +47,7 @@ import static com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment.broad
  * Created by z on 2018/4/10.
  */
 
-public class
-App extends MultiDexApplication {
+public class App extends MultiDexApplication {
 
     private static App s_app;
 
@@ -282,7 +281,7 @@ App extends MultiDexApplication {
     public void PauseService(){
         try {
 
-            radio.CloseLocalRadio();
+            radio.CloseLocalRadio(1);
             btservice.btAvrPause();
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
             homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(1);
@@ -298,7 +297,7 @@ App extends MultiDexApplication {
     }
     public void PauseServiceFMMUSic(){
         try {
-            radio.CloseLocalRadio();
+            radio.CloseLocalRadio(1);
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
             homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(1);
             homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
@@ -310,7 +309,7 @@ App extends MultiDexApplication {
     }
     public void PauseServiceFMBTMUSic(){
         try {
-            radio.CloseLocalRadio();
+            radio.CloseLocalRadio(1);
             btservice.btAvrPause();
             homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
             homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);

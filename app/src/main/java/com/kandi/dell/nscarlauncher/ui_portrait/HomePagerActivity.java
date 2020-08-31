@@ -19,7 +19,10 @@ import com.kandi.dell.nscarlauncher.common.util.TimeUtils;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
-import com.kandi.dell.nscarlauncher.ui_portrait.music.DialogLocalMusic;
+
+import com.kandi.dell.nscarlauncher.ui_portrait.bluetooth.phone.PhoneFragment;
+import com.kandi.dell.nscarlauncher.ui_portrait.bluetooth.phone.service.PhoneInfoService;
+import com.kandi.dell.nscarlauncher.ui_portrait.music.dialog.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.service.PlayerService;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.service.ScanService;
@@ -27,9 +30,11 @@ import com.kandi.dell.nscarlauncher.ui_portrait.music.service.ScanService;
 public class HomePagerActivity extends BaseActivity {
     public ImageView gramophoneView;
     MusicFragment musicFragment;
+    PhoneFragment phoneFragment;
     public SeekBar music_progress_bar;//音乐进度条
     DialogLocalMusic dialogLocalMusicD;//音乐列表弹框
     ScanService scanService;//本地数据扫描服务
+    PhoneInfoService phoneInfoService;//蓝牙电话记录服务
     public BaseFragment mCurFragment;//当前页
     @SuppressLint("MissingSuperCall")
     @Override
@@ -117,8 +122,10 @@ public class HomePagerActivity extends BaseActivity {
     private void createFragment() {
         App.get().setmCurActivity(this);
         getMusicFragment();
+        getPhoneFragment();
         getDialogLocalMusicD();
         getScanService();
+        getPhoneInfoService();
     }
     //初始化 控件
     private void initGroupView() {
@@ -137,6 +144,12 @@ public class HomePagerActivity extends BaseActivity {
                         break;
                     case HandleKey.MUSICCOLSE:
                         getView(R.id.iv_home_music_center).setBackgroundResource(R.mipmap.ic_home_music_puase);
+                        break;
+                    case HandleKey.BTMUSICOPEN:
+                        getView(R.id.ctl_iv_center).setBackgroundResource(R.mipmap.ic_music_play);
+                        break;
+                    case HandleKey.BTMUSICCOLSE:
+                        getView(R.id.ctl_iv_center).setBackgroundResource(R.mipmap.ic_music_home_stop);
                         break;
                 }
             }catch (Exception e){
@@ -232,6 +245,19 @@ public class HomePagerActivity extends BaseActivity {
             musicFragment=new MusicFragment();
         }
         return musicFragment;
+    }
+
+    public PhoneFragment getPhoneFragment() {
+        if(phoneFragment==null){
+            phoneFragment=new PhoneFragment();
+        }
+        return phoneFragment;
+    }
+    public PhoneInfoService getPhoneInfoService() {
+        if(phoneInfoService==null){
+            phoneInfoService=new PhoneInfoService();
+        }
+        return phoneInfoService;
     }
 
     public DialogLocalMusic getDialogLocalMusicD() {

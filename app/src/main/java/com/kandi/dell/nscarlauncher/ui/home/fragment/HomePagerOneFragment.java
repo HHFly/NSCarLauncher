@@ -110,8 +110,8 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
 
     @Override
     public void setListener() {
-        setClickListener(R.id.FM);
-        setClickListener(R.id.bt_music);
+//        setClickListener(R.id.FM);
+//        setClickListener(R.id.bt_music);
         setClickListener(R.id.music);
         setClickListener(R.id.rl_air);
         setClickListener(R.id.controll_air);
@@ -333,13 +333,13 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.FM:
-                isFirst = true;
-                homePagerActivity.jumpFragment(FragmentType.FM);
-                break;
-            case R.id.bt_music:
-                homePagerActivity.jumpFragment(FragmentType.BTMUSIC);
-                break;
+//            case R.id.FM:
+//                isFirst = true;
+//                homePagerActivity.jumpFragment(FragmentType.FM);
+//                break;
+//            case R.id.bt_music:
+//                homePagerActivity.jumpFragment(FragmentType.BTMUSIC);
+//                break;
             case R.id.music:
                 homePagerActivity.jumpFragment(FragmentType.MUSIC);
                 break;

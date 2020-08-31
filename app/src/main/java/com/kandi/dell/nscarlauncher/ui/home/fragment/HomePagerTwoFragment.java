@@ -64,7 +64,7 @@ public class HomePagerTwoFragment extends BaseFragment {
         setClickListener(R.id.rl_phone);
         setClickListener(R.id.rl_set);
         setClickListener(R.id.rl_navigation);
-        setClickListener(R.id.rl_carcontroll);
+//        setClickListener(R.id.rl_carcontroll);
         setClickListener(R.id.music);
         setClickListener(R.id.iv_backbox);
         setClickListener(R.id.iv_cenlock);
@@ -117,14 +117,14 @@ public class HomePagerTwoFragment extends BaseFragment {
             case R.id.rl_app:
                 homePagerActivity.jumpFragment(FragmentType.APPLICATION);
                 break;
-            case R.id.rl_carcontroll:
-                if(FlagProperty.BCMStaus==0) {
-                    JumpUtils.actAPK(getActivity(), FragmentType.CARCONTROLL);
-                    JumpUtils.act60In(getActivity());
-                }else {
-                    Toast.makeText(getActivity(), R.string.BCM未连接, Toast.LENGTH_SHORT).show();
-                }
-                break;
+//            case R.id.rl_carcontroll:
+//                if(FlagProperty.BCMStaus==0) {
+//                    JumpUtils.actAPK(getActivity(), FragmentType.CARCONTROLL);
+//                    JumpUtils.act60In(getActivity());
+//                }else {
+//                    Toast.makeText(getActivity(), R.string.BCM未连接, Toast.LENGTH_SHORT).show();
+//                }
+//                break;
             case R.id.rl_navigation:
                 openNavi();
                 break;

@@ -1,60 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="90px"
+    android:layout_height="106px"
     android:background="@mipmap/ic_phone_num_bg">
     <ImageView
-        android:layout_width="23px"
-        android:layout_height="23px"
-        android:layout_marginLeft="63px"
+        android:layout_width="27px"
+        android:layout_height="27px"
+        android:layout_marginLeft="40px"
         android:layout_marginTop="30px"
         android:src="@mipmap/ic_phone_record"/>
-    <LinearLayout
-        android:layout_width="500px"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="107px"
-        android:layout_marginTop="10px"
-        android:orientation="vertical"
-        >
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80px"
+        android:layout_marginTop="37px"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        >
+        <TextView style="@style/BaseText.Tv"
+            android:id="@+id/number"
+            android:textSize="30px"
+            android:singleLine="true"
+            android:ellipsize="end"
+
+            android:text=""
+            />
         <TextView
             android:id="@+id/name"
             style="@style/BaseText.Tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18px" />
-
-        <TextView style="@style/BaseText.Tv"
-            android:id="@+id/number"
             android:textSize="24px"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:layout_marginBottom="8px"
-            />
-    </LinearLayout>
+            android:textColor="#989898"
+            android:text=""/>
 
+
+    </LinearLayout>
 
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_centerVertical="true"
     android:layout_alignParentRight="true"
-    android:layout_marginTop="10px"
-    android:layout_marginRight="78px"
+    android:layout_marginRight="40px"
+
     >
     <TextView style="@style/BaseText.Tv"
         android:id="@+id/call_count"
-        android:textSize="18px"
+        android:textSize="24px"
+        android:textColor="#989898"
         android:ellipsize="end"
         android:singleLine="true"
+        android:text=""
+        android:layout_marginRight="11px"
+
         />
 
     <TextView style="@style/BaseText.Tv"
         android:id="@+id/call_time"
         android:ellipsize="end"
         android:singleLine="true"
-        android:textSize="18px"
+        android:textSize="24px"
+        android:textColor="#989898"
         android:layout_marginBottom="10px"
+        android:text=""
         />
 </LinearLayout>
     <View style="@style/BaseLine.Horizontal"

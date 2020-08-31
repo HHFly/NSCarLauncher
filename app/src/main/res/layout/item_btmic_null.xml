@@ -4,12 +4,7 @@
     android:id="@+id/bt_mic_null"
     android:layout_height="match_parent"
     android:background="@mipmap/ic_f_fm_bg">
-    <TextView style="@style/BaseText.Tv"
-    android:textSize="48px"
-    android:text="@string/蓝牙音乐"
-    android:layout_marginLeft="145px"
-    android:layout_marginTop="114px"
-    />
+
    <RelativeLayout
        android:layout_width="600px"
        android:layout_height="400px"
