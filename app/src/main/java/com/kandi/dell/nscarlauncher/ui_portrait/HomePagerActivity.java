@@ -26,6 +26,9 @@ import com.kandi.dell.nscarlauncher.ui_portrait.music.dialog.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.service.PlayerService;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.service.ScanService;
+import com.kandi.dell.nscarlauncher.ui_portrait.airctrl.AirCtrlFragment;
+import com.kandi.dell.nscarlauncher.ui_portrait.carctrl.CarCtrlFragment;
+import com.kandi.dell.nscarlauncher.ui_portrait.ems.EmsFragment;
 
 public class HomePagerActivity extends BaseActivity {
     public ImageView gramophoneView;
@@ -35,6 +38,10 @@ public class HomePagerActivity extends BaseActivity {
     DialogLocalMusic dialogLocalMusicD;//音乐列表弹框
     ScanService scanService;//本地数据扫描服务
     PhoneInfoService phoneInfoService;//蓝牙电话记录服务
+    public CarCtrlFragment mCarCtrlFragment;
+    public AirCtrlFragment mAirCtrlFragment;
+    public EmsFragment mEmsFragment;
+
     public BaseFragment mCurFragment;//当前页
     @SuppressLint("MissingSuperCall")
     @Override
@@ -98,12 +105,14 @@ public class HomePagerActivity extends BaseActivity {
                 jumpFragment(FragmentType.MUSIC);
                 break;
             case R.id.item_air:
+                jumpFragment(FragmentType.AIRCONTROLL);
                 break;
             case R.id.item_app:
                 break;
             case R.id.item_phone:
                 break;
             case R.id.item_power:
+                jumpFragment(FragmentType.EMS);
                 break;
             case R.id.item_set:
                 jumpFragment(FragmentType.SET);
@@ -113,6 +122,7 @@ public class HomePagerActivity extends BaseActivity {
             case R.id.item_btmusic:
                 break;
             case R.id.item_carcontroll:
+                jumpFragment(FragmentType.CARCONTROLL);
                 break;
         }
     }
@@ -164,7 +174,16 @@ public class HomePagerActivity extends BaseActivity {
                     switchFragment(getMusicFragment());
                     break;
                 case FragmentType.SET:
-//                    switchFragment(setFragment);
+                    //switchFragment(getSetFragment());
+                    break;
+                case FragmentType.CARCONTROLL:
+                    switchFragment(getCarCtrlFragment());
+                    break;
+                case FragmentType.AIRCONTROLL:
+                    switchFragment(getAirCtrlFragment());
+                    break;
+                case FragmentType.EMS:
+                    switchFragment(getEmsFragment());
                     break;
 
             }
@@ -247,6 +266,7 @@ public class HomePagerActivity extends BaseActivity {
         return musicFragment;
     }
 
+
     public PhoneFragment getPhoneFragment() {
         if(phoneFragment==null){
             phoneFragment=new PhoneFragment();
@@ -254,10 +274,34 @@ public class HomePagerActivity extends BaseActivity {
         return phoneFragment;
     }
     public PhoneInfoService getPhoneInfoService() {
-        if(phoneInfoService==null){
-            phoneInfoService=new PhoneInfoService();
+        if (phoneInfoService == null) {
+            phoneInfoService = new PhoneInfoService();
         }
         return phoneInfoService;
+    }
+    public CarCtrlFragment getCarCtrlFragment(){
+        if(mCarCtrlFragment == null){
+            mCarCtrlFragment = new CarCtrlFragment();
+            mCarCtrlFragment.setHomePagerActivity(this);
+        }
+        return mCarCtrlFragment;
+    }
+
+    public AirCtrlFragment getAirCtrlFragment(){
+        if(mAirCtrlFragment == null){
+            mAirCtrlFragment = new AirCtrlFragment();
+            mAirCtrlFragment.setHomePagerActivity(this);
+        }
+        return mAirCtrlFragment;
+    }
+
+    public EmsFragment getEmsFragment(){
+        if(mEmsFragment == null){
+            mEmsFragment = new EmsFragment();
+            mEmsFragment.setHomePagerActivity(this);
+        }
+        return mEmsFragment;
+
     }
 
     public DialogLocalMusic getDialogLocalMusicD() {

@@ -16,7 +16,8 @@ import android.support.annotation.IntDef;
         FragmentType.POWERRECOVER,
         FragmentType.VIDEO,
         FragmentType.BTSET,
-        FragmentType.DVR
+        FragmentType.DVR,
+        FragmentType.EMS
 })
 public @interface FragmentType {
     /*电台*/
@@ -47,4 +48,6 @@ public @interface FragmentType {
     int BTSET =13;
     /*行车记录仪*/
     int DVR =14;
+    /*能量管理*/
+    int EMS =15;
 }

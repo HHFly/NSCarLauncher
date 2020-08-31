@@ -51,4 +51,9 @@
     <color name="bgcolor">#6A5ACD</color>
     <color name="checked">#FF0000</color>
     <color name="unchecked">#00FF00</color>
+
+    <color name="color_Text_default">#EEEEEE</color>
+    <color name="color_blue_default">#18E4F6</color>
+    <color name="color_dark_blue_default">#5589E4</color>
+    <color name="color_ldark_blue_default">#77A9FB</color>
 </resources>
