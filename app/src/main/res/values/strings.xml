@@ -291,5 +291,7 @@
     <string name="电池数量">电池数量</string>
     <string name="剩余电量">剩余电量</string>
     <string name="箱">箱</string>
+    <string name="收藏列表">收藏列表</string>
+    <string name="搜索中">搜索中</string>
 
 </resources>

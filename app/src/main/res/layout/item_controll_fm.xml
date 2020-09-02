@@ -11,7 +11,7 @@
 
         <ImageView
             android:layout_gravity="center"
-            android:id="@+id/ctl_iv_left"
+            android:id="@+id/ctl_fm_left"
             android:layout_width="16px"
             android:layout_height="23px"
             android:layout_marginTop="12px"
@@ -36,7 +36,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
     <ImageView
-        android:id="@+id/ctl_iv_center"
+        android:id="@+id/ctl_fm_center"
         android:layout_width="48px"
         android:layout_height="48px"
         android:src="@mipmap/ic_off"
@@ -57,7 +57,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
     <ImageView
-        android:id="@+id/ctl_iv_right"
+        android:id="@+id/ctl_fm_right"
         android:layout_gravity="center"
         android:layout_width="19px"
         android:layout_height="23px"

@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
@@ -16,12 +19,16 @@ import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.FragmentUtils;
 import com.kandi.dell.nscarlauncher.common.util.IsHomeUtils;
 import com.kandi.dell.nscarlauncher.common.util.TimeUtils;
+import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
+
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 
+import com.kandi.dell.nscarlauncher.ui_portrait.bluetooth.btmusic.BTMusicFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.bluetooth.phone.PhoneFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.bluetooth.phone.service.PhoneInfoService;
+import com.kandi.dell.nscarlauncher.ui_portrait.fm.FMFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.dialog.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.service.PlayerService;
@@ -29,11 +36,15 @@ import com.kandi.dell.nscarlauncher.ui_portrait.music.service.ScanService;
 import com.kandi.dell.nscarlauncher.ui_portrait.airctrl.AirCtrlFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.carctrl.CarCtrlFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.ems.EmsFragment;
+import com.kandi.dell.nscarlauncher.widget.PlayControllFMView;
+import com.kandi.dell.nscarlauncher.widget.PlayControllView;
 
 public class HomePagerActivity extends BaseActivity {
     public ImageView gramophoneView;
     MusicFragment musicFragment;
     PhoneFragment phoneFragment;
+    BTMusicFragment btMusicFragment;
+    FMFragment fmFragment;
     public SeekBar music_progress_bar;//音乐进度条
     DialogLocalMusic dialogLocalMusicD;//音乐列表弹框
     ScanService scanService;//本地数据扫描服务
@@ -43,6 +54,9 @@ public class HomePagerActivity extends BaseActivity {
     public EmsFragment mEmsFragment;
 
     public BaseFragment mCurFragment;//当前页
+
+    public PlayControllView btPaly;
+    public PlayControllFMView fmPaly ;
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -57,8 +71,9 @@ public class HomePagerActivity extends BaseActivity {
     @Override
     public void findView() {
         gramophoneView=getView(R.id.iv_music);
-        music_progress_bar=getView(R.id.music_progress_bar
-        );
+        music_progress_bar=getView(R.id.music_progress_bar);
+        fmPaly=getView(R.id.fm_playcontroll);
+        btPaly= getView(R.id.bt_playcontroll);
     }
 
     @Override
@@ -72,6 +87,7 @@ public class HomePagerActivity extends BaseActivity {
 
     @Override
     public void setListener() {
+
         setClickListener(R.id.iv_home_music_center);
         setClickListener(R.id.iv_home_music_left);
         setClickListener(R.id.iv_home_music_right);
@@ -84,14 +100,76 @@ public class HomePagerActivity extends BaseActivity {
         setClickListener(R.id.item_fm);
         setClickListener(R.id.item_btmusic);
         setClickListener(R.id.item_carcontroll);
+        setPalyListen();
     }
+    private void setPalyListen(){
+        //fm
+        fmPaly.setOnItemClickListener(new PlayControllFMView.OnItemClickListener() {
+            @Override
+            public void onClickLeft() {
+                getFmFragment().leftFm(getFmFragment().channel);
 
+            }
+
+            @Override
+            public void onClickCenter(boolean isPlay) {
+                getFmFragment().play();
+
+            }
+
+            @Override
+            public void onClickRight() {
+                getFmFragment().rightFm(getFmFragment().channel);
+            }
+        });
+
+        //蓝牙音乐
+        btPaly.setOnItemClickListener(new PlayControllView.OnItemClickListener() {
+            @Override
+            public void onClickLeft() {
+
+                if(!FlagProperty.flag_bluetooth){
+                    ToastUtils.show( R.string.蓝牙未连接);
+                }else {
+                   getBtMusicFragment().musicBack();
+
+                }
+            }
+
+            @Override
+            public void onClickCenter(boolean isPlay) {
+
+                if(!FlagProperty.flag_bluetooth){
+                    btPaly.isPlay=!isPlay;
+                    ToastUtils.show( R.string.蓝牙未连接);
+
+                    return;
+                }else {
+
+                  getBtMusicFragment().play();
+                }
+            }
+
+            @Override
+            public void onClickRight() {
+
+                if(!FlagProperty.flag_bluetooth){
+                    ToastUtils.show( R.string.蓝牙未连接);
+                }else {
+                    getBtMusicFragment().musicNext();
+                }
+            }
+        });
+
+
+    }
     @Override
     public void onClick(View v) {
         if (TimeUtils.isFastDoubleClick()) {
             return;
         }
         switch (v.getId()){
+
             case R.id.iv_home_music_center:
                 getMusicFragment().play();
                 break;
@@ -118,6 +196,7 @@ public class HomePagerActivity extends BaseActivity {
                 jumpFragment(FragmentType.SET);
                 break;
             case R.id.item_fm:
+                jumpFragment(FragmentType.FM);
                 break;
             case R.id.item_btmusic:
                 break;
@@ -133,6 +212,8 @@ public class HomePagerActivity extends BaseActivity {
         App.get().setmCurActivity(this);
         getMusicFragment();
         getPhoneFragment();
+        getBtMusicFragment();
+        getFmFragment();
         getDialogLocalMusicD();
         getScanService();
         getPhoneInfoService();
@@ -156,10 +237,20 @@ public class HomePagerActivity extends BaseActivity {
                         getView(R.id.iv_home_music_center).setBackgroundResource(R.mipmap.ic_home_music_puase);
                         break;
                     case HandleKey.BTMUSICOPEN:
-                        getView(R.id.ctl_iv_center).setBackgroundResource(R.mipmap.ic_music_play);
+//                        getView(R.id.ctl_iv_center).setBackgroundResource(R.mipmap.ic_music_play);
+                        btPaly.setPlay(true);
                         break;
                     case HandleKey.BTMUSICCOLSE:
-                        getView(R.id.ctl_iv_center).setBackgroundResource(R.mipmap.ic_music_home_stop);
+//                        getView(R.id.ctl_iv_center).setBackgroundResource(R.mipmap.ic_music_home_stop);
+                        btPaly.setPlay(false);
+                        break;
+                    case HandleKey.FMOPEN:
+//                        getView(R.id.ctl_fm_center).setBackgroundResource(R.mipmap.ic_fm_play);
+                        fmPaly.setPlay(true);
+                        break;
+                    case HandleKey.FMCOLSE:
+//                        getView(R.id.ctl_fm_center).setBackgroundResource(R.mipmap.ic_off);
+                        fmPaly.setPlay(false);
                         break;
                 }
             }catch (Exception e){
@@ -303,6 +394,23 @@ public class HomePagerActivity extends BaseActivity {
         return mEmsFragment;
 
     }
+
+    public BTMusicFragment getBtMusicFragment() {
+        if(btMusicFragment==null){
+            btMusicFragment=new BTMusicFragment();
+        }
+        return btMusicFragment;
+    }
+
+
+    public FMFragment getFmFragment() {
+        if(fmFragment==null){
+            fmFragment=new FMFragment();
+        }
+        return fmFragment;
+    }
+
+
 
     public DialogLocalMusic getDialogLocalMusicD() {
         if(dialogLocalMusicD==null){

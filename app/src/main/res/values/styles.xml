@@ -94,4 +94,11 @@
         <item name="android:colorForeground">@color/colormusicblue</item>
 
     </style>
+    <declare-styleable name="RulerView">
+        <attr name="titleName" format="reference|string" />
+        <attr name="unitName" format="reference|string" />
+        <attr name="minValue" format="reference|integer" />
+        <attr name="maxValue" format="reference|integer" />
+        <attr name="currentValue" format="reference|integer" />
+    </declare-styleable>
 </resources>

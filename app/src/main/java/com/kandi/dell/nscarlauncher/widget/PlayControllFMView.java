@@ -27,9 +27,9 @@ public class PlayControllFMView extends LinearLayout {
         super(context, attrs);
         LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.item_controll_fm, this);
-        left=(ImageView) findViewById(R.id.ctl_iv_left);
-        center=(ImageView) findViewById(R.id.ctl_iv_center);
-        right=(ImageView) findViewById(R.id.ctl_iv_right);
+        left=(ImageView) findViewById(R.id.ctl_fm_left);
+        center=(ImageView) findViewById(R.id.ctl_fm_center);
+        right=(ImageView) findViewById(R.id.ctl_fm_right);
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +62,7 @@ public class PlayControllFMView extends LinearLayout {
     }
     public void setPlay(boolean isPlay){
 //        Log.d("fm" , String.valueOf(isPlay));
-        center.setImageResource(isPlay?R.mipmap.ic_play:R.mipmap.ic_off);
+        center.setImageResource(isPlay?R.mipmap.ic_fm_play:R.mipmap.ic_off);
         this.isPlay =isPlay;
     }
 

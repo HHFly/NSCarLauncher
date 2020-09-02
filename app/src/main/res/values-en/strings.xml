@@ -154,11 +154,13 @@
     <string name="未选择文件">Unselected file!</string>
     <string name="当前无歌曲播放">No song currently playing</string>
     <string name="暂无歌词">No lyrics</string>
-    <string name="蓝牙电话">蓝牙电话</string>
-    <string name="麦克风">麦克风</string>
-    <string name="拨号键盘">拨号键盘</string>
-    <string name="音量">音量</string>
-    <string name="正在呼叫">正在呼叫...</string>
-    <string name="通讯录">通讯录</string>
+    <string name="蓝牙电话">BT Phone</string>
+    <string name="麦克风">Microphone</string>
+    <string name="拨号键盘">Keyboard</string>
+    <string name="音量">Volume</string>
+    <string name="正在呼叫">Calling...</string>
+    <string name="通讯录">Address Books </string>
+    <string name="收藏列表">Collection List</string>
+    <string name="搜索中">Searching</string>
 
 </resources>

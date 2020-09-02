@@ -29,9 +29,9 @@ public class PlayControllView extends LinearLayout {
 
         LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.item_controll_1, this);
-        left=(ImageView) findViewById(R.id.ctl_iv_left);
-        center=(ImageView) findViewById(R.id.ctl_iv_center);
-        right=(ImageView) findViewById(R.id.ctl_iv_right);
+        left=(ImageView) findViewById(R.id.ctl_bt_left);
+        center=(ImageView) findViewById(R.id.ctl_bt_center);
+        right=(ImageView) findViewById(R.id.ctl_bt_right);
         ctl_tv_center=  findViewById(R.id.ctl_tv_center);
         left.setOnClickListener(new OnClickListener() {
             @Override
@@ -64,7 +64,7 @@ public class PlayControllView extends LinearLayout {
         right.setVisibility(isShow?View.VISIBLE : View.GONE);
     }
     public void setPlay(boolean isPlay){
-        center.setImageResource(isPlay?R.mipmap.ic_pause:R.mipmap.ic_music_home_stop);
+        center.setImageResource(isPlay?R.mipmap.ic_music_play:R.mipmap.ic_music_home_stop);
         ctl_tv_center.setText(isPlay?getContext().getString(R.string.播放):getContext().getString(R.string.暂停));
         this.isPlay =isPlay;
     }

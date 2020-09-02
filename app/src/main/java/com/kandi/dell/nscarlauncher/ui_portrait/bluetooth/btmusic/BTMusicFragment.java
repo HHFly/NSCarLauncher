@@ -81,11 +81,7 @@ public class BTMusicFragment  extends BaseFragment {
 
                 break;
             case R.id.ctl_iv_center:
-                if (!isPlay) {
-                    musicPlay();
-                } else {
-                    musicPause();
-                }
+                play();
 
 
                 break;
@@ -106,6 +102,15 @@ public class BTMusicFragment  extends BaseFragment {
 
         requestAudioFocus();
 
+    }
+
+    /*播放*/
+    public   void  play(){
+        if (!isPlay) {
+            musicPlay();
+        } else {
+            musicPause();
+        }
     }
     /*暂停*/
     public   void musicPause(){
