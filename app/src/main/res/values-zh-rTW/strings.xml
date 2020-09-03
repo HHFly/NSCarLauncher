@@ -166,5 +166,7 @@
     <string name="通讯录">通訊錄</string>
     <string name="收藏列表">收藏清單</string>
     <string name="搜索中">蒐索中</string>
+    <string name="设备接入">设备接入</string>
+    <string name="设备移除">设备移除</string>
 
 </resources>

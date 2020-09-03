@@ -450,15 +450,10 @@ public class PPhoneFragment extends BaseFragment implements MvpMainView{
 
     }
     /*判断蓝牙连接*/
-    private void requestAudioFocus() {
-
-
-
+    public void requestAudioFocus() {
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
 
-            FlagProperty.flag_bluetooth = true;
-//            getPhoneRecord();
-//            getPhoneBook();
+            setNullViewGone(false);
         } else {
             setNullViewGone(true);
         }

@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:id="@+id/bt_phone_null"
     android:layout_height="match_parent"
-    android:background="@mipmap/ic_f_fm_bg">
+    android:background="#13151D"
+    android:layout_marginTop="148px">
 
     <RelativeLayout
         android:layout_width="600px"

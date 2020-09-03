@@ -2,14 +2,11 @@ package com.kandi.dell.nscarlauncher.app;
 
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.audiofx.Equalizer;
-import android.net.wifi.WifiManager;
-import android.os.Bundle;
 import android.os.IFmService;
 import android.os.IKdAudioControlService;
 import android.os.IKdBtService;
@@ -20,19 +17,15 @@ import android.support.multidex.MultiDexApplication;
 import android.widget.FrameLayout;
 
 import com.kandi.dell.nscarlauncher.BuildConfig;
-import com.kandi.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.kandi.dell.nscarlauncher.common.util.DrawUtils;
 import com.kandi.dell.nscarlauncher.common.util.FrescoUtils;
 import com.kandi.dell.nscarlauncher.common.util.JsonUtils;
 import com.kandi.dell.nscarlauncher.common.util.NSLifecycleHandle;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
-import com.kandi.dell.nscarlauncher.common.util.TimeUtils;
 import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
-import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerOneFragment;
-import com.kandi.dell.nscarlauncher.ui.home.fragment.HomePagerTwoFragment;
-import com.kandi.dell.nscarlauncher.ui_portrait.HomePagerActivity;
+import com.kandi.dell.nscarlauncher.ui_portrait.home.HomePagerActivity;
 
 
 import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_CALLEND;

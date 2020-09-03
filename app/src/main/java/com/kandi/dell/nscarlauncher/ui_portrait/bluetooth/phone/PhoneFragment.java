@@ -116,7 +116,7 @@ public class PhoneFragment  extends BaseFragment {
                 switch (msg.what) {
                     case BOOKREFRESH:
                         if(pMemberFragment!=null) {
-//                            pMemberFragment.refresh();
+                            pMemberFragment.refresh();
                         }
                         break;
                     case RECORDREFRESH:

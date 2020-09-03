@@ -7,7 +7,7 @@ import android.view.View;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
-import com.kandi.dell.nscarlauncher.ui_portrait.HomePagerActivity;
+import com.kandi.dell.nscarlauncher.ui_portrait.home.HomePagerActivity;
 
 public class CarCtrlFragment extends BaseFragment{
     private HomePagerActivity homePagerActivity;

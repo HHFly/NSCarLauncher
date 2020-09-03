@@ -60,7 +60,7 @@ import com.kandi.dell.nscarlauncher.common.util.NetUtils;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.common.util.TimeUtils;
 import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
-import com.kandi.dell.nscarlauncher.receiver.CarMFLReceiver;
+import com.kandi.dell.nscarlauncher.ui_portrait.home.receiver.CarMFLReceiver;
 import com.kandi.dell.nscarlauncher.ui.application.AppFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;

@@ -32,7 +32,7 @@ public class BTMusicFragment  extends BaseFragment {
     private final static int MUSCI_BACK = 6; // 蓝牙音乐上一首
     private final static int MUSIC_NEXT = 7; // 蓝牙音乐下一首
     private final static int MUSIC_SONGNAME = 15;//蓝牙歌曲名
-
+    private final static int MUSIC_TIME = 8;//蓝牙时间
     SeekBar music_progress_bar;
     int progress = 0; // 记录进度
     public  boolean isPlay;
@@ -187,23 +187,7 @@ public class BTMusicFragment  extends BaseFragment {
         music_progress_bar.setProgress(0);
         music_progress_bar.setEnabled(false);
     }
-    // 设置蓝牙音乐进度条信息
-    public  void setBlueMusicProgress(int time) {
-//        time /= 1000;
-        int total_time = BlueMusicBroadcoast.music_total_time;
-        if (time > total_time) {
-            time = total_time;
-        }
-        if(total_time!=0) {
-            progress = (int) Math.ceil(time * 100 / total_time);
-        }
-        if(music_progress_bar!=null) {
-            music_progress_bar.setProgress(progress);
-            music_current_time.setText("" + getTime(time / 60) + ":" + getTime(time % 60));
-            music_total_time.setText(getTime(total_time / 60) + ":" + getTime(total_time % 60));
-        }
 
-    }
     // 时间格式化为00
     public static String getTime(int time) {
         if (time < 10) {
@@ -287,6 +271,45 @@ public class BTMusicFragment  extends BaseFragment {
             }
         }
     };
+    public   void setMusicInfoHanle(String songname, String singer){
+
+        Message message = myHandler.obtainMessage();
+        Bundle bundle =new Bundle();
+        bundle.putString("songname",songname);
+        bundle.putString("singer",singer);
+        message.what=MUSIC_SONGNAME;
+        message.setData(bundle);
+        myHandler.sendMessage(message); //发送消息
+
+    }
+    public   void setMusicProgressHanle(int time,int total_time){
+
+        Message message = myHandler.obtainMessage();
+        Bundle bundle =new Bundle();
+        bundle.putInt("time",time);
+        bundle.putInt("total",total_time);
+        message.what=MUSIC_TIME;
+        message.setData(bundle);
+        myHandler.sendMessage(message); //发送消息
+
+    }
+    // 设置蓝牙音乐进度条信息
+    public  void setBlueMusicProgress(int time,int total_time) {
+//        time /= 1000;
+//        int total_time = BlueMusicBroadcoast.music_total_time;
+        if (time > total_time) {
+            time = total_time;
+        }
+        if(total_time!=0) {
+            progress = (int) Math.ceil(time * 100 / total_time);
+        }
+        if(music_progress_bar!=null) {
+            music_progress_bar.setProgress(progress);
+            music_current_time.setText("" + getTime(time / 60) + ":" + getTime(time % 60));
+            music_total_time.setText(getTime(total_time / 60) + ":" + getTime(total_time % 60));
+        }
+
+    }
     public Handler myHandler = new Handler() {
 
         public void handleMessage(Message msg) {
@@ -341,6 +364,12 @@ public class BTMusicFragment  extends BaseFragment {
                         String singer =bundle.getString("singer");
                         setMusicInfo(songname,singer);
                         break;
+                    case MUSIC_TIME:
+                        Bundle bundle1 =msg.getData();
+                        int time=bundle1.getInt("time");
+                        int totaltime =bundle1.getInt("total");
+                        setBlueMusicProgress(time,totaltime);
+                        break;
                     default:
                         break;
                 }
@@ -351,7 +380,7 @@ public class BTMusicFragment  extends BaseFragment {
 
         ;
     };
-    private void requestAudioFocus() {
+    public void requestAudioFocus() {
 
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
 

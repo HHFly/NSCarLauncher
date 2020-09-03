@@ -459,6 +459,8 @@ public class FMFragment extends BaseFragment {
     private final  int VIEWFRESH =0;
     private final  int VIEWCHANGE =1;
     private final  int REFRESH =2;
+    public final static   int NEXT =3;
+    public final  static int LAST =4;
     public Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -473,6 +475,12 @@ public class FMFragment extends BaseFragment {
                     initRvAdapter(mData);
                     SPUtil.getInstance(getContext(),FMCHANNELLIST).putString(FMCHANNELLIST,mData.toString());
                     changeChannel();
+                    break;
+                case NEXT:
+                    rightFm(channel);
+                    break;
+                case LAST:
+                    leftFm(channel);
                     break;
                 default:
                     break;

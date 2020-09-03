@@ -48,7 +48,7 @@ public class MusicFragment extends BaseFragment {
     public ImageView bt_play,bt_music_model,gramophoneView;
     public TextView tv_music_songname, tv_music_singer, music_current_time, music_total_time;
     public  boolean flag_play,flag_drag,flag_first,system_flag, am_flag;
-    int music_model = 1,dataMode; // 音乐播放循环模式
+   public int music_model = 1,dataMode; // 音乐播放循环模式
     public   int Progress = 0; // 记录进度
     int music_time = 0; // 记录歌曲时间，若无变化，则不更新界面
     public  boolean recoveryLast = false;//记忆上次播放标志位

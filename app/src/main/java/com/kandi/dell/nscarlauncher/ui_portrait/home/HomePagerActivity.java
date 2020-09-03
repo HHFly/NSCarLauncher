@@ -1,16 +1,13 @@
-package com.kandi.dell.nscarlauncher.ui_portrait;
+package com.kandi.dell.nscarlauncher.ui_portrait.home;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
@@ -29,6 +26,10 @@ import com.kandi.dell.nscarlauncher.ui_portrait.bluetooth.btmusic.BTMusicFragmen
 import com.kandi.dell.nscarlauncher.ui_portrait.bluetooth.phone.PhoneFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.bluetooth.phone.service.PhoneInfoService;
 import com.kandi.dell.nscarlauncher.ui_portrait.fm.FMFragment;
+import com.kandi.dell.nscarlauncher.ui_portrait.home.receiver.BTBroadcoastReceiver;
+import com.kandi.dell.nscarlauncher.ui_portrait.home.receiver.CarMFLReceiver;
+import com.kandi.dell.nscarlauncher.ui_portrait.home.receiver.SDBroadcastReceiver;
+import com.kandi.dell.nscarlauncher.ui_portrait.home.receiver.USBReceover;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.dialog.DialogLocalMusic;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.service.PlayerService;
@@ -57,10 +58,49 @@ public class HomePagerActivity extends BaseActivity {
 
     public PlayControllView btPaly;
     public PlayControllFMView fmPaly ;
+
+    SDBroadcastReceiver usbBroadcastReceiver;
+    USBReceover usbReceover;
+    BTBroadcoastReceiver btBroadcoastReceiver;
+    CarMFLReceiver carMFLReceiver;
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onSaveInstanceState(Bundle outState) {
 //        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(usbBroadcastReceiver==null){
+            usbBroadcastReceiver=new SDBroadcastReceiver(this);
+        }
+        if(usbReceover==null){
+            usbReceover =new USBReceover(this);
+        }
+        if(btBroadcoastReceiver==null){
+            btBroadcoastReceiver =new BTBroadcoastReceiver(this);
+        }
+        if(carMFLReceiver==null){
+            carMFLReceiver=new CarMFLReceiver(this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(usbBroadcastReceiver!=null){
+            this.unregisterReceiver(usbBroadcastReceiver);
+        }
+        if(usbReceover!=null){
+            this.unregisterReceiver(usbReceover);
+        }
+        if(btBroadcoastReceiver!=null){
+            this.unregisterReceiver(btBroadcoastReceiver);
+        }
+        if(carMFLReceiver!=null){
+            this.unregisterReceiver(carMFLReceiver);
+        }
     }
 
     @Override
@@ -188,6 +228,7 @@ public class HomePagerActivity extends BaseActivity {
             case R.id.item_app:
                 break;
             case R.id.item_phone:
+                jumpFragment(FragmentType.PHONE);
                 break;
             case R.id.item_power:
                 jumpFragment(FragmentType.EMS);
@@ -199,6 +240,7 @@ public class HomePagerActivity extends BaseActivity {
                 jumpFragment(FragmentType.FM);
                 break;
             case R.id.item_btmusic:
+                jumpFragment(FragmentType.BTMUSIC);
                 break;
             case R.id.item_carcontroll:
                 jumpFragment(FragmentType.CARCONTROLL);
@@ -275,6 +317,12 @@ public class HomePagerActivity extends BaseActivity {
                     break;
                 case FragmentType.EMS:
                     switchFragment(getEmsFragment());
+                    break;
+                case FragmentType.PHONE:
+                    switchFragment(getPhoneFragment());
+                    break;
+                case FragmentType.BTMUSIC:
+                    switchFragment(getBtMusicFragment());
                     break;
 
             }

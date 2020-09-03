@@ -162,5 +162,7 @@
     <string name="通讯录">Address Books </string>
     <string name="收藏列表">Collection List</string>
     <string name="搜索中">Searching</string>
+    <string name="设备接入">设备接入</string>
+    <string name="设备移除">设备移除</string>
 
 </resources>

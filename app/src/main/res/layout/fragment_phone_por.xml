@@ -101,5 +101,5 @@
     <include layout="@layout/item_phone_calling_por"
         android:visibility="gone"/>
     <include layout="@layout/item_btphone_null"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 </android.support.constraint.ConstraintLayout>
