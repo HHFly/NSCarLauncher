@@ -22,6 +22,7 @@ import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
 
+import com.kandi.dell.nscarlauncher.ui_portrait.application.AppFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.bluetooth.btmusic.BTMusicFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.bluetooth.phone.PhoneFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.bluetooth.phone.service.PhoneInfoService;
@@ -37,6 +38,7 @@ import com.kandi.dell.nscarlauncher.ui_portrait.music.service.ScanService;
 import com.kandi.dell.nscarlauncher.ui_portrait.airctrl.AirCtrlFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.carctrl.CarCtrlFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.ems.EmsFragment;
+import com.kandi.dell.nscarlauncher.ui_portrait.video.VideoFragment;
 import com.kandi.dell.nscarlauncher.widget.PlayControllFMView;
 import com.kandi.dell.nscarlauncher.widget.PlayControllView;
 
@@ -45,7 +47,9 @@ public class HomePagerActivity extends BaseActivity {
     MusicFragment musicFragment;
     PhoneFragment phoneFragment;
     BTMusicFragment btMusicFragment;
+    VideoFragment videoFragment;
     FMFragment fmFragment;
+    AppFragment appFragment;
     public SeekBar music_progress_bar;//音乐进度条
     DialogLocalMusic dialogLocalMusicD;//音乐列表弹框
     ScanService scanService;//本地数据扫描服务
@@ -226,6 +230,7 @@ public class HomePagerActivity extends BaseActivity {
                 jumpFragment(FragmentType.AIRCONTROLL);
                 break;
             case R.id.item_app:
+                jumpFragment(FragmentType.APPLICATION);
                 break;
             case R.id.item_phone:
                 jumpFragment(FragmentType.PHONE);
@@ -259,6 +264,8 @@ public class HomePagerActivity extends BaseActivity {
         getDialogLocalMusicD();
         getScanService();
         getPhoneInfoService();
+        getVideoFragment();
+        getAppFragment();
     }
     //初始化 控件
     private void initGroupView() {
@@ -323,6 +330,12 @@ public class HomePagerActivity extends BaseActivity {
                     break;
                 case FragmentType.BTMUSIC:
                     switchFragment(getBtMusicFragment());
+                    break;
+                case FragmentType.APPLICATION:
+                    switchFragment(getAppFragment());
+                    break;
+                case FragmentType.VIDEO:
+                    switchFragment(getVideoFragment());
                     break;
 
             }
@@ -458,7 +471,19 @@ public class HomePagerActivity extends BaseActivity {
         return fmFragment;
     }
 
+    public AppFragment getAppFragment() {
+        if(appFragment==null){
+            appFragment=new AppFragment();
+        }
+        return appFragment;
+    }
 
+    public VideoFragment getVideoFragment() {
+        if(videoFragment==null){
+            videoFragment=new VideoFragment();
+        }
+        return videoFragment;
+    }
 
     public DialogLocalMusic getDialogLocalMusicD() {
         if(dialogLocalMusicD==null){

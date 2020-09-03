@@ -13,6 +13,13 @@ public class AppInfo extends BaseModel {
     private String name ;//应用名
     public AppInfo(){}
 
+    public AppInfo(String appLabel, Drawable appIcon, String pkgName, String name) {
+        this.appLabel = appLabel;
+        this.appIcon = appIcon;
+        this.pkgName = pkgName;
+        this.name = name;
+    }
+
     public String getAppLabel() {
         return appLabel;
     }
@@ -40,4 +47,5 @@ public class AppInfo extends BaseModel {
     public void setName(String name) {
         this.name = name;
     }
+
 }

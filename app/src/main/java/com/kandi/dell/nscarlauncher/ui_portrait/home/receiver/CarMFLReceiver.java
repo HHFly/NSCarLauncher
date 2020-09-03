@@ -1,4 +1,4 @@
-package com.kandi.dell.nscarlauncher.receiver;
+package com.kandi.dell.nscarlauncher.ui_portrait.home.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,13 +8,9 @@ import android.os.SystemProperties;
 
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.common.util.LogUtils;
-import com.kandi.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
-import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
-import com.kandi.dell.nscarlauncher.ui.music.DialogLocalMusic;
-import com.kandi.dell.nscarlauncher.ui.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui.music.model.MusicModel;
 import com.kandi.dell.nscarlauncher.ui_portrait.fm.FMFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.home.HomePagerActivity;
@@ -110,8 +106,8 @@ public class CarMFLReceiver extends BroadcastReceiver {
                 LogUtils.log(ACTION_WHEEL_CALL);
                 homePagerActivity.jumpFragment(FragmentType.PHONE);
                 FlagProperty.flag_phone_incall_click = true;
-                homePagerActivity.getPhoneFragment().answerPhone();
-               homePagerActivity.getPhoneFragment().phoneStart();
+                homePagerActivity.getPhoneFragment().getpPhoneFragment().answerPhone();
+//               homePagerActivity.getPhoneFragment().phoneStart();
             }
 
         }
@@ -119,8 +115,15 @@ public class CarMFLReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_WHEEL_HANGUP)) {
             LogUtils.log(ACTION_WHEEL_HANGUP);
             FlagProperty.flag_phone_ringcall = false;
-            HomePagerActivity.homePagerActivity.getPhoneFragment().hangDownphone();
+            homePagerActivity.getPhoneFragment().getpPhoneFragment().hangDownphone();
         }
+        //app安装
+         if(intent.getAction().equals("android.intent.action.PACKAGE_ADDED")) {
+             App.get().getCurActivity().getAppFragment().refreshAppInfo();
+             if (FragmentType.APPLICATION == homePagerActivity.mCurFragment.getmType()) {
+
+             }
+         }
 
     }
 
@@ -139,6 +142,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
         intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_MUSIC_NEXT);
         intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_CALL);
         intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_HANGUP);
+        intentFilter.addAction("android.intent.action.PACKAGE_ADDED");
         homePagerActivity.registerReceiver(this, intentFilter);
     }
 }
