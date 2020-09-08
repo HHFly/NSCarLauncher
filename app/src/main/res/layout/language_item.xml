@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="78px">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/language_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24px"
+            android:textColor="@color/color_Text_default"
+            android:textSize="30px"
+            android:text="@string/中文"/>
+
+        <ImageView
+            android:id="@+id/language_checkbox"
+            android:layout_width="36px"
+            android:layout_height="36px"
+            android:layout_marginRight="25px"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/select_checkbox"/>
+    </RelativeLayout>
+</RelativeLayout>

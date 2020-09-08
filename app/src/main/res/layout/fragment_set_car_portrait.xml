@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg14151E">
+    <RelativeLayout
+        android:id="@+id/bt_back"
+        android:layout_width="wrap_content"
+        android:layout_height="50px"
+        android:layout_marginLeft="40px"
+        android:layout_marginTop="77px">
+        <ImageView
+            android:layout_width="20px"
+            android:layout_height="36px"
+            android:background="@mipmap/bt_back"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25px"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color_Text_default"
+            android:textSize="36px"
+            android:text="@string/设置"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80px"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/color_Text_default"
+        android:textSize="36px"
+        android:text="@string/车辆设置"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="40px"
+        android:layout_marginRight="40px"
+        android:layout_marginTop="127px">
+
+        <TextView style="@style/BaseText.Tv"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="45px"
+            android:layout_marginLeft="24px"
+            android:layout_marginBottom="23px"
+            android:textColor="@color/color_Text989898"
+            android:textSize="24px"
+            android:text="@string/语言切换"/>
+
+        <RelativeLayout
+            android:id="@+id/carset_layout"
+            android:layout_width="match_parent"
+            android:layout_height="78px"
+            android:background="@color/color_bg1B1D28">
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24px"
+                android:textColor="@color/color_Text_default"
+                android:textSize="30px"
+                android:text="@string/行车模式"/>
+            
+            <ImageView
+                android:layout_width="26px"
+                android:layout_height="14px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="24px"
+                android:background="@mipmap/spinner_bg"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/car_choose_layout"
+            android:layout_width="689px"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/set_language_laybg"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/la_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.RecyclerView>
+            
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

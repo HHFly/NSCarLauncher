@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_bg14151E">
+
+    <RelativeLayout
+        android:id="@+id/bt_back"
+        android:layout_width="wrap_content"
+        android:layout_height="50px"
+        android:layout_marginLeft="40px"
+        android:layout_marginTop="77px">
+        <ImageView
+            android:layout_width="20px"
+            android:layout_height="36px"
+            android:background="@mipmap/bt_back"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25px"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color_Text_default"
+            android:textSize="36px"
+            android:text="@string/设置"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80px"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/color_Text_default"
+        android:textSize="36px"
+        android:text="@string/显示与亮度"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="160px"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="78px"
+            android:layout_marginLeft="64px"
+            android:layout_marginRight="64px">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="78px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/BaseText.Tv"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/color_Text989898"
+                    android:text="@string/autolight"
+                    android:textSize="24px" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:visibility="visible"
+                    android:id="@+id/autolight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:theme="@style/mySwitch"
+                    app:thumbTint="@color/white"
+                    app:trackTint="@drawable/select_switch_bg"
+                    android:layout_marginLeft="500px"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="156px"
+            android:layout_marginLeft="64px"
+            android:layout_marginRight="64px">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/BaseText.Tv"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="23px"
+                    android:textColor="@color/color_Text989898"
+                    android:text="@string/亮度"
+                    android:textSize="24px" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="78px"
+                    android:layout_marginTop="23px"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/ic_dispaly_small" />
+
+                    <SeekBar
+                        android:id="@+id/seekbar_display"
+                        android:layout_width="528px"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="25px"
+                        android:maxHeight="3.4dp"
+                        android:minHeight="3.4dp"
+                        android:progressDrawable="@drawable/seekbar_style"
+                        android:thumb="@mipmap/ic_volume" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="25px"
+                        android:src="@mipmap/ic_display_big" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="78px"
+            android:layout_marginLeft="64px"
+            android:layout_marginRight="64px">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/BaseText.Tv"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/color_Text989898"
+                    android:text="@string/wallpaper"
+                    android:textSize="24px" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="460px"
+        android:layout_marginLeft="40px"
+        android:layout_marginRight="40px">
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>

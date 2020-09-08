@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+	android:background="@mipmap/shoots_bg_02"
+    android:id="@+id/bgview"
+     >
+
+    <TextView
+        android:id="@+id/toptitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30px"
+        android:text="@string/设置时间"
+        android:textColor="@color/white"
+        android:textSize="40px" />
+    
+		<LinearLayout
+		    android:id="@+id/timePicker1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:gravity="center"
+			android:layout_marginTop="10px"
+			android:background="@mipmap/shoots_settime_bg"
+			android:orientation="horizontal" >
+		
+		   <com.kandi.dell.nscarlauncher.ui_portrait.setting.widgets.SetDate_WheelView
+		       android:id="@+id/year"
+		       android:layout_width="wrap_content"
+		       android:layout_weight="1"
+		       android:layout_height="wrap_content" />
+		
+		   <com.kandi.dell.nscarlauncher.ui_portrait.setting.widgets.SetDate_WheelView
+		       android:id="@+id/month"
+		       android:layout_width="wrap_content"
+		       android:layout_weight="1"
+		       android:layout_height="wrap_content" />
+		
+		   <com.kandi.dell.nscarlauncher.ui_portrait.setting.widgets.SetDate_WheelView
+		       android:id="@+id/day"
+		       android:layout_width="wrap_content"
+		       android:layout_weight="1"
+		       android:layout_height="wrap_content" />
+		   
+		   <com.kandi.dell.nscarlauncher.ui_portrait.setting.widgets.SetDate_WheelView
+		       android:id="@+id/hour"
+		       android:layout_width="wrap_content"
+		       android:layout_weight="1"
+		       android:layout_height="wrap_content" />
+		   
+		   <com.kandi.dell.nscarlauncher.ui_portrait.setting.widgets.SetDate_WheelView
+		       android:id="@+id/min"
+		       android:layout_width="wrap_content"
+		       android:layout_weight="1"
+		       android:layout_height="wrap_content" />
+		</LinearLayout>
+
+    <Button
+        android:id="@+id/timeset_return"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+		android:layout_marginBottom="20px"
+        android:layout_gravity="center"
+        android:background="@drawable/select_bt_eq_bg"
+        android:textColor="@color/white"
+        android:textSize="30px"
+        android:text="@string/确定" />
+
+</LinearLayout>

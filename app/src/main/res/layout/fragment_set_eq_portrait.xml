@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg14151E">
+
+ <RelativeLayout
+     android:id="@+id/bt_back"
+     android:layout_width="wrap_content"
+     android:layout_height="50px"
+     android:layout_marginLeft="40px"
+     android:layout_marginTop="77px">
+  <ImageView
+      android:layout_width="20px"
+      android:layout_height="36px"
+      android:background="@mipmap/bt_back"
+      android:layout_centerVertical="true"/>
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="25px"
+      android:layout_centerVertical="true"
+      android:textColor="@color/color_Text_default"
+      android:textSize="36px"
+      android:text="@string/设置"/>
+ </RelativeLayout>
+
+ <TextView
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_marginTop="80px"
+     android:layout_centerHorizontal="true"
+     android:textColor="@color/color_Text_default"
+     android:textSize="36px"
+     android:text="@string/均衡器"/>
+
+  <LinearLayout
+      android:id="@+id/ll_seekbar"
+      android:layout_centerHorizontal="true"
+      android:orientation="horizontal"
+      android:layout_marginTop="140px"
+      android:layout_marginLeft="40px"
+      android:layout_marginRight="40px"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content">
+
+  </LinearLayout>
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/rv_eq_nameList"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="719px"
+      android:layout_marginLeft="40px"
+      android:layout_marginRight="40px"
+      android:layout_marginBottom="140px"
+      android:layout_alignParentBottom="true"
+      android:layout_centerHorizontal="true"
+      android:scrollbars="none"
+      android:overScrollMode="never">
+
+  </android.support.v7.widget.RecyclerView>
+</RelativeLayout>

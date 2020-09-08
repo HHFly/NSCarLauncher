@@ -1,7 +1,9 @@
 package com.kandi.dell.nscarlauncher.ui_portrait.home;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -41,6 +43,7 @@ import com.kandi.dell.nscarlauncher.ui_portrait.ems.EmsFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.video.VideoFragment;
 import com.kandi.dell.nscarlauncher.widget.PlayControllFMView;
 import com.kandi.dell.nscarlauncher.widget.PlayControllView;
+import com.kandi.dell.nscarlauncher.ui_portrait.setting.SetFragment;
 
 public class HomePagerActivity extends BaseActivity {
     public ImageView gramophoneView;
@@ -57,6 +60,7 @@ public class HomePagerActivity extends BaseActivity {
     public CarCtrlFragment mCarCtrlFragment;
     public AirCtrlFragment mAirCtrlFragment;
     public EmsFragment mEmsFragment;
+    public SetFragment mSetFragment;
 
     public BaseFragment mCurFragment;//当前页
 
@@ -67,6 +71,7 @@ public class HomePagerActivity extends BaseActivity {
     USBReceover usbReceover;
     BTBroadcoastReceiver btBroadcoastReceiver;
     CarMFLReceiver carMFLReceiver;
+    private static WifiManager mWifiManager;//wifi
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -124,7 +129,7 @@ public class HomePagerActivity extends BaseActivity {
     public void initView() {
         createFragment();
         initGroupView();
-
+        initNetwork();//网络
     }
 
 
@@ -175,7 +180,7 @@ public class HomePagerActivity extends BaseActivity {
                 if(!FlagProperty.flag_bluetooth){
                     ToastUtils.show( R.string.蓝牙未连接);
                 }else {
-                   getBtMusicFragment().musicBack();
+                    getBtMusicFragment().musicBack();
 
                 }
             }
@@ -190,7 +195,7 @@ public class HomePagerActivity extends BaseActivity {
                     return;
                 }else {
 
-                  getBtMusicFragment().play();
+                    getBtMusicFragment().play();
                 }
             }
 
@@ -266,6 +271,10 @@ public class HomePagerActivity extends BaseActivity {
         getPhoneInfoService();
         getVideoFragment();
         getAppFragment();
+        getAirCtrlFragment();
+        getCarCtrlFragment();
+        getEmsFragment();
+        getSetFragment();
     }
     //初始化 控件
     private void initGroupView() {
@@ -314,7 +323,7 @@ public class HomePagerActivity extends BaseActivity {
                     switchFragment(getMusicFragment());
                     break;
                 case FragmentType.SET:
-                    //switchFragment(getSetFragment());
+                    switchFragment(getSetFragment());
                     break;
                 case FragmentType.CARCONTROLL:
                     switchFragment(getCarCtrlFragment());
@@ -399,7 +408,26 @@ public class HomePagerActivity extends BaseActivity {
 
     }
 
+    // 初始化无线网络信息
+    private void initNetwork() {
+        if (mWifiManager == null) {
+            mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        }
+    }
 
+    // 设置当前所连接wifi的强度
+    public static void setWifiLevel() {
+//        Log.i("testtest","=========="+mWifiManager);
+//        WifiInfo connectionInfo = mWifiManager.getConnectionInfo();
+//        if (connectionInfo != null) {
+//            int signalLevel = WifiManager.calculateSignalLevel(connectionInfo.getRssi(), 5);
+//            mIvWifi.setImageResource(getSignalIntensity(signalLevel));
+//
+//        } else {
+//            mIvWifi.setImageResource(R.mipmap.wifi_off);
+//
+//        }
+    }
 
 
     public  void showFragemnt(){
@@ -483,6 +511,14 @@ public class HomePagerActivity extends BaseActivity {
             videoFragment=new VideoFragment();
         }
         return videoFragment;
+    }
+
+    public SetFragment getSetFragment() {
+        if(mSetFragment == null){
+            mSetFragment = new SetFragment();
+            mSetFragment.setHomePagerActivity(this);
+        }
+        return mSetFragment;
     }
 
     public DialogLocalMusic getDialogLocalMusicD() {

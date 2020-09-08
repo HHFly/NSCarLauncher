@@ -296,4 +296,30 @@
     <string name="设备接入">设备接入</string>
     <string name="设备移除">设备移除</string>
 
+    <!--设置-->
+    <string name="显示与亮度">显示与亮度</string>
+    <string name="无线网络">无线网络</string>
+    <string name="语言切换">语言切换</string>
+    <string name="中文">中文</string>
+    <string name="English">English</string>
+    <string name="输入法切换">输入法切换</string>
+    <string name="自动更新">自动更新</string>
+    <string name="使用网络更新">使用网络更新</string>
+    <string name="设置日期">设置日期</string>
+    <string name="设置时间">设置时间</string>
+    <string name="选择时区">选择时区</string>
+    <string name="确定">确定</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="hour">时</string>
+    <string name="min">分</string>
+    <string name="行车模式">行车模式</string>
+    <string name="经济">经济</string>
+    <string name="运动">运动</string>
+    <string name="回收比">回收比</string>
+    <string name="低">低</string>
+    <string name="中">中</string>
+    <string name="高">高</string>
+
 </resources>
