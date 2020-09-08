@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80px"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="40px">
+        <ImageView
+            android:id="@+id/iv_music_selected"
+            android:layout_width="12px"
+            android:layout_height="14px"
+            android:src="@mipmap/ic_music_dialog_selected"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/item_songname"
+            android:layout_marginRight="10px"
+
+            />
+        <TextView
+            android:id="@+id/item_songname"
+            style="@style/BaseText.Tv"
+            android:layout_width="wrap_content"
+            android:ellipsize="marquee"
+            android:maxEms="12"
+            android:singleLine="true"
+            android:text=""
+            android:textSize="30px"
+            android:textColor="@drawable/selector_text_select_white_blue"
+            android:layout_marginRight="40px"
+            />
+
+
+
+    </LinearLayout>
+
+
+
+    <ImageView
+        android:id="@+id/iv_music_list_delete"
+        android:layout_width="15px"
+        android:layout_height="15px"
+        android:src="@mipmap/ic_music_dialog_delete"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="26px"
+        />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/check_style"
+        android:layout_gravity="center_vertical"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="20px"
+        />
+
+    <View
+        style="@style/BaseLine.Horizontal"
+        android:background="#1B1D27"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+</android.support.constraint.ConstraintLayout>

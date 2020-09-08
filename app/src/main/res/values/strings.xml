@@ -295,5 +295,7 @@
     <string name="搜索中">搜索中</string>
     <string name="设备接入">设备接入</string>
     <string name="设备移除">设备移除</string>
+    <string name="当前无视频播放">当前无视频播放</string>
+    <string name="SD视频">SD视频</string>
 
 </resources>

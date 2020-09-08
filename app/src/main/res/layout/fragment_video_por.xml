@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#13151D">
+    <ImageView
+        android:id="@+id/iv_return"
+        android:layout_width="20px"
+        android:layout_height="36px"
+        android:src="@mipmap/ic_back"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="40px"
+        android:layout_marginTop="77px"/>
+
+    <TextView
+        style="@style/BaseText.Tv"
+        android:layout_marginTop="79px"
+        android:text="@string/视频"
+        android:textColor="#EEEEEE"
+        android:textSize="36px"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+
+    <com.kandi.dell.nscarlauncher.ui_portrait.video.VideoPlayerStandard
+        android:id="@+id/videoplayer"
+        android:layout_width="688px"
+        android:layout_height="456px"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_return"
+        android:layout_marginTop="57px"
+        />
+
+
+    <ImageView
+        android:id="@+id/iv_video_list"
+        android:layout_width="33px"
+        android:layout_height="30px"
+        android:src="@mipmap/ic_video_list"
+        android:scaleType="fitCenter"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="40px"
+        android:layout_marginTop="84px"/>
+
+    <TextView style="@style/BaseText.Tv"
+        android:id="@+id/tv_video_name"
+        android:ellipsize="marquee"
+        android:maxEms="12"
+        android:singleLine="true"
+        android:text="Forrest Gump"
+        android:textSize="36px"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_return"
+        android:layout_marginTop="538px"
+        />
+    <ImageView
+        android:id="@+id/iv_video_left"
+        android:layout_width="36px"
+        android:layout_height="42px"
+        android:background="@drawable/select_home_ctll_last"
+        android:layout_centerVertical="true"
+        app:layout_constraintTop_toTopOf="@+id/ctl_video_center"
+        app:layout_constraintBottom_toBottomOf="@+id/ctl_video_center"
+        app:layout_constraintRight_toLeftOf="@+id/ctl_video_center"
+        android:layout_marginRight="66px"
+        />
+
+    <ImageView
+        android:id="@+id/ctl_video_center"
+        android:layout_width="72px"
+        android:layout_height="32dp"
+        android:layout_marginTop="40px"
+        android:src="@mipmap/ic_music_home_stop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_video_name" />
+    <ImageView
+        android:id="@+id/iv_video_right"
+        android:layout_width="36px"
+        android:layout_height="42px"
+        android:background="@drawable/select_home_ctll_next"
+        app:layout_constraintTop_toTopOf="@+id/ctl_video_center"
+        app:layout_constraintBottom_toBottomOf="@+id/ctl_video_center"
+        app:layout_constraintLeft_toRightOf="@+id/ctl_video_center"
+        android:layout_marginLeft="66px"
+        />
+    <TextView style="@style/BaseText.Tv"
+        android:id="@+id/video_current_time"
+        android:textSize="24px"
+        android:text="00.00"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ctl_video_center"
+        android:layout_marginTop="50px"
+        android:layout_marginLeft="43px"
+        />
+    <SeekBar
+        android:id="@+id/video_progress_bar"
+        android:layout_width="520px"
+        android:layout_height="wrap_content"
+        android:maxHeight="2dp"
+        android:minHeight="2dp"
+        android:progressDrawable="@drawable/seekbar_style"
+        android:thumb="@mipmap/ic_btmusic_thumb"
+        app:layout_constraintTop_toTopOf="@+id/video_current_time"
+        app:layout_constraintBottom_toBottomOf="@+id/video_current_time"
+        app:layout_constraintLeft_toRightOf="@+id/video_current_time"
+        app:layout_constraintRight_toLeftOf="@+id/video_total_time"
+        />
+    <TextView style="@style/BaseText.Tv"
+        android:id="@+id/video_total_time"
+        android:textSize="24px"
+        android:text="00:00"
+        app:layout_constraintTop_toBottomOf="@+id/ctl_video_center"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="50px"
+        android:layout_marginRight="43px"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl_null"
+        android:layout_width="688px"
+        android:layout_height="456px"
+        android:background="#383C52"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_return"
+        android:layout_marginTop="57px"
+        android:visibility="gone">
+        <TextView style="@style/BaseText.Tv"
+            android:textSize="30px"
+            android:text="@string/当前无视频播放"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

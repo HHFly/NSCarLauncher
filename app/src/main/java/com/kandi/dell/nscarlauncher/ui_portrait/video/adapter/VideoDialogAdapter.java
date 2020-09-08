@@ -1,4 +1,4 @@
-package com.kandi.dell.nscarlauncher.ui_portrait.music.adapter;
+package com.kandi.dell.nscarlauncher.ui_portrait.video.adapter;
 
 import android.view.View;
 import android.widget.CheckBox;
@@ -13,33 +13,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
-public class MusicAdapter extends BaseListRvAdapter<Mp3Info> {
+public class VideoDialogAdapter  extends BaseListRvAdapter<Mp3Info> {
     private int mode=1;//1 local 2 usb 3  sd
     public boolean isShow = false;
     public void setMode(int mode) {
         this.mode = mode;
     }
-    public MusicAdapter(List<Mp3Info> data) {
-        super(data);
-    }
-    public Map<Integer, Mp3Info> recodeStatu = new HashMap<>();
-    @Override
-    public int getItemResId() {
-        return R.layout.item_music_list;
-    }
 
+    public Map<Integer, Mp3Info> recodeStatu = new HashMap<>();
     public void setRecodeStatu(Map<Integer, Mp3Info> recodeStatu) {
         this.recodeStatu = recodeStatu;
     }
 
-    @Override
-    public void bindBodyData(AutoViewHolder holder, final int bodyPos, final Mp3Info data) {
-        holder.text(R.id.item_songname,data.displayName);
-        holder.text(R.id.item_songtime, data.artist);
+    public VideoDialogAdapter(List<Mp3Info> data) {
+        super(data);
+    }
 
-        boolean isSelected =App.get().getCurActivity().getDialogLocalMusicD().musicDiverID == bodyPos;
+    @Override
+    public int getItemResId() {
+        return R.layout.item_video_list;
+    }
+
+    @Override
+    public void bindBodyData(AutoViewHolder holder, int bodyPos, Mp3Info data) {
+        holder.text(R.id.item_songname,data.displayName);
+
+
+        boolean isSelected = App.get().getCurActivity().getDialogVideo().musicDiverID == bodyPos;
         holder.get(R.id.item_songname).setSelected(isSelected);
         holder.visibility(R.id.iv_music_selected,isSelected);
         final CheckBox checkBox = holder.get(R.id.checkBox);
@@ -76,34 +76,21 @@ public class MusicAdapter extends BaseListRvAdapter<Mp3Info> {
 
         });
 
-            checkBox.setChecked(data.isCheck());
-            checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(checkBox.isChecked()){
-                        recodeStatu.put(bodyPos,data);
+        checkBox.setChecked(data.isCheck());
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBox.isChecked()){
+                    recodeStatu.put(bodyPos,data);
 
-                    }else {
-                        recodeStatu.remove(bodyPos);
-                    }
-                    data.setCheck(checkBox.isChecked());
+                }else {
+                    recodeStatu.remove(bodyPos);
                 }
-            });
-            holder.visibility(R.id.iv_music_list_delete,!isShow);
-            holder.visibility(R.id.checkBox,isShow);
-
-
-
-    }
-
-    // 时间格式化为00
-    public static String getTime(int time) {
-
-        if (time < 10) {
-            return "0" + time;
-        } else {
-            return "" + time;
-        }
+                data.setCheck(checkBox.isChecked());
+            }
+        });
+        holder.visibility(R.id.iv_music_list_delete,!isShow);
+        holder.visibility(R.id.checkBox,isShow);
     }
     private OnItemClickListener onItemClickListener;
 

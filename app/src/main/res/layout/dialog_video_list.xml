@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#1B1D27"
+    >
+
+    <LinearLayout
+        android:id="@+id/ll_tab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="77px"
+        >
+        <TextView
+            android:id="@+id/tv_local_music"
+            style="@style/BaseText.Tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/本地视频"
+            android:textSize="36px"
+            android:gravity="center"
+            android:textColor="@drawable/select_music_list"
+            android:background="@drawable/select_music_stroke"
+            android:paddingBottom="5px"
+            android:layout_marginRight="37px"
+            />
+        <TextView
+            android:id="@+id/tv_usb_music"
+            style="@style/BaseText.Tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="36px"
+            android:paddingBottom="5px"
+            android:layout_marginRight="37px"
+            android:text="@string/USB视频"
+            android:gravity="center"
+            android:textColor="@drawable/select_music_list"
+            android:background="@drawable/select_music_stroke"/>
+
+        <TextView
+            android:id="@+id/tv_sd_music"
+            style="@style/BaseText.Tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="36px"
+            android:text="@string/SD视频"
+            android:gravity="center"
+            android:textColor="@drawable/select_music_list"
+            android:background="@drawable/select_music_stroke"
+            android:paddingBottom="5px"
+
+            />
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_music_close"
+        android:layout_width="20px"
+        android:layout_height="36px"
+        android:src="@mipmap/ic_back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="77px"
+        android:layout_marginLeft="40px"/>
+
+    <LinearLayout
+        android:id="@+id/operate_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="32px"
+        android:layout_marginTop="70px"
+        android:visibility="gone">
+
+        <CheckBox
+            android:id="@+id/btn_select_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:button="@drawable/check_style" />
+
+        <TextView
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@mipmap/operate_bg"
+            android:gravity="center"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"
+            android:text="@string/delete"
+            android:textColor="@color/white"
+            android:textSize="24px" />
+
+        <TextView
+            android:id="@+id/btn_copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@mipmap/operate_bg"
+            android:gravity="center"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"
+            android:text="@string/copy"
+            android:textColor="@color/white"
+            android:textSize="24px" />
+
+        <TextView
+            android:id="@+id/btn_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/operate_bg"
+            android:gravity="center"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"
+            android:text="@string/cancle"
+            android:textColor="@color/white"
+            android:textSize="24px" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_music"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="174px"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="114px"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+</android.support.constraint.ConstraintLayout>

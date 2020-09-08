@@ -123,7 +123,7 @@ public class ScanService extends  Observable {
         }
         setChanged();
         notifyObservers(2);
-        mResolver = null;
+
 
 
     }

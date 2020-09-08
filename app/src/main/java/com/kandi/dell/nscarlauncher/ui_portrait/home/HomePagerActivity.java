@@ -39,6 +39,7 @@ import com.kandi.dell.nscarlauncher.ui_portrait.airctrl.AirCtrlFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.carctrl.CarCtrlFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.ems.EmsFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.video.VideoFragment;
+import com.kandi.dell.nscarlauncher.ui_portrait.video.dialog.DialogVideo;
 import com.kandi.dell.nscarlauncher.widget.PlayControllFMView;
 import com.kandi.dell.nscarlauncher.widget.PlayControllView;
 
@@ -52,6 +53,7 @@ public class HomePagerActivity extends BaseActivity {
     AppFragment appFragment;
     public SeekBar music_progress_bar;//音乐进度条
     DialogLocalMusic dialogLocalMusicD;//音乐列表弹框
+    DialogVideo dialogVideo; //视频列表弹框
     ScanService scanService;//本地数据扫描服务
     PhoneInfoService phoneInfoService;//蓝牙电话记录服务
     public CarCtrlFragment mCarCtrlFragment;
@@ -262,10 +264,14 @@ public class HomePagerActivity extends BaseActivity {
         getBtMusicFragment();
         getFmFragment();
         getDialogLocalMusicD();
+        getDialogVideo();
         getScanService();
         getPhoneInfoService();
         getVideoFragment();
         getAppFragment();
+        getScanService().ScanAllDaTa(this);
+        getScanService().addObserver(getDialogLocalMusicD());
+        getScanService().addObserver(getDialogVideo());
     }
     //初始化 控件
     private void initGroupView() {
@@ -491,6 +497,14 @@ public class HomePagerActivity extends BaseActivity {
         }
         return dialogLocalMusicD;
     }
+
+    public DialogVideo getDialogVideo() {
+        if(dialogVideo==null){
+            dialogVideo=new DialogVideo(this);
+        }
+        return dialogVideo;
+    }
+
     public ScanService getScanService() {
         if(scanService==null){
             scanService=new ScanService();

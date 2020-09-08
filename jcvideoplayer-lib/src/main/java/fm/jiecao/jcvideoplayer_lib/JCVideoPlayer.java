@@ -43,14 +43,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static final String TAG = "JieCaoVideoPlayer";
 
     public static int mCurrentState = -1;//-1相当于null
-    protected static final int CURRENT_STATE_NORMAL = 0;
-    protected static final int CURRENT_STATE_PREPAREING = 1;
-    protected static final int CURRENT_STATE_PLAYING = 2;
-    protected static final int CURRENT_STATE_PLAYING_BUFFERING_START = 3;
-    protected static final int CURRENT_STATE_PAUSE = 5;
-    protected static final int CURRENT_STATE_AUTO_COMPLETE = 6;
-    protected static final int CURRENT_STATE_ERROR = 7;
-    protected static int BACKUP_PLAYING_BUFFERING_STATE = 0;
+    public static final int CURRENT_STATE_NORMAL = 0;
+    public static final int CURRENT_STATE_PREPAREING = 1;
+    public static final int CURRENT_STATE_PLAYING = 2;
+    public static final int CURRENT_STATE_PLAYING_BUFFERING_START = 3;
+    public static final int CURRENT_STATE_PAUSE = 5;
+    public static final int CURRENT_STATE_AUTO_COMPLETE = 6;
+    public static final int CURRENT_STATE_ERROR = 7;
+    public static int BACKUP_PLAYING_BUFFERING_STATE = 0;
 
     protected boolean mTouchingProgressBar = false;
     protected boolean mIfCurrentIsFullscreen = false;
@@ -202,7 +202,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 break;
         }
     }
-
+    public void start(){
+        startButton.performClick();
+    }
     @Override
     public void onClick(View v) {
         int i = v.getId();
@@ -728,7 +730,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         setStateAndUi(mCurrentState);
     }
 
-    protected void startProgressTimer() {
+    public void startProgressTimer() {
         cancelProgressTimer();
         UPDATE_PROGRESS_TIMER = new Timer();
         UPDATE_PROGRESS_TIMER.schedule(new TimerTask() {
@@ -768,7 +770,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         return position;
     }
 
-    protected int getDuration() {
+    public int getDuration() {
         int duration = 0;
         try {
             duration = JCMediaManager.instance().mediaPlayer.getDuration();
