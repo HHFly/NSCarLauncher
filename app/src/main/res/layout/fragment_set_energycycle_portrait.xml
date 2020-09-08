@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg14151E">
+    <RelativeLayout
+        android:id="@+id/bt_back"
+        android:layout_width="wrap_content"
+        android:layout_height="50px"
+        android:layout_marginLeft="40px"
+        android:layout_marginTop="77px">
+        <ImageView
+            android:layout_width="20px"
+            android:layout_height="36px"
+            android:background="@mipmap/bt_back"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25px"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color_Text_default"
+            android:textSize="36px"
+            android:text="@string/设置"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80px"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/color_Text_default"
+        android:textSize="36px"
+        android:text="@string/能量回收"/>
+
+    <LinearLayout
+        android:layout_width="689px"
+        android:layout_height="156px"
+        android:orientation="vertical"
+        android:background="@mipmap/setting_laybg2"
+        android:layout_marginLeft="40px"
+        android:layout_marginRight="40px"
+        android:layout_marginTop="172px">
+
+        <RelativeLayout
+            android:id="@+id/cycle_layout"
+            android:layout_width="689px"
+            android:layout_height="78px">
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24px"
+                android:textColor="@color/color_Text_default"
+                android:textSize="30px"
+                android:text="@string/行车模式"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/is_cycle_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/mySwitch"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+        
+        <ImageView
+            android:layout_width="638px"
+            android:layout_height="2px"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/under_line"/>
+
+        <RelativeLayout
+            android:layout_width="689px"
+            android:layout_height="78px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24px"
+                android:textColor="@color/color_Text_default"
+                android:textSize="30px"
+                android:text="@string/回收比"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="296px"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="36px"
+                    android:layout_height="36px"
+                    android:background="@drawable/select_checkbox"/>
+                <TextView
+                    android:id="@+id/set_low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12px"
+                    android:textColor="@color/color_Text_default"
+                    android:text="@string/低"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="447px"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="36px"
+                    android:layout_height="36px"
+                    android:background="@drawable/select_checkbox"/>
+                <TextView
+                    android:id="@+id/set_middle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12px"
+                    android:textColor="@color/color_Text_default"
+                    android:text="@string/中"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="595px"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="36px"
+                    android:layout_height="36px"
+                    android:background="@drawable/select_checkbox"/>
+                <TextView
+                    android:id="@+id/set_high"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12px"
+                    android:textColor="@color/color_Text_default"
+                    android:text="@string/高"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

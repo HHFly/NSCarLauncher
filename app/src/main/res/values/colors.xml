@@ -56,4 +56,7 @@
     <color name="color_blue_default">#18E4F6</color>
     <color name="color_dark_blue_default">#5589E4</color>
     <color name="color_ldark_blue_default">#77A9FB</color>
+    <color name="color_Text989898">#989898</color>
+    <color name="color_bg1B1D28">#1B1D28</color>
+    <color name="color_bg14151E">#14151E</color>
 </resources>

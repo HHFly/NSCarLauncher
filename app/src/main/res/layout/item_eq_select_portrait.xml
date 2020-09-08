@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="176px"
+    android:layout_height="88px"
+    android:layout_margin="5px">
+    <TextView
+        android:id="@+id/tv_set_eq"
+        android:layout_width="176px"
+        android:layout_height="88px"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:singleLine="true"
+        android:background="@drawable/select_bt_eq_bg"
+        android:textSize="36px"
+        android:textColor="@drawable/select_text_color"/>
+</RelativeLayout>

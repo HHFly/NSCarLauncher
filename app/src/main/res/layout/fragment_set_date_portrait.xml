@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg14151E">
+    <RelativeLayout
+        android:id="@+id/bt_back"
+        android:layout_width="wrap_content"
+        android:layout_height="50px"
+        android:layout_marginLeft="40px"
+        android:layout_marginTop="77px">
+        <ImageView
+            android:layout_width="20px"
+            android:layout_height="36px"
+            android:background="@mipmap/bt_back"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25px"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color_Text_default"
+            android:textSize="36px"
+            android:text="@string/设置"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80px"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/color_Text_default"
+        android:textSize="36px"
+        android:text="@string/日期和时间"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="63px"
+        android:layout_marginRight="63px"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/auto_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="78px"
+            android:layout_marginTop="160px">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@drawable/select_datatext_color"
+                    android:textSize="30px"
+                    android:text="@string/自动更新"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@drawable/select_datatext_color"
+                    android:textSize="18px"
+                    android:text="@string/使用网络更新"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/is_auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/mySwitch"
+                android:clickable="false"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+        
+        <ImageView
+            android:layout_width="640px"
+            android:layout_height="2px"
+            android:background="@mipmap/under_line" />
+
+        <RelativeLayout
+            android:id="@+id/data_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="78px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@drawable/select_datatext_color"
+                android:textSize="30px"
+                android:text="@string/设置日期"/>
+
+            <TextView
+                android:id="@+id/text_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@drawable/select_datatext_color"
+                android:textSize="30px"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="640px"
+            android:layout_height="2px"
+            android:background="@mipmap/under_line" />
+
+        <RelativeLayout
+            android:id="@+id/time_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="78px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@drawable/select_datatext_color"
+                android:textSize="30px"
+                android:text="@string/设置时间"/>
+
+            <TextView
+                android:id="@+id/text_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@drawable/select_datatext_color"
+                android:textSize="30px"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="640px"
+            android:layout_height="2px"
+            android:background="@mipmap/under_line" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="78px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/color_Text_default"
+                android:textSize="30px"
+                android:text="@string/选择时区"/>
+
+            <TextView
+                android:id="@+id/text_time_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/color_Text_default"
+                android:textSize="30px"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="640px"
+            android:layout_height="2px"
+            android:background="@mipmap/under_line" />
+
+        <RelativeLayout
+            android:id="@+id/set24_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="78px">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/使用24小时制"
+                    android:textColor="@color/color_Text_default"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_Text_default"
+                    android:textSize="18px" />
+            </LinearLayout>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/cb_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/mySwitch"
+                android:clickable="false"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>
