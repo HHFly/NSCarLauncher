@@ -1,11 +1,12 @@
 package com.kandi.dell.nscarlauncher.ui_portrait.setting.fragment;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.internal.widget.LinearLayoutManager;
-import com.android.internal.widget.RecyclerView;
+
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.home.HomePagerActivity;

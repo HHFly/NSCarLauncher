@@ -325,7 +325,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
                     if(currentWifiInfo!=null&&currentWifiInfo.getSSID().length()>2) {
                         setTvText(R.id.wifi_current_name, currentWifiInfo.getSSID().substring(1, currentWifiInfo.getSSID().length() - 1));
 
-                        homePagerActivity.setWifiLevel();
+//                        homePagerActivity.setWifiLevel();
                        setViewVisibility(R.id.ll_wifi_current,true);
                     }
                     break;
@@ -334,7 +334,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
 //                    wifi_current_name.setText("");
 //                    wifi_current_state.setVisibility(View.INVISIBLE);
 //                    wifi_current_info.setVisibility(View.INVISIBLE);
-                    homePagerActivity.setWifiLevel();
+//                    homePagerActivity.setWifiLevel();
 
                     break;
 

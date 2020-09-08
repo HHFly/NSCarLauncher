@@ -4,8 +4,7 @@ import android.os.SystemProperties;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.android.internal.widget.LinearLayoutManager;
-import com.android.internal.widget.RecyclerView;
+
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.home.HomePagerActivity;

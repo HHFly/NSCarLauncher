@@ -327,7 +327,24 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         }
         return (T) child;
     }
-
+    /**
+     * 获取TextView
+     *
+     * @param id
+     * @param <T>
+     * @return
+     */
+    public TextView getTextView(@IdRes int id) {
+        if (mViews == null) {
+            mViews = new SparseArray<>();
+        }
+        View child = mViews.get(id);
+        if (child == null) {
+            child = findViewById(id);
+            mViews.put(id, child);
+        }
+        return (TextView) child;
+    }
     /**
      * 设置监听
      *
