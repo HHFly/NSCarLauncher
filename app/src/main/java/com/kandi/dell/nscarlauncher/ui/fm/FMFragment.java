@@ -303,7 +303,7 @@ public void openFm(){
                 new Thread() {
                     public void run() {
                         try {
-                            System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio(1));
+                            System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
                             homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
 //
 //                        System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 开机初始化为频道93.0
@@ -323,7 +323,7 @@ public void openFm(){
             new Thread() {
                 public void run() {
                     try {
-                        System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio(1));
+                        System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                         homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.FM));
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -407,7 +407,7 @@ public void  changeChannel(float value){
                         public void run() {
                             try {
 
-                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio(1));
+                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                                 homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.FM));
                                 isPlay=false;
                             } catch (Exception e) {
@@ -420,7 +420,7 @@ public void  changeChannel(float value){
                     new Thread() {
                         public void run() {
                             try {
-                                System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio(1));
+                                System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
 //                                Log.d("Fm","Channel open  "+String.valueOf(channel));
                                 System.out.println("radio.SetRadioFreq():" + channel + "----" + App.get().getRadio().SetRadioFreq(channel)); // 开机初始化为频道93.0
 //                                Log.d("Fm","Channel  set "+String.valueOf(channel));
@@ -436,7 +436,7 @@ public void  changeChannel(float value){
                     new Thread() {
                         public void run() {
                             try {
-                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio(1));
+                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                                 homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.FM));
                                 isPlay=false;
                             } catch (Exception e) {
@@ -449,7 +449,7 @@ public void  changeChannel(float value){
                     new Thread() {
                         public void run() {
                             try {
-                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio(1));
+                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                                 homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.FM));
                                 isPlay=false;
                             } catch (Exception e) {

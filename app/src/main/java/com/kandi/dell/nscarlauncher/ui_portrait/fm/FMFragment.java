@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class FMFragment extends BaseFragment {
     private FmRulerView mRule;
     private FMAdapter mAdapter ;
-    public ArrayList<Float> fm_list = new ArrayList<>();
+
     private  ArrayList<Float> mData =new ArrayList<>();
     public boolean isPlay,isSearch;
     public float channel = 93.0f;// 默认初始的波段
@@ -114,7 +114,7 @@ public class FMFragment extends BaseFragment {
         /*初始化数据*/
         initFMList();
         /*初始化recleview*/
-        initRvAdapter(fm_list);
+        initRvAdapter(mData);
         /*初始化channel*/
         channel= SPUtil.getInstance(getContext(),FMCHANNEL).getFloat(FMCHANNEL,93.0f);
     }
@@ -125,8 +125,16 @@ public class FMFragment extends BaseFragment {
             String[] arr = list.split(",");
 
             for(int i =0;i<arr.length;i++){
-                fm_list.add(NumParseUtils.parseFloat(arr[i]));
+                mData.add(NumParseUtils.parseFloat(arr[i]));
             }
+        }else {
+            mData.add(87.5f);
+            mData.add(91.8f);
+            mData.add(93.0f);
+            mData.add(105.5f);
+            mData.add(106.8f);
+            mData.add(107.0f);
+
         }
     }
     @Override
@@ -360,7 +368,8 @@ public class FMFragment extends BaseFragment {
             new Thread() {
                 public void run() {
                     try {
-                        System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio(1));
+                        System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
+                        App.get().getCurActivity().myHandler.sendEmptyMessage(HandleKey.FMOPEN);
 //                        homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
 //
 //                        System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 开机初始化为频道93.0
@@ -380,8 +389,8 @@ public class FMFragment extends BaseFragment {
             new Thread() {
                 public void run() {
                     try {
-                        System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio(1));
-
+                        System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
+                        App.get().getCurActivity().myHandler.sendEmptyMessage(HandleKey.FMCOLSE);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -402,7 +411,7 @@ public class FMFragment extends BaseFragment {
                         public void run() {
                             try {
 
-                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio(1));
+                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                                 App.get().getCurActivity().myHandler.sendEmptyMessage(HandleKey.FMCOLSE);
                                 isPlay=false;
                             } catch (Exception e) {
@@ -415,7 +424,7 @@ public class FMFragment extends BaseFragment {
                     new Thread() {
                         public void run() {
                             try {
-                                System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio(1));
+                                System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
 //                                Log.d("Fm","Channel open  "+String.valueOf(channel));
                                 System.out.println("radio.SetRadioFreq():" + channel + "----" + App.get().getRadio().SetRadioFreq(channel)); // 开机初始化为频道93.0
 //                                Log.d("Fm","Channel  set "+String.valueOf(channel));
@@ -431,7 +440,7 @@ public class FMFragment extends BaseFragment {
                     new Thread() {
                         public void run() {
                             try {
-                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio(1));
+                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                                 App.get().getCurActivity().myHandler.sendEmptyMessage(HandleKey.FMCOLSE);
                                 isPlay=false;
                             } catch (Exception e) {
@@ -444,7 +453,7 @@ public class FMFragment extends BaseFragment {
                     new Thread() {
                         public void run() {
                             try {
-                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio(1));
+                                System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                                 App.get().getCurActivity().myHandler.sendEmptyMessage(HandleKey.FMCOLSE);
                                 isPlay=false;
                             } catch (Exception e) {

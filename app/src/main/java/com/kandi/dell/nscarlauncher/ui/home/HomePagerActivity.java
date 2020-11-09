@@ -556,7 +556,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     @Override
     protected void onDestroy() {
 
-        App.get().unregistMyReceiver();
+//        App.get().unregistMyReceiver();
         App.get().PauseService();
 
         try {

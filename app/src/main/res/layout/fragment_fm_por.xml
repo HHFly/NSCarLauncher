@@ -54,6 +54,7 @@
 
             />
     </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/rl_ct"
         android:layout_width="660px"
@@ -66,9 +67,8 @@
         <com.kandi.dell.nscarlauncher.ui_portrait.fm.FmRulerView
             android:id="@+id/rule"
             android:layout_width="match_parent"
-            android:layout_height="120px"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="435px"
             app:currentValue="930"
             app:maxValue="1080"
             app:minValue="875"

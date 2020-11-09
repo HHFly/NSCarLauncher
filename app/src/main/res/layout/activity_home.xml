@@ -22,7 +22,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_time"
         android:layout_marginLeft="40px"
         android:layout_marginTop="47px"
-        android:text="2018/10/14 星期二"
+        android:text="2018/10/14   星期二"
         />
     <TextView
         android:id="@+id/tv_1"

@@ -27,7 +27,7 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
 
-    <com.kandi.dell.nscarlauncher.ui_portrait.video.VideoPlayerStandard
+    <com.kandi.dell.nscarlauncher.ui_portrait.video.VideoPlayStandard
         android:id="@+id/videoplayer"
         android:layout_width="688px"
         android:layout_height="456px"

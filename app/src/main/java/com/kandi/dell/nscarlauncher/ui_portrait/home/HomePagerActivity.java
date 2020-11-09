@@ -371,6 +371,9 @@ public class HomePagerActivity extends BaseActivity {
     public void jumpFragment(@FragmentType int type ){
         if(IsHomeUtils.isForeground(this,"HomePagerActivity"))
             switch (type) {
+                case  FragmentType.FM:
+                    switchFragment(getFmFragment());
+                    break;
                 case FragmentType.MUSIC:
                     switchFragment(getMusicFragment());
                     break;

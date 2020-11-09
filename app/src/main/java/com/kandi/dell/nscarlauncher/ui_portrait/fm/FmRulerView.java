@@ -263,7 +263,7 @@ public class FmRulerView extends View {
 
         //画标尺的指示器线
         setIndicatorLinePaint();
-//        canvas.drawLine(mMeasuredWidth / 2, mTop, mMeasuredWidth / 2, mTop + mIndicatorLong, mPaint);
+        canvas.drawLine(mMeasuredWidth / 2, mTop, mMeasuredWidth / 2, mTop + mIndicatorLong, mPaint);
 
         //画标尺的背景边框
 //        setRulerStrokePaint();
@@ -476,7 +476,7 @@ public class FmRulerView extends View {
     }
 
     private void setIndicatorLinePaint() {
-        mPaint.setColor(Color.parseColor("#FF0000"));
+        mPaint.setColor(Color.RED);
         mPaint.setStrokeWidth(3);
     }
 

@@ -223,19 +223,19 @@ public class PPhoneFragment extends BaseFragment implements MvpMainView{
                         setViewVisibility(R.id.ll_calling_key,false);
                         setViewVisibility(R.id.ll_calling_controll,false);
                         //更新通话记录
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    Thread.sleep(800);
-                                    App.get().getBtservice().btCallLogstartUpdate(1);
-                                } catch (RemoteException e) {
-                                    e.printStackTrace();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }).start();
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                try {
+//                                    Thread.sleep(800);
+//                                    App.get().getBtservice().btCallLogstartUpdate(1);
+//                                } catch (RemoteException e) {
+//                                    e.printStackTrace();
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        }).start();
 
                         flag_phone=false;
 

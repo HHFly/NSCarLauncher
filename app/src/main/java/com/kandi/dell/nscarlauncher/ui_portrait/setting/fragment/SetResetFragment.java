@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.kandi.dell.nscarlauncher.R;
+import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.FragmentUtils;
 import com.kandi.dell.nscarlauncher.ui_portrait.home.HomePagerActivity;
@@ -13,11 +14,9 @@ public class SetResetFragment extends BaseFragment {
     private BaseFragment mCurFragment;//当前页
     private RelativeLayout fragmentShow;
     SetUserResetFragment setUserResetFragment;
-    private HomePagerActivity homePagerActivity;
 
-    public void setHomePagerActivity(HomePagerActivity homePagerActivity) {
-        this.homePagerActivity = homePagerActivity;
-    }
+
+
     @Override
     public int getContentResId() {
         return R.layout.fragment_set_reset_portrait;
@@ -58,7 +57,7 @@ public class SetResetFragment extends BaseFragment {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_return:
-                homePagerActivity.getSetFragment().getUpgradeFragment().hideFragment();
+                App.get().getCurActivity().getSetFragment().getUpgradeFragment().hideFragment();
                 break;
             case R.id.bt_resetcar:
                 switchFragment(setUserResetFragment);
@@ -69,7 +68,6 @@ public class SetResetFragment extends BaseFragment {
     public SetUserResetFragment getSetUserResetFragment() {
         if(setUserResetFragment == null){
             setUserResetFragment = new SetUserResetFragment();
-            setUserResetFragment.setHomePagerActivity(homePagerActivity);
         }
         return setUserResetFragment;
     }

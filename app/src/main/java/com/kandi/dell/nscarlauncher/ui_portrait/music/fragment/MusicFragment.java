@@ -97,6 +97,7 @@ public class MusicFragment extends BaseFragment {
         music_total_time=getView(R.id.music_total_time);
         tv_music_songname=getView(R.id.tv_mu_songname);
         tv_music_singer =getView(R.id.tv_mu_singer);
+        bt_music_model=getView(R.id.iv_music_mode);
     }
 
     @Override
@@ -130,6 +131,9 @@ public class MusicFragment extends BaseFragment {
                 getDialogLrc().show();
                 break;
             case R.id.music_fav:
+                if (App.get().getCurActivity().getDialogLocalMusicD().Playnow==null){
+               return;
+               }
                 App.get().getCurActivity().getDialogLocalMusicD().Playnow.changeFav();
                 setViewSelected(R.id.music_fav,App.get().getCurActivity().getDialogLocalMusicD().Playnow.isFav());
                 break;

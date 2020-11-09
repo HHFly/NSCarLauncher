@@ -75,6 +75,7 @@ public class DialogLrc {
     }
 
     private void initLrc(){
+        if(App.get().getCurActivity().getDialogLocalMusicD().Playnow==null)return;
         songname.setText(App.get().getCurActivity().getDialogLocalMusicD().Playnow.displayName);
         singer.setText(App.get().getCurActivity().getDialogLocalMusicD().Playnow.artist);
         boolean isLrcExists =fileIsExists(App.get().getCurActivity().getDialogLocalMusicD().Playnow.getLrcStr());

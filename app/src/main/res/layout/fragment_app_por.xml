@@ -31,6 +31,8 @@
         android:scrollbars="none"
         android:overScrollMode="never"
         android:layout_marginTop="150px"
+        android:paddingLeft="40px"
+        android:paddingRight="40px"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"

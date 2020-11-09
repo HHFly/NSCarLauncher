@@ -97,7 +97,6 @@ public class UpgradeFragment extends BaseFragment {
     public SetResetFragment getSetResetFragment() {
         if(setResetFragment == null){
             setResetFragment = new SetResetFragment();
-            setResetFragment.setHomePagerActivity(homePagerActivity);
         }
         return setResetFragment;
     }

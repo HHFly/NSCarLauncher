@@ -12,7 +12,7 @@
             android:layout_width="50px"
             android:layout_height="32px"
 
-            android:src="@mipmap/ic_bottom_home"/>
+            android:src="@drawable/select_home"/>
 
         <TextView
             android:id="@+id/tv_home"
@@ -39,7 +39,7 @@
             android:id="@+id/iv_power"
             android:layout_width="40px"
             android:layout_height="31px"
-            android:src="@mipmap/ic_bottom_back"
+            android:src="@drawable/select_back"
             />
         <TextView
             android:id="@+id/tv_back"

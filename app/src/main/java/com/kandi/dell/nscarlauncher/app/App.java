@@ -56,7 +56,7 @@ public class App extends MultiDexApplication {
     AudioManager audioManager;
     private IKdBtService btservice ;
     private HomePagerActivity mCurActivity;
-    private BlueMusicBroadcoast bluetoothReceiver; //蓝牙广播接受
+
     private Equalizer mEqualizer;
 
     public  IFmService getRadio() {
@@ -119,7 +119,7 @@ public class App extends MultiDexApplication {
 
         s_app = this;
         //初始化服务
-        SystemProperties.set("sys.nushine.k28_application", BuildConfig.VERSION_NAME);
+//        SystemProperties.set("sys.nushine.k28_application", BuildConfig.VERSION_NAME);
 
         DrawUtils.init(this);
         ToastUtils.init(this);
@@ -137,7 +137,6 @@ public class App extends MultiDexApplication {
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         initFm();
         btService();
-        registMyReceiver();
     }
     public void reSetMusic(){
         mediaPlayer.release();
@@ -188,62 +187,14 @@ public class App extends MultiDexApplication {
 
         // radio初始化
         radio = IFmService.Stub.asInterface(ServiceManager.getService("fm"));
-
-            audioservice.setBassLevel(120);
-            audioservice.setSurroundWidth(7);
-        } catch (RemoteException e) {
+//
+//            audioservice.setBassLevel(120);
+//            audioservice.setSurroundWidth(7);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
-    /*反注册接收器*/
-    public void  unregistMyReceiver(){
-        try {
-            if (bluetoothReceiver!=null) {
-                this.unregisterReceiver(bluetoothReceiver);
-            }
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*注册接收器*/
-    private void registMyReceiver() {
-        bluetoothReceiver = new BlueMusicBroadcoast();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.kangdi.BroadCast.RequestPinCode");
-        intentFilter.addAction("com.kangdi.BroadCast.PinCode");
-        intentFilter.addAction(ACTION_RINGCALL);
-        intentFilter.addAction(ACTION_CALLSTART);
-        intentFilter.addAction(ACTION_CALLEND);
-        intentFilter.addAction(ACTION_CALLOUT);
-        intentFilter.addAction("com.kangdi.BroadCast.HandsFreeConnect");
-        intentFilter.addAction("com.kangdi.BroadCast.HandsFreeDisconnect");
-        intentFilter.addAction("com.kangdi.BroadCast.AudioConnect");
-        intentFilter.addAction("com.kangdi.BroadCast.AudioDisconnect");
-        intentFilter.addAction("com.kangdi.BroadCast.PbapConnect");
-        intentFilter.addAction("com.kangdi.BroadCast.PbapGetCompleted");
-        intentFilter.addAction("com.kangdi.BroadCast.SimCallStart");
-        intentFilter.addAction("com.kangdi.BroadCast.MusicInfoChanged");
-        intentFilter.addAction("android.intent.action.NEW_OUTGOING_CALL");
-        intentFilter.addAction("android.intent.action.PHONE_STATE");
-        intentFilter.addAction("com.kangdi.BroadCast.TrackProgress");
-        intentFilter.addAction("com.kangdi.BroadCast.CallActive");
-        intentFilter.addAction("com.kangdi.BroadCast.BtStreamSusppend");
-        intentFilter.addAction("com.kangdi.BroadCast.MusicCurrentPosition");
-        intentFilter.addAction("com.kangdi.BroadCast.open4GAduioPath");
-        intentFilter.addAction("com.kangdi.BroadCast.AcMediaStatusChanged");
-        intentFilter.addAction("com.kangdi.BroadCast.PhoneState");
-        intentFilter.addAction("com.kangdi.BroadCast.BtStreamStart");
-//        三方通话
-        intentFilter.addAction("com.kangdi.BroadCast.tripartite.hangon");
-        intentFilter.addAction("com.kangdi.BroadCast.tripartite.talking");
-        intentFilter.addAction("com.kangdi.BroadCast.tripartite.hangup");
-        intentFilter.addAction("com.kangdi.BroadCast.tripartite.comming");
-        intentFilter.addAction("com.kangdi.BroadCast.PbapGetCallHistoryCompleted");
-        registerReceiver(bluetoothReceiver, intentFilter);
-    }
 
 
 
@@ -276,7 +227,7 @@ public class App extends MultiDexApplication {
     public void PauseService(){
         try {
 
-            radio.CloseLocalRadio(1);
+            radio.CloseLocalRadio();
             btservice.btAvrPause();
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
             homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(1);
@@ -292,7 +243,7 @@ public class App extends MultiDexApplication {
     }
     public void PauseServiceFMMUSic(){
         try {
-            radio.CloseLocalRadio(1);
+            radio.CloseLocalRadio();
             broadcastMusicInfo(getApplicationContext(), PAUSE_MSG);
             homePagerActivity.getHomePagerTwoFragment().myHandler.sendEmptyMessage(1);
             homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
@@ -304,7 +255,7 @@ public class App extends MultiDexApplication {
     }
     public void PauseServiceFMBTMUSic(){
         try {
-            radio.CloseLocalRadio(1);
+            radio.CloseLocalRadio();
             btservice.btAvrPause();
             homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.FM);
             homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
