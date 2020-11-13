@@ -29,8 +29,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="127px"
-        android:layout_marginBottom="112px">
+        android:layout_marginTop="127px">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -50,7 +49,7 @@
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/color_Text_default"
                     android:textSize="60px"
-                    android:text="18℃"/>
+                    android:text="0℃"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -67,41 +66,81 @@
                 android:layout_height="wrap_content">
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="212px"
-                    android:layout_marginTop="358px">
+                    android:layout_height="268px"
+                    android:layout_marginLeft="86px"
+                    android:layout_marginTop="48px">
                     <ImageView
-                        android:layout_width="21px"
-                        android:layout_height="30px"
-                        android:background="@mipmap/air_temp_icon"/>
+                        android:id="@+id/set_btn_temp_plus"
+                        android:layout_width="51px"
+                        android:layout_height="51px"
+                        android:layout_marginTop="35px"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/select_btn_plus"/>
                     <TextView
                         android:id="@+id/set_temp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="33px"
-                        android:textColor="@color/color_Text_default"
-                        android:textSize="24px"
-                        android:text="温度23°"/>
+                        android:layout_marginTop="127px"
+                        android:layout_marginLeft="10px"
+                        android:textColor="@color/color_ldark_blue_default"
+                        android:textSize="42px"
+                        android:text="18"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/set_temp"
+                        android:layout_alignTop="@+id/set_temp"
+                        android:textColor="@color/color_ldark_blue_default"
+                        android:textSize="42px"
+                        android:text="@string/摄氏度"/>
+                    <ImageView
+                        android:id="@+id/set_btn_temp_min"
+                        android:layout_width="51px"
+                        android:layout_height="51px"
+                        android:layout_marginBottom="10px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/select_btn_min"/>
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="412px"
-                    android:layout_marginTop="358px">
+                    android:layout_height="268px"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="95px"
+                    android:layout_marginTop="48px">
 
                     <ImageView
+                        android:id="@+id/set_btn_speed_plus"
+                        android:layout_width="51px"
+                        android:layout_height="51px"
+                        android:layout_marginTop="35px"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/select_btn_plus"/>
+                    <ImageView
+                        android:id="@+id/icon_speed"
                         android:layout_width="30px"
                         android:layout_height="30px"
+                        android:layout_marginTop="140px"
                         android:background="@mipmap/air_btn_air_fan_big" />
                     <TextView
                         android:id="@+id/set_speed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="42px"
-                        android:textColor="@color/color_Text_default"
-                        android:textSize="24px"
-                        android:text="风速4档"/>
+                        android:layout_toRightOf="@+id/icon_speed"
+                        android:layout_marginTop="127px"
+                        android:layout_marginLeft="5px"
+                        android:textColor="@color/color_ldark_blue_default"
+                        android:textSize="42px"
+                        android:text="8"/>
+                    <ImageView
+                        android:id="@+id/set_btn_speed_min"
+                        android:layout_width="51px"
+                        android:layout_height="51px"
+                        android:layout_marginBottom="10px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/select_btn_min"/>
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -111,7 +150,7 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="307px"
-            android:layout_alignParentBottom="true"
+            android:layout_marginTop="470px"
             android:layout_centerHorizontal="true">
 
             <TableRow
@@ -407,6 +446,34 @@
 
             </TableRow>
         </TableLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="#8F000000"
+        android:clickable="true" >
+
+        <ProgressBar
+            android:id="@+id/pbar"
+            style="@style/custProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/设备加载中"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 

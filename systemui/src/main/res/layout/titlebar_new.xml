@@ -1,81 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/center"
-    android:layout_width="match_parent" android:layout_height="112px" android:background="@mipmap/ic_bottom_bg">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
-        <ImageView
-            android:id="@+id/center_img"
-            android:layout_width="50px"
-            android:layout_height="32px"
-
-            android:src="@drawable/select_home"/>
-
-        <TextView
-            android:id="@+id/tv_home"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/center"
+        android:layout_width="match_parent" android:layout_height="112px" android:background="@mipmap/ic_bottom_bg">
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18px"
-            android:textColor="#EEEEEE"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15px"
-            android:includeFontPadding="false"
-            android:text="@string/首页"/>
-    </LinearLayout>
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/center_img"
+                android:layout_width="50px"
+                android:layout_height="32px"
 
-    <LinearLayout
+                android:src="@drawable/select_home"/>
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="198px"
-        android:layout_alignParentLeft="true"
-        android:orientation="vertical">
-        <ImageView
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/iv_power"
-            android:layout_width="40px"
-            android:layout_height="31px"
-            android:src="@drawable/select_back"
-            />
-        <TextView
-            android:id="@+id/tv_back"
+            <TextView
+                android:id="@+id/tv_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18px"
+                android:textColor="#EEEEEE"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15px"
+                android:includeFontPadding="false"
+                android:text="@string/首页"/>
+        </LinearLayout>
+
+        <LinearLayout
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18px"
-            android:textColor="#EEEEEE"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16px"
-            android:includeFontPadding="false"
-            android:text="@string/返回"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/ll_volume"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="199px">
-        <ImageView
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/title_iv_sound"
-            android:layout_width="40px"
-            android:layout_height="40px"
-            android:src="@drawable/select_sound"
-            />
-        <TextView
-            android:id="@+id/tv_t_volume"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="198px"
+            android:layout_alignParentLeft="true"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/iv_power"
+                android:layout_width="40px"
+                android:layout_height="31px"
+                android:src="@drawable/select_back"
+                />
+            <TextView
+                android:id="@+id/tv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18px"
+                android:textColor="#EEEEEE"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16px"
+                android:includeFontPadding="false"
+                android:text="@string/返回"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18px"
-            android:textColor="#EEEEEE"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8px"
-            android:includeFontPadding="false"
-            android:text="@string/音量"/>
-    </LinearLayout>
-</RelativeLayout>
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="199px">
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/title_iv_sound"
+                android:layout_width="40px"
+                android:layout_height="40px"
+                android:src="@drawable/select_sound"
+                />
+            <TextView
+                android:id="@+id/tv_t_volume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18px"
+                android:textColor="#EEEEEE"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8px"
+                android:includeFontPadding="false"
+                android:text="@string/音量"/>
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

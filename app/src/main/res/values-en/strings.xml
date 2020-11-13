@@ -31,6 +31,7 @@
     <string name="均衡器">Equalizer</string>
     <string name="车辆设置">Vehicle Setting</string>
     <string name="能量回收">Energy Recovery</string>
+    <string name="制动回收开关">Recovery</string>
     <string name="升级">Update</string>
     <string name="关于">About</string>
     <string name="帮助">Help</string>

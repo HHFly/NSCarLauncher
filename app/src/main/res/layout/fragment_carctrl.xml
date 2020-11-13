@@ -29,8 +29,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="127px"
-        android:layout_marginBottom="112px">
+        android:layout_marginTop="127px">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -154,7 +153,7 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="307px"
-            android:layout_alignParentBottom="true"
+            android:layout_marginTop="470px"
             android:layout_centerHorizontal="true">
 
             <TableRow
@@ -385,6 +384,34 @@
                 </RelativeLayout>
             </TableRow>
         </TableLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="#8F000000"
+        android:clickable="true" >
+
+        <ProgressBar
+            android:id="@+id/pbar"
+            style="@style/custProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/设备加载中"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 

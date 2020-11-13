@@ -9,6 +9,7 @@ import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.ui_portrait.setting.model.SetDate_WheelMain;
 import com.kandi.dell.nscarlauncher.ui_portrait.setting.widgets.SetDate_JudgeDate;
 import com.kandi.dell.nscarlauncher.ui_portrait.setting.widgets.SetDate_ScreenInfo;
+import com.kandi.dell.nscarlauncher.ui_portrait.setting.widgets.SetDate_SystemDateTime;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -46,7 +47,7 @@ public class DateTimeDialog extends Dialog {
                     dt=df.parse(wheelMain.getTime());
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(dt);
-//					SetDate_SystemDateTime.setTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE));
+					SetDate_SystemDateTime.setTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE));
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

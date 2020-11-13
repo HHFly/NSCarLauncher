@@ -277,15 +277,15 @@ public  void  musicNext(){
     }
     /*获取全局模块*/
     private void  getService(){
-        if(audioservice==null) {
-            audioservice = App.get().getAudioservice();
-        }
+//        if(audioservice==null) {
+//            audioservice = App.get().getAudioservice();
+//        }
         if(audioManager==null) {
             audioManager = App.get().getAudioManager();
         }
-        if(btservice==null) {
-            btservice = App.get().getBtservice();
-        }
+//        if(btservice==null) {
+//            btservice = App.get().getBtservice();
+//        }
     }
 
 
@@ -372,68 +372,68 @@ public  void  musicNext(){
     public    Handler myHandler = new Handler() {
 
         public void handleMessage(Message msg) {
-            try {
-                switch (msg.what) {
-                    case MUSIC_CHANGE:
-//                        getView(R.id.bt_gif).performClick();
-
-                        break;
-                    case MUSIC_BLUETOOTH_CLOSE:
-
-                        if(App.get().getBtservice()!=null) {
-                            App.get().getBtservice().btAvrPause();
-                        }
-                        if(iv_bt_stop!=null) {
-                            iv_bt_stop.setVisibility(View.VISIBLE);
-                            Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
-                        }
-                        isPlay=false;
-                        homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.BTMUSICCOLSE));
-                        break;
-
-                    case MUSIC_BLUETOOTH_OPEN:
-
-                        if(App.get().getBtservice()!=null&& isPlay==false){
-                        App.get().getBtservice().btAvrPlay();
-                        }
-                        if(iv_bt_stop!=null) {
-                            iv_bt_stop.setVisibility(View.GONE);
-                            Glide.with(context).load(gifPath).into(mGifImageView);
-                        }
-                        isPlay=true;
-                        if(homePagerActivity.getHomePagerTwoFragment().music_name!=null) {
-                            homePagerActivity.getHomePagerTwoFragment().music_name.setText(App.get().getString(R.string.本地音乐));
-                        }
-                        homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.BTMUSICOPEN));
-                        break;
-                    case MUSCI_BACK:
-                        App.get().getBtservice().btAvrLast();
-                        break;
-                    case MUSIC_NEXT:
-                        App.get().getBtservice().btAvrNext();
-                        break;
-                    case 11:
-
-
-                     musicPlay();
-                        break;
-                    case  12:
-
-
-                     musicPause();
-                        break;
-                    case MUSIC_SONGNAME:
-                       Bundle bundle =msg.getData();
-                       String songname=bundle.getString("songname");
-                       String singer =bundle.getString("singer");
-                        setMusicInfo(songname,singer);
-                        break;
-                    default:
-                        break;
-                }
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                switch (msg.what) {
+//                    case MUSIC_CHANGE:
+////                        getView(R.id.bt_gif).performClick();
+//
+//                        break;
+//                    case MUSIC_BLUETOOTH_CLOSE:
+//
+////                        if(App.get().getBtservice()!=null) {
+////                            App.get().getBtservice().btAvrPause();
+////                        }
+//                        if(iv_bt_stop!=null) {
+//                            iv_bt_stop.setVisibility(View.VISIBLE);
+//                            Glide.with(context).load(R.mipmap.ic_bt_music_stop).into(mGifImageView);
+//                        }
+//                        isPlay=false;
+//                        homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.BTMUSICCOLSE));
+//                        break;
+//
+//                    case MUSIC_BLUETOOTH_OPEN:
+//
+////                        if(App.get().getBtservice()!=null&& isPlay==false){
+////                        App.get().getBtservice().btAvrPlay();
+////                        }
+//                        if(iv_bt_stop!=null) {
+//                            iv_bt_stop.setVisibility(View.GONE);
+//                            Glide.with(context).load(gifPath).into(mGifImageView);
+//                        }
+//                        isPlay=true;
+//                        if(homePagerActivity.getHomePagerTwoFragment().music_name!=null) {
+//                            homePagerActivity.getHomePagerTwoFragment().music_name.setText(App.get().getString(R.string.本地音乐));
+//                        }
+//                        homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.BTMUSICOPEN));
+//                        break;
+//                    case MUSCI_BACK:
+////                        App.get().getBtservice().btAvrLast();
+//                        break;
+//                    case MUSIC_NEXT:
+////                        App.get().getBtservice().btAvrNext();
+//                        break;
+//                    case 11:
+//
+//
+//                     musicPlay();
+//                        break;
+//                    case  12:
+//
+//
+//                     musicPause();
+//                        break;
+//                    case MUSIC_SONGNAME:
+//                       Bundle bundle =msg.getData();
+//                       String songname=bundle.getString("songname");
+//                       String singer =bundle.getString("singer");
+//                        setMusicInfo(songname,singer);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            } catch (RemoteException e) {
+//                e.printStackTrace();
+//            }
         }
 
         ;
@@ -449,51 +449,51 @@ public  void  musicNext(){
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                     Log.d("audioTest", "btmusic loss transient");
 
-                    try {
-                        App.get().getBtservice().btAvrPause();
-                        homePagerActivity.getHomePagerOneFragment().btPaly.setPlay(false);
-                        isPlay=false;
-                        stopGif();
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        App.get().getBtservice().btAvrPause();
+//                        homePagerActivity.getHomePagerOneFragment().btPaly.setPlay(false);
+//                        isPlay=false;
+//                        stopGif();
+//                    } catch (RemoteException e) {
+//                        e.printStackTrace();
+//                    }
                     break;
 
                 case  AudioManager.AUDIOFOCUS_GAIN:
                     Log.d("audioTest", "btmusic gain");
-                    try {
-//                        if (!audioservice.isDuringNavi()) {
-                        if(!isPlay) {
-                            Log.d("AUDIOFOCUS_GAIN", "run: " +String.valueOf(isPlay));
-                            App.get().getBtservice().btAvrPlay();
-                            homePagerActivity.getHomePagerOneFragment().btPaly.setPlay(true);
-                            isPlay=true;
-                            homePagerActivity.getHomePagerTwoFragment().music_name.setText(App.get().getString(R.string.本地音乐));
-                        }
+//                    try {
+////                        if (!audioservice.isDuringNavi()) {
+//                        if(!isPlay) {
+//                            Log.d("AUDIOFOCUS_GAIN", "run: " +String.valueOf(isPlay));
+////                            App.get().getBtservice().btAvrPlay();
+//                            homePagerActivity.getHomePagerOneFragment().btPaly.setPlay(true);
+//                            isPlay=true;
+//                            homePagerActivity.getHomePagerTwoFragment().music_name.setText(App.get().getString(R.string.本地音乐));
 //                        }
-                    }catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+////                        }
+//                    }catch (RemoteException e) {
+//                        e.printStackTrace();
+//                    }
                     break;
                 case  AudioManager.AUDIOFOCUS_LOSS:
-                    try {
-                        App.get().getBtservice().btAvrStop();
+//                    try {
+//                        App.get().getBtservice().btAvrStop();
                         homePagerActivity.getHomePagerOneFragment().btPaly.setPlay(false);
                         isPlay=false;
                         stopGif();
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+//                    } catch (RemoteException e) {
+//                        e.printStackTrace();
+//                    }
                     break;
                 case   AudioManager.AUDIOFOCUS_REQUEST_FAILED:
-                    try {
-                        App.get().getBtservice().btAvrStop();
+//                    try {
+//                        App.get().getBtservice().btAvrStop();
                         homePagerActivity.getHomePagerOneFragment().btPaly.setPlay(false);
                         isPlay=false;
                         stopGif();
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+//                    } catch (RemoteException e) {
+//                        e.printStackTrace();
+//                    }
                     break;
 
             }

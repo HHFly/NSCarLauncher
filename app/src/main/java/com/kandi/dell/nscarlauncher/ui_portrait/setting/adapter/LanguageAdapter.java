@@ -55,7 +55,7 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.LaView
         /*
         添加选中的打勾显示
          */
-        holder.language_checkbox.setOnClickListener(new View.OnClickListener() {
+        holder.language_item_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //将点击的位置传出去
@@ -90,10 +90,12 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.LaView
     public class LaViewHolder extends RecyclerView.ViewHolder {
         TextView language_name;
         ImageView language_checkbox;
+        RelativeLayout language_item_layout;
         public LaViewHolder(View itemView) {
             super(itemView);
             language_name = (TextView) itemView.findViewById(R.id.language_name);
             language_checkbox = (ImageView) itemView.findViewById(R.id.language_checkbox);
+            language_item_layout = (RelativeLayout) itemView.findViewById(R.id.language_item_layout);
         }
     }
 

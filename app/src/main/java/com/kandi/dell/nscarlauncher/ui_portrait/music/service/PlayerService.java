@@ -48,8 +48,8 @@ public class PlayerService extends Service {
 					try {
 						currentTime = mediaPlayer.getCurrentPosition(); // 获取当前音乐播放的位置
 						App.get().getCurActivity().getMusicFragment().setMusicProgress(currentTime);
-						if(App.get().getCurActivity().getMusicFragment().getDialogLrc().isLrc){
-							App.get().getCurActivity().getMusicFragment().getDialogLrc().refrshLrc(currentTime);
+						if(App.get().getCurActivity().getDialogLrc().isLrc){
+							App.get().getCurActivity().getDialogLrc().refrshLrc(currentTime);
 						}
 						SPUtil.getInstance(getApplicationContext()).putInt(MusicFragment.MUSICPROGRESS,currentTime);
 						handler.sendEmptyMessageDelayed(1, 1000);

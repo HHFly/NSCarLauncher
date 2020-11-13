@@ -18,6 +18,7 @@ import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.ui_portrait.setting.model.SetDate_WheelMain;
 import com.kandi.dell.nscarlauncher.ui_portrait.setting.widgets.SetDate_JudgeDate;
 import com.kandi.dell.nscarlauncher.ui_portrait.setting.widgets.SetDate_ScreenInfo;
+import com.kandi.dell.nscarlauncher.ui_portrait.setting.widgets.SetDate_SystemDateTime;
 
 /**
  * 设置界面日期设置弹出Dialog框
@@ -56,7 +57,7 @@ public class DateDialog extends Dialog{
 					dt=df.parse(wheelMain.getTime());
 					Calendar cal=Calendar.getInstance();  
 					cal.setTime(dt); 
-//					SetDate_SystemDateTime.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+					SetDate_SystemDateTime.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

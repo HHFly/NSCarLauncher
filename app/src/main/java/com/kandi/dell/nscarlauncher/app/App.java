@@ -17,6 +17,7 @@ import android.support.multidex.MultiDexApplication;
 import android.widget.FrameLayout;
 
 import com.kandi.dell.nscarlauncher.BuildConfig;
+import com.kandi.dell.nscarlauncher.candriver.DriverServiceManger;
 import com.kandi.dell.nscarlauncher.common.util.DrawUtils;
 import com.kandi.dell.nscarlauncher.common.util.FrescoUtils;
 import com.kandi.dell.nscarlauncher.common.util.JsonUtils;
@@ -131,9 +132,12 @@ public class App extends MultiDexApplication {
         /*初始化驱动模块*/
         initService();
 
+        /*初始化CAN服务*/
+        DriverServiceManger.getInstance().startService(this);;
+
     }
     private void initService(){
-       initMusic();
+        initMusic();
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         initFm();
         btService();
@@ -145,7 +149,7 @@ public class App extends MultiDexApplication {
         mEqualizer=null;
         initMusic();
     }
-/*音乐均衡器*/
+    /*音乐均衡器*/
     private void initMusic() {
         mediaPlayer= new MediaPlayer();
         mEqualizer = new Equalizer(0, App.get().getMediaPlayer().getAudioSessionId());
@@ -185,9 +189,9 @@ public class App extends MultiDexApplication {
     private void  initFm(){
         try {
 
-        // radio初始化
-        radio = IFmService.Stub.asInterface(ServiceManager.getService("fm"));
-//
+            // radio初始化
+            radio = IFmService.Stub.asInterface(ServiceManager.getService("fm"));
+
 //            audioservice.setBassLevel(120);
 //            audioservice.setSurroundWidth(7);
         } catch (Exception e) {

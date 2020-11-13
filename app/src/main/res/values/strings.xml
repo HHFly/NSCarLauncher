@@ -29,6 +29,7 @@
     <string name="均衡器">均衡器</string>
     <string name="车辆设置">车辆设置</string>
     <string name="能量回收">能量回收</string>
+    <string name="制动回收开关">制动回收开关</string>
     <string name="升级">升级</string>
     <string name="关于">关于</string>
     <string name="帮助">帮助</string>
@@ -264,10 +265,12 @@
     <string name="远光灯">远光灯</string>
     <string name="示宽灯">示宽灯</string>
     <string name="后雾灯">后雾灯</string>
+    <string name="设备加载中">设备加载中...</string>
 
     <!--空调控制-->
     <string name="室内温度">室内温度</string>
     <string name="OFF">OFF</string>
+    <string name="ON">ON</string>
     <string name="AC">A/C</string>
     <string name="PTC">PTC</string>
     <string name="内循环">内循环</string>
@@ -277,6 +280,7 @@
     <string name="吹面吹脚">吹面吹脚</string>
     <string name="吹脚除雾">吹脚除雾</string>
     <string name="除霜除雾">除霜除雾</string>
+    <string name="摄氏度">℃</string>
 
     <!--能量管理-->
     <string name="能量管理">能量管理</string>

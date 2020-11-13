@@ -85,6 +85,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public void Resume(){
 
     }
+
+    public void Pause(){
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

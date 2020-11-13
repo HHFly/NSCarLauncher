@@ -2,7 +2,7 @@ package com.kandi.systemui.driver;
 
 import android.os.RemoteException;
 
-import com.driverlayer.kdos_driverServer.IECarDriver;
+import com.driverlayer.os_driverServer.IECarDriver;
 
 public class TBoxInfoDriver {
 	

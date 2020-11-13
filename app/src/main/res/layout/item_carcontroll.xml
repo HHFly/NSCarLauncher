@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="202px"
     android:layout_height="302px"
-    android:background="@mipmap/item_bg">
+    android:background="@mipmap/ic_home_fm_bg">
     <RelativeLayout
         android:id="@+id/item_carcontroll"
         android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="14px"
+        android:layout_marginTop="12px"
         android:text="@string/整车控制"
         android:textSize="24px"
         android:textColor="#EEEEEE"
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="32px"
+        android:layout_marginTop="22px"
         >
         <ImageView
             android:id="@+id/iv_backbox"

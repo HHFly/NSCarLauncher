@@ -10,9 +10,8 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.driverlayer.kdos_driverServer.IECarDriver;
+import com.driverlayer.os_driverServer.IECarDriver;
 
 /**
  * @author ivan.lv
@@ -22,27 +21,11 @@ public class DriverServiceManger {
 
 	CarSettingDriver m_carSettingDriver = null;
 	AirConditionDriver m_airCondiDriver = null;
-	ConfigDriver1xCarCtrlSetup m_configDriver1xCarCtrlSetup = null;
-	ConfigDriver31MgnBattarySetup m_configDriver31MgnBattarySetup = null;
-	ConfigDriver32MgnChargerSetup m_configDriver32MgnChargerSetup = null;
-	ConfigDriver33MgnBcuSetup m_configDriver33MgnBcuSetup = null;
-	ConfigDriver34MgnMotorCtrlSetup m_configDriver34MgnMotorCtrlSetup = null;
-	ConfigDriver3xMgnMiscSetup m_configDriver3xMgnMiscSetup = null;
-	ConfigDriver38MgnUpgrade m_configDriver38MgnUpgrade = null;
-	EnergyInfoDriver m_energyInfoDriver = null;
 	EcocEnergyInfoDriver m_ecocEnergyInfoDriver = null;
 	TBoxInfoDriver m_tBoxInfoDriver =null;
 	void initDrivers(IECarDriver R_service) {
 		m_carSettingDriver = (R_service==null)?null:(new CarSettingDriver(R_service));
-		m_airCondiDriver = (R_service==null)?null:(new AirConditionDriver(R_service));;
-		m_configDriver1xCarCtrlSetup = (R_service==null)?null:(new ConfigDriver1xCarCtrlSetup(R_service));
-		m_configDriver31MgnBattarySetup = (R_service==null)?null:(new ConfigDriver31MgnBattarySetup(R_service));
-		m_configDriver32MgnChargerSetup = (R_service==null)?null:(new ConfigDriver32MgnChargerSetup(R_service));
-		m_configDriver33MgnBcuSetup = (R_service==null)?null:(new ConfigDriver33MgnBcuSetup(R_service));
-		m_configDriver34MgnMotorCtrlSetup = (R_service==null)?null:(new ConfigDriver34MgnMotorCtrlSetup(R_service));
-		m_configDriver3xMgnMiscSetup = (R_service==null)?null:(new ConfigDriver3xMgnMiscSetup(R_service));
-		m_configDriver38MgnUpgrade = (R_service==null)?null:(new ConfigDriver38MgnUpgrade(R_service));
-		m_energyInfoDriver = (R_service==null)?null:(new EnergyInfoDriver(R_service));
+		m_airCondiDriver = (R_service==null)?null:(new AirConditionDriver(R_service));
 		m_ecocEnergyInfoDriver = (R_service==null)?null:(new EcocEnergyInfoDriver(R_service));
 		m_tBoxInfoDriver =(R_service==null)?null:(new TBoxInfoDriver(R_service));
 	}
@@ -188,65 +171,7 @@ public class DriverServiceManger {
 	public AirConditionDriver getAirConditionDriver() {
 		return m_airCondiDriver;
 	}
-	
-	/**
-	 * 获取 设置->车辆设置 UI数据
-	 * @return
-	 */
-	public ConfigDriver1xCarCtrlSetup getConfigDriver1xCarCtrlSetup() {
-		return m_configDriver1xCarCtrlSetup;
-	}
-	/**
-	 * 获取 设置->管理设置->电池UI数据
-	 * @return
-	 */
-	public ConfigDriver31MgnBattarySetup getConfigDriver31MgnBattarySetup() {
-		return m_configDriver31MgnBattarySetup;
-	}
-	/**
-	 * 获取 设置->管理设置->充电机 UI数据
-	 * @return
-	 */
-	public ConfigDriver32MgnChargerSetup getConfigDriver32MgnChargerSetup() {
-		return m_configDriver32MgnChargerSetup;
-	}
-	/**
-	 * 获取 设置->管理设置->BCU UI数据
-	 * @return
-	 */
-	public ConfigDriver33MgnBcuSetup getConfigDriver33MgnBcuSetup() {
-		return m_configDriver33MgnBcuSetup;
-	}
-	/**
-	 * 获取 设置->管理设置->电机控制机 UI数据
-	 * @return
-	 */
-	public ConfigDriver34MgnMotorCtrlSetup getConfigDriver34MgnMotorCtrlSetup() {
-		return m_configDriver34MgnMotorCtrlSetup;
-	}
-	/**
-	 * 获取 设置->管理设置相关UI数据（包括登录密码、系统报警、系统故障）
-	 * @return
-	 */
-	public ConfigDriver3xMgnMiscSetup getConfigDriver3xMgnMiscSetup() {
-		return m_configDriver3xMgnMiscSetup;
-	}
-	/**
-	 * 获取 设置->管理设置->密码&升级 UI数据
-	 * @return
-	 */
-	public ConfigDriver38MgnUpgrade getConfigDriver38MgnUpgrade() {
-		return m_configDriver38MgnUpgrade;
-	}
-	
-	/**
-	 * 获取能量管理UI数据（包括主界面剩余里程、剩余电量）
-	 * @return
-	 */
-	public EnergyInfoDriver getEnergyInfoDriver() {
-		return m_energyInfoDriver;
-	}
-	
+
 	/**
 	 * 获取ECOC能量管理UI数据（包括主界面剩余里程、剩余电量）
 	 * @return
@@ -257,7 +182,7 @@ public class DriverServiceManger {
 
 	/**
 	 * 获取能量管理详情UI数据
-	 * @param nBattaryNum
+	 * @param
 	 * @return
 	 * 
 	 * deprecated, please use EnergyInfoDriver.getBattaryDetailInfo(int index) instead.

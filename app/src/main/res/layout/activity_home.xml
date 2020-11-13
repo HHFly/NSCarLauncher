@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
+    android:background="#080B0F"
     xmlns:app="http://schemas.android.com/apk/res-auto">
   <TextView
     android:id="@+id/tv_time"
@@ -14,16 +15,17 @@
     android:layout_marginTop="47px"
     android:text="14:20"
     />
-    <TextView
-        android:id="@+id/tv_date"
-        style="@style/BaseText.Tv"
-        android:textSize="24px"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_time"
-        android:layout_marginLeft="40px"
-        android:layout_marginTop="47px"
-        android:text="2018/10/14   星期二"
-        />
+
+  <TextView
+      android:id="@+id/tv_date"
+      style="@style/BaseText.Tv"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="40px"
+      android:layout_marginTop="119px"
+      android:text="2018/10/14   星期二"
+      android:textSize="24px"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/tv_1"
         style="@style/BaseText.Tv"
@@ -40,7 +42,8 @@
         android:textSize="72px"
         app:layout_constraintLeft_toLeftOf="@+id/tv_1"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_date"
-        android:text="80"
+        android:text="0"
+        android:textColor="#F03A53"
         />
     <TextView
         android:id="@+id/tv_remainkon_km"
@@ -81,8 +84,8 @@
       android:layout_marginTop="24px"
       />
   <include layout="@layout/item_carcontroll"
-      android:layout_width="204px"
-      android:layout_height="304px"
+      android:layout_width="202px"
+      android:layout_height="302px"
       app:layout_constraintLeft_toLeftOf="@id/item_music"
       app:layout_constraintRight_toRightOf="@+id/item_music"
       app:layout_constraintTop_toBottomOf="@id/item_music"

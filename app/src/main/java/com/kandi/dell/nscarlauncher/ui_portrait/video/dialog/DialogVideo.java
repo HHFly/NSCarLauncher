@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
@@ -62,9 +63,10 @@ public class DialogVideo implements Observer {
         dialog = new Dialog(context, R.style.nodarken_style);
         dialog.setCanceledOnTouchOutside(true);// 设置点击屏幕Dialog不消失
         window = dialog.getWindow();
-        window.setContentView(R.layout.dialog_music_list);
+        window.setContentView(R.layout.dialog_video_list);
+        window.setType(WindowManager.LayoutParams.TYPE_APPLICATION_PANEL);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         WindowManager.LayoutParams lp = window.getAttributes();
-
         window.setAttributes(lp);
         this.context = context;
         iv_music_close =window.findViewById(R.id.iv_music_close);

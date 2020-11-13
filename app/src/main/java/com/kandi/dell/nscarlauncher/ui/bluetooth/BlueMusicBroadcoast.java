@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Handler;
-import android.os.IKdBtService;
+//import android.os.IKdBtService;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -79,7 +79,7 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
     public final static String   ACTION_CALL_TRIPARTITE_TALKING = "com.kangdi.BroadCast.tripartite.talking"; //接听
     public final static String   ACTION_CALL_TRIPARTITE_HANGON = "com.kangdi.BroadCast.tripartite.hangon"; //保持
     public final static String   KEY_PHONENUM_TRIPARTITE = "com.kangdi.key.tripartite.phonenum";//电话
-    static IKdBtService btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
+//    static IKdBtService btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
 
     static AudioManager audioManager;
     private  String MusicStaus="0";
@@ -103,12 +103,12 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
         if (intent.getAction().equals(ACTION_PBAP_GET_COMPLETED)) {
             new Thread() {
                 public void run() {
-                    try {
-                        HomePagerActivity.homePagerActivity.getPhoneFragment().getPhoneBookStr(btservice.getContactsJsonString());
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        HomePagerActivity.homePagerActivity.getPhoneFragment().getPhoneBookStr(btservice.getContactsJsonString());
+//
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
                 }
 
                 ;
@@ -317,11 +317,11 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
             if(HomePagerActivity.homePagerActivity.getFmFragment().isPlay || homePagerActivity.getMusicFragment().flag_play || JCVideoPlayer.mCurrentState == 2){
 
                 homePagerActivity.getHomePagerOneFragment().music_name.setText(context.getString(R.string.蓝牙音乐));
-                try{
-                    btservice.btAvrPause();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+//                try{
+//                    btservice.btAvrPause();
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
                 return;
             }
             String music_info = intent.getStringExtra(KEY_MUSICINFO);
@@ -342,11 +342,11 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
 
             if(HomePagerActivity.homePagerActivity.getFmFragment().isPlay || homePagerActivity.getMusicFragment().flag_play || JCVideoPlayer.mCurrentState == 2){
 
-                try{
-                    btservice.btAvrPause();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+//                try{
+//                    btservice.btAvrPause();
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
                 return;
             }
 //            int  intent.getStringExtra(KEY_MEDIA_STATUS)
@@ -492,11 +492,11 @@ public class BlueMusicBroadcoast extends BroadcastReceiver {
                     HomePagerActivity.homePagerActivity.getPhoneFragment().phoneStart();
                     break;
                 case PIN_CODE:
-                    try {
-                        btservice.btPinCode(FlagProperty.BtCode);
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        btservice.btPinCode(FlagProperty.BtCode);
+//                    } catch (RemoteException e) {
+//                        e.printStackTrace();
+//                    }
                     break;
                 case PHONE_OUT:
                     HomePagerActivity.homePagerActivity.getPhoneFragment().phoneCall(FlagProperty.phone_number);

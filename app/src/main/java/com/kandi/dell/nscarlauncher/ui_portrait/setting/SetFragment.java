@@ -145,6 +145,9 @@ public class SetFragment extends BaseFragment {
         setVisibilityGone(R.id.rl_f_set,true);
     }
     public void hideFragment(){
+        if(mCurFragment != null){
+            mCurFragment.Pause();
+        }
         fragmentShow.setVisibility(View.GONE);
     }
 

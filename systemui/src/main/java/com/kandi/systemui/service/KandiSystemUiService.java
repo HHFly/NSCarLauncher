@@ -51,7 +51,7 @@ public class KandiSystemUiService extends Service {
     Window window;
     public ComingReceiver comingReceiver;
     WindowManager mWindowManager,wm;
-    LayoutParams wmParams; // WindowManager.LayoutParams
+    LayoutParams wmParams,wmParamsBottom; // WindowManager.LayoutParams
     FrameLayout mFloatLayout ,phoneFloatLayout,mBottomLayout;
     private ImageView status_bar_wifi_btn,status_bar_3g_level_btn,status_bar_bluetooth_image,status_bar_3g_type_btn,status_bar_battery_imageView,center_img,iv_power,title_iv_sound,iv_car_tbox;
     private  TextView tv_t_power,status_bar_time_textview,tv_hangup,tv_answser,tv_phone_number,tv_home,tv_t_volume;
@@ -147,18 +147,18 @@ public class KandiSystemUiService extends Service {
         Tel.listen(MyListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
     }
     private void createBottom(){
-        wmParams=  new LayoutParams();
-        wmParams.type = LayoutParams.TYPE_STATUS_BAR;
-        wmParams.format = PixelFormat.RGBA_8888;
-        wmParams.flags = LayoutParams.FLAG_NOT_FOCUSABLE;
-        wmParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
-        wmParams.x = 0;
-        wmParams.y = 0;
-        wmParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        wmParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        wmParamsBottom=  new LayoutParams();
+        wmParamsBottom.type = 2019;
+        wmParamsBottom.format = PixelFormat.RGBA_8888;
+        wmParamsBottom.flags = LayoutParams.FLAG_NOT_FOCUSABLE;
+        wmParamsBottom.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+        wmParamsBottom.x = 0;
+        wmParamsBottom.y = 0;
+        wmParamsBottom.width = WindowManager.LayoutParams.MATCH_PARENT;
+        wmParamsBottom.height = WindowManager.LayoutParams.WRAP_CONTENT;
         LayoutInflater inflater = LayoutInflater.from(this);
         mBottomLayout = (FrameLayout) inflater.inflate(R.layout.titlebar_new, null);
-        mWindowManager.addView(mBottomLayout, wmParams);
+        mWindowManager.addView(mBottomLayout, wmParamsBottom);
 
         //        中间栏
         center_img =(ImageView) mBottomLayout.findViewById(R.id.center_img);
@@ -229,6 +229,7 @@ public class KandiSystemUiService extends Service {
                 }.start();
             }
         });
+
         tv_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

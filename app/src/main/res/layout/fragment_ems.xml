@@ -29,8 +29,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="127px"
-        android:layout_marginBottom="112px">
+        android:layout_marginTop="127px">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -81,7 +80,7 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="307px"
-            android:layout_alignParentBottom="true"
+            android:layout_marginTop="470px"
             android:layout_centerHorizontal="true">
 
             <TableRow
@@ -100,17 +99,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30px"
                         android:layout_centerHorizontal="true"
+                        android:text="--"
                         android:textSize="36px"
                         android:textColor="@color/color_dark_blue_default"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="77px"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginTop="77px"
+                        android:text="@string/总电压"
                         android:textColor="@drawable/select_text_color"
-                        android:textSize="24px"
-                        android:text="@string/总电压"/>
+                        android:textSize="24px" />
                     
                 </RelativeLayout>
 
@@ -126,6 +126,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30px"
                         android:layout_centerHorizontal="true"
+                        android:text="--"
                         android:textSize="36px"
                         android:textColor="@color/color_dark_blue_default"/>
 
@@ -152,6 +153,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30px"
                         android:layout_centerHorizontal="true"
+                        android:text="--"
                         android:textSize="36px"
                         android:textColor="@color/color_dark_blue_default"/>
 
@@ -179,6 +181,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30px"
                         android:layout_centerHorizontal="true"
+                        android:text="--"
                         android:textSize="36px"
                         android:textColor="@color/color_dark_blue_default"/>
 
@@ -211,6 +214,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30px"
                         android:layout_centerHorizontal="true"
+                        android:text="--"
                         android:textSize="36px"
                         android:textColor="@color/color_dark_blue_default"/>
 
@@ -237,6 +241,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30px"
                         android:layout_centerHorizontal="true"
+                        android:text="--"
                         android:textSize="36px"
                         android:textColor="@color/color_dark_blue_default"/>
 
@@ -263,6 +268,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30px"
                         android:layout_centerHorizontal="true"
+                        android:text="--"
                         android:textSize="36px"
                         android:textColor="@color/color_dark_blue_default"/>
 
@@ -289,6 +295,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30px"
                         android:layout_centerHorizontal="true"
+                        android:text="--"
                         android:textSize="36px"
                         android:textColor="@color/color_dark_blue_default"/>
 

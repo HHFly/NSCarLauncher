@@ -28,13 +28,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class BlueToothSetFragment extends BaseFragment implements CompoundButton.OnCheckedChangeListener{
+public class BlueToothSetFragment extends BaseFragment{
     private HomePagerActivity homePagerActivity;
     private final int BLUETOOTH_INFO_NAME = 1;
     private final int BLUETOOTH_CHANGE_NAME = 2;
     private final int BLUETOOTH_CHANGE_PASSWORD = 3;
     private final int BLUETOOTH_ATTACHED = 4;
-    private SwitchCompat aSwitchCompat;
     File file = new File("/sdcard/kandi/bluetoothPassword.txt");
     String[] info = new String[1]; // 获取蓝牙名字传入参数
     String newName = "";
@@ -70,19 +69,17 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
     @Override
     public int getContentResId() {
 
-            return R.layout.activity_btset;
+            return R.layout.activity_btset_portrait;
     }
 
     @Override
     public void findView() {
         tv_set_bluetooth_name=getView(R.id.bt_name);
         tv_set_bluetooth_password=getView(R.id.bt_pin);
-        aSwitchCompat=getView(R.id.isopen);
     }
 
     @Override
     public void setListener() {
-        aSwitchCompat.setOnCheckedChangeListener(this);
         setClickListener(R.id.bt_back);
         setClickListener(R.id.ll_name);
         setClickListener(R.id.ll_pin);
@@ -224,23 +221,6 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
             }
         });
         dialogPass.show();
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()){
-            case R.id.isopen:
-                if(isChecked){
-                   setViewVisibility(R.id.ll_btshow,true);
-                }else {
-                    setViewVisibility(R.id.ll_btshow,false);
-                }
-                break;
-
-            default:
-                break;
-        }
-
     }
     public void BluetoothInit() {
         bluetoothPasswordInit();

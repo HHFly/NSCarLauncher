@@ -2,6 +2,8 @@ package com.kandi.dell.nscarlauncher.ui_portrait.setting.fragment;
 
 import android.content.ContentResolver;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.candriver.DriverServiceManger;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 import com.kandi.dell.nscarlauncher.ui_portrait.home.HomePagerActivity;
@@ -32,6 +35,10 @@ public class DateFragment extends BaseFragment {
     private TextView text_data,text_time;
     private DateTimeDialog timeDialog;
     private DateDialog dateDialog;
+    boolean isbreak = false;
+    Thread thread;
+    private final int UPDATE_PANNEL = 1;
+    SimpleDateFormat Cur_Time;
     public void setHomePagerActivity(HomePagerActivity homePagerActivity) {
         this.homePagerActivity = homePagerActivity;
     }
@@ -58,7 +65,7 @@ public class DateFragment extends BaseFragment {
         setClickListener(R.id.auto_layout);
 //        setClickListener(R.id.rl_date);
         setClickListener(R.id.bt_back);
-        setClickListener(R.id.cb_date);
+//        setClickListener(R.id.cb_date);
         setClickListener(R.id.set24_layout);
     }
 
@@ -84,11 +91,47 @@ public class DateFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        this.refreshPannelStatus();
+    }
+
+    @Override
+    public void Resume() {
+        isbreak = false;
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!isbreak){
+                    try{
+                        myHandler.sendEmptyMessage(UPDATE_PANNEL);
+                        Thread.sleep(1000);
+                    }catch (Exception e){
+                    }
+                }
+            }
+        });
+        thread.setName("DateFragment");
+        thread.start();
+    }
+
+    @Override
+    public void Pause() {
+        isbreak = true;
+    }
+
+    @Override
+    public void onDestroy() {
+        isbreak = true;
+        super.onDestroy();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.auto_layout:
                 isAuto = !isAuto;
-                //Settings.Global.putString(homePagerActivity.getActivity().getContentResolver(), Settings.Global.AUTO_TIME, isAuto?"1":"0");
+                Settings.Global.putString(homePagerActivity.getActivity().getContentResolver(), Settings.Global.AUTO_TIME, isAuto?"1":"0");
                 //刷新界面
                 enableDateTimeSet(isAuto);
                 //需要刷新数据
@@ -99,7 +142,7 @@ public class DateFragment extends BaseFragment {
 
 						@Override
 						public void onDismiss(String info, int what, Object obj) {
-							SimpleDateFormat Cur_Time = new SimpleDateFormat(Settings.System.getString(homePagerActivity.getActivity().getContentResolver(),Settings.System.DATE_FORMAT));
+							Cur_Time = new SimpleDateFormat(Settings.System.getString(homePagerActivity.getActivity().getContentResolver(),Settings.System.DATE_FORMAT));
 							Calendar calendar = (Calendar) obj;
                             text_data.setText(Cur_Time.format(calendar.getTime()));
 						}
@@ -113,7 +156,7 @@ public class DateFragment extends BaseFragment {
 
 						@Override
 						public void onDismiss(String info, int what, Object obj) {
-							SimpleDateFormat Cur_Time = new SimpleDateFormat(SPUtil.getInstance(homePagerActivity.getActivity()).getString("shared_time_format", "HH:mm"));
+							Cur_Time = new SimpleDateFormat(SPUtil.getInstance(homePagerActivity.getActivity()).getString("shared_time_format", "HH:mm"));
 							Calendar calendar = (Calendar) obj;
                             text_time.setText(Cur_Time.format(calendar.getTime()));
 						}
@@ -156,5 +199,25 @@ public class DateFragment extends BaseFragment {
             data_layout.setOnClickListener(null);
             time_layout.setOnClickListener(null);
         }
+    }
+
+    public Handler myHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case UPDATE_PANNEL:
+                    refreshPannelStatus();
+                    break;
+                default:
+                    break;
+            }
+        };
+    };
+
+    public void refreshPannelStatus(){
+        Cur_Time = new SimpleDateFormat(Settings.System.getString(homePagerActivity.getActivity().getContentResolver(),Settings.System.DATE_FORMAT));
+        Calendar calendar = Calendar.getInstance();;
+        text_data.setText(Cur_Time.format(calendar.getTime()));
+        Cur_Time = new SimpleDateFormat(SPUtil.getInstance(homePagerActivity.getActivity()).getString("shared_time_format", "HH:mm"));
+        text_time.setText(Cur_Time.format(calendar.getTime()));
     }
 }

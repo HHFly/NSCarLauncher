@@ -17,7 +17,7 @@
        style="@style/BaseLine.Horizontal"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="40px"
-        android:background="#000"/>
+        android:background="#13171D"/>
     <TextView
         android:id="@+id/tv_music_title"
         style="@style/BaseText.Tv"

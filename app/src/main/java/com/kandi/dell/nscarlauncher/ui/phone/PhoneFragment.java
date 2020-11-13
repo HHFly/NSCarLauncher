@@ -169,15 +169,15 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     }
     /*获取全局模块*/
     private void  getService(){
-        if(audioservice==null) {
-            audioservice = App.get().getAudioservice();
-        }
+//        if(audioservice==null) {
+//            audioservice = App.get().getAudioservice();
+//        }
         if(audioManager==null) {
             audioManager = App.get().getAudioManager();
         }
-        if(btservice==null) {
-            btservice = App.get().getBtservice();
-        }
+//        if(btservice==null) {
+//            btservice = App.get().getBtservice();
+//        }
     }
     /*打电话*/
    public void callphone(String num){

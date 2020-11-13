@@ -41,19 +41,11 @@
         android:layout_marginRight="40px"
         android:layout_marginTop="127px">
 
-        <TextView style="@style/BaseText.Tv"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="45px"
-            android:layout_marginLeft="24px"
-            android:layout_marginBottom="23px"
-            android:textColor="@color/color_Text989898"
-            android:textSize="24px"
-            android:text="@string/语言切换"/>
-
         <RelativeLayout
             android:id="@+id/carset_layout"
             android:layout_width="match_parent"
             android:layout_height="78px"
+            android:layout_marginTop="45px"
             android:background="@color/color_bg1B1D28">
             
             <TextView
@@ -74,20 +66,60 @@
                 android:background="@mipmap/spinner_bg"/>
 
         </RelativeLayout>
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/car_choose_layout"
             android:layout_width="689px"
             android:layout_height="wrap_content"
             android:background="@mipmap/set_language_laybg"
-            android:visibility="gone">
+            android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/la_recyclerView"
+            <RelativeLayout
+                android:id="@+id/eco_mode_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </android.support.v7.widget.RecyclerView>
-            
-        </RelativeLayout>
+                android:layout_height="78px">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="24px"
+                    android:textColor="@color/color_Text_default"
+                    android:textSize="30px"
+                    android:text="@string/经济"/>
+
+                <ImageView
+                    android:id="@+id/eco_mode_checkbox"
+                    android:layout_width="36px"
+                    android:layout_height="36px"
+                    android:layout_marginRight="25px"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/select_checkbox"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/sport_mode_layout"
+                android:layout_width="match_parent"
+                android:layout_height="78px">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="24px"
+                    android:textColor="@color/color_Text_default"
+                    android:textSize="30px"
+                    android:text="@string/运动"/>
+
+                <ImageView
+                    android:id="@+id/sport_mode_checkbox"
+                    android:layout_width="36px"
+                    android:layout_height="36px"
+                    android:layout_marginRight="25px"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/select_checkbox"/>
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>

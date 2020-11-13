@@ -538,9 +538,9 @@ public class MusicFragment extends BaseFragment {
     }
     /*获取全局模块*/
     private void  getService(){
-        audioservice=App.get().getAudioservice();
+//        audioservice=App.get().getAudioservice();
         audioManager=App.get().getAudioManager();
-        btservice =App.get().getBtservice();
+//        btservice =App.get().getBtservice();
     }
 
 

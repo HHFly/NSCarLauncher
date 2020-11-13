@@ -27,8 +27,8 @@ public class CarPowerManangerAnimRecevie extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if(intent.getAction().equals("com.driverlayer.kdos_driverserver")){
             final  String m_key= "KD_CAST_EVENT";
-            final String skeyChargeGun ="KD_CAST_EVENT2";
-            final String skeyChargeState ="KD_CAST_EVENT3";
+            final String skeyChargeGun ="KD_CAST_EVENT1";
+            final String skeyChargeState ="KD_CAST_EVENT2";
             Bundle bundle =intent.getExtras();
             Set<String> keySet = bundle.keySet();
             for(String key :keySet){
@@ -42,7 +42,7 @@ public class CarPowerManangerAnimRecevie extends BroadcastReceiver {
                     e.printStackTrace();
                     continue;
                 }
-                if(2==eventId){
+                if(1==eventId){
                     //充电枪插拔事件，
                     boolean isGunIn =bundle.getBoolean(skeyChargeGun);//Value值true是充电枪插入，false是充电枪拔出。
                     if(isGunIn){
@@ -50,7 +50,7 @@ public class CarPowerManangerAnimRecevie extends BroadcastReceiver {
                     }
                 }
 
-                if(3==eventId){
+                if(2==eventId){
                     //充电启停事件
                     int state =bundle.getInt(skeyChargeState);//Value值0是停止充电，1是开始充电。2 故障
                     if(0==state){

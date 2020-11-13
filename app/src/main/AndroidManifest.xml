@@ -2,12 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.kandi.dell.nscarlauncher"
-
+    android:sharedUserId="android.uid.system"
    >
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name=" android.permission.WRITE_SECURE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <!-- WIFI and Net -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -78,7 +79,7 @@
             android:value="32fcdcb767b3ccca061e62934491e4bb"/>
         <service android:name="com.amap.api.location.APSService">
         </service>
-        <activity android:name=".ui_portrait.home.HomePagerActivity" android:launchMode="singleInstance" >
+        <activity android:name=".ui_portrait.home.HomePagerActivity" android:screenOrientation="portrait" android:launchMode="singleInstance" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

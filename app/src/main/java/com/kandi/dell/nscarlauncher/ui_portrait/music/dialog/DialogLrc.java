@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -31,15 +33,15 @@ public class DialogLrc {
     ImageView iv_retrun;
     TextView songname,singer;
     public boolean isLrc;
+    public  boolean isShow;
     public DialogLrc(final Context context) {
         dialog = new Dialog(context, R.style.nodarken_style);
         dialog.setCanceledOnTouchOutside(true);// 设置点击屏幕Dialog不消失
         window = dialog.getWindow();
         window.setContentView(R.layout.dialog_lrc);
+        window.setType(WindowManager.LayoutParams.TYPE_APPLICATION_PANEL);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         WindowManager.LayoutParams lp = window.getAttributes();
-//        lp.gravity= Gravity.TOP;
-//        lp.gravity=Gravity.TOP;
-//        lp.y=60;
         window.setAttributes(lp);
         this.context = context;
         mLrcView=window.findViewById(R.id.au_lrcView);
@@ -66,12 +68,19 @@ public class DialogLrc {
             @Override
             public void onCancel(DialogInterface dialog) {
                 isLrc=false;
+                isShow=false;
             }
         });
     }
     public void show(){
+        isShow=true;
         initLrc();
         dialog.show();
+    }
+
+    public void  cancel(){
+        dialog.cancel();
+        isShow=false;
     }
 
     private void initLrc(){

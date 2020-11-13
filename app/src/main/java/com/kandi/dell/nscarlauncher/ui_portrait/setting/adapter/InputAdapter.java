@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodInfo;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kandi.dell.nscarlauncher.R;
@@ -42,16 +43,17 @@ public class InputAdapter extends RecyclerView.Adapter<InputAdapter.InputViewHol
     @Override
     public void onBindViewHolder(final InputViewHolder holder, final int position) {
         holder.language_name.setText(items[position]);
-        holder.itemView.setSelected(mposition == position);
-        holder.language_checkbox.setSelected(mposition == position);
+        holder.itemView.setSelected(InputMethodUtils.getDefaultInputMethod().equals(mList.get(position).getId()));
+//        holder.language_checkbox.setSelected(mposition == position);
+        holder.language_checkbox.setSelected(InputMethodUtils.getDefaultInputMethod().equals(mList.get(position).getId()));
         /*
         添加选中的打勾显示
          */
-        holder.language_checkbox.setOnClickListener(new View.OnClickListener() {
+        holder.language_item_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //将点击的位置传出去
-                mposition = position;
+//                mposition = position;
                 //在点击监听里最好写入setVisibility(View.VISIBLE);这样可以避免效果会闪
                 holder.language_checkbox.setSelected(true);
                 InputMethodUtils.putDefaultInputMethod(mList.get(position).getId());
@@ -71,10 +73,12 @@ public class InputAdapter extends RecyclerView.Adapter<InputAdapter.InputViewHol
     public class InputViewHolder extends RecyclerView.ViewHolder {
         TextView language_name;
         ImageView language_checkbox;
+        RelativeLayout language_item_layout;
         public InputViewHolder(View itemView) {
             super(itemView);
             language_name = (TextView) itemView.findViewById(R.id.language_name);
             language_checkbox = (ImageView) itemView.findViewById(R.id.language_checkbox);
+            language_item_layout = (RelativeLayout) itemView.findViewById(R.id.language_item_layout);
         }
     }
 

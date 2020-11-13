@@ -125,6 +125,10 @@ public class CarMFLReceiver extends BroadcastReceiver {
              }
          }
 
+         if(intent.getAction().equals("com.kangdi.home.hide")){
+             homePagerActivity.hideFragment();
+         }
+
     }
 
     public CarMFLReceiver() {
@@ -143,6 +147,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
         intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_CALL);
         intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_HANGUP);
         intentFilter.addAction("android.intent.action.PACKAGE_ADDED");
+        intentFilter.addAction("com.kangdi.home.hide");
         homePagerActivity.registerReceiver(this, intentFilter);
     }
 }

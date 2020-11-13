@@ -1,16 +1,38 @@
 package com.kandi.dell.nscarlauncher.ui_portrait.airctrl;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.RemoteException;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.candriver.AirConditionDriver;
+import com.kandi.dell.nscarlauncher.candriver.DriverServiceManger;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui_portrait.home.HomePagerActivity;
+import com.kandi.dell.nscarlauncher.candriver.AirConditionDriver.eAirBlowMode;
+
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AirCtrlFragment extends BaseFragment{
     private HomePagerActivity homePagerActivity;
+    AirConditionDriver airPannelDrv;
+    private TextView air_temp;
+    BaseReceiver baseReceiver;
+    boolean isbreak = false;
+    Thread thread;
+    private final int UPDATE_PANNEL = 1;
+    int presetTemp,windSpeed;
 
     @Override
     public void setmType(int mType) {
@@ -22,21 +44,13 @@ public class AirCtrlFragment extends BaseFragment{
     }
 
     @Override
-    public void onUnFirstResume() {
-
-    }
-
-    @Override
-    public void Resume() {
-    }
-
-    @Override
     public int getContentResId() {
         return R.layout.fragment_airctrl;
     }
 
     @Override
     public void findView() {
+        air_temp = getView(R.id.air_temp);
     }
 
     @Override
@@ -52,98 +66,276 @@ public class AirCtrlFragment extends BaseFragment{
         setClickListener(R.id.bt_airctrl_head_foot);
         setClickListener(R.id.bt_airctrl_foot_win);
         setClickListener(R.id.bt_airctrl_defog);
+        setClickListener(R.id.set_btn_temp_plus);
+        setClickListener(R.id.set_btn_temp_min);
+        setClickListener(R.id.set_btn_speed_plus);
+        setClickListener(R.id.set_btn_speed_min);
     }
 
     @Override
     public void initView() {
+        if(baseReceiver == null){
+            baseReceiver = new BaseReceiver();
+            IntentFilter kdIntentFilter = new IntentFilter();
+            kdIntentFilter.addAction("com.driverlayer.kdos_driverserver");
+            getActivity().registerReceiver(baseReceiver, kdIntentFilter);
+        }
+        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if(baseReceiver != null){
+            getActivity().unregisterReceiver(baseReceiver);
+            baseReceiver = null;
+        }
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setViewVisibility(R.id.loadingView,false);
+        this.refreshPannelStatus();
+    }
+
+    @Override
+    public void Resume() {
+        isbreak = false;
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!isbreak){
+                    try{
+                        myHandler.sendEmptyMessage(UPDATE_PANNEL);
+                        Thread.sleep(1000);
+                    }catch (Exception e){
+                    }
+                }
+            }
+        });
+        thread.setName("EnergyCycleFragment");
+        thread.start();
+    }
+
+    @Override
+    public void Pause() {
+        isbreak = true;
+    }
+
+    @Override
+    public void onDestroy() {
+        isbreak = true;
+        super.onDestroy();
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.bt_back:
-                homePagerActivity.hideFragment();
-                break;
-            case R.id.bt_airctrl_off:
-                boolean airctrl_off_status = getView(R.id.bt_airctrl_off).isSelected();
-                selectBtView(R.id.bt_airctrl_off,R.id.bt_airctrl_off_img,R.id.bt_airctrl_off_txt,!airctrl_off_status);
-                if(!airctrl_off_status){
-                    selectBtView(R.id.bt_airctrl_ac,R.id.bt_airctrl_ac_img,R.id.bt_airctrl_ac_txt,false);
-                    selectBtView(R.id.bt_airctrl_ptc,R.id.bt_airctrl_ptc_img,R.id.bt_airctrl_ptc_txt,false);
-                }
-                //调用can接口发送报文
-                break;
-            case R.id.bt_airctrl_ac:
-                if(getView(R.id.bt_airctrl_off).isSelected()){
-                    selectBtView(R.id.bt_airctrl_off,R.id.bt_airctrl_off_img,R.id.bt_airctrl_off_txt,false);
-                }
-                selectBtView(R.id.bt_airctrl_ac,R.id.bt_airctrl_ac_img,R.id.bt_airctrl_ac_txt,!getView(R.id.bt_airctrl_ac).isSelected());
-                //调用can接口发送报文
-                break;
-            case R.id.bt_airctrl_ptc:
-                if(getView(R.id.bt_airctrl_off).isSelected()){
-                    selectBtView(R.id.bt_airctrl_off,R.id.bt_airctrl_off_img,R.id.bt_airctrl_off_txt,false);
-                }
-                selectBtView(R.id.bt_airctrl_ptc,R.id.bt_airctrl_ptc_img,R.id.bt_airctrl_ptc_txt,!getView(R.id.bt_airctrl_ptc).isSelected());
-                //调用can接口发送报文
-                break;
-            case R.id.bt_airctrl_incycle:
-                selectBtView(R.id.bt_airctrl_incycle,R.id.bt_airctrl_incycle_img,R.id.bt_airctrl_incycle_txt,true);
-                selectBtView(R.id.bt_airctrl_outcycle,R.id.bt_airctrl_outcycle_img,R.id.bt_airctrl_outcycle_txt,false);
-                //调用can接口发送报文
-                break;
-            case R.id.bt_airctrl_outcycle:
-                selectBtView(R.id.bt_airctrl_incycle,R.id.bt_airctrl_incycle_img,R.id.bt_airctrl_incycle_txt,false);
-                selectBtView(R.id.bt_airctrl_outcycle,R.id.bt_airctrl_outcycle_img,R.id.bt_airctrl_outcycle_txt,true);
-                //调用can接口发送报文
-                break;
-            case R.id.bt_airctrl_head:
-                selectBtView(R.id.bt_airctrl_head,R.id.bt_airctrl_head_img,R.id.bt_airctrl_head_txt,true);
-                selectBtView(R.id.bt_airctrl_foot,R.id.bt_airctrl_foot_img,R.id.bt_airctrl_foot_txt,false);
-                selectBtView(R.id.bt_airctrl_head_foot,R.id.bt_airctrl_head_foot_img,R.id.bt_airctrl_head_foot_txt,false);
-                selectBtView(R.id.bt_airctrl_foot_win,R.id.bt_airctrl_foot_win_img,R.id.bt_airctrl_foot_win_txt,false);
-                selectBtView(R.id.bt_airctrl_defog,R.id.bt_airctrl_defog_img,R.id.bt_airctrl_defog_txt,false);
-                //调用can接口发送报文
-                break;
-            case R.id.bt_airctrl_foot:
-                selectBtView(R.id.bt_airctrl_head,R.id.bt_airctrl_head_img,R.id.bt_airctrl_head_txt,false);
-                selectBtView(R.id.bt_airctrl_foot,R.id.bt_airctrl_foot_img,R.id.bt_airctrl_foot_txt,true);
-                selectBtView(R.id.bt_airctrl_head_foot,R.id.bt_airctrl_head_foot_img,R.id.bt_airctrl_head_foot_txt,false);
-                selectBtView(R.id.bt_airctrl_foot_win,R.id.bt_airctrl_foot_win_img,R.id.bt_airctrl_foot_win_txt,false);
-                selectBtView(R.id.bt_airctrl_defog,R.id.bt_airctrl_defog_img,R.id.bt_airctrl_defog_txt,false);
-                //调用can接口发送报文
-                break;
-            case R.id.bt_airctrl_head_foot:
-                selectBtView(R.id.bt_airctrl_head,R.id.bt_airctrl_head_img,R.id.bt_airctrl_head_txt,false);
-                selectBtView(R.id.bt_airctrl_foot,R.id.bt_airctrl_foot_img,R.id.bt_airctrl_foot_txt,false);
-                selectBtView(R.id.bt_airctrl_head_foot,R.id.bt_airctrl_head_foot_img,R.id.bt_airctrl_head_foot_txt,true);
-                selectBtView(R.id.bt_airctrl_foot_win,R.id.bt_airctrl_foot_win_img,R.id.bt_airctrl_foot_win_txt,false);
-                selectBtView(R.id.bt_airctrl_defog,R.id.bt_airctrl_defog_img,R.id.bt_airctrl_defog_txt,false);
-                //调用can接口发送报文
-                break;
-            case R.id.bt_airctrl_foot_win:
-                selectBtView(R.id.bt_airctrl_head,R.id.bt_airctrl_head_img,R.id.bt_airctrl_head_txt,false);
-                selectBtView(R.id.bt_airctrl_foot,R.id.bt_airctrl_foot_img,R.id.bt_airctrl_foot_txt,false);
-                selectBtView(R.id.bt_airctrl_head_foot,R.id.bt_airctrl_head_foot_img,R.id.bt_airctrl_head_foot_txt,false);
-                selectBtView(R.id.bt_airctrl_foot_win,R.id.bt_airctrl_foot_win_img,R.id.bt_airctrl_foot_win_txt,true);
-                selectBtView(R.id.bt_airctrl_defog,R.id.bt_airctrl_defog_img,R.id.bt_airctrl_defog_txt,false);
-                //调用can接口发送报文
-                break;
-            case R.id.bt_airctrl_defog:
-                selectBtView(R.id.bt_airctrl_head,R.id.bt_airctrl_head_img,R.id.bt_airctrl_head_txt,false);
-                selectBtView(R.id.bt_airctrl_foot,R.id.bt_airctrl_foot_img,R.id.bt_airctrl_foot_txt,false);
-                selectBtView(R.id.bt_airctrl_head_foot,R.id.bt_airctrl_head_foot_img,R.id.bt_airctrl_head_foot_txt,false);
-                selectBtView(R.id.bt_airctrl_foot_win,R.id.bt_airctrl_foot_win_img,R.id.bt_airctrl_foot_win_txt,false);
-                selectBtView(R.id.bt_airctrl_defog,R.id.bt_airctrl_defog_img,R.id.bt_airctrl_defog_txt,true);
-                //调用can接口发送报文
-                break;
+        try {
+
+            switch (view.getId()){
+                case R.id.bt_back:
+                    homePagerActivity.hideFragment();
+                    break;
+                case R.id.bt_airctrl_off:
+                    boolean airctrl_off_status = getView(R.id.bt_airctrl_off).isSelected();
+                    selectBtView(R.id.bt_airctrl_off,R.id.bt_airctrl_off_img,R.id.bt_airctrl_off_txt,!airctrl_off_status);
+                    if(!airctrl_off_status){
+                        setTvText(R.id.bt_airctrl_off_txt,R.string.ON);
+                    }else{
+                        selectBtView(R.id.bt_airctrl_ac,R.id.bt_airctrl_ac_img,R.id.bt_airctrl_ac_txt,false);
+                        selectBtView(R.id.bt_airctrl_ptc,R.id.bt_airctrl_ptc_img,R.id.bt_airctrl_ptc_txt,false);
+                        setTvText(R.id.bt_airctrl_off_txt,R.string.OFF);
+                        airPannelDrv.isACPowerOn = false;
+                        airPannelDrv.isPTCPowerOn = false;
+                    }
+                    //调用can接口发送报文
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setWindPowerOn(!airctrl_off_status);
+                    }
+                    break;
+                case R.id.bt_airctrl_ac:
+                    if(!getView(R.id.bt_airctrl_off).isSelected()){
+                        selectBtView(R.id.bt_airctrl_off,R.id.bt_airctrl_off_img,R.id.bt_airctrl_off_txt,true);
+                        setTvText(R.id.bt_airctrl_off_txt,R.string.ON);
+                        airPannelDrv.isWindPowerOn = true;
+                    }
+                    boolean acStatus = !getView(R.id.bt_airctrl_ac).isSelected();
+                    selectBtView(R.id.bt_airctrl_ac,R.id.bt_airctrl_ac_img,R.id.bt_airctrl_ac_txt,acStatus);
+                    //调用can接口发送报文
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setACPowerOn(acStatus);
+                    }
+                    break;
+                case R.id.bt_airctrl_ptc:
+                    if(!getView(R.id.bt_airctrl_off).isSelected()){
+                        selectBtView(R.id.bt_airctrl_off,R.id.bt_airctrl_off_img,R.id.bt_airctrl_off_txt,true);
+                        setTvText(R.id.bt_airctrl_off_txt,R.string.ON);
+                        airPannelDrv.isWindPowerOn = true;
+                    }
+                    boolean ptcStatus = !getView(R.id.bt_airctrl_ptc).isSelected();
+                    selectBtView(R.id.bt_airctrl_ptc,R.id.bt_airctrl_ptc_img,R.id.bt_airctrl_ptc_txt,ptcStatus);
+                    //调用can接口发送报文
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setPtcPowerOn(ptcStatus);
+                    }
+                    break;
+                case R.id.bt_airctrl_incycle:
+                    selectBtView(R.id.bt_airctrl_incycle,R.id.bt_airctrl_incycle_img,R.id.bt_airctrl_incycle_txt,true);
+                    selectBtView(R.id.bt_airctrl_outcycle,R.id.bt_airctrl_outcycle_img,R.id.bt_airctrl_outcycle_txt,false);
+                    //调用can接口发送报文
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setInternalCycle(true);
+                    }
+                    break;
+                case R.id.bt_airctrl_outcycle:
+                    selectBtView(R.id.bt_airctrl_incycle,R.id.bt_airctrl_incycle_img,R.id.bt_airctrl_incycle_txt,false);
+                    selectBtView(R.id.bt_airctrl_outcycle,R.id.bt_airctrl_outcycle_img,R.id.bt_airctrl_outcycle_txt,true);
+                    //调用can接口发送报文
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setInternalCycle(false);
+                    }
+                    break;
+                case R.id.bt_airctrl_head:
+                    selectBtView(R.id.bt_airctrl_head,R.id.bt_airctrl_head_img,R.id.bt_airctrl_head_txt,true);
+                    selectBtView(R.id.bt_airctrl_foot,R.id.bt_airctrl_foot_img,R.id.bt_airctrl_foot_txt,false);
+                    selectBtView(R.id.bt_airctrl_head_foot,R.id.bt_airctrl_head_foot_img,R.id.bt_airctrl_head_foot_txt,false);
+                    selectBtView(R.id.bt_airctrl_foot_win,R.id.bt_airctrl_foot_win_img,R.id.bt_airctrl_foot_win_txt,false);
+                    selectBtView(R.id.bt_airctrl_defog,R.id.bt_airctrl_defog_img,R.id.bt_airctrl_defog_txt,false);
+                    //调用can接口发送报文
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setAirBlowMode(AirConditionDriver.eAirBlowMode.BLOW_HEAD);
+                    }
+                    break;
+                case R.id.bt_airctrl_foot:
+                    selectBtView(R.id.bt_airctrl_head,R.id.bt_airctrl_head_img,R.id.bt_airctrl_head_txt,false);
+                    selectBtView(R.id.bt_airctrl_foot,R.id.bt_airctrl_foot_img,R.id.bt_airctrl_foot_txt,true);
+                    selectBtView(R.id.bt_airctrl_head_foot,R.id.bt_airctrl_head_foot_img,R.id.bt_airctrl_head_foot_txt,false);
+                    selectBtView(R.id.bt_airctrl_foot_win,R.id.bt_airctrl_foot_win_img,R.id.bt_airctrl_foot_win_txt,false);
+                    selectBtView(R.id.bt_airctrl_defog,R.id.bt_airctrl_defog_img,R.id.bt_airctrl_defog_txt,false);
+                    //调用can接口发送报文
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setAirBlowMode(AirConditionDriver.eAirBlowMode.BLOW_FOOT);
+                    }
+                    break;
+                case R.id.bt_airctrl_head_foot:
+                    selectBtView(R.id.bt_airctrl_head,R.id.bt_airctrl_head_img,R.id.bt_airctrl_head_txt,false);
+                    selectBtView(R.id.bt_airctrl_foot,R.id.bt_airctrl_foot_img,R.id.bt_airctrl_foot_txt,false);
+                    selectBtView(R.id.bt_airctrl_head_foot,R.id.bt_airctrl_head_foot_img,R.id.bt_airctrl_head_foot_txt,true);
+                    selectBtView(R.id.bt_airctrl_foot_win,R.id.bt_airctrl_foot_win_img,R.id.bt_airctrl_foot_win_txt,false);
+                    selectBtView(R.id.bt_airctrl_defog,R.id.bt_airctrl_defog_img,R.id.bt_airctrl_defog_txt,false);
+                    //调用can接口发送报文
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setAirBlowMode(AirConditionDriver.eAirBlowMode.BLOW_HEAD_FOOT);
+                    }
+                    break;
+                case R.id.bt_airctrl_foot_win:
+                    selectBtView(R.id.bt_airctrl_head,R.id.bt_airctrl_head_img,R.id.bt_airctrl_head_txt,false);
+                    selectBtView(R.id.bt_airctrl_foot,R.id.bt_airctrl_foot_img,R.id.bt_airctrl_foot_txt,false);
+                    selectBtView(R.id.bt_airctrl_head_foot,R.id.bt_airctrl_head_foot_img,R.id.bt_airctrl_head_foot_txt,false);
+                    selectBtView(R.id.bt_airctrl_foot_win,R.id.bt_airctrl_foot_win_img,R.id.bt_airctrl_foot_win_txt,true);
+                    selectBtView(R.id.bt_airctrl_defog,R.id.bt_airctrl_defog_img,R.id.bt_airctrl_defog_txt,false);
+                    //调用can接口发送报文
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setAirBlowMode(AirConditionDriver.eAirBlowMode.BLOW_FOOT_DEMIST);
+                    }
+                    break;
+                case R.id.bt_airctrl_defog:
+                    selectBtView(R.id.bt_airctrl_head,R.id.bt_airctrl_head_img,R.id.bt_airctrl_head_txt,false);
+                    selectBtView(R.id.bt_airctrl_foot,R.id.bt_airctrl_foot_img,R.id.bt_airctrl_foot_txt,false);
+                    selectBtView(R.id.bt_airctrl_head_foot,R.id.bt_airctrl_head_foot_img,R.id.bt_airctrl_head_foot_txt,false);
+                    selectBtView(R.id.bt_airctrl_foot_win,R.id.bt_airctrl_foot_win_img,R.id.bt_airctrl_foot_win_txt,false);
+                    selectBtView(R.id.bt_airctrl_defog,R.id.bt_airctrl_defog_img,R.id.bt_airctrl_defog_txt,true);
+                    //调用can接口发送报文
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setAirBlowMode(AirConditionDriver.eAirBlowMode.BLOW_DEMIST);
+                    }
+                    break;
+                case R.id.set_btn_temp_plus:
+                    presetTemp = Integer.parseInt(getTvText(R.id.set_temp));
+                    presetTemp = presetTemp+1>=32?32:presetTemp+1;
+                    setTvText(R.id.set_temp,""+presetTemp);
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setPresetTemp(presetTemp);
+                    }
+                    break;
+                case R.id.set_btn_temp_min:
+                    presetTemp = Integer.parseInt(getTvText(R.id.set_temp));
+                    presetTemp = presetTemp-1<=18?18:presetTemp-1;
+                    setTvText(R.id.set_temp,""+presetTemp);
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setPresetTemp(presetTemp);
+                    }
+                    break;
+                case R.id.set_btn_speed_plus:
+                    windSpeed = Integer.parseInt(getTvText(R.id.set_speed));
+                    windSpeed = windSpeed+1>=8?8:windSpeed+1;
+                    setTvText(R.id.set_speed,""+windSpeed);
+                    selectBtView(R.id.bt_airctrl_off,R.id.bt_airctrl_off_img,R.id.bt_airctrl_off_txt,true);
+                    setTvText(R.id.bt_airctrl_off_txt,R.string.ON);
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setWindSpeed(windSpeed);
+                    }
+                    break;
+                case R.id.set_btn_speed_min:
+                    windSpeed = Integer.parseInt(getTvText(R.id.set_speed));
+                    windSpeed = windSpeed-1<=1?1:windSpeed-1;
+                    setTvText(R.id.set_speed,""+windSpeed);
+                    selectBtView(R.id.bt_airctrl_off,R.id.bt_airctrl_off_img,R.id.bt_airctrl_off_txt,true);
+                    setTvText(R.id.bt_airctrl_off_txt,R.string.ON);
+                    if(airPannelDrv == null){
+                        airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+                    }else{
+                        airPannelDrv.setWindSpeed(windSpeed);
+                    }
+                    break;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
+
+    protected final int UPDATE_TEXT = 0;
+    protected final int AIR_DISABLED = -1;
+    protected final int RERESH_WHEELS  = 100;
+    protected final int SET_TEMPWHEELS = 101;
+    protected final int SET_WINDWHEELS = 102;
 
     public Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-
+                case UPDATE_TEXT:
+                    refreshACDisplay();
+                    break;
+                case UPDATE_PANNEL:
+                    refreshPannelStatus();
+                    break;
             }
         };
     };
@@ -159,6 +351,104 @@ public class AirCtrlFragment extends BaseFragment{
         getView(layoutid).setSelected(status);
         getView(imgid).setSelected(status);
         getView(txtid).setSelected(status);
+    }
+
+    public void refreshACDisplay() {
+        AirConditionDriver airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+        if(airPannelDrv != null) {
+
+            int nInternalTemperature = airPannelDrv.getInsideTemp();
+
+            air_temp.setText(nInternalTemperature);
+
+            if(airPannelDrv.isPtcPowerOn() != getView(R.id.bt_airctrl_ptc).isSelected()) {
+                selectBtView(R.id.bt_airctrl_ptc,R.id.bt_airctrl_ptc_img,R.id.bt_airctrl_ptc_txt,airPannelDrv.isPtcPowerOn());
+            }
+            if(airPannelDrv.isACPowerOn() != getView(R.id.bt_airctrl_ac).isSelected()) {
+                selectBtView(R.id.bt_airctrl_ac,R.id.bt_airctrl_ac_img,R.id.bt_airctrl_ac_txt,airPannelDrv.isACPowerOn());
+            }
+            if(airPannelDrv.isWindPowerOn() != getView(R.id.bt_airctrl_off).isSelected()) {
+                selectBtView(R.id.bt_airctrl_off,R.id.bt_airctrl_off_img,R.id.bt_airctrl_off_txt,airPannelDrv.isWindPowerOn());
+                setTvText(R.id.bt_airctrl_off_txt,airPannelDrv.isWindPowerOn()?R.string.ON:R.string.OFF);
+            }
+        }
+        else {
+            Log.e("KDSERVICE", "AirConditionActivity.refreshPannelStatus() service is null");
+        }
+    }
+
+    public void refreshPannelStatus() {
+        AirConditionDriver airPannelDrv = DriverServiceManger.getInstance().getAirConditionDriver();
+
+        if(airPannelDrv != null) {
+            try {
+                int ret = airPannelDrv.retreveACInfo();
+                if(ret == 1){
+                    setViewVisibility(R.id.loadingView,true);
+                    return;
+                } else {
+                    setViewVisibility(R.id.loadingView,false);
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+            if(airPannelDrv.isPtcPowerOn() != getView(R.id.bt_airctrl_ptc).isSelected()) {
+                selectBtView(R.id.bt_airctrl_ptc,R.id.bt_airctrl_ptc_img,R.id.bt_airctrl_ptc_txt,airPannelDrv.isPtcPowerOn());
+            }
+            if(airPannelDrv.isACPowerOn() != getView(R.id.bt_airctrl_ac).isSelected()) {
+                selectBtView(R.id.bt_airctrl_ac,R.id.bt_airctrl_ac_img,R.id.bt_airctrl_ac_txt,airPannelDrv.isACPowerOn());
+            }
+            if(airPannelDrv.isWindPowerOn() != getView(R.id.bt_airctrl_off).isSelected()) {
+                selectBtView(R.id.bt_airctrl_off,R.id.bt_airctrl_off_img,R.id.bt_airctrl_off_txt,airPannelDrv.isWindPowerOn());
+                setTvText(R.id.bt_airctrl_off_txt,airPannelDrv.isWindPowerOn()?R.string.ON:R.string.OFF);
+            }
+
+            selectBtView(R.id.bt_airctrl_head,R.id.bt_airctrl_head_img,R.id.bt_airctrl_head_txt,airPannelDrv.getAirBlowMode()== eAirBlowMode.BLOW_HEAD);
+            selectBtView(R.id.bt_airctrl_foot,R.id.bt_airctrl_foot_img,R.id.bt_airctrl_foot_txt,airPannelDrv.getAirBlowMode()== eAirBlowMode.BLOW_FOOT);
+            selectBtView(R.id.bt_airctrl_head_foot,R.id.bt_airctrl_head_foot_img,R.id.bt_airctrl_head_foot_txt,airPannelDrv.getAirBlowMode()== eAirBlowMode.BLOW_HEAD_FOOT);
+            selectBtView(R.id.bt_airctrl_foot_win,R.id.bt_airctrl_foot_win_img,R.id.bt_airctrl_foot_win_txt,airPannelDrv.getAirBlowMode()== eAirBlowMode.BLOW_FOOT_DEMIST);
+            selectBtView(R.id.bt_airctrl_defog,R.id.bt_airctrl_defog_img,R.id.bt_airctrl_defog_txt,airPannelDrv.getAirBlowMode()== eAirBlowMode.BLOW_DEMIST);
+
+            selectBtView(R.id.bt_airctrl_incycle,R.id.bt_airctrl_incycle_img,R.id.bt_airctrl_incycle_txt,airPannelDrv.isInternalCycle());
+            selectBtView(R.id.bt_airctrl_outcycle,R.id.bt_airctrl_outcycle_img,R.id.bt_airctrl_outcycle_txt,!airPannelDrv.isInternalCycle());
+
+            //refresh temperature display
+            int nInternalTemperature = airPannelDrv.getInsideTemp();
+            air_temp.setText(nInternalTemperature+"℃");
+
+            setTvText(R.id.set_temp,""+airPannelDrv.getPresetTemp());
+            setTvText(R.id.set_speed,""+airPannelDrv.getWindSpeed());
+
+            Log.d("ACCondition", "PTC="+ airPannelDrv.isPtcPowerOn()+", AC="+airPannelDrv.isACPowerOn()+", PWR="+ airPannelDrv.isWindPowerOn()+
+                    ", mode="+airPannelDrv.getAirBlowMode()+", cyc="+airPannelDrv.isInternalCycle()+
+                    ", setT="+airPannelDrv.getPresetTemp()+", setWind="+airPannelDrv.getWindSpeed()+
+                    ", temp="+airPannelDrv.getInsideTemp());
+
+        }
+        else {
+            Log.e("KDSERVICE", "AirConditionActivity.refreshPannelStatus() service is null");
+        }
+    }
+
+    private class BaseReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            Set<String> keySet = bundle.keySet();
+            for(String key : keySet) {
+
+                if(key.compareTo("KD_CAST_EVENT0") != 0) {
+                    continue;
+                }
+                if(bundle.getBoolean(key)) {
+//                    myHandler.sendEmptyMessage(AIR_DISABLED);
+                } else {
+                    myHandler.sendEmptyMessage(UPDATE_PANNEL);
+                }
+            }
+//            refreshWheels();
+        }
     }
 
 }

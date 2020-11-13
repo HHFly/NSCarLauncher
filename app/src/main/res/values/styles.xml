@@ -111,4 +111,10 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
+    <style name="custProgress">
+        <item name="android:indeterminateDrawable">@drawable/progress_anim</item>
+        <item name="android:indeterminateOnly">true</item>
+        <item name="android:indeterminateBehavior">repeat</item>
+    </style>
 </resources>

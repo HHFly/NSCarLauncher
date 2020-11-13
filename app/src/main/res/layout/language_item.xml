@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="78px">
     <RelativeLayout
+        android:id="@+id/language_item_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView

@@ -29,7 +29,8 @@
         <TextView
             android:id="@+id/tv_fm_hz"
             style="@style/BaseText.Tv"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="93.0"
             android:textSize="20px" />
     <TextView

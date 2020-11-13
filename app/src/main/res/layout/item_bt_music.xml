@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="202px"
     android:layout_height="302px"
 
-    android:background="@mipmap/item_bg">
+    android:background="@mipmap/ic_home_fm_bg">
     <RelativeLayout
         android:id="@+id/item_btmusic"
         android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20px"
+        android:layout_marginTop="8px"
        />
 
 

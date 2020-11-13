@@ -53,7 +53,7 @@ public class MusicFragment extends BaseFragment {
     int music_time = 0; // 记录歌曲时间，若无变化，则不更新界面
     public  boolean recoveryLast = false;//记忆上次播放标志位
     private MusicMainAdapter mAdapter;
-    private DialogLrc dialogLrc;
+//    private DialogLrc dialogLrc;
     @Override
     public void setmType(int mType) {
         super.setmType(FragmentType.MUSIC);
@@ -85,7 +85,7 @@ public class MusicFragment extends BaseFragment {
         //初始化view播放状态
         initPlayView();
         //初始化歌词弹框
-        getDialogLrc();
+//        getDialogLrc();
     }
 
     @Override
@@ -128,7 +128,7 @@ public class MusicFragment extends BaseFragment {
                 App.get().getCurActivity().getDialogLocalMusicD().show();
                 break;
             case R.id.music_lrc:
-                getDialogLrc().show();
+                App.get().getCurActivity().getDialogLrc().show();
                 break;
             case R.id.music_fav:
                 if (App.get().getCurActivity().getDialogLocalMusicD().Playnow==null){
@@ -571,13 +571,5 @@ public class MusicFragment extends BaseFragment {
             flag_play = true;
 
         }
-    }
-
-
-    public DialogLrc getDialogLrc() {
-        if(null==dialogLrc){
-            dialogLrc =new DialogLrc(getContext());
-        }
-        return dialogLrc;
     }
 }

@@ -32,12 +32,13 @@
         android:layout_centerHorizontal="true"
         android:textColor="@color/color_Text_default"
         android:textSize="36px"
-        android:text="@string/显示与亮度"/>
+        android:text="@string/设置"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="127px">
+        android:layout_marginTop="150px"
+        android:layout_marginBottom="10px">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -153,13 +154,6 @@
                         android:layout_marginRight="24px"
                         android:layout_centerVertical="true"
                         android:background="@mipmap/icon_go"/>
-
-                    <ImageView
-                        android:layout_width="576px"
-                        android:layout_height="2px"
-                        android:layout_marginLeft="112px"
-                        android:layout_marginTop="75px"
-                        android:background="@mipmap/under_line"/>
 
                 </RelativeLayout>
 
@@ -278,13 +272,6 @@
                         android:layout_centerVertical="true"
                         android:background="@mipmap/icon_go"/>
 
-                    <ImageView
-                        android:layout_width="576px"
-                        android:layout_height="2px"
-                        android:layout_marginLeft="112px"
-                        android:layout_marginTop="75px"
-                        android:background="@mipmap/under_line"/>
-
                 </RelativeLayout>
 
             </LinearLayout>
@@ -295,7 +282,7 @@
                 android:layout_marginTop="567px"
                 android:layout_centerHorizontal="true"
                 android:orientation="vertical"
-                android:background="@mipmap/setting_laybg">
+                android:background="@mipmap/setting_laybg2">
 
                 <RelativeLayout
                     android:id="@+id/carset_layout"
@@ -364,13 +351,6 @@
                         android:layout_centerVertical="true"
                         android:background="@mipmap/icon_go"/>
 
-                    <ImageView
-                        android:layout_width="576px"
-                        android:layout_height="2px"
-                        android:layout_marginLeft="112px"
-                        android:layout_marginTop="75px"
-                        android:background="@mipmap/under_line"/>
-
                 </RelativeLayout>
 
             </LinearLayout>
@@ -381,7 +361,7 @@
                 android:layout_marginTop="761px"
                 android:layout_centerHorizontal="true"
                 android:orientation="vertical"
-                android:background="@mipmap/setting_laybg">
+                android:background="@mipmap/setting_laybg2">
 
                 <RelativeLayout
                     android:id="@+id/update_layout"
@@ -449,13 +429,6 @@
                         android:layout_marginRight="24px"
                         android:layout_centerVertical="true"
                         android:background="@mipmap/icon_go"/>
-
-                    <ImageView
-                        android:layout_width="576px"
-                        android:layout_height="2px"
-                        android:layout_marginLeft="112px"
-                        android:layout_marginTop="75px"
-                        android:background="@mipmap/under_line"/>
 
                 </RelativeLayout>
 

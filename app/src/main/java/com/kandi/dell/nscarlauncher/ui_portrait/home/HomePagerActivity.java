@@ -1,6 +1,7 @@
 package com.kandi.dell.nscarlauncher.ui_portrait.home;
 
 import android.annotation.SuppressLint;
+import android.app.Instrumentation;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -13,11 +14,14 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.text.format.DateFormat;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
-import com.driverlayer.kdos_driverServer.IECarDriver;
+import com.driverlayer.os_driverServer.IECarDriver;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.Activity.BaseActivity;
@@ -43,6 +47,7 @@ import com.kandi.dell.nscarlauncher.ui_portrait.home.receiver.CarMFLReceiver;
 import com.kandi.dell.nscarlauncher.ui_portrait.home.receiver.SDBroadcastReceiver;
 import com.kandi.dell.nscarlauncher.ui_portrait.home.receiver.USBReceover;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.dialog.DialogLocalMusic;
+import com.kandi.dell.nscarlauncher.ui_portrait.music.dialog.DialogLrc;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.fragment.MusicFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.service.PlayerService;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.service.ScanService;
@@ -71,6 +76,7 @@ public class HomePagerActivity extends BaseActivity {
     public SeekBar music_progress_bar;//音乐进度条
     DialogLocalMusic dialogLocalMusicD;//音乐列表弹框
     DialogVideo dialogVideo; //视频列表弹框
+    DialogLrc dialogLrc;//歌词弹窗
     ScanService scanService;//本地数据扫描服务
     PhoneInfoService phoneInfoService;//蓝牙电话记录服务
     public CarCtrlFragment mCarCtrlFragment;
@@ -173,6 +179,40 @@ public class HomePagerActivity extends BaseActivity {
         setClickListener(R.id.iv_window);
         setPalyListen();
     }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("testtest", "onBackPressed: "+isLoadingShow());
+//        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.d("1", "onKeyDown: "+isLoadingShow());
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if(!isLoadingShow()) {
+                    hideFragment();
+                }
+                return true;//拦截事件
+            case KeyEvent.KEYCODE_HOME:
+                if(!isLoadingShow()) {
+                    hideFragment();
+                }
+                //收不到
+                break;
+            case KeyEvent.KEYCODE_MOVE_HOME:
+//                isHome = true;
+                if(!isLoadingShow()) {
+                    hideFragment();
+                }
+                break;
+            default:
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     private void setPalyListen(){
         //fm
         fmPaly.setOnItemClickListener(new PlayControllFMView.OnItemClickListener() {
@@ -471,6 +511,24 @@ public class HomePagerActivity extends BaseActivity {
     }
     /*隐藏fragemt*/
     public  void  hideFragment() {
+
+        if(dialogLocalMusicD.isShow || dialogLrc.isShow || dialogVideo.isShow){
+            new Thread() {
+                public void run () {
+                    try {
+                        Instrumentation inst= new Instrumentation();
+                        inst.sendKeyDownUpSync(KeyEvent. KEYCODE_BACK);
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+            return;
+        }
+
+        if(mCurFragment != null){
+            mCurFragment.Pause();
+        }
         setViewVisibility(R.id.frame_main, false);
         hideLoadingDialog();
     }
@@ -535,10 +593,10 @@ public class HomePagerActivity extends BaseActivity {
     /*电量车程*/
     private   void setCarPoewr(){
 
-        int[] power =new int[10];
+        int[] power =new int[2];
         try {
             if(ieCarDriver!=null) {
-                ieCarDriver.Ecoc_getGeneral_Car(power);
+                ieCarDriver.getCarInfo(power);
 //                if (!tv_power.getText().equals(String.valueOf(power[10]))) {
 //                    int i =power[10]%10;
 //                    FlagProperty.CarPower =power[10]/10;
@@ -547,17 +605,17 @@ public class HomePagerActivity extends BaseActivity {
 //                    iv_t_power.setImageResource(getPower(power[10]));
 ////                    setIvImage(R.id.iv_t_power, getPower(power[0]));
 //                }
-                FlagProperty.Speed =power[7];
+                FlagProperty.Speed =power[0];
                 /*剩余里程*/
 
-                    if (0 == power[1]) {
-                        getTextView(R.id.tv_remainkon).setTextColor(Color.parseColor("#F03A53"));
-                    } else {
-                        getTextView(R.id.tv_remainkon).setTextColor(Color.parseColor("#FFFFFF"));
-                    }
-                    setTvText(R.id.tv_remainkon,String.valueOf(power[1]));
-
+                if (0 == power[1]) {
+                    getTextView(R.id.tv_remainkon).setTextColor(Color.parseColor("#F03A53"));
+                } else {
+                    getTextView(R.id.tv_remainkon).setTextColor(Color.parseColor("#FFFFFF"));
                 }
+                setTvText(R.id.tv_remainkon,String.valueOf(power[1]));
+
+            }
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -601,27 +659,27 @@ public class HomePagerActivity extends BaseActivity {
                 work = ieCarDriver.getCar_WorkMode();
 
 
-                    switch (work) {
-                        case 0x01:
-                            setTvText(R.id.tv_car_mode,R.string.Economic);
+                switch (work) {
+                    case 0x01:
+                        setTvText(R.id.tv_car_mode,R.string.Economic);
 //                            homePagerOneFragment.tv_work.setText(R.string.Economic);
-                            break;
-                        case 0x02:
-                            setTvText(R.id.tv_car_mode,R.string.Sport);
+                        break;
+                    case 0x02:
+                        setTvText(R.id.tv_car_mode,R.string.Sport);
 
-                            break;
-                        case 0x03:
-                            setTvText(R.id.tv_car_mode,R.string.Irascible);
-                            break;
-                        case 0x04:
-                            setTvText(R.id.tv_car_mode,R.string.NEDC);
+                        break;
+                    case 0x03:
+                        setTvText(R.id.tv_car_mode,R.string.Irascible);
+                        break;
+                    case 0x04:
+                        setTvText(R.id.tv_car_mode,R.string.NEDC);
 
-                            break;
-                        default:
-                            setTvText(R.id.tv_car_mode,R.string.Economic);
+                        break;
+                    default:
+                        setTvText(R.id.tv_car_mode,R.string.Economic);
 
-                            break;
-                    }
+                        break;
+                }
 
 
             }
@@ -675,7 +733,7 @@ public class HomePagerActivity extends BaseActivity {
             }else {
                 ToastUtils.show(R.string.safetip);
             }
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -683,7 +741,7 @@ public class HomePagerActivity extends BaseActivity {
     public  void  OneKeyWindowOpen(){
         try {
             ieCarDriver.set_OneKeyOpenWindow(0);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -698,6 +756,7 @@ public class HomePagerActivity extends BaseActivity {
         getFmFragment();
         getDialogLocalMusicD();
         getDialogVideo();
+        getDialogLrc();
         getScanService();
         getPhoneInfoService();
         getVideoFragment();
@@ -805,6 +864,13 @@ public class HomePagerActivity extends BaseActivity {
             dialogVideo=new DialogVideo(this);
         }
         return dialogVideo;
+    }
+
+    public DialogLrc getDialogLrc() {
+        if(dialogLrc==null){
+            dialogLrc=new DialogLrc(this);
+        }
+        return dialogLrc;
     }
 
     public ScanService getScanService() {

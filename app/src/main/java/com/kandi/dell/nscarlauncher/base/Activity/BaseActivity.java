@@ -38,7 +38,7 @@ import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gyf.barlibrary.BarHide;
 import com.gyf.barlibrary.ImmersionBar;
-import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
+import com.kandi.dell.nscarlauncher.ui_portrait.home.HomePagerActivity;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 //import com.zhy.autolayout.AutoLayoutActivity;
@@ -69,7 +69,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     /**
      * 加载对话框是否显示
      */
-    private boolean isLoadingShow;
+    public boolean isLoadingShow;
+
+    public boolean isLoadingShow() {
+        return isLoadingShow;
+    }
     /**
      * 定位管理工具类
      */

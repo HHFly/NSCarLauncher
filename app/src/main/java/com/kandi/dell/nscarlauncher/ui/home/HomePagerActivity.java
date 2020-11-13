@@ -45,7 +45,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.driverlayer.kdos_driverServer.IECarDriver;
+import com.driverlayer.os_driverServer.IECarDriver;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.Activity.BaseActivity;
@@ -1092,10 +1092,10 @@ public int getSim(int num) {
     /*电量车程*/
     private   void setCarPoewr(){
 
-        int[] power =new int[10];
+        int[] power =new int[2];
         try {
             if(ieCarDriver!=null) {
-               ieCarDriver.Ecoc_getGeneral_Car(power);
+                ieCarDriver.getCarInfo(power);
 //                if (!tv_power.getText().equals(String.valueOf(power[10]))) {
 //                    int i =power[10]%10;
 //                    FlagProperty.CarPower =power[10]/10;
@@ -1104,23 +1104,18 @@ public int getSim(int num) {
 //                    iv_t_power.setImageResource(getPower(power[10]));
 ////                    setIvImage(R.id.iv_t_power, getPower(power[0]));
 //                }
-                    FlagProperty.Speed =power[7];
-                    /*剩余里程*/
-                if (homePagerOneFragment != null) {
-                    if (homePagerOneFragment.tv_w_speed.getText().toString().equals(String.valueOf(power[1]))) {
-                        return;
-                    }
-                    if (0 == power[1]) {
-                        homePagerOneFragment.tv_w_speed.setTextColor(Color.parseColor("#F03A53"));
-                    } else {
-                        homePagerOneFragment.tv_w_speed.setTextColor(Color.parseColor("#FFFFFF"));
-                    }
+                FlagProperty.Speed =power[0];
+                /*剩余里程*/
 
-                    homePagerOneFragment.tv_w_speed.setText(String.valueOf(power[1]));
+                if (0 == power[1]) {
+                    getTextView(R.id.tv_remainkon).setTextColor(Color.parseColor("#F03A53"));
+                } else {
+                    getTextView(R.id.tv_remainkon).setTextColor(Color.parseColor("#FFFFFF"));
                 }
-            }else {
+                setTvText(R.id.tv_remainkon,String.valueOf(power[1]));
 
             }
+
         } catch (RemoteException e) {
             e.printStackTrace();
         }

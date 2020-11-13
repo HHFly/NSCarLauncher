@@ -18,7 +18,7 @@
             android:background="@drawable/select_home_ctll_last" />
 
         <TextView
-            android:layout_marginTop="20px"
+            android:layout_marginTop="21px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -39,7 +39,7 @@
             />
         <TextView
             android:id="@+id/ctl_tv_center"
-            android:layout_marginTop="9px"
+            android:layout_marginTop="7px"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
             android:background="@drawable/select_home_ctll_next"
             />
         <TextView
-            android:layout_marginTop="20px"
+            android:layout_marginTop="21px"
             android:layout_gravity="bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

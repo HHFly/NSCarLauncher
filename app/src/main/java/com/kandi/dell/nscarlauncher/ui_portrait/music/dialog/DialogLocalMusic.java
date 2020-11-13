@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
@@ -72,10 +73,9 @@ public class DialogLocalMusic implements Observer {
         dialog.setCanceledOnTouchOutside(true);// 设置点击屏幕Dialog不消失
          window = dialog.getWindow();
         window.setContentView(R.layout.dialog_music_list);
+        window.setType(WindowManager.LayoutParams.TYPE_APPLICATION_PANEL);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         WindowManager.LayoutParams lp = window.getAttributes();
-//        lp.gravity= Gravity.TOP;
-//        lp.gravity=Gravity.TOP;
-//        lp.y=60;
         window.setAttributes(lp);
 //        window.setWindowAnimations(R.style.dialog_localmusic_style);
         this.context = context;
