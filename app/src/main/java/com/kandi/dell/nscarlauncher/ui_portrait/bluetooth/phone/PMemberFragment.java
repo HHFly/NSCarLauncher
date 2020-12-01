@@ -2,6 +2,7 @@ package com.kandi.dell.nscarlauncher.ui_portrait.bluetooth.phone;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.kandi.dell.nscarlauncher.R;
@@ -36,6 +37,7 @@ public class PMemberFragment extends BaseFragment implements SideBar.OnChooseLet
 
     @Override
     public void setListener() {
+        setClickListener(R.id.iv_return);
             hintSideBar.setOnChooseLetterChangedListener(this);
     }
 
@@ -85,30 +87,32 @@ public class PMemberFragment extends BaseFragment implements SideBar.OnChooseLet
 
         }
         if (mAdapter == null) {
-            rv = getView(R.id.recyclerView2);
+            rv = getView(R.id.recyclerView1);
             mAdapter =new PMemberAdapter(data);
 
             if (rv != null) {
-                setPullAction(mData);
-                rv.addItemDecoration(new SectionDecoration(dataList,getContext(), new SectionDecoration.DecorationCallback() {
-                    //返回标记id (即每一项对应的标志性的字符串)
-                    @Override
-                    public String getGroupId(int position) {
-                        if(dataList.get(position).getName()!=null) {
-                            return dataList.get(position).getName();
-                        }
-                        return "-1";
-                    }
-
-                    //获取同组中的第一个内容
-                    @Override
-                    public String getGroupFirstLine(int position) {
-                        if(dataList.get(position).getName()!=null) {
-                            return dataList.get(position).getName();
-                        }
-                        return "";
-                    }
-                }));
+//                if(data != null && data.size() > 0){
+//                    setPullAction(data);
+//                    rv.addItemDecoration(new SectionDecoration(dataList,getContext(), new SectionDecoration.DecorationCallback() {
+//                        //返回标记id (即每一项对应的标志性的字符串)
+//                        @Override
+//                        public String getGroupId(int position) {
+//                            if(dataList.get(position).getName()!=null) {
+//                                return dataList.get(position).getName();
+//                            }
+//                            return "-1";
+//                        }
+//
+//                        //获取同组中的第一个内容
+//                        @Override
+//                        public String getGroupFirstLine(int position) {
+//                            if(dataList.get(position).getName()!=null) {
+//                                return dataList.get(position).getName();
+//                            }
+//                            return "";
+//                        }
+//                    }));
+//                }
                 linearLayoutManager = new LinearLayoutManager(getContext());
                 rv.setLayoutManager(linearLayoutManager);
                 rv.setAdapter(mAdapter);
@@ -126,27 +130,29 @@ public class PMemberFragment extends BaseFragment implements SideBar.OnChooseLet
 
         }else {
             if(rv==null){
-                setPullAction(mData);
-                rv.addItemDecoration(new SectionDecoration(dataList,getContext(), new SectionDecoration.DecorationCallback() {
-                    //返回标记id (即每一项对应的标志性的字符串)
-                    @Override
-                    public String getGroupId(int position) {
-                        if(dataList.get(position).getName()!=null) {
-                            return dataList.get(position).getName();
-                        }
-                        return "-1";
-                    }
-
-                    //获取同组中的第一个内容
-                    @Override
-                    public String getGroupFirstLine(int position) {
-                        if(dataList.get(position).getName()!=null) {
-                            return dataList.get(position).getName();
-                        }
-                        return "";
-                    }
-                }));
-                rv = getView(R.id.recyclerView2);
+//                if(data != null && data.size() > 0){
+//                    setPullAction(data);
+//                    rv.addItemDecoration(new SectionDecoration(dataList,getContext(), new SectionDecoration.DecorationCallback() {
+//                        //返回标记id (即每一项对应的标志性的字符串)
+//                        @Override
+//                        public String getGroupId(int position) {
+//                            if(dataList.get(position).getName()!=null) {
+//                                return dataList.get(position).getName();
+//                            }
+//                            return "-1";
+//                        }
+//
+//                        //获取同组中的第一个内容
+//                        @Override
+//                        public String getGroupFirstLine(int position) {
+//                            if(dataList.get(position).getName()!=null) {
+//                                return dataList.get(position).getName();
+//                            }
+//                            return "";
+//                        }
+//                    }));
+//                }
+                rv = getView(R.id.recyclerView1);
                 if (rv != null) {
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                     rv.setLayoutManager(linearLayoutManager);

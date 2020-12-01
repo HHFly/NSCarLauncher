@@ -149,7 +149,8 @@
             android:textSize="18px"
             android:text=""
             android:textColor="#989898"
-            android:layout_marginTop="50px"/>
+            android:layout_marginTop="50px"
+            android:layout_marginBottom="8px"/>
 
         <View style="@style/BaseLine.Horizontal"
             android:background="#3C3C3C"
@@ -163,7 +164,7 @@
         android:layout_marginRight="24px">
 
         <TextView style="@style/BaseText.Tv"
-            android:textSize="36px"
+            android:textSize="30px"
             android:text="@string/固件版本"
             android:layout_marginTop="10px"/>
         <TextView style="@style/BaseText.Tv"

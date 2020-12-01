@@ -44,10 +44,6 @@ public class DateDialog extends Dialog{
 		toptitle.setText(context.getResources().getString(R.string.设置日期));
 		
 		return_bt = (Button) findViewById(R.id.timeset_return);
-		String dataformat = Settings.System.getString(getContext().getContentResolver(), Settings.System.DATE_FORMAT);
-		if("".equals(dataformat) || dataformat == null){
-			Settings.System.putString(getContext().getContentResolver(), Settings.System.DATE_FORMAT,"yyyy-MM-dd");
-		}
 		return_bt.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {

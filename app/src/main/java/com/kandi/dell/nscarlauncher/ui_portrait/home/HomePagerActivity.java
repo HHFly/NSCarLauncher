@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -28,6 +29,7 @@ import com.kandi.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.common.util.FragmentUtils;
 import com.kandi.dell.nscarlauncher.common.util.IsHomeUtils;
+import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.common.util.TimeUtils;
 import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
 
@@ -54,6 +56,7 @@ import com.kandi.dell.nscarlauncher.ui_portrait.music.service.ScanService;
 import com.kandi.dell.nscarlauncher.ui_portrait.airctrl.AirCtrlFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.carctrl.CarCtrlFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.ems.EmsFragment;
+import com.kandi.dell.nscarlauncher.ui_portrait.setting.fragment.BlueToothSetFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.video.VideoFragment;
 import com.kandi.dell.nscarlauncher.ui_portrait.video.dialog.DialogVideo;
 import com.kandi.dell.nscarlauncher.widget.PlayControllFMView;
@@ -83,6 +86,7 @@ public class HomePagerActivity extends BaseActivity {
     public AirCtrlFragment mAirCtrlFragment;
     public EmsFragment mEmsFragment;
     public SetFragment mSetFragment;
+    public BlueToothSetFragment mBlueToothSetFragment;
 
     public BaseFragment mCurFragment;//当前页
 
@@ -158,10 +162,15 @@ public class HomePagerActivity extends BaseActivity {
         initGroupView();
         init_time();//时间
         bindIeCarService();
+        changBgView();
+        if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
+            FlagProperty.flag_bluetooth = true;
+        }
     }
 
     @Override
     public void setListener() {
+        setClickListener(R.id.music_layout);
         setClickListener(R.id.iv_home_music_center);
         setClickListener(R.id.iv_home_music_left);
         setClickListener(R.id.iv_home_music_right);
@@ -280,6 +289,9 @@ public class HomePagerActivity extends BaseActivity {
             return;
         }
         switch (v.getId()){
+            case R.id.music_layout:
+                jumpFragment(FragmentType.MUSIC);
+                break;
             case R.id.iv_backbox:
 //                后备箱要注意只控制开锁，关锁不需要控制。
                 if(FlagProperty.BCMStaus==0) {
@@ -415,6 +427,7 @@ public class HomePagerActivity extends BaseActivity {
                     switchFragment(getFmFragment());
                     break;
                 case FragmentType.MUSIC:
+                    getBlueToothSetFragment().setOriginId(1);
                     switchFragment(getMusicFragment());
                     break;
                 case FragmentType.SET:
@@ -430,6 +443,7 @@ public class HomePagerActivity extends BaseActivity {
                     switchFragment(getEmsFragment());
                     break;
                 case FragmentType.PHONE:
+                    getBlueToothSetFragment().setOriginId(2);
                     switchFragment(getPhoneFragment());
                     break;
                 case FragmentType.BTMUSIC:
@@ -440,6 +454,9 @@ public class HomePagerActivity extends BaseActivity {
                     break;
                 case FragmentType.VIDEO:
                     switchFragment(getVideoFragment());
+                    break;
+                case FragmentType.BTSET:
+                    switchFragment(getBlueToothSetFragment());
                     break;
 
             }
@@ -453,7 +470,7 @@ public class HomePagerActivity extends BaseActivity {
     private void switchFragment(BaseFragment fragment) {
 
         mCurFragment = FragmentUtils.selectFragment(this, mCurFragment, fragment, R.id.frame_main);
-
+        mCurFragment.setmType(fragment.getmType());
         mCurFragment.Resume();
 
         myHandler.sendMessage(myHandler.obtainMessage(HandleKey.SHOW));
@@ -529,6 +546,20 @@ public class HomePagerActivity extends BaseActivity {
         if(mCurFragment != null){
             mCurFragment.Pause();
         }
+        if(mCurFragment != null){
+            if(mCurFragment.getmType() == FragmentType.SET){
+                if(!getSetFragment().isSetHome){
+                    getSetFragment().hideFragment();
+                    return;
+                }
+            }
+
+            if(mCurFragment.getmType() == FragmentType.VIDEO){
+                getVideoFragment().getView(R.id.iv_return).performClick();
+                return;
+            }
+        }
+
         setViewVisibility(R.id.frame_main, false);
         hideLoadingDialog();
     }
@@ -765,11 +796,23 @@ public class HomePagerActivity extends BaseActivity {
         getCarCtrlFragment();
         getEmsFragment();
         getSetFragment();
+        getBlueToothSetFragment();
         getScanService().ScanAllDaTa(this);
         getScanService().addObserver(getDialogLocalMusicD());
         getScanService().addObserver(getDialogVideo());
 
     }
+
+    /*设置背景param int resid*/
+    public void changBgView(){
+        int resid = SPUtil.getInstance(getActivity(),"picindex").getInt("picindex",0);//存放图片数组存入对应资源
+        if(resid == 0){
+            getView(R.id.bg_home).setBackgroundResource(R.color.dfbackground);
+        }else{
+            getView(R.id.bg_home).setBackgroundResource(resid);
+        }
+    }
+
     public MusicFragment getMusicFragment() {
         if(musicFragment==null){
             musicFragment=new MusicFragment();
@@ -850,6 +893,14 @@ public class HomePagerActivity extends BaseActivity {
             mSetFragment.setHomePagerActivity(this);
         }
         return mSetFragment;
+    }
+
+    public BlueToothSetFragment getBlueToothSetFragment() {
+        if(mBlueToothSetFragment == null){
+            mBlueToothSetFragment = new BlueToothSetFragment();
+            mBlueToothSetFragment.setHomePagerActivity(this);
+        }
+        return mBlueToothSetFragment;
     }
 
     public DialogLocalMusic getDialogLocalMusicD() {

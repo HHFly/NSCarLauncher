@@ -13,7 +13,7 @@
     <TextView style="@style/BaseText.Tv"
         android:id="@+id/apk_name"
         android:singleLine="true"
-        android:maxLength="7"
+        android:maxEms="9"
         android:ellipsize="end"
         android:layout_marginTop="23px"
         android:textSize="24px"

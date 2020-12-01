@@ -41,6 +41,7 @@ public class CarCtrlFragment extends BaseFragment{
 
     public boolean isDoorStatus;
     public boolean isTrunkStatus;
+    boolean isUserClick = false;//用户操作延迟刷新
 
     @Override
     public void setmType(int mType) {
@@ -107,6 +108,7 @@ public class CarCtrlFragment extends BaseFragment{
 
     @Override
     public void initView() {
+        setmType(FragmentType.CARCONTROLL);
         if(baseReceiver == null){
             baseReceiver = new BaseReceiver();
             IntentFilter kdIntentFilter = new IntentFilter();
@@ -125,6 +127,7 @@ public class CarCtrlFragment extends BaseFragment{
 
     @Override
     public void Resume() {
+        isUserClick = false;
         isbreak = false;
         thread = new Thread(new Runnable() {
             @Override
@@ -167,6 +170,7 @@ public class CarCtrlFragment extends BaseFragment{
         if(carSettingDrv == null){
             carSettingDrv = DriverServiceManger.getInstance().getCarSettingDriver();
         }
+        isUserClick = true;
         try{
             switch (view.getId()){
                 case R.id.bt_back:
@@ -334,12 +338,12 @@ public class CarCtrlFragment extends BaseFragment{
 
                 int ret = carSettingDrv.retreveCarInfo();
                 Log.i("testtest","=======refreshCarSettingViewButtonsStatus======="+ret);
-                if(ret == 1){
-                    setViewVisibility(R.id.loadingView,true);
-                    return;
-                } else {
-                    setViewVisibility(R.id.loadingView,false);
-                }
+//                if(ret == 1){
+//                    setViewVisibility(R.id.loadingView,true);
+//                    return;
+//                } else {
+//                    setViewVisibility(R.id.loadingView,false);
+//                }
 
 
                 //车门
@@ -457,6 +461,10 @@ public class CarCtrlFragment extends BaseFragment{
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case UPDATE_PANNEL:
+                    if(isUserClick){
+                        isUserClick = false;
+                        return;
+                    }
                     refreshCarSettingViewButtonsStatus();
                     break;
                 default:

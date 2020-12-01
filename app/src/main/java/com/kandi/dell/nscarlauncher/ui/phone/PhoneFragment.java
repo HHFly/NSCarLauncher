@@ -169,27 +169,27 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     }
     /*获取全局模块*/
     private void  getService(){
-//        if(audioservice==null) {
-//            audioservice = App.get().getAudioservice();
-//        }
+        if(audioservice==null) {
+            audioservice = App.get().getAudioservice();
+        }
         if(audioManager==null) {
             audioManager = App.get().getAudioManager();
         }
-//        if(btservice==null) {
-//            btservice = App.get().getBtservice();
-//        }
+        if(btservice==null) {
+            btservice = App.get().getBtservice();
+        }
     }
     /*打电话*/
-   public void callphone(String num){
-       number=num;
-       new Thread() {
-           public void run() {
-               myHandler.sendMessage(myHandler.obtainMessage(PHONE_START));
-           }
-       }.start();
+    public void callphone(String num){
+        number=num;
+        new Thread() {
+            public void run() {
+                myHandler.sendMessage(myHandler.obtainMessage(PHONE_START));
+            }
+        }.start();
 
-   }
-   /*挂电话*/
+    }
+    /*挂电话*/
     public void hangDownphone(){
 
         new Thread() {
@@ -294,12 +294,12 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     String call_time = changeTimeToStandard(jsonObject.getString("callTime"));
                     String name = jsonObject.getString("name");
-                   String number = jsonObject.getString("callNumber");
+                    String number = jsonObject.getString("callNumber");
 
-                   info.setName(StringUtils.replaceBlank(name));
-                   info.setNumber(number);
-                   info.setCall_time(call_time);
-                   phoneRecordInfos.add(info);
+                    info.setName(StringUtils.replaceBlank(name));
+                    info.setNumber(number);
+                    info.setCall_time(call_time);
+                    phoneRecordInfos.add(info);
                 }
                 if(pRecordFragment!=null) {
                     pRecordFragment.setmData(phoneRecordInfos);
@@ -345,11 +345,11 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
                     if (object.length() <= 0) {
 
                     } else {
-                      String number= object.getJSONObject(0).getString("phone").replace(" ", "");
+                        String number= object.getJSONObject(0).getString("phone").replace(" ", "");
                         number = number.replace("-", "");
                         info.setNumber(number);
 //                        System.out.println(info.name + " : " + info.number);
-                       phoneBookInfos.add(info);
+                        phoneBookInfos.add(info);
                     }
                 }
                 new Thread(new Runnable() {
@@ -704,7 +704,7 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
     public void callIn(String num,String addre,String ty){
         number=num;
         address =addre;
-       type =ty;
+        type =ty;
         new Thread() {
             public void run() {
                 myHandler.sendMessage(myHandler.obtainMessage(PHONE_IN));
@@ -722,9 +722,9 @@ public class PhoneFragment extends BaseFragment implements ViewPager.OnPageChang
             pNumFragment = new PNumFragment();
         }
         if(pMemberFragment==null){
-         pMemberFragment =new PMemberFragment();}
-         if(pRecordFragment==null){
-         pRecordFragment =new PRecordFragment();}
+            pMemberFragment =new PMemberFragment();}
+        if(pRecordFragment==null){
+            pRecordFragment =new PRecordFragment();}
         mFragments.add(pNumFragment);
         mFragments.add(pMemberFragment);
         mFragments.add(pRecordFragment);

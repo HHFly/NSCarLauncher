@@ -193,7 +193,7 @@ public class FMFragment extends BaseFragment {
         } else {
             App.get().getCurActivity().hideFragment();
             closeFm();
-            SPUtil.getInstance(getContext(),FMCHANNEL).putFloat(FMCHANNEL,channel);
+            SPUtil.getInstance(App.get().getCurActivity().getActivity(),FMCHANNEL).putFloat(FMCHANNEL,channel);
         }
     }
     /**
@@ -370,6 +370,7 @@ public class FMFragment extends BaseFragment {
                     try {
                         System.out.println("radio.OpenLocalRadio():" + App.get().getRadio().OpenLocalRadio());
                         App.get().getCurActivity().myHandler.sendEmptyMessage(HandleKey.FMOPEN);
+                        isPlay=true;
 //                        homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendMessage(homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.obtainMessage(HandleKey.OPEMFM));
 //
 //                        System.out.println("radio.SetRadioFreq():" + channel + "----" + radio.SetRadioFreq(channel)); // 开机初始化为频道93.0
@@ -391,6 +392,7 @@ public class FMFragment extends BaseFragment {
                     try {
                         System.out.println("radio.CloseLocalRadio():" + App.get().getRadio().CloseLocalRadio());
                         App.get().getCurActivity().myHandler.sendEmptyMessage(HandleKey.FMCOLSE);
+                        isPlay=false;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="600px"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="400px"
-    android:background="#eeeeee">
+    android:background="@drawable/data_bg">
  <TextView
      android:id="@+id/wifi_input_name"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
      android:textSize="36px"
-     android:textColor="#010101"
+     android:textColor="@color/white"
      android:layout_marginLeft="52px"
      android:layout_marginTop="30px"/>
     <TextView
@@ -18,7 +19,8 @@
         android:layout_below="@+id/wifi_input_name"
         android:layout_marginTop="23px"
         android:text="@string/密码"
-        android:textColor="#010101"
+        android:textSize="30px"
+        android:textColor="@color/white"
         />
     <RelativeLayout
         android:layout_marginTop="85px"
@@ -35,7 +37,7 @@
         android:layout_centerHorizontal="true"
         android:background="@null"
         android:inputType="textPassword"
-        android:textColor="#010101"
+        android:textColor="@color/white"
         android:textSize="36px"
         />
     <ImageView
@@ -52,30 +54,30 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:background="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="78px">
       <TextView
           android:id="@+id/wifi_input_cancel"
-          android:layout_width="0px"
+          android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:text="@string/取消"
-          android:textColor="#5178E1"
+          android:textColor="@color/white"
           android:textSize="36px"
+          android:background="@drawable/select_bt_eq_bg"
           android:gravity="center"/>
-        <View style="@style/BaseLine.Vertical"
-            android:background="#989898"/>
+
         <TextView
             android:id="@+id/wifi_input_confirm"
-            android:layout_width="0px"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/确认"
             android:textSize="36px"
-            android:textColor="#989898"
+            android:textColor="@color/white"
+            android:background="@drawable/select_bt_eq_bg"
             android:gravity="center"/>
 
     </LinearLayout>

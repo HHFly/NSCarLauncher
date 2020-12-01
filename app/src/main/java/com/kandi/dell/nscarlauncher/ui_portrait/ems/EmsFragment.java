@@ -110,6 +110,7 @@ public class EmsFragment extends BaseFragment{
 
     @Override
     public void initView() {
+        setmType(FragmentType.EMS);
 //        setBatSoc(40);
         emsDriver = DriverServiceManger.getInstance().getEmsDriver();
     }

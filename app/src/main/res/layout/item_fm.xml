@@ -4,45 +4,45 @@
     android:layout_height="302px"
 
     android:background="@mipmap/ic_home_fm_bg">
-<RelativeLayout
-    android:id="@+id/item_fm"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginTop="20px">
-
-    <ImageView
-        android:id="@+id/iv_fm"
-        android:layout_width="127px"
-        android:layout_height="129px"
-        android:src="@mipmap/fm_bg" />
-
-    <LinearLayout
-        android:visibility="visible"
-        android:id="@+id/ll_fm"
-        android:orientation="horizontal"
+    <RelativeLayout
+        android:id="@+id/item_fm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-       >
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20px">
 
-        <TextView
-            android:id="@+id/tv_fm_hz"
-            style="@style/BaseText.Tv"
+        <ImageView
+            android:id="@+id/iv_fm"
+            android:layout_width="127px"
+            android:layout_height="129px"
+            android:src="@mipmap/fm_bg" />
+
+        <LinearLayout
+            android:visibility="visible"
+            android:id="@+id/ll_fm"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="93.0"
-            android:textSize="20px" />
-    <TextView
-        style="@style/BaseText.Tv"
-        android:textSize="12px"
-        android:text="MHZ"
-       android:layout_toRightOf="@+id/tv_fm_hz"/>
-    </LinearLayout>
+            android:layout_centerInParent="true"
+            >
+
+            <TextView
+                android:id="@+id/tv_fm_hz"
+                style="@style/BaseText.Tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="93.0"
+                android:textSize="20px" />
+            <TextView
+                style="@style/BaseText.Tv"
+                android:textSize="12px"
+                android:text="MHZ"
+                android:layout_toRightOf="@+id/tv_fm_hz"/>
+        </LinearLayout>
 
 
 
-</RelativeLayout>
+    </RelativeLayout>
     <TextView
         style="@style/BaseText.Tv"
         android:layout_marginTop="9px"
@@ -53,9 +53,9 @@
 
     <com.kandi.dell.nscarlauncher.widget.PlayControllFMView
         android:id="@+id/fm_playcontroll"
-        android:layout_width="202px"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="15px" />
 
 

@@ -318,7 +318,7 @@ public class VideoPlayStandard extends JCVideoPlayer {
     private void changeUiToNormal() {
         topContainer.setVisibility(View.INVISIBLE);
         bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.VISIBLE);
+        startButton.setVisibility(View.INVISIBLE);
         loadingProgressBar.setVisibility(View.INVISIBLE);
         thumbImageView.setVisibility(View.VISIBLE);
         coverImageView.setVisibility(View.VISIBLE);
@@ -349,7 +349,7 @@ public class VideoPlayStandard extends JCVideoPlayer {
     private void changeUiToPlayingShow() {
         topContainer.setVisibility(View.INVISIBLE);
         bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.VISIBLE);
+        startButton.setVisibility(View.INVISIBLE);
         loadingProgressBar.setVisibility(View.INVISIBLE);
         thumbImageView.setVisibility(View.INVISIBLE);
         coverImageView.setVisibility(View.INVISIBLE);
@@ -365,7 +365,7 @@ public class VideoPlayStandard extends JCVideoPlayer {
     private void changeUiToPauseShow() {
         topContainer.setVisibility(View.INVISIBLE);
         bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.VISIBLE);
+        startButton.setVisibility(View.INVISIBLE);
         loadingProgressBar.setVisibility(View.INVISIBLE);
         thumbImageView.setVisibility(View.INVISIBLE);
         coverImageView.setVisibility(View.INVISIBLE);
@@ -412,7 +412,7 @@ public class VideoPlayStandard extends JCVideoPlayer {
     private void changeUiToCompleteShow() {
         topContainer.setVisibility(View.INVISIBLE);
         bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.VISIBLE);
+        startButton.setVisibility(View.INVISIBLE);
         loadingProgressBar.setVisibility(View.INVISIBLE);
         thumbImageView.setVisibility(View.VISIBLE);
         coverImageView.setVisibility(View.INVISIBLE);
@@ -423,7 +423,7 @@ public class VideoPlayStandard extends JCVideoPlayer {
     private void changeUiToCompleteClear() {
         topContainer.setVisibility(View.INVISIBLE);
         bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.VISIBLE);
+        startButton.setVisibility(View.INVISIBLE);
         loadingProgressBar.setVisibility(View.INVISIBLE);
         thumbImageView.setVisibility(View.VISIBLE);
         coverImageView.setVisibility(View.INVISIBLE);
@@ -434,7 +434,7 @@ public class VideoPlayStandard extends JCVideoPlayer {
     private void changeUiToError() {
         topContainer.setVisibility(View.INVISIBLE);
         bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.VISIBLE);
+        startButton.setVisibility(View.INVISIBLE);
         loadingProgressBar.setVisibility(View.INVISIBLE);
         thumbImageView.setVisibility(View.INVISIBLE);
         coverImageView.setVisibility(View.VISIBLE);

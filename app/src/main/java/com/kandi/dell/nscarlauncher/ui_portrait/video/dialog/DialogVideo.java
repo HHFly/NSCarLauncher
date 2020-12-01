@@ -3,6 +3,7 @@ package com.kandi.dell.nscarlauncher.ui_portrait.video.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Handler;
@@ -42,7 +43,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class DialogVideo implements Observer {
-    public static final String PATH_MUSIC = "/storage/emulated/0/Video/";
+    public static final String PATH_MUSIC = "/sdcard/Movies/";
     public  boolean isShow;
     VideoDialogAdapter mAdapter;
     public  List<Mp3Info> data = new ArrayList<Mp3Info>();
@@ -307,6 +308,7 @@ public class DialogVideo implements Observer {
 
 //                    App.get().getCurActivity().getMusicFragment().getDriverFragment().listStartPlayMusic();
                     App.get().getCurActivity().getVideoFragment().play(data);
+                    mAdapter.notifyDataSetChanged();
                 }
 
 
@@ -552,7 +554,7 @@ public class DialogVideo implements Observer {
                     long endTimes = System.currentTimeMillis();
                     Log.i("CopyFileThread",""+Thread.currentThread().getName()+"-alltime:"+(endTimes-beginTimes));
                     operate_count_index++;
-
+                    context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(sourse)));
                     threadEnd();
                     if(operate_count_index>operate_total){
                         isWhile = false;
@@ -605,7 +607,7 @@ public class DialogVideo implements Observer {
 
     public  void  show(){
         dialog.show();
-//        fresh();
+        fresh();
         isShow=true;
     }
     public void  cancel(){

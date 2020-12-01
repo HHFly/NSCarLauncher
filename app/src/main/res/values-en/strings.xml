@@ -38,7 +38,7 @@
     <string name="我的设备">About My Device</string>
     <string name="整车控制">Car Control</string>
     <string name="导航">Navigation</string>
-    <string name="空调">Air Conditioning</string>
+    <string name="空调">Air</string>
     <string name="室内">Indoor</string>
     <string name="usb">USB Music</string>
     <string name="MusicCol">Collection</string>
@@ -47,6 +47,7 @@
     <string name="新密码">New Password：</string>
     <string name="请输入蓝牙密码">Please enter bluetooth password</string>
     <string name="请输入无线密码">Please enter the wireless password</string>
+    <string name="无线网络">Wifi</string>
     <string name="亮度">Brightness</string>
     <string name="autolight">Automatic backlight</string>
     <string name="语言和输入法">Language &amp; input </string>
@@ -99,8 +100,8 @@
     <string name="更改蓝牙密码">Change bluetooth password</string>
     <string name="旧密码">Old Password:</string>
     <string name="附近网络">Network</string>
-    <string name="当前连接网络">Current connected network:</string>
-    <string name="更多应用">More applications</string>
+    <string name="当前连接网络">Current network:</string>
+    <string name="更多应用">More App</string>
     <string name="下午">PM </string>
     <string name="上午">AM </string>
     <string name="上一台">Last</string>
@@ -147,7 +148,7 @@
     <string name="delete">DELETE</string>
     <string name="cancle">CANCEL</string>
     <string name="importerr">Import failed</string>
-    <string name="应用">Application</string>
+    <string name="应用">App</string>
     <string name="能量">Power</string>
     <string name="未知音乐">Unknown music</string>
     <string name="歌手">Singer</string>
@@ -167,5 +168,56 @@
     <string name="设备移除">Device remove</string>
     <string name="当前无视频播放">No video playing </string>
     <string name="SD视频">SD Video</string>
+    <string name="输入法切换">IME Toggler</string>
+    <string name="低">low</string>
+    <string name="中">middle</string>
+    <string name="高">high</string>
+    <string name="行车模式">Driving mode</string>
+    <string name="经济">Economy</string>
+    <string name="运动">Sport</string>
+    <string name="回收比">Recovery ratio</string>
+    <string name="自动更新">Auto Update</string>
+    <string name="使用网络更新">Net Update</string>
+    <string name="设置日期">Set date</string>
+    <string name="设置时间">Set time</string>
+    <string name="语言切换">Language switching</string>
+    <string name="中文">Chinese</string>
+    <string name="English">English</string>
+    <string name="显示与亮度">Display &amp; brightness</string>
+    <string name="近光灯">Dipped beam</string>
+    <string name="远光灯">High beam</string>
+    <string name="示宽灯">Side beam</string>
+    <string name="后雾灯">Rear fog lamp</string>
+    <string name="设备加载中">Loading...</string>
+    <!--空调控制-->
+    <string name="室内温度">Indoor Temp</string>
+    <string name="OFF">OFF</string>
+    <string name="ON">ON</string>
+    <string name="AC">A/C</string>
+    <string name="PTC">PTC</string>
+    <string name="内循环">In-cycle</string>
+    <string name="外循环">Out-cycle</string>
+    <string name="吹面">Face</string>
+    <string name="吹脚">Foot</string>
+    <string name="吹面吹脚">Face&amp;Foot</string>
+    <string name="吹脚除雾">Face&amp;Defog</string>
+    <string name="除霜除雾">Defrost&amp;Defog</string>
+    <string name="摄氏度">℃</string>
+    <string name="sd">SD</string>
+    <string name="关闭">Close light</string>
+
+    <!--能量管理-->
+    <string name="能量管理">Energy Management</string>
+    <string name="剩余电流">Aftercurrent</string>
+    <string name="总电压">Total voltage</string>
+    <string name="总电流">Total current</string>
+    <string name="最高温度">Highest Temp</string>
+    <string name="最低温度">Lowest Temp</string>
+    <string name="单体最高">Cell Highest</string>
+    <string name="单体最低">Cell Lowest</string>
+    <string name="绝缘电阻">Mohm</string>
+    <string name="电池数量">Number of batteries</string>
+    <string name="剩余电量">Soc</string>
+    <string name="箱"></string>
 
 </resources>

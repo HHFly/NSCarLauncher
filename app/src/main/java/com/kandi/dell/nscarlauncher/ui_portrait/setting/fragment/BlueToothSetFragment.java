@@ -38,7 +38,7 @@ public class BlueToothSetFragment extends BaseFragment{
     String[] info = new String[1]; // 获取蓝牙名字传入参数
     String newName = "";
     String newPassword = "";
-//    IKdBtService btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
+    IKdBtService btservice = IKdBtService.Stub.asInterface(ServiceManager.getService("bt"));
 
     TextView tv_set_bluetooth_name;
     TextView tv_set_bluetooth_password;
@@ -62,6 +62,7 @@ public class BlueToothSetFragment extends BaseFragment{
 
     @Override
     public void initView() {
+        setmType(FragmentType.BTSET);
         myHandler.sendMessage(myHandler.obtainMessage(BLUETOOTH_INFO_NAME));
 
     }
@@ -144,15 +145,15 @@ public class BlueToothSetFragment extends BaseFragment{
                     new Thread() {
                         public void run() {
                             int result = -1;
-//                            try {
-//                                result = btservice.btSetLocalName(newName);
-////                                System.out.println("改名称结果:" + result);
-//                            } catch (RemoteException e) {
-//                                e.printStackTrace();
-//                            }
-//                            if (result == 0) {
-//                                myHandler.sendMessage(myHandler.obtainMessage(BLUETOOTH_CHANGE_NAME));
-//                            }
+                            try {
+                                result = btservice.btSetLocalName(newName);
+//                                System.out.println("改名称结果:" + result);
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
+                            if (result == 0) {
+                                myHandler.sendMessage(myHandler.obtainMessage(BLUETOOTH_CHANGE_NAME));
+                            }
                         };
                     }.start();
                     dialogName.dismiss();
@@ -288,12 +289,12 @@ public class BlueToothSetFragment extends BaseFragment{
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case BLUETOOTH_INFO_NAME:
-//                    try {
-//                        tv_set_bluetooth_name.setText(info[btservice.btGetLocalName(info)]);
-//                        tv_set_bluetooth_password.setText(FlagProperty.BtCode);
-//                    } catch (RemoteException e) {
-//                        e.printStackTrace();
-//                    }
+                    try {
+                        tv_set_bluetooth_name.setText(info[btservice.btGetLocalName(info)]);
+                        tv_set_bluetooth_password.setText(FlagProperty.BtCode);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case BLUETOOTH_CHANGE_NAME:
                     tv_set_bluetooth_name.setText( newName);

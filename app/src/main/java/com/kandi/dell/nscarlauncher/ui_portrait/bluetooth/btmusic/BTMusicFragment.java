@@ -52,6 +52,7 @@ public class BTMusicFragment  extends BaseFragment {
         tv_bt_music_singer=getView(R.id.tv_bt_singer);
         tv_bt_music_songname=getView(R.id.tv_bt_songname);
         music_total_time=getView(R.id.btmusic_total_time);
+        NullView =getView(R.id.bt_mic_null);
         bt_blueSet= getView(R.id.bt_blueSet);
         iv_bt_stop=getView(R.id.ctl_iv_center);
     }
@@ -67,6 +68,7 @@ public class BTMusicFragment  extends BaseFragment {
 
     @Override
     public void initView() {
+        setmType(FragmentType.BTMUSIC);
         initSeekBar();
         initName();
         setVisibilityGone(R.id.bt_mic_null,!FlagProperty.flag_bluetooth);
@@ -93,7 +95,7 @@ public class BTMusicFragment  extends BaseFragment {
                 break;
 
             case R.id.bt_blueSet:
-
+                App.get().getCurActivity().jumpFragment(FragmentType.BTSET);
                 break;
         }
     }
@@ -130,8 +132,6 @@ public class BTMusicFragment  extends BaseFragment {
     /*播放*/
     public  void musicPlay(){
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
-            int a =App.get().getAudioManager().requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-
             if (App.get().getAudioManager().requestAudioFocus(afBTChangeListener, 13, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                 new Thread() {
                     public void run() {
@@ -209,7 +209,7 @@ public class BTMusicFragment  extends BaseFragment {
             }
             if (("").equals(singer)||"null".equals(singer)) {
                 tv_bt_music_singer.setText("");
-                tv_bt_music_singer.setVisibility(View.GONE);
+                tv_bt_music_singer.setVisibility(View.INVISIBLE);
             } else {
                 tv_bt_music_singer.setText("- " + singer);
                 tv_bt_music_singer.setVisibility(View.VISIBLE);
@@ -325,7 +325,7 @@ public class BTMusicFragment  extends BaseFragment {
                             App.get().getBtservice().btAvrPause();
                         }
                         if(iv_bt_stop!=null) {
-                          iv_bt_stop.setImageResource(R.mipmap.ic_btmusic_default);
+                          iv_bt_stop.setImageResource(R.mipmap.ic_music_stop);
                         }
                         isPlay=false;
                         App.get().getCurActivity().myHandler.sendEmptyMessage(HandleKey.BTMUSICCOLSE);
@@ -337,7 +337,7 @@ public class BTMusicFragment  extends BaseFragment {
                             App.get().getBtservice().btAvrPlay();
                         }
                         if(iv_bt_stop!=null) {
-                           iv_bt_stop.setImageResource(R.mipmap.ic_btmusic_play);
+                           iv_bt_stop.setImageResource(R.mipmap.ic_play_big);
                         }
                         isPlay=true;
                         App.get().getCurActivity().myHandler.sendEmptyMessage(HandleKey.BTMUSICOPEN);

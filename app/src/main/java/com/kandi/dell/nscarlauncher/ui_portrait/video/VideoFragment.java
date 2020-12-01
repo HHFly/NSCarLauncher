@@ -1,6 +1,7 @@
 package com.kandi.dell.nscarlauncher.ui_portrait.video;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
 import android.widget.SeekBar;
@@ -55,13 +56,13 @@ public class VideoFragment extends BaseFragment {
         switch (v.getId()){
             case R.id.iv_return:
                 stopVideo();
+                handler.sendEmptyMessage(2);
                 App.get().getCurActivity().jumpFragment(FragmentType.APPLICATION);
                 break;
             case R.id.iv_video_list:
                 App.get().getCurActivity().getDialogVideo().show();
                 break;
             case R.id.ctl_video_center:
-                isPause =!isPause;
                 controllVideo();
                 break;
             case R.id.iv_video_left:
@@ -75,8 +76,8 @@ public class VideoFragment extends BaseFragment {
         }
     }
     private void  controllVideo(){
-        if(isPause){
-         pauseVideo();
+        if(!isPause){
+            pauseVideo();
         }else {
             resumeVideo();
         }
@@ -85,8 +86,9 @@ public class VideoFragment extends BaseFragment {
     public void pauseVideo() {
         try {
             if (JCMediaManager.instance().mediaPlayer!=null&&JCMediaManager.instance().mediaPlayer.isPlaying()) {
+                isPause =!isPause;
                 JCMediaManager.instance().mediaPlayer.pause();
-
+                handler.sendEmptyMessage(2);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -95,7 +97,9 @@ public class VideoFragment extends BaseFragment {
     public void resumeVideo() {
         try {
             if (JCMediaManager.instance().mediaPlayer!=null&&!JCMediaManager.instance().mediaPlayer.isPlaying()){
+                isPause =!isPause;
                 JCMediaManager.instance().mediaPlayer.start();
+                handler.sendEmptyMessage(2);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -114,9 +118,12 @@ public class VideoFragment extends BaseFragment {
     }
     public void stopVideo() {
 //        if (HaiLinMediaManager.instance().mediaPlayer!=null&&HaiLinMediaManager.instance().mediaPlayer.isPlaying()) {
-        isPause = false;
+        isPause = true;
         JCVideoPlayer.releaseAllVideos();
-
+        setTvText(R.id.tv_video_name,"");
+        setTvText(R.id.video_current_time,"00:00");
+        setTvText(R.id.video_total_time,"00:00");
+        initSeekBar();
 //        }
     }
     public void play(Mp3Info data) {
@@ -133,7 +140,9 @@ public class VideoFragment extends BaseFragment {
             hailinVideoPlayer.start();
             currentTime=0;
             setMusicInfo(App.get().getCurActivity().getDialogVideo().data.get(App.get().getCurActivity().getDialogVideo().musicDiverID).displayName);
+            isPause = false;
             handler.sendEmptyMessage(1);
+            handler.sendEmptyMessage(2);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -229,7 +238,7 @@ public class VideoFragment extends BaseFragment {
     /**
      * handler用来接收消息，来发送广播更新播放时间
      */
-    private Handler handler = new Handler() {
+    public Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             if (msg.what == 1) {
                 if(JCMediaManager.instance().mediaPlayer != null) {
@@ -244,6 +253,8 @@ public class VideoFragment extends BaseFragment {
                     }
 
                 }
+            }else if(msg.what == 2){
+                getView(R.id.ctl_video_center).setBackgroundResource(  isPause?R.mipmap.ic_music_home_stop:R.mipmap.ic_music_play);
             }
         };
     };

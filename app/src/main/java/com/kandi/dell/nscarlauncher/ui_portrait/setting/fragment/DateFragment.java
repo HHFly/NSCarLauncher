@@ -74,10 +74,10 @@ public class DateFragment extends BaseFragment {
 //        checkBox.setChecked(FlagProperty.isHourdate);
         String autotimestate = Settings.Global.getString(homePagerActivity.getActivity().getContentResolver(), Settings.Global.AUTO_TIME);
         if("1".equals(autotimestate)){
-            isAuto = false;
+            isAuto = true;
             enableDateTimeSet(isAuto);
         }else{
-            isAuto = true;
+            isAuto = false;
             enableDateTimeSet(isAuto);
         }
 
@@ -142,7 +142,7 @@ public class DateFragment extends BaseFragment {
 
 						@Override
 						public void onDismiss(String info, int what, Object obj) {
-							Cur_Time = new SimpleDateFormat(Settings.System.getString(homePagerActivity.getActivity().getContentResolver(),Settings.System.DATE_FORMAT));
+							Cur_Time = new SimpleDateFormat("yyyy-MM-dd");
 							Calendar calendar = (Calendar) obj;
                             text_data.setText(Cur_Time.format(calendar.getTime()));
 						}
@@ -189,10 +189,10 @@ public class DateFragment extends BaseFragment {
 
     public void enableDateTimeSet(boolean selected){
         auto_layout.setSelected(true);
-        data_layout.setSelected(selected);
-        time_layout.setSelected(selected);
-        is_auto.setChecked(!selected);
-        if(selected){
+        data_layout.setSelected(!selected);
+        time_layout.setSelected(!selected);
+        is_auto.setChecked(selected);
+        if(!selected){
             data_layout.setOnClickListener(this);
             time_layout.setOnClickListener(this);
         }else{
@@ -214,8 +214,8 @@ public class DateFragment extends BaseFragment {
     };
 
     public void refreshPannelStatus(){
-        Cur_Time = new SimpleDateFormat(Settings.System.getString(homePagerActivity.getActivity().getContentResolver(),Settings.System.DATE_FORMAT));
-        Calendar calendar = Calendar.getInstance();;
+        Cur_Time = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
         text_data.setText(Cur_Time.format(calendar.getTime()));
         Cur_Time = new SimpleDateFormat(SPUtil.getInstance(homePagerActivity.getActivity()).getString("shared_time_format", "HH:mm"));
         text_time.setText(Cur_Time.format(calendar.getTime()));

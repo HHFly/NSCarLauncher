@@ -89,7 +89,7 @@
             </intent-filter>
         </activity>
         <!--<activity android:name=".ui.video.JCPlayerActivity" android:screenOrientation="landscape"/>-->
-        <service android:name=".ui.music.Service.PlayerService"/>
+        <service android:name=".ui_portrait.music.service.PlayerService"/>
 
     </application>
 

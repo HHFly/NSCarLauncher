@@ -2,6 +2,7 @@ package com.kandi.dell.nscarlauncher.ui_portrait.setting.fragment;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
@@ -14,15 +15,24 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.common.util.EditTextUtils;
+import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
 import com.kandi.dell.nscarlauncher.common.util.WifiUtil;
 import com.kandi.dell.nscarlauncher.ui_portrait.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui_portrait.setting.adapter.WifiAdpter;
@@ -129,8 +139,8 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
         wifi_netmask.setText(WifiUtil.intToIp(wifiManager.getDhcpInfo().netmask));
         wifi_gateway.setText(WifiUtil.intToIp(wifiManager.getDhcpInfo().gateway));
 
-        ImageButton left_button = (ImageButton) window.findViewById(R.id.current_wifi_left);
-        ImageButton right_button = (ImageButton) window.findViewById(R.id.current_wifi_right);
+        Button left_button = (Button) window.findViewById(R.id.current_wifi_left);
+        Button right_button = (Button) window.findViewById(R.id.current_wifi_right);
 
         //忽略此网络操作
         left_button.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +165,70 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
             }
         });
     }
+
+    // 显示现在连接的wifi的数据信息
+    public void showWifiPassword(Context context,final Wifiinfo text){
+        final Dialog dialog = new Dialog(context, R.style.nodarken_style);
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setContentView(R.layout.dialog_wifi_input);
+        window.setWindowAnimations(R.style.mystyle);
+        TextView wifi_input_name = (TextView) window.findViewById(R.id.wifi_input_name);
+        EditText wifi_input_password = (EditText) window.findViewById(R.id.wifi_input_password);
+        ImageView iv_input_see = (ImageView) window.findViewById(R.id.iv_input_see);
+        TextView wifi_input_cancel = (TextView) window.findViewById(R.id.wifi_input_cancel);
+        TextView wifi_input_confirm = (TextView) window.findViewById(R.id.wifi_input_confirm);
+        wifi_input_name.setText(text.name);
+        EditTextUtils.openKeyBroad(wifi_input_password);
+        iv_input_see.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(iv_input_see.isSelected()){
+                    wifi_input_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    iv_input_see.setSelected(false);
+                }else {
+                    wifi_input_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    iv_input_see.setSelected(true);
+                }
+            }
+        });
+        wifi_input_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditTextUtils.hideKeyBroad(context,wifi_input_password);
+                dialog.dismiss();
+                App.get().getCurActivity().initImmersionBar();
+            }
+        });
+        wifi_input_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String data = wifi_input_password.getText().toString();
+                if (TextUtils.isEmpty(data)) {
+                    return;
+                }
+                new ConnectWifiThread().execute(text.name, data, String.valueOf(text.security_type));
+                EditTextUtils.hideKeyBroad(context,wifi_input_password);
+                dialog.dismiss();
+                App.get().getCurActivity().initImmersionBar();
+            }
+        });
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                hintKeyBoard();
+                dialog.dismiss();
+                App.get().getCurActivity().initImmersionBar();
+            }
+        });
+    }
+
+    public void hintKeyBoard() {
+        //拿到InputMethodManager
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
     /**
      * 扫描wifi线程
      *
@@ -229,7 +303,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
                     info.signal_intensity = getSignalIntensity(WifiManager.calculateSignalLevel(wifiList.get(i).level, 4));
                     info.security_type = getSecurity(wifiList.get(i));
                     //Log.d("Wifi-Kangdi", "[security_type] " + info.security_type);
-                    info.state = "断开";
+                    info.state = getString(R.string.断开);
                     datas.add(info);
                 }
             }else{
@@ -244,7 +318,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
                 info.signal_intensity = getSignalIntensity(WifiManager.calculateSignalLevel(wifiList.get(i).level, 4));
                 info.security_type = getSecurity(wifiList.get(i));
                 //Log.d("Wifi-Kangdi", "[security_type] " + info.security_type);
-                info.state = "断开";
+                info.state = getString(R.string.断开);
                 datas.add(info);
 
             }
@@ -363,7 +437,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
 
                 @Override
                 public void onClick(Wifiinfo data) {
-                    ShowDialog(data);
+                    showWifiPassword(getContext(),data);
                 }
             });
 

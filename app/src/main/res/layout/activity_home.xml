@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#080B0F"
+    android:id="@+id/bg_home"
     xmlns:app="http://schemas.android.com/apk/res-auto">
   <TextView
     android:id="@+id/tv_time"

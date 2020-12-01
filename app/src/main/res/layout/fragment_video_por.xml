@@ -54,7 +54,6 @@
         android:ellipsize="marquee"
         android:maxEms="12"
         android:singleLine="true"
-        android:text="Forrest Gump"
         android:textSize="36px"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -76,9 +75,9 @@
     <ImageView
         android:id="@+id/ctl_video_center"
         android:layout_width="72px"
-        android:layout_height="72dp"
+        android:layout_height="72px"
         android:layout_marginTop="40px"
-        android:src="@mipmap/ic_music_home_stop"
+        android:background="@mipmap/ic_music_home_stop"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_video_name" />
@@ -95,7 +94,7 @@
     <TextView style="@style/BaseText.Tv"
         android:id="@+id/video_current_time"
         android:textSize="24px"
-        android:text="00.00"
+        android:text="00:00"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ctl_video_center"
         android:layout_marginTop="10px"

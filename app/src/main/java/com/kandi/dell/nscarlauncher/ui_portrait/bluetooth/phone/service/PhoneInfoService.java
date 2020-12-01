@@ -40,7 +40,7 @@ public class PhoneInfoService {
     }
 
     public PhoneInfoService() {
-//        this.btservice = App.get().getBtservice();
+        this.btservice = App.get().getBtservice();
 
     }
     public void getInfo(){

@@ -54,7 +54,7 @@ public class KandiSystemUiService extends Service {
     LayoutParams wmParams,wmParamsBottom; // WindowManager.LayoutParams
     FrameLayout mFloatLayout ,phoneFloatLayout,mBottomLayout;
     private ImageView status_bar_wifi_btn,status_bar_3g_level_btn,status_bar_bluetooth_image,status_bar_3g_type_btn,status_bar_battery_imageView,center_img,iv_power,title_iv_sound,iv_car_tbox;
-    private  TextView tv_t_power,status_bar_time_textview,tv_hangup,tv_answser,tv_phone_number,tv_home,tv_t_volume;
+    private  TextView tv_t_power,status_bar_time_textview,tv_hangup,tv_answser,tv_phone_number,tv_home,tv_t_volume,tv_back;
     private RelativeLayout Rlcenter;
     private TextView ll_volume,ll_power;
     private DialogVolumeControl dialogVolumeControl ;
@@ -166,6 +166,7 @@ public class KandiSystemUiService extends Service {
         title_iv_sound =(ImageView) mBottomLayout.findViewById(R.id.title_iv_sound);
         tv_home =(TextView) mBottomLayout.findViewById(R.id.tv_home);
         tv_t_volume =(TextView) mBottomLayout.findViewById(R.id.tv_t_volume);
+        tv_back = (TextView) mBottomLayout.findViewById(R.id.tv_back);
         Rlcenter =(RelativeLayout) mBottomLayout.findViewById(R.id.center);
     }
     private void createView() {
@@ -560,9 +561,9 @@ public class KandiSystemUiService extends Service {
     //设置语言
     public void setLocal(String local){
         switch (local){
-            case "ch":tv_home.setText("首页");tv_t_volume.setText("音量");tv_hangup.setText("挂断");tv_answser.setText("接听");break;
-            case "en": tv_home.setText("Home");tv_t_volume.setText("Volume");tv_hangup.setText("refuse");tv_answser.setText("answer");break;
-            default: tv_home.setText("首页");tv_t_volume.setText("音量");tv_hangup.setText("挂断");tv_answser.setText("接听");break;
+            case "ch":tv_home.setText("首页");tv_t_volume.setText("音量");tv_back.setText("返回");tv_hangup.setText("挂断");tv_answser.setText("接听");break;
+            case "en": tv_home.setText("Home");tv_t_volume.setText("Volume");tv_back.setText("Back");tv_hangup.setText("refuse");tv_answser.setText("answer");break;
+            default: tv_home.setText("首页");tv_t_volume.setText("音量");tv_back.setText("返回");tv_hangup.setText("挂断");tv_answser.setText("接听");break;
         }
     }
   /*判断是顶部app是否是桌面*/

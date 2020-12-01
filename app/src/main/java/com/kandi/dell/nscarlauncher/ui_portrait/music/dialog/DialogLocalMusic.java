@@ -30,7 +30,7 @@ import com.kandi.dell.nscarlauncher.common.util.FileUtil;
 import com.kandi.dell.nscarlauncher.common.util.MemoryUtil;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
-import com.kandi.dell.nscarlauncher.ui.music.Service.PlayerService;
+import com.kandi.dell.nscarlauncher.ui_portrait.music.service.PlayerService;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.adapter.MusicAdapter;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.model.Mp3Info;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.service.ScanService;
@@ -51,7 +51,7 @@ import java.util.Observer;
 public class DialogLocalMusic implements Observer {
 
 
-    public static final String PATH_MUSIC = "/storage/emulated/0/Music/";
+    public static final String PATH_MUSIC = "/sdcard/Music/";
     public  List<Mp3Info> data = new ArrayList<Mp3Info>();
     public  Mp3Info Playnow;
     private MusicAdapter mAdapter;
@@ -103,6 +103,9 @@ public class DialogLocalMusic implements Observer {
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
+                if(App.get().getCurActivity().getMusicFragment().mAdapter != null){
+                    App.get().getCurActivity().getMusicFragment().mAdapter.notifyDataSetChanged();
+                }
                 isShow=false;
             }
         });
@@ -293,10 +296,10 @@ public class DialogLocalMusic implements Observer {
         mAdapter.notifyDataSetChanged();
     }
 
-    private void initRvAdapter( List<Mp3Info> data) {
+    public void initRvAdapter( List<Mp3Info> datas) {
         if (mAdapter == null) {
             RecyclerView rv = window.findViewById(R.id.recyclerView_music);
-            mAdapter =new MusicAdapter(data);
+            mAdapter =new MusicAdapter(datas);
             mAdapter.setRecodeStatu(recodeStatu);
             if (rv != null) {
 
@@ -307,12 +310,13 @@ public class DialogLocalMusic implements Observer {
             mAdapter.setOnItemClickListener(new MusicAdapter.OnItemClickListener() {
 
                 @Override
-                public void onClickMusic(Mp3Info data, int Pos) {
+                public void onClickMusic(Mp3Info mdata, int Pos) {
                     if(lastDataMode==dataMode){
 
                     }else {
                         lastDataMode=dataMode;
                         tranportData();
+                        App.get().getCurActivity().getMusicFragment().initRvAdapter(data);
                     }
 
 
@@ -322,12 +326,13 @@ public class DialogLocalMusic implements Observer {
                     Intent i = new Intent(context, PlayerService.class);
                     i.putExtra("MSG", FlagProperty.PLAY_MSG);
                     context.startService(i);
+                    mAdapter.notifyDataSetChanged();
 //                    App.get().getCurActivity().getMusicFragment().getDriverFragment().listStartPlayMusic();
                     }
 
 
                 @Override
-                public void onLongClickMusic(Mp3Info data, int Pos) {
+                public void onLongClickMusic(Mp3Info mdata, int Pos) {
                         if(!mAdapter.isShow) {
 //                            Intent i = new Intent(context, PlayerService.class);
 //                            i.putExtra("MSG", FlagProperty.PAUSE_MSG);
@@ -354,9 +359,9 @@ public class DialogLocalMusic implements Observer {
                 }
 
                 @Override
-                public void onDelete(Mp3Info data, int Pos) {
+                public void onDelete(Mp3Info mdata, int Pos) {
                     operate_path.clear();
-                    recodeStatu.put(Pos,data);
+                    recodeStatu.put(Pos,mdata);
                     mAdapter.isShow = false;
                     for (Mp3Info entry : recodeStatu.values()) {
                         operate_path.add(entry.getUrl());
@@ -382,7 +387,7 @@ public class DialogLocalMusic implements Observer {
             });
 
         }else {
-            mAdapter.notifyData(data,true);
+            mAdapter.notifyData(datas,true);
         }
 
 //        setViewVisibilityGone(R.id.item_music_null,data==null||data.size()==0);
@@ -468,7 +473,7 @@ public class DialogLocalMusic implements Observer {
     }
     public  void  show(){
         dialog.show();
-//        fresh();
+        fresh();
         isShow=true;
     }
     public void  cancel(){
@@ -608,7 +613,7 @@ public class DialogLocalMusic implements Observer {
                     long endTimes = System.currentTimeMillis();
                     Log.i("CopyFileThread",""+Thread.currentThread().getName()+"-alltime:"+(endTimes-beginTimes));
                     operate_count_index++;
-
+                    context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED));
                     threadEnd();
                     if(operate_count_index>operate_total){
                         isWhile = false;

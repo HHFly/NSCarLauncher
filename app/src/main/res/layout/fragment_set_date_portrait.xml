@@ -167,7 +167,8 @@
         <ImageView
             android:layout_width="640px"
             android:layout_height="2px"
-            android:background="@mipmap/under_line" />
+            android:background="@mipmap/under_line"
+            android:visibility="gone"/>
 
         <RelativeLayout
             android:id="@+id/set24_layout"

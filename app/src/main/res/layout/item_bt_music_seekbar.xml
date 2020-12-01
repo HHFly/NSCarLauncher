@@ -6,7 +6,7 @@
     <TextView style="@style/BaseText.Tv"
         android:id="@+id/bt_music_current_time"
         android:textSize="24px"
-        android:text="00.00"
+        android:text="00:00"
         android:layout_gravity="center_vertical"
         />
     <SeekBar

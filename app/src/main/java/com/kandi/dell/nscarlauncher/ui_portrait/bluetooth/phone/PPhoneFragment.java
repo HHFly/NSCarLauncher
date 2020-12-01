@@ -278,6 +278,7 @@ public class PPhoneFragment extends BaseFragment implements MvpMainView{
     // 电话拨打
     public void phoneCall(String number) {
         setTvText(R.id.num,"");
+        this.number = number;
         setTvText(R.id.call_number,getName(number));
         setTvText(R.id.call_time, R.string.正在呼叫);
 //                            TvNum.setText("");

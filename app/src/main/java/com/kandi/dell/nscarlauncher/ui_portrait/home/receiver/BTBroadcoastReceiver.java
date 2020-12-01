@@ -22,11 +22,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_CALLEND;
-import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_CALLOUT;
-import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_CALLSTART;
-import static com.kandi.dell.nscarlauncher.ui.bluetooth.BlueMusicBroadcoast.ACTION_RINGCALL;
-
 public class BTBroadcoastReceiver extends BroadcastReceiver {
     public final static int    PHONE_START               = 1;
     public final static int    PIN_CODE                  = 2;
@@ -75,9 +70,11 @@ public class BTBroadcoastReceiver extends BroadcastReceiver {
     public final static String   ACTION_CALL_TRIPARTITE_TALKING = "com.kangdi.BroadCast.tripartite.talking"; //接听
     public final static String   ACTION_CALL_TRIPARTITE_HANGON = "com.kangdi.BroadCast.tripartite.hangon"; //保持
     public final static String   KEY_PHONENUM_TRIPARTITE = "com.kangdi.key.tripartite.phonenum";//电话
+    public final static String ACTION_CHANGEBG = "com.changeBg";
     @Override
     public void onReceive(Context context, Intent intent) {
         String action =intent.getAction();
+        Log.i("testtest","========BTBroadcoastReceiver========="+action);
         switch (action){
             case ACTION_REQUEST_PINCODE:
                 myHandler.sendMessage(myHandler.obtainMessage(PIN_CODE));
@@ -134,6 +131,7 @@ public class BTBroadcoastReceiver extends BroadcastReceiver {
                 break;
             case ACTION_AC:
                 myHandler.sendMessage(myHandler.obtainMessage(BTMusic_CHANGE));
+                myHandler.sendMessage(myHandler.obtainMessage(BTPhone_CHANGE));
                 break;
             case ACTION_AD:
                 myHandler.sendMessage(myHandler.obtainMessage(BTMusic_CHANGE));
@@ -151,6 +149,9 @@ public class BTBroadcoastReceiver extends BroadcastReceiver {
                 int current = intent.getIntExtra("current",0);
                 int music_total_time =intent.getIntExtra("total",0);
                 homePagerActivity.getBtMusicFragment().setMusicProgressHanle(current,music_total_time);
+                break;
+            case  ACTION_CHANGEBG:
+                homePagerActivity.changBgView();
                 break;
         }
 
@@ -177,7 +178,7 @@ public class BTBroadcoastReceiver extends BroadcastReceiver {
             FlagProperty.phone_number = intent.getStringExtra(KEY_PHONENUM).trim(); // 记录电话号码
             FlagProperty.phone_number_one = FlagProperty.phone_number;
             Log.d("MediaFocusControl", "====home====ACTION_CALLOUT=======");
-            if (App.get().getAudioManager().requestAudioFocus(homePagerActivity.getPhoneFragment().getpPhoneFragment().afChangeListener, 22,
+            if (App.get().getAudioManager().requestAudioFocus(homePagerActivity.getPhoneFragment().getpPhoneFragment().afChangeListener, 11,
                     AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                 Log.d("kondi", "BtPhone get AudioFocus");
                 //MainKondi.changeFragment(MainKondi.FRAGMENT_PHONE); // 拨打时时进入电话页面
@@ -204,7 +205,7 @@ public class BTBroadcoastReceiver extends BroadcastReceiver {
                     FlagProperty.flag_phone_ringcall = true;
                     FlagProperty.phone_number = num; // 记录电话号码
                     FlagProperty.phone_number_one = num;
-                    if (App.get().getAudioManager().requestAudioFocus(homePagerActivity.getPhoneFragment().getpPhoneFragment().afChangeListener, 22,
+                    if (App.get().getAudioManager().requestAudioFocus(homePagerActivity.getPhoneFragment().getpPhoneFragment().afChangeListener, 11,
                             AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                         homePagerActivity.hideLoadingDialog();
                         homePagerActivity.jumpFragment(FragmentType.PHONE);
@@ -223,25 +224,23 @@ public class BTBroadcoastReceiver extends BroadcastReceiver {
             FlagProperty.is_calling = true;
             FlagProperty.is_callindex_one = true;
             if (!FlagProperty.is_one_oper) {
-
-                if (App.get().getAudioManager().requestAudioFocus(homePagerActivity.getPhoneFragment().getpPhoneFragment().afChangeListener, 22,
+                if (App.get().getAudioManager().requestAudioFocus(homePagerActivity.getPhoneFragment().getpPhoneFragment().afChangeListener, 11,
                         AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
 
                 }
-                if (FlagProperty.flag_phone_ringcall) { // 来电
-                    if (FlagProperty.flag_phone_incall_click) { // 板接
-                        new CallThread().start(); // 电话页面转换
-                        FlagProperty.flag_phone_incall_click = false;
-                    } else { // 手接
-
-                        new CallThread().start(); // 电话页面转换
-                    }
-                } else {
-                    String number = intent.getStringExtra(KEY_PHONENUM).trim();
+            }
+            if (FlagProperty.flag_phone_ringcall) { // 来电
+                if (FlagProperty.flag_phone_incall_click) { // 板接
+                    new CallThread().start(); // 电话页面转换
+                    FlagProperty.flag_phone_incall_click = false;
+                } else { // 手接
 
                     new CallThread().start(); // 电话页面转换
                 }
+            } else {
+                String number = intent.getStringExtra(KEY_PHONENUM).trim();
 
+                new CallThread().start(); // 电话页面转换
             }
         }else if (index == 2) {
             FlagProperty.is_callindex_two = true;
@@ -377,6 +376,7 @@ public class BTBroadcoastReceiver extends BroadcastReceiver {
         intentFilter.addAction("com.kangdi.BroadCast.tripartite.hangup");
         intentFilter.addAction("com.kangdi.BroadCast.tripartite.comming");
         intentFilter.addAction("com.kangdi.BroadCast.PbapGetCallHistoryCompleted");
+        intentFilter.addAction(ACTION_CHANGEBG);
 
         homePagerActivity.registerReceiver(this, intentFilter);
     }

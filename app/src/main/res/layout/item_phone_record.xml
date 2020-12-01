@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="106px"
-    android:background="@mipmap/ic_phone_num_bg">
+    android:layout_height="106px">
     <ImageView
         android:layout_width="27px"
         android:layout_height="27px"
@@ -71,7 +70,7 @@
     <View style="@style/BaseLine.Horizontal"
         android:layout_marginLeft="42px"
         android:layout_marginRight="42px"
-
+        android:background="#010309"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

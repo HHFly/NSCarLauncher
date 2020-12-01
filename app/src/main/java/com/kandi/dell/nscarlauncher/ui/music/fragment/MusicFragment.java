@@ -76,17 +76,17 @@ public class MusicFragment extends BaseFragment {
     public final static String MUSICPROGRESS = "musicprogress";//音乐播放进度
     public  boolean recoveryLast = false;//记忆上次播放标志位
     public  int music_model = 1,dataMode; // 音乐播放循环模式
-     SeekBar music_progress_bar; // 音乐播放进度条
-     int Progress = 0; // 记录进度
-     int music_time = 0; // 记录歌曲时间，若无变化，则不更新界面
-     boolean flag_drag = false; // 是否拖动歌曲进度条
+    SeekBar music_progress_bar; // 音乐播放进度条
+    int Progress = 0; // 记录进度
+    int music_time = 0; // 记录歌曲时间，若无变化，则不更新界面
+    boolean flag_drag = false; // 是否拖动歌曲进度条
     public  boolean flag_first = false;
-     AudioManager audioManager;
-     IKdAudioControlService audioservice ;
-     IKdBtService btservice;
+    AudioManager audioManager;
+    IKdAudioControlService audioservice ;
+    IKdBtService btservice;
     public  boolean system_flag, am_flag,flag_play,flag_hachage;
     public  CircleImageView circle_image;
-     Context context;
+    Context context;
     public  ImageView bt_open, bt_play, bt_back, bt_next, bt_u, bt_music_model, bt_fav;
     public  TextView tv_music_songname, tv_music_singer, music_current_time, music_total_time,btn_delete,btn_copy;
     public CheckBox btn_select_all;
@@ -500,23 +500,23 @@ public class MusicFragment extends BaseFragment {
             system_flag = true;
             am_flag = true;
 //            if (homePagerActivity.getDialogLocalMusic().data.size() > 0) {
-                if(circle_image!=null) {
-                    circle_image.roatateStart();
-                }
-                if(bt_play!=null) {
-                    bt_play.setBackgroundResource(R.mipmap.ic_play_big);
-                }
-                if(recoveryLast){
-                    broadcastMusicInfoChange(context, FlagProperty.PROGRESS_CHANGE,SPUtil.getInstance(context,MusicFragment.MUSICPROGRESS).getInt(MusicFragment.MUSICPROGRESS,0));
-                    recoveryLast = false;
-                }else{
-                    broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
-                }
-                flag_play = true;
-                homePagerActivity.getHomePagerTwoFragment().musicPaly.setPlay(true);
-                homePagerActivity.getHomePagerOneFragment().music_name.setText(context.getString(R.string.蓝牙音乐));
-                homePagerActivity.getHomePagerTwoFragment().myHandler.sendMessage(homePagerActivity.getHomePagerTwoFragment().myHandler.obtainMessage(MUSIC_OPEN));
+            if(circle_image!=null) {
+                circle_image.roatateStart();
             }
+            if(bt_play!=null) {
+                bt_play.setBackgroundResource(R.mipmap.ic_play_big);
+            }
+            if(recoveryLast){
+                broadcastMusicInfoChange(context, FlagProperty.PROGRESS_CHANGE,SPUtil.getInstance(context,MusicFragment.MUSICPROGRESS).getInt(MusicFragment.MUSICPROGRESS,0));
+                recoveryLast = false;
+            }else{
+                broadcastMusicInfo(context, FlagProperty.PLAY_MSG);
+            }
+            flag_play = true;
+            homePagerActivity.getHomePagerTwoFragment().musicPaly.setPlay(true);
+            homePagerActivity.getHomePagerOneFragment().music_name.setText(context.getString(R.string.蓝牙音乐));
+            homePagerActivity.getHomePagerTwoFragment().myHandler.sendMessage(homePagerActivity.getHomePagerTwoFragment().myHandler.obtainMessage(MUSIC_OPEN));
+        }
 //        }
     }
     public   void musicPause(Context context){
@@ -538,9 +538,9 @@ public class MusicFragment extends BaseFragment {
     }
     /*获取全局模块*/
     private void  getService(){
-//        audioservice=App.get().getAudioservice();
+        audioservice=App.get().getAudioservice();
         audioManager=App.get().getAudioManager();
-//        btservice =App.get().getBtservice();
+        btservice =App.get().getBtservice();
     }
 
 
@@ -841,11 +841,11 @@ public class MusicFragment extends BaseFragment {
 //      intent.setAction("nscar_fresh_sdcard");
 //      context.sendBroadcast(intent);
 
-      selectMode(dataMode);
-      flag_hachage=true;
-      homePagerActivity.getDialogLocalMusic().updateLocalMusic(context);
+        selectMode(dataMode);
+        flag_hachage=true;
+        homePagerActivity.getDialogLocalMusic().updateLocalMusic(context);
 
-  }
+    }
 
 //
 

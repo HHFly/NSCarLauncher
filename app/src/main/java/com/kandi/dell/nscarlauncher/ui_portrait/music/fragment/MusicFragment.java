@@ -52,7 +52,7 @@ public class MusicFragment extends BaseFragment {
     public   int Progress = 0; // 记录进度
     int music_time = 0; // 记录歌曲时间，若无变化，则不更新界面
     public  boolean recoveryLast = false;//记忆上次播放标志位
-    private MusicMainAdapter mAdapter;
+    public MusicMainAdapter mAdapter;
 //    private DialogLrc dialogLrc;
     @Override
     public void setmType(int mType) {
@@ -191,11 +191,11 @@ public class MusicFragment extends BaseFragment {
         music_model = SPUtil.getInstance(getContext()).getInt(MUSICMODEL,music_model);
         dataMode = SPUtil.getInstance(getContext()).getInt(MUSICDATAMODE,dataMode);
         if (music_model == 1) {
-            bt_music_model.setImageDrawable(getResources().getDrawable((R.drawable.selector_musicmode_circle)));
+            bt_music_model.setBackgroundResource(R.drawable.selector_musicmode_circle);
         } else if (music_model == 2) {
-            bt_music_model.setImageDrawable(getResources().getDrawable((R.drawable.selector_musicmode_single)));
+            bt_music_model.setBackgroundResource(R.drawable.selector_musicmode_single);
         } else if (music_model == 3) {
-            bt_music_model.setImageDrawable(getResources().getDrawable((R.drawable.selector_musicmode_random)));
+            bt_music_model.setBackgroundResource(R.drawable.selector_musicmode_random);
         }
 
         if(musicpath !=null && !musicpath.equals("")){
@@ -232,6 +232,9 @@ public class MusicFragment extends BaseFragment {
 
                 }
             }
+            String musicName = ((Mp3Info)App.get().getCurActivity().getDialogLocalMusicD().data.get(App.get().getCurActivity().getDialogLocalMusicD().musicDiverID)).title;
+            String artist = ((Mp3Info)App.get().getCurActivity().getDialogLocalMusicD().data.get(App.get().getCurActivity().getDialogLocalMusicD().musicDiverID)).artist;
+            App.get().getCurActivity().getMusicFragment().setMusicInfo(musicName, artist);
         }else{
             gramophoneView.setImageResource(R.mipmap.ic_music_default);
         }
@@ -241,9 +244,9 @@ public class MusicFragment extends BaseFragment {
     /*音乐播放*/
     public   void  play(){
         if (!flag_play) {
-            musicPlay(getActivity());
+            musicPlay(App.get().getCurrentActivity());
         } else {
-            musicPause(getActivity());
+            musicPause(App.get().getCurrentActivity());
         }
     }
     /*播发音乐*/
@@ -251,11 +254,11 @@ public class MusicFragment extends BaseFragment {
         if(App.get().getCurActivity().getDialogLocalMusicD().data.size()==0) {
             return;
         }
-        if ( App.get().getAudioManager().requestAudioFocus(afSystemChangeListener, 23, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+        if ( App.get().getAudioManager().requestAudioFocus(afSystemChangeListener, 12, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             system_flag = true;
             am_flag = true;
 //            if (homePagerActivity.getDialogLocalMusicD().data.size() > 0) {
-
+            ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
             if(bt_play!=null) {
                 bt_play.setBackgroundResource(R.mipmap.ic_music_play);
             }
@@ -279,7 +282,7 @@ public class MusicFragment extends BaseFragment {
             system_flag = false;
             am_flag = false;
 
-
+            ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
             if(bt_play!=null) {
                 bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
             }
@@ -294,18 +297,19 @@ public class MusicFragment extends BaseFragment {
     public  AudioManager.OnAudioFocusChangeListener afSystemChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         public void onAudioFocusChange(int focusChange) {
             if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
-
+                Log.i("testtest","=====musicPlay===requestAudioFocus========AUDIOFOCUS_LOSS_TRANSIENT");
                 system_flag = false;
 
                 if(bt_play!=null) {
                     bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
                 }
 
-                broadcastMusicInfo(getContext(), FlagProperty.PAUSE_MSG);
+                broadcastMusicInfo(App.get().getCurrentActivity(), FlagProperty.PAUSE_MSG);
                 flag_play = false;
                 ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
 
             } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                Log.i("testtest","=====musicPlay===requestAudioFocus========AUDIOFOCUS_GAIN");
                 Log.d("audioTest", "3 gain");
                 system_flag = true;
                 if (am_flag) {
@@ -315,31 +319,32 @@ public class MusicFragment extends BaseFragment {
                         if(bt_play!=null) {
                             bt_play.setBackgroundResource(R.mipmap.ic_music_play);
                         }
-                        broadcastMusicInfo(getContext(), FlagProperty.PLAY_MSG);
+                        broadcastMusicInfo(App.get().getCurrentActivity(), FlagProperty.PLAY_MSG);
                         flag_play = true;
 
                     }
                     ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
                 }
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-
+                Log.i("testtest","=====musicPlay===requestAudioFocus========AUDIOFOCUS_LOSS");
                 system_flag = false;
 
                 if(bt_play!=null) {
                     bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
                 }
-                broadcastMusicInfo(getContext(), FlagProperty.PAUSE_MSG);
+                broadcastMusicInfo(App.get().getCurrentActivity(), FlagProperty.PAUSE_MSG);
                 flag_play = false;
                 ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
 
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                Log.i("testtest","=====musicPlay===requestAudioFocus========AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK");
                 Log.d("audioTest", "3 loss transient can duck");
                 system_flag = false;
 
                 if (bt_play != null) {
                     bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
                 }
-                broadcastMusicInfo(getContext(), FlagProperty.PAUSE_MSG);
+                broadcastMusicInfo(App.get().getCurrentActivity(), FlagProperty.PAUSE_MSG);
                 flag_play = false;
                 ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_CLOSE));
             }
@@ -359,7 +364,10 @@ public class MusicFragment extends BaseFragment {
             }
 //            circle_image.roatateStart();
             ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
-            MusicModel.getPrevMusic(getContext(), music_model);
+            MusicModel.getPrevMusic(App.get().getCurrentActivity(), music_model);
+            if(mAdapter != null){
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
     /*下一首*/
@@ -378,23 +386,23 @@ public class MusicFragment extends BaseFragment {
 //            circle_image.roatateStart();
 
             ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
-            MusicModel.getNextMusic(getContext(), music_model);
+            MusicModel.getNextMusic(App.get().getCurrentActivity(), music_model);
+            if(mAdapter != null){
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
     /*音乐模式*/
     public     void setMode(){
         try {
             if (music_model == 1) {
-
-                bt_music_model.setImageDrawable(getResources().getDrawable((R.drawable.selector_musicmode_single)));
+                bt_music_model.setBackgroundResource(R.drawable.selector_musicmode_single);
                 music_model = 2;
             } else if (music_model == 2) {
-
-                bt_music_model.setImageDrawable(getResources().getDrawable((R.drawable.selector_musicmode_random)));
+                bt_music_model.setBackgroundResource(R.drawable.selector_musicmode_random);
                 music_model = 3;
             } else if (music_model == 3) {
-
-                bt_music_model.setImageDrawable(getResources().getDrawable((R.drawable.selector_musicmode_circle)));
+                bt_music_model.setBackgroundResource(R.drawable.selector_musicmode_circle);
                 music_model = 1;
             }
             SPUtil.getInstance(getContext()).putInt(MUSICMODEL,music_model);
@@ -422,7 +430,9 @@ public class MusicFragment extends BaseFragment {
                     if(bt_play!=null){
                         bt_play.setBackgroundResource(R.mipmap.ic_music_play);
                     }
-                    setViewSelected(R.id.music_fav,App.get().getCurActivity().getDialogLocalMusicD().Playnow.isFav());
+                    if(App.get().getCurActivity().getDialogLocalMusicD().Playnow != null){
+                        setViewSelected(R.id.music_fav,App.get().getCurActivity().getDialogLocalMusicD().Playnow.isFav());
+                    }
                     flag_play=true;
 
                     break;
@@ -438,7 +448,7 @@ public class MusicFragment extends BaseFragment {
                     system_flag = false;
                     am_flag = false;
 
-
+                    App.get().getCurActivity().myHandler.sendEmptyMessage(HandleKey.MUSICCOLSE);
                     if(bt_play!=null) {
                         bt_play.setBackgroundResource(R.mipmap.ic_music_stop);
                     }
@@ -489,17 +499,25 @@ public class MusicFragment extends BaseFragment {
                 int progress = (int) Math.ceil(time * 100 / totaltime);
                 if (flag_first) {
                     if (progress > Progress) {
-                        music_progress_bar.setProgress(progress);
+                        if(music_progress_bar != null){
+                            music_progress_bar.setProgress(progress);
+                        }
                         App.get().getCurActivity().music_progress_bar.setProgress(progress);
                         flag_first = false;
                     }
                 } else {
-                    music_progress_bar.setProgress(progress);
+                    if(music_progress_bar != null){
+                        music_progress_bar.setProgress(progress);
+                    }
                     App.get().getCurActivity().music_progress_bar.setProgress(progress);
                 }
-                music_current_time.setText("" + getTime(time / 60) + ":" + getTime(time % 60));
+                if(music_current_time != null){
+                    music_current_time.setText("" + getTime(time / 60) + ":" + getTime(time % 60));
+                }
                 App.get().getCurActivity().setTvText(R.id.music_current_time,getTime(time / 60) + ":" + getTime(time % 60));
-                music_total_time.setText("" + getTime(totaltime / 60) + ":" + getTime(totaltime % 60));
+                if(music_total_time != null){
+                    music_total_time.setText("" + getTime(totaltime / 60) + ":" + getTime(totaltime % 60));
+                }
                 App.get().getCurActivity().setTvText(R.id.music_total_time,getTime(totaltime / 60) + ":" + getTime(totaltime % 60));
             }
         }
@@ -527,7 +545,7 @@ public class MusicFragment extends BaseFragment {
      *
      *
      */
-    private void initRvAdapter( List<Mp3Info> data) {
+    public void initRvAdapter( List<Mp3Info> data) {
         if (mAdapter == null) {
             RecyclerView rv = getView(R.id.recyclerView_music);
             mAdapter =new MusicMainAdapter(data);
@@ -548,12 +566,12 @@ public class MusicFragment extends BaseFragment {
                     i.putExtra("MSG", FlagProperty.PLAY_MSG);
                     getContext().startService(i);
                     listStartPlayMusic();
+                    mAdapter.notifyDataSetChanged();
 
                 }
             });
 
         }else {
-
             mAdapter.notifyData(data,true);
         }
 
@@ -562,7 +580,7 @@ public class MusicFragment extends BaseFragment {
     }
     // 开始播放音乐
     public  void listStartPlayMusic() {
-        if ( App.get().getAudioManager().requestAudioFocus(afSystemChangeListener, 23,
+        if ( App.get().getAudioManager().requestAudioFocus(afSystemChangeListener, 12,
                 AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             system_flag = true;
             am_flag = true;

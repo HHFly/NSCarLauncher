@@ -71,6 +71,7 @@
             android:layout_width="689px"
             android:layout_height="wrap_content"
             android:background="@mipmap/set_language_laybg"
+            android:visibility="gone"
             android:orientation="vertical">
 
             <RelativeLayout

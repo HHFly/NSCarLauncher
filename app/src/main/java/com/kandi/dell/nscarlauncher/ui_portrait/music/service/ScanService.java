@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.ui_portrait.music.model.Mp3Info;
 
 import java.io.File;
@@ -266,7 +267,7 @@ public class ScanService extends  Observable {
         new Thread(){
             public void run() {
                 if(context!=null) {
-//                    updateGallery(context);
+                    updateGallery(context);
 
                     getUSBVideoMusicData(context, 0);
 
@@ -477,12 +478,13 @@ public class ScanService extends  Observable {
     public   List<Mp3Info>getDatabyMode(int mode){
         switch (mode){
             case 0:
+                App.get().getCurActivity().getDialogLocalMusicD().myHandler.sendMessage(  App.get().getCurActivity().getDialogLocalMusicD().myHandler.obtainMessage(0));
                 return SDData;
             case 1:
-
+                App.get().getCurActivity().getDialogLocalMusicD().myHandler.sendMessage(  App.get().getCurActivity().getDialogLocalMusicD().myHandler.obtainMessage(1));
                 return USBData;
             case 2:
-
+                App.get().getCurActivity().getDialogLocalMusicD().myHandler.sendMessage(  App.get().getCurActivity().getDialogLocalMusicD().myHandler.obtainMessage(2));
                 return SDCardData;
 
         }

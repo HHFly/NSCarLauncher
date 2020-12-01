@@ -38,6 +38,7 @@ public class SetFragment extends BaseFragment {
     UpgradeFragment upgradeFragment;
     CarSetFragment carSetFragment;
     EnergyCycleFragment energyCycleFragment;
+    public boolean isSetHome = true;
     @Override
     public int getContentResId() {
         return R.layout.fragment_set_portrait;
@@ -74,6 +75,7 @@ public class SetFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        setmType(FragmentType.SET);
         getDisplayFragment();
         getBlueToothSetFragment();
         getWifiFragment();
@@ -139,7 +141,7 @@ public class SetFragment extends BaseFragment {
      * @param fragment
      */
     private void switchFragment(BaseFragment fragment) {
-
+        isSetHome = false;
         mCurFragment = FragmentUtils.selectFragment(getActivity(), mCurFragment, fragment, R.id.frame_set);
         mCurFragment.Resume();
         setVisibilityGone(R.id.rl_f_set,true);
@@ -148,6 +150,7 @@ public class SetFragment extends BaseFragment {
         if(mCurFragment != null){
             mCurFragment.Pause();
         }
+        isSetHome = true;
         fragmentShow.setVisibility(View.GONE);
     }
 

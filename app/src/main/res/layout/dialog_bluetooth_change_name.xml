@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="500px"
     android:layout_height="315px"
-    android:background="@drawable/phone_dialog_bg"
+    android:background="@drawable/data_bg"
     android:orientation="vertical" >
 
     <TextView
@@ -26,11 +26,12 @@
 
     <TextView
         android:id="@+id/dialog_bluetooth_previous_name"
-        android:layout_width="wrap_content"
+        android:layout_width="300px"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/tv_bt_name_dialog"
         android:layout_marginLeft="20px"
         android:layout_marginTop="94px"
+        android:background="#FF181A2D"
         android:textColor="@android:color/white"
         android:textSize="20px"/>
     
@@ -51,8 +52,9 @@
         android:layout_marginLeft="20px"
         android:layout_toRightOf="@+id/tv_bt_name_dialog_new"
         android:layout_marginTop="160px"
-        android:background="@null"
+        android:background="#FF181A2D"
         android:hint="@string/请输入蓝牙名称"
+        android:textColorHint="@color/white"
         android:inputType="textNoSuggestions"
         android:textColor="@android:color/white"
         android:textSize="20px" />
@@ -65,7 +67,7 @@
         android:layout_marginTop="229px"
         android:text="@string/确认"
         android:gravity="center"
-
+        android:background="#FF181A2D"
         android:textColor="@drawable/select_music_local_text_bg"
         />
 
@@ -78,7 +80,7 @@
         android:layout_marginTop="229px"
         android:text="@string/取消"
         android:gravity="center"
-
+        android:background="#FF181A2D"
         android:textColor="@drawable/select_music_local_text_bg"
         />
 
