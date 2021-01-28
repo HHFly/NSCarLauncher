@@ -585,16 +585,20 @@ public class DialogVideo implements Observer {
     }
     @Override
     public void update(Observable o, Object arg) {
-        switch ((int)arg){
-            case 2:
-                if(dataMode==-1){
-                    fresh();
-                    tranportData();
-                }else {
-                    fresh(dataMode);
-                    tranportData();
-                }
-                break;
+        try {
+            switch ((int)arg){
+                case 2:
+                    if(dataMode==-1){
+                        fresh();
+                        tranportData();
+                    }else {
+                        fresh(dataMode);
+                        tranportData();
+                    }
+                    break;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     public int getPosition() {

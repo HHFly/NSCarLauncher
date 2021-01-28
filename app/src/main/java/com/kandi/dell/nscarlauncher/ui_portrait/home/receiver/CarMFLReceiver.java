@@ -4,10 +4,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.wifi.WifiManager;
 import android.os.SystemProperties;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.common.util.LogUtils;
+import com.kandi.dell.nscarlauncher.common.util.ToastUtils;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
 
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
@@ -129,6 +134,16 @@ public class CarMFLReceiver extends BroadcastReceiver {
              homePagerActivity.hideFragment();
          }
 
+//         if (intent.getAction().equals(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION)) {
+//             int linkWifiResult = intent.getIntExtra(WifiManager.EXTRA_SUPPLICANT_ERROR, 123);
+//             if (linkWifiResult == WifiManager.ERROR_AUTHENTICATING) {
+//                 if(App.get().getCurActivity().getSetFragment().getWifiFragment() != null && !App.get().getCurActivity().getSetFragment().getWifiFragment().error){
+//                     App.get().getCurActivity().getSetFragment().getWifiFragment().error = true;
+//                     ToastUtils.show(context,context.getString(R.string.Wifi密码错误));
+//                 }
+//             }
+//         }
+
     }
 
     public CarMFLReceiver() {
@@ -148,6 +163,7 @@ public class CarMFLReceiver extends BroadcastReceiver {
         intentFilter.addAction(CarMFLReceiver.ACTION_WHEEL_HANGUP);
         intentFilter.addAction("android.intent.action.PACKAGE_ADDED");
         intentFilter.addAction("com.kangdi.home.hide");
+//        intentFilter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
         homePagerActivity.registerReceiver(this, intentFilter);
     }
 }

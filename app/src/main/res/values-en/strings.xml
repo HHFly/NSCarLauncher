@@ -220,4 +220,6 @@
     <string name="剩余电量">Soc</string>
     <string name="箱"></string>
 
+    <string name="Wifi密码错误">Wifi Password Error</string>
+
 </resources>

@@ -22,11 +22,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
-import com.driverlayer.os_driverServer.IECarDriver;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
+import com.kandi.dell.nscarlauncher.candriver.CarInfoDriver;
+import com.kandi.dell.nscarlauncher.candriver.CarSettingDriver;
+import com.kandi.dell.nscarlauncher.candriver.DriverServiceManger;
 import com.kandi.dell.nscarlauncher.common.util.FragmentUtils;
 import com.kandi.dell.nscarlauncher.common.util.IsHomeUtils;
 import com.kandi.dell.nscarlauncher.common.util.SPUtil;
@@ -63,6 +65,7 @@ import com.kandi.dell.nscarlauncher.widget.PlayControllFMView;
 import com.kandi.dell.nscarlauncher.widget.PlayControllView;
 import com.kandi.dell.nscarlauncher.ui_portrait.setting.SetFragment;
 
+import java.sql.DriverManager;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -98,7 +101,6 @@ public class HomePagerActivity extends BaseActivity {
     BTBroadcoastReceiver btBroadcoastReceiver;
     CarMFLReceiver carMFLReceiver;
     private static WifiManager mWifiManager;//wifi
-    public IECarDriver ieCarDriver;//车辆aidl服务
     private static final  String ACTION ="com.driverlayer.kdos_driverServer.RemoteService";
     private static final  String PACKAGE ="com.driverlayer.kd_vwcsserver";
     public   int backbox =0x02;//0x01为开启状态，0x02为关闭状态。
@@ -161,7 +163,7 @@ public class HomePagerActivity extends BaseActivity {
         createFragment();
         initGroupView();
         init_time();//时间
-        bindIeCarService();
+        init_carservice();//iecar 服务
         changBgView();
         if (SystemProperties.get("sys.kd.btacconnected").compareTo("yes") == 0) {
             FlagProperty.flag_bluetooth = true;
@@ -563,35 +565,7 @@ public class HomePagerActivity extends BaseActivity {
         setViewVisibility(R.id.frame_main, false);
         hideLoadingDialog();
     }
-    //车辆服务绑定
-    private void bindIeCarService() {
 
-        Intent intent = new Intent(ACTION);
-        intent.setPackage(PACKAGE);
-
-        try {
-            getApplicationContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
-        }catch (Exception e){
-//            LogUtils.log("绑定aidl服务失败");
-        }
-
-    }
-
-    /*aidl服务*/
-    private ServiceConnection serviceConnection =new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            ieCarDriver=IECarDriver.Stub.asInterface(service);
-            init_carservice();//iecar 服务
-
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            ieCarDriver=null;
-        }
-    };
     //车辆服务模块初始化
     private void init_carservice() {
         ExecutorService timePool = Executors.newSingleThreadExecutor();  //采用线程池单一线程方式，防止被杀死
@@ -615,19 +589,19 @@ public class HomePagerActivity extends BaseActivity {
     }
     /*车辆服务*/
     private  void  aidlService(){
-
         setCarWork();
         setCarMode();
         setCarPoewr();
         getCarState();
     }
+
+    CarInfoDriver carInfoDriver;
     /*电量车程*/
     private   void setCarPoewr(){
-
-        int[] power =new int[2];
         try {
-            if(ieCarDriver!=null) {
-                ieCarDriver.getCarInfo(power);
+            carInfoDriver = DriverServiceManger.getInstance().getCarInfoDriver();
+            if(carInfoDriver!=null) {
+                carInfoDriver.getCarInfo();
 //                if (!tv_power.getText().equals(String.valueOf(power[10]))) {
 //                    int i =power[10]%10;
 //                    FlagProperty.CarPower =power[10]/10;
@@ -636,15 +610,15 @@ public class HomePagerActivity extends BaseActivity {
 //                    iv_t_power.setImageResource(getPower(power[10]));
 ////                    setIvImage(R.id.iv_t_power, getPower(power[0]));
 //                }
-                FlagProperty.Speed =power[0];
+                FlagProperty.Speed =carInfoDriver.getCarSpeed();
                 /*剩余里程*/
 
-                if (0 == power[1]) {
+                if (0 == carInfoDriver.getRemaingMileage()) {
                     getTextView(R.id.tv_remainkon).setTextColor(Color.parseColor("#F03A53"));
                 } else {
                     getTextView(R.id.tv_remainkon).setTextColor(Color.parseColor("#FFFFFF"));
                 }
-                setTvText(R.id.tv_remainkon,String.valueOf(power[1]));
+                setTvText(R.id.tv_remainkon,String.valueOf(carInfoDriver.getRemaingMileage()));
 
             }
 
@@ -654,11 +628,11 @@ public class HomePagerActivity extends BaseActivity {
     }
     /*车辆模式*/
     public  void setCarMode(){
-        int[] mode =new int[2];
         try {
-            if(ieCarDriver!=null){
-                ieCarDriver.GetTBoxStatus(mode);
-                if(FlagProperty.CarMode!=mode[1]){
+            carInfoDriver = DriverServiceManger.getInstance().getCarInfoDriver();
+            if(carInfoDriver!=null){
+                carInfoDriver.getCar_SportEnergy();
+                if(FlagProperty.CarMode!=carInfoDriver.getCarMode()){
 //                    if(homePagerOneFragment!=null){
 //                        switch (mode[1]){
 //                            case 0:
@@ -686,10 +660,10 @@ public class HomePagerActivity extends BaseActivity {
     public  void setCarWork(){
         int work;
         try {
-            if(ieCarDriver!=null) {
-                work = ieCarDriver.getCar_WorkMode();
-
-
+            carInfoDriver = DriverServiceManger.getInstance().getCarInfoDriver();
+            if(carInfoDriver!=null) {
+                carInfoDriver.getCar_SportEnergy();
+                work = carInfoDriver.getCarMode();
                 switch (work) {
                     case 0x01:
                         setTvText(R.id.tv_car_mode,R.string.Economic);
@@ -720,14 +694,16 @@ public class HomePagerActivity extends BaseActivity {
         }
     }
 
+    CarSettingDriver carSettingDriver;
     /*整车控制状态*/
     public   void  getCarState(){
         int [] carState =new int[16];
         try {
-            if(ieCarDriver!=null) {
-                FlagProperty.BCMStaus= ieCarDriver.getCarState(carState);
+            carSettingDriver = DriverServiceManger.getInstance().getCarSettingDriver();
+            if(carSettingDriver!=null) {
+                FlagProperty.BCMStaus= carSettingDriver.retreveCarInfo();
 
-                if (0x02 == carState[7]) {
+                if (carSettingDriver.isDoorsLocked()) {
                     isCenterlockOpen=false;
                     setIvImage(R.id.iv_cenlock, R.mipmap.ic_car_2);
                 } else {
@@ -746,8 +722,11 @@ public class HomePagerActivity extends BaseActivity {
     public   void setBackBox(boolean isOpen){
         try {
             if(FlagProperty.Speed<5) {
-
-                ieCarDriver.setCar_Action(0x03, 1, isOpen ? 0x01 : 0x02);
+                carSettingDriver = DriverServiceManger.getInstance().getCarSettingDriver();
+                if(carSettingDriver!=null){
+                    carSettingDriver.setBackDoorOpen(!isOpen);
+                }
+//                carSettingDriver.setCar_Action(0x03, 1, isOpen ? 0x01 : 0x02);
             }else {
                 ToastUtils.show(R.string.safetip);
             }
@@ -759,8 +738,10 @@ public class HomePagerActivity extends BaseActivity {
     public  void  setDoorLock(boolean isOpen){
         try {
             if(FlagProperty.Speed<5) {
-
-                ieCarDriver.setCar_Action(0x01, 1, isOpen ? 0x01 : 0x02);
+                carSettingDriver = DriverServiceManger.getInstance().getCarSettingDriver();
+                if(carSettingDriver!=null){
+                    carSettingDriver.setDoorsLocked(!isOpen);
+                }
             }else {
                 ToastUtils.show(R.string.safetip);
             }
@@ -771,7 +752,10 @@ public class HomePagerActivity extends BaseActivity {
     /*一件下窗*/
     public  void  OneKeyWindowOpen(){
         try {
-            ieCarDriver.set_OneKeyOpenWindow(0);
+            carSettingDriver = DriverServiceManger.getInstance().getCarSettingDriver();
+            if(carSettingDriver!=null){
+                carSettingDriver.triggerOneKeyWinOpen();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

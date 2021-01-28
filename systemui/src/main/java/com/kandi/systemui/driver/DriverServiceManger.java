@@ -31,7 +31,7 @@ public class DriverServiceManger {
 	}
 	
 	String sDrvSvrVersion = "(后台服务不可用)";
-	private static final String ACTION = "com.driverlayer.kdos_driverServer.RemoteService";
+	private static final String ACTION = "com.driverlayer.os_driverServer.RemoteService";
 
 	private static DriverServiceManger instance;
 	public static DriverServiceManger getInstance() {
@@ -101,7 +101,7 @@ public class DriverServiceManger {
 		ActivityManager manager = (ActivityManager) this.context.getSystemService(Context.ACTIVITY_SERVICE);
 		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
 			String str = service.service.getClassName();
-			if ("com.driverlayer.kdos_driverServer.DriverManager".equals(str)) {
+			if ("com.nushine.nshlbus.com.driverlayer.os_driverServer.DriverManager".equals(str)) {
 				return true;
 			}
 		}

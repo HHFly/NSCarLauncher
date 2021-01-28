@@ -337,13 +337,12 @@ public class CarCtrlFragment extends BaseFragment{
             try {
 
                 int ret = carSettingDrv.retreveCarInfo();
-                Log.i("testtest","=======refreshCarSettingViewButtonsStatus======="+ret);
-//                if(ret == 1){
-//                    setViewVisibility(R.id.loadingView,true);
-//                    return;
-//                } else {
-//                    setViewVisibility(R.id.loadingView,false);
-//                }
+                if(ret == 1){
+                    setViewVisibility(R.id.loadingView,true);
+                    return;
+                } else {
+                    setViewVisibility(R.id.loadingView,false);
+                }
 
 
                 //车门

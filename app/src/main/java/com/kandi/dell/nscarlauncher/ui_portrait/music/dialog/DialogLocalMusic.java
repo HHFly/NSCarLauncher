@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Handler;
@@ -321,12 +322,14 @@ public class DialogLocalMusic implements Observer {
 
 
 //                    App.get().getCurActivity().getMusicFragment().getDriverFragment().recoveryLast = false;
-                    musicDiverID =Pos;
-                    PlayerService.isPause = false;
-                    Intent i = new Intent(context, PlayerService.class);
-                    i.putExtra("MSG", FlagProperty.PLAY_MSG);
-                    context.startService(i);
-                    mAdapter.notifyDataSetChanged();
+                    if ( App.get().getAudioManager().requestAudioFocus(App.get().getCurActivity().getMusicFragment().afSystemChangeListener, 12, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                        musicDiverID =Pos;
+                        PlayerService.isPause = false;
+                        Intent i = new Intent(context, PlayerService.class);
+                        i.putExtra("MSG", FlagProperty.PLAY_MSG);
+                        context.startService(i);
+                        mAdapter.notifyDataSetChanged();
+                    }
 //                    App.get().getCurActivity().getMusicFragment().getDriverFragment().listStartPlayMusic();
                     }
 
@@ -507,17 +510,21 @@ public class DialogLocalMusic implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-      switch ((int)arg){
-          case 1:
-              if(dataMode==-1){
-                  fresh();
-                  tranportData();
-              }else {
-                  fresh(dataMode);
-                  tranportData();
-              }
-              break;
-      }
+        try{
+            switch ((int)arg){
+                case 1:
+                    if(dataMode==-1){
+                        fresh();
+                        tranportData();
+                    }else {
+                        fresh(dataMode);
+                        tranportData();
+                    }
+                    break;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
 

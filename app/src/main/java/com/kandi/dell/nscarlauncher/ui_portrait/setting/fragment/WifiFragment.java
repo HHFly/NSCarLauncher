@@ -57,6 +57,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
     private List<ScanResult> wifiList;// wifi列表
     private boolean isScan;
     private SwitchCompat aSwitchCompat;
+    public boolean error = false;
 
     public void setHomePagerActivity(HomePagerActivity homePagerActivity) {
         this.homePagerActivity = homePagerActivity;
@@ -207,6 +208,7 @@ public class WifiFragment extends BaseFragment implements CompoundButton.OnCheck
                 if (TextUtils.isEmpty(data)) {
                     return;
                 }
+                error = false;
                 new ConnectWifiThread().execute(text.name, data, String.valueOf(text.security_type));
                 EditTextUtils.hideKeyBroad(context,wifi_input_password);
                 dialog.dismiss();
@@ -486,7 +488,7 @@ class ConnectWifiThread extends AsyncTask<String, Integer, String> {
         WifiConfiguration config = WifiUtil.createWifiInfo(params[0], params[1], security_type, wifiManager);
         int networkId = wifiManager.addNetwork(config);
         if (null != config) {
-            wifiManager.enableNetwork(networkId, true);
+            boolean f = wifiManager.enableNetwork(networkId, true);
             wifiManager.saveConfiguration();
             return params[0];
         }

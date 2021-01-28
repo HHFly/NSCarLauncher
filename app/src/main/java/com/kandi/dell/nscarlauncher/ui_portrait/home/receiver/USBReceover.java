@@ -27,7 +27,7 @@ public class USBReceover extends BroadcastReceiver {
         String action = intent.getAction();
         if (action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
             Toast.makeText(context, R.string.USB接入, Toast.LENGTH_SHORT).show();
-            new Thread(new Runnable() {
+            /*new Thread(new Runnable() {
                 int loopcount =0;
                 @Override
                 public void run() {
@@ -79,7 +79,7 @@ public class USBReceover extends BroadcastReceiver {
                         }
                     }
                 }
-            }).start();
+            }).start();*/
         }
         else if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
             Toast.makeText(context, R.string.USB拔出, Toast.LENGTH_SHORT).show();

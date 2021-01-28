@@ -99,6 +99,17 @@ public class BTMusicFragment  extends BaseFragment {
                 break;
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(isPlay){
+            iv_bt_stop.setImageResource(R.mipmap.ic_play_big);
+        }else {
+            iv_bt_stop.setImageResource(R.mipmap.ic_music_stop);
+        }
+    }
+
     @Override
     public void Resume() {
 

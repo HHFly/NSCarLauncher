@@ -327,5 +327,6 @@
     <string name="低">低</string>
     <string name="中">中</string>
     <string name="高">高</string>
+    <string name="Wifi密码错误">Wifi密码错误</string>
 
 </resources>

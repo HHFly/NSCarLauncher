@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 
 public class SDBroadcastReceiver extends BroadcastReceiver {
     public static final String PATH_SD = "/mnt/media_rw/extsd/";
+    public static final String PATH_USB = "/mnt/media_rw/udisk/";
     boolean isSearch = false;
     public  Boolean  isSDOuting =false;//设备是否移除
     public  Boolean isFirst =true;
@@ -58,7 +59,8 @@ public class SDBroadcastReceiver extends BroadcastReceiver {
                                     Log.d("USBReceover", "exist:" + exist);
                                     if (exist) {
                                         File file = new File(PATH_SD);
-                                        if(!file.exists()){
+                                        File file2 = new File(PATH_USB);
+                                        if(!file.exists() && !file2.exists()){
                                             continue;
                                         }
                                         Thread.sleep(2000);
@@ -142,7 +144,7 @@ public class SDBroadcastReceiver extends BroadcastReceiver {
                     String str = a[0];//取出位置0处的字符串
 
                     if ((str.contains("/dev/block/vold")) &&
-                            (a[1].contains("extsd"))) {
+                            (a[1].contains("extsd") || a[1].contains("udisk"))) {
                         ret = true;
                     }
                 }

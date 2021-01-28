@@ -357,16 +357,18 @@ public class MusicFragment extends BaseFragment {
 //            if (flag_play) {
 //                bt_play.performClick();
 //            }
-            if (music_model == 2) { // 单曲循环模式不变换音乐图片
+            if ( App.get().getAudioManager().requestAudioFocus(afSystemChangeListener, 12, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                if (music_model == 2) { // 单曲循环模式不变换音乐图片
 //                gramophoneView.resetRoatate();
-            } else { // 其他模式
+                } else { // 其他模式
 //                 circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_PREV)));
-            }
+                }
 //            circle_image.roatateStart();
-            ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
-            MusicModel.getPrevMusic(App.get().getCurrentActivity(), music_model);
-            if(mAdapter != null){
-                mAdapter.notifyDataSetChanged();
+                ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
+                MusicModel.getPrevMusic(App.get().getCurrentActivity(), music_model);
+                if(mAdapter != null){
+                    mAdapter.notifyDataSetChanged();
+                }
             }
         }
     }
@@ -378,17 +380,19 @@ public class MusicFragment extends BaseFragment {
 //            if (flag_play) {
 //                bt_play.performClick();
 //            }
-            if (music_model == 2) { // 单曲循环模式不变换音乐图片
+            if ( App.get().getAudioManager().requestAudioFocus(afSystemChangeListener, 12, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                if (music_model == 2) { // 单曲循环模式不变换音乐图片
 //                circle_image.resetRoatate();
-            } else { // 其他模式
-                // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
-            }
+                } else { // 其他模式
+                    // circle_image.nextRoatate(getPlayDrawable(getDrawableId(DIRECTION_NEXT)));
+                }
 //            circle_image.roatateStart();
 
-            ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
-            MusicModel.getNextMusic(App.get().getCurrentActivity(), music_model);
-            if(mAdapter != null){
-                mAdapter.notifyDataSetChanged();
+                ViewHandler.sendMessage(ViewHandler.obtainMessage(MUSIC_BLUETOOTH_OPEN));
+                MusicModel.getNextMusic(App.get().getCurrentActivity(), music_model);
+                if(mAdapter != null){
+                    mAdapter.notifyDataSetChanged();
+                }
             }
         }
     }

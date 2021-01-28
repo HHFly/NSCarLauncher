@@ -302,7 +302,7 @@ public class FMFragment extends BaseFragment {
         if(mRule!=null) {
             mRule.setChannel(channel);
         }
-        SPUtil.getInstance(getContext(),FMCHANNEL).putFloat(FMCHANNEL,channel);
+        SPUtil.getInstance(App.get().getCurrentActivity(),FMCHANNEL).putFloat(FMCHANNEL,channel);
 
     }
     /*变换频道
