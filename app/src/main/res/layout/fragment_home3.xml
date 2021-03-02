@@ -13,7 +13,7 @@
 
         >
 
-        <include layout="@layout/item_app" />
+        <!--<include layout="@layout/item_app" />-->
         <include layout="@layout/item_video" />
         <include layout="@layout/item_setting"/>
 

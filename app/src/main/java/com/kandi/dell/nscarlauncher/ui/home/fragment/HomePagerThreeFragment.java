@@ -1,11 +1,14 @@
 package com.kandi.dell.nscarlauncher.ui.home.fragment;
 
+import android.util.Log;
 import android.view.View;
 
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.base.fragment.BaseFragment;
 import com.kandi.dell.nscarlauncher.ui.home.HomePagerActivity;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
+
+import java.io.File;
 
 public class HomePagerThreeFragment extends BaseFragment {
     private HomePagerActivity homePagerActivity;
@@ -29,7 +32,7 @@ public class HomePagerThreeFragment extends BaseFragment {
     @Override
     public void setListener() {
             setClickListener(R.id.rl_set);
-            setClickListener(R.id.rl_app);
+//            setClickListener(R.id.rl_app);
             setClickListener(R.id.rl_video);
     }
 
@@ -44,9 +47,9 @@ public class HomePagerThreeFragment extends BaseFragment {
             case R.id.rl_set:
                 homePagerActivity.jumpFragment(FragmentType.SET);
                 break;
-            case R.id.rl_app:
-                homePagerActivity.jumpFragment(FragmentType.APPLICATION);
-                break;
+//            case R.id.rl_app:
+//                homePagerActivity.jumpFragment(FragmentType.APPLICATION);
+//                break;
             case R.id.rl_video:
                 homePagerActivity.jumpFragment(FragmentType.VIDEO);
                 break;

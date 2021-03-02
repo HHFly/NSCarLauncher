@@ -49,17 +49,17 @@ public class SetData {
         setModel6.setLogo(R.mipmap.ic_set_date);
         data.add(setModel6);
 
-        SetModel setModel7 =new SetModel();
-        setModel7.setName(App.get().getString(R.string.车辆设置));
-        setModel7.setItem(SetType.CARSET);
-        setModel7.setLogo(R.mipmap.ic_set_carset);
-        data.add(setModel7);
+//        SetModel setModel7 =new SetModel();
+//        setModel7.setName(App.get().getString(R.string.车辆设置));
+//        setModel7.setItem(SetType.CARSET);
+//        setModel7.setLogo(R.mipmap.ic_set_carset);
+//        data.add(setModel7);
 
-        SetModel setModel8 =new SetModel();
-        setModel8.setName(App.get().getString(R.string.能量回收));
-        setModel8.setItem(SetType.RECOVERY);
-        setModel8.setLogo(R.mipmap.ic_set_recovery);
-        data.add(setModel8);
+//        SetModel setModel8 =new SetModel();
+//        setModel8.setName(App.get().getString(R.string.能量回收));
+//        setModel8.setItem(SetType.RECOVERY);
+//        setModel8.setLogo(R.mipmap.ic_set_recovery);
+//        data.add(setModel8);
 
         SetModel setModel9 =new SetModel();
         setModel9.setName(App.get().getString(R.string.升级));

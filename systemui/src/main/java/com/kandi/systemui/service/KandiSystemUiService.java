@@ -38,9 +38,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kandi.systemui.R;
-import com.kandi.systemui.driver.DriverServiceManger;
 import com.kandi.systemui.listen.MyPhoneStateListener;
-import com.kandi.systemui.receiver.CarPowerManangerAnimRecevie;
+//import com.kandi.systemui.receiver.CarPowerManangerAnimRecevie;
 import com.kandi.systemui.widget.DialogGunIn;
 import com.kandi.systemui.widget.DialogPowerIn;
 import com.kandi.systemui.widget.DialogVolumeControl;
@@ -52,7 +51,7 @@ public class KandiSystemUiService extends Service {
     public ComingReceiver comingReceiver;
     WindowManager mWindowManager,wm;
     LayoutParams wmParams; // WindowManager.LayoutParams
-    FrameLayout mFloatLayout ,phoneFloatLayout,mBottomLayout;
+    FrameLayout mFloatLayout ,phoneFloatLayout;
     private ImageView status_bar_wifi_btn,status_bar_3g_level_btn,status_bar_bluetooth_image,status_bar_3g_type_btn,status_bar_battery_imageView,center_img,iv_power,title_iv_sound,iv_car_tbox;
     private  TextView tv_t_power,status_bar_time_textview,tv_hangup,tv_answser,tv_phone_number,tv_home,tv_t_volume;
     private RelativeLayout Rlcenter;
@@ -60,7 +59,7 @@ public class KandiSystemUiService extends Service {
     private DialogVolumeControl dialogVolumeControl ;
     private DialogGunIn dialogGunIn;
     BluetoothController mBluetoothController;
-    CarPowerManangerAnimRecevie carPowerManangerAnimRecevie;
+    //    CarPowerManangerAnimRecevie carPowerManangerAnimRecevie;
     BatteryAndTimeController mBatteryAndTimeController;
     WifiController mWifiController;
     TelephonySignalController mTelephonySignalController;
@@ -72,7 +71,7 @@ public class KandiSystemUiService extends Service {
     public final static String ACTION_WHEEL_MUTE ="com.kangdi.BroadCast.Mute";//静音
     public final static String ACTION_RESET_CLEAR ="com.kandi.MASTER_CLEAR";//恢复出厂设置
     private float mPosX,mPosY,mCurPosX,mCurPosY;
-  public   static IKdBtService btservice;//蓝牙服务
+    public   static IKdBtService btservice;//蓝牙服务
     private WindowManager.LayoutParams wmParamDiaglogs = null;
     private  boolean isRecord =false;
     DialogPowerIn dialogPowerIn;
@@ -88,8 +87,6 @@ public class KandiSystemUiService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        DriverServiceManger.getInstance().startService(this);
         mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         window = new Dialog(this, R.style.nodarken_style).getWindow();
         //设置Window为全透明
@@ -97,7 +94,6 @@ public class KandiSystemUiService extends Service {
 
         createFloatView();
         createView();
-        createBottom();
         setListen();
         initHeader();
         Receiver();
@@ -120,14 +116,12 @@ public class KandiSystemUiService extends Service {
         if (mFloatLayout != null) {
             mWindowManager.removeView(mFloatLayout);
         }
-        if(mBottomLayout!=null){
-            mWindowManager.removeView(mBottomLayout);
-        }
+
         if (phoneFloatLayout != null) {
             wm.removeView(phoneFloatLayout);
         }
-            if (comingReceiver!=null){
-        this.unregisterReceiver(comingReceiver);
+        if (comingReceiver!=null){
+            this.unregisterReceiver(comingReceiver);
         }
     }
 
@@ -136,7 +130,7 @@ public class KandiSystemUiService extends Service {
     protected void initHeader() {
 
         mBluetoothController = new BluetoothController(this);
-        carPowerManangerAnimRecevie =new CarPowerManangerAnimRecevie(this);
+//        carPowerManangerAnimRecevie =new CarPowerManangerAnimRecevie(this);
         mBatteryAndTimeController = new BatteryAndTimeController(this);
         mWifiController = new WifiController(this);
         mTelephonySignalController = new TelephonySignalController(this);
@@ -145,28 +139,6 @@ public class KandiSystemUiService extends Service {
         MyListener.setContext(getApplicationContext());
         Tel = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         Tel.listen(MyListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
-    }
-    private void createBottom(){
-        wmParams=  new LayoutParams();
-        wmParams.type = LayoutParams.TYPE_STATUS_BAR;
-        wmParams.format = PixelFormat.RGBA_8888;
-        wmParams.flags = LayoutParams.FLAG_NOT_FOCUSABLE;
-        wmParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
-        wmParams.x = 0;
-        wmParams.y = 0;
-        wmParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        wmParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        LayoutInflater inflater = LayoutInflater.from(this);
-        mBottomLayout = (FrameLayout) inflater.inflate(R.layout.titlebar_new, null);
-        mWindowManager.addView(mBottomLayout, wmParams);
-
-        //        中间栏
-        center_img =(ImageView) mBottomLayout.findViewById(R.id.center_img);
-        iv_power =(ImageView) mBottomLayout.findViewById(R.id.iv_power);
-        title_iv_sound =(ImageView) mBottomLayout.findViewById(R.id.title_iv_sound);
-        tv_home =(TextView) mBottomLayout.findViewById(R.id.tv_home);
-        tv_t_volume =(TextView) mBottomLayout.findViewById(R.id.tv_t_volume);
-        Rlcenter =(RelativeLayout) mBottomLayout.findViewById(R.id.center);
     }
     private void createView() {
         wmParams=  new LayoutParams();
@@ -198,7 +170,13 @@ public class KandiSystemUiService extends Service {
 //        时间
         status_bar_time_textview = (TextView) mFloatLayout.findViewById(R.id.tv_title_date);
 
-
+//        中间栏
+        center_img =(ImageView) mFloatLayout.findViewById(R.id.center_img);
+        iv_power =(ImageView) mFloatLayout.findViewById(R.id.iv_power);
+        title_iv_sound =(ImageView) mFloatLayout.findViewById(R.id.title_iv_sound);
+        tv_home =(TextView) mFloatLayout.findViewById(R.id.tv_home);
+        tv_t_volume =(TextView) mFloatLayout.findViewById(R.id.tv_t_volume);
+        Rlcenter =(RelativeLayout) mFloatLayout.findViewById(R.id.center);
 
         mFloatLayout.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
@@ -210,38 +188,20 @@ public class KandiSystemUiService extends Service {
         center_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              gotoHome();
+                gotoHome();
 
             }
         });
         iv_power.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread() {
-                    public void run () {
-                        try {
-                            Instrumentation inst= new Instrumentation();
-                            inst.sendKeyDownUpSync(KeyEvent. KEYCODE_BACK);
-                        } catch(Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }.start();
+                gotoHome();
             }
         });
         tv_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread() {
-                    public void run () {
-                        try {
-                            Instrumentation inst= new Instrumentation();
-                            inst.sendKeyDownUpSync(KeyEvent. KEYCODE_BACK);
-                        } catch(Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }.start();
+                gotoHome();
             }
         });
         title_iv_sound.setOnClickListener(new View.OnClickListener() {
@@ -320,7 +280,7 @@ public class KandiSystemUiService extends Service {
             registerReceiver(comingReceiver, intentFilter);
         }
     }
-//返回首页
+    //返回首页
     private boolean isCalling=false;
 
     public void setCalling(boolean calling) {
@@ -367,7 +327,7 @@ public class KandiSystemUiService extends Service {
             dialogVolumeControl.setContent(this);
             dialogVolumeControl.incomingShow();
         }
-          dialogVolumeControl.show();
+        dialogVolumeControl.show();
 
     }
     /*
@@ -525,35 +485,27 @@ public class KandiSystemUiService extends Service {
         }
 
     }
-        public void setTbox(int mode){
-            switch (mode){
-                case 0 :
-                case 3 :
-                   iv_car_tbox.setVisibility(View.INVISIBLE);
-                    break;
-                case 1:
-                    iv_car_tbox.setVisibility(View.VISIBLE);
-                    iv_car_tbox.setImageResource(R.mipmap.ic_tbox_close);
-                    break;
-                case 2:
-                    iv_car_tbox.setVisibility(View.VISIBLE);
-                    iv_car_tbox.setImageResource(R.mipmap.ic_tbox_wirless);
-                    break;
-            }
+    public void setTbox(int mode){
+        switch (mode){
+            case 0 :
+            case 3 :
+                iv_car_tbox.setVisibility(View.INVISIBLE);
+                break;
+            case 1:
+                iv_car_tbox.setVisibility(View.VISIBLE);
+                iv_car_tbox.setImageResource(R.mipmap.ic_tbox_close);
+                break;
+            case 2:
+                iv_car_tbox.setVisibility(View.VISIBLE);
+                iv_car_tbox.setImageResource(R.mipmap.ic_tbox_wirless);
+                break;
         }
+    }
     public void setBluetoothState(boolean isBluetoothEnable) {
         if (isBluetoothEnable) {
             status_bar_bluetooth_image.setImageResource(R.mipmap.home_top_btn4_on);
         } else {
             status_bar_bluetooth_image.setImageResource(R.mipmap.home_top_btn4_off);
-        }
-    }
-    public boolean restartKdService() {
-        if (!DriverServiceManger.getInstance().isServiceRunning()) {
-            DriverServiceManger.getInstance().startService(this);
-            return false;
-        } else {
-            return true;
         }
     }
     //设置语言
@@ -564,7 +516,7 @@ public class KandiSystemUiService extends Service {
             default: tv_home.setText("首页");tv_t_volume.setText("音量");tv_hangup.setText("挂断");tv_answser.setText("接听");break;
         }
     }
-  /*判断是顶部app是否是桌面*/
+    /*判断是顶部app是否是桌面*/
 
     private boolean isHome() {
 

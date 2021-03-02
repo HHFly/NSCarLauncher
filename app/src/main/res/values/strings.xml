@@ -245,4 +245,20 @@
     <string name="setting_failure">设置失败</string>
     <string name="preview">预览</string>
 
+    <string name="left_light">左转向灯</string>
+    <string name="right_light">右转向灯</string>
+    <string name="totallight">灯光总开关</string>
+    <string name="near_light">近光灯</string>
+    <string name="far_light">远光灯</string>
+    <string name="overtake_light">超车灯</string>
+    <string name="rearfog_light">后雾灯</string>
+    <string name="main_light1">主照明灯1</string>
+    <string name="main_light2">主照明灯2</string>
+    <string name="wiperint">雨刮间歇档</string>
+    <string name="wiperlo">雨刮低速挡</string>
+    <string name="wiperhi">雨刮高速挡</string>
+    <string name="spray">喷淋开关</string>
+    <string name="auto_light">自动大灯开关</string>
+    <string name="auto_wiper">自动雨刮开关</string>
+
 </resources>

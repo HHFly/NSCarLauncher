@@ -113,7 +113,8 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
         setClickListener(R.id.FM);
         setClickListener(R.id.bt_music);
         setClickListener(R.id.music);
-        setClickListener(R.id.rl_air);
+//        setClickListener(R.id.rl_air);
+        setClickListener(R.id.rl_carctrl);
         setClickListener(R.id.controll_air);
         setClickListener(R.id.wave_view);
         setClickListener(R.id.tv_w_time);
@@ -343,20 +344,23 @@ public class HomePagerOneFragment extends BaseFragment  implements WeatherSearch
             case R.id.music:
                 homePagerActivity.jumpFragment(FragmentType.MUSIC);
                 break;
-            case R.id.rl_air:
-                if(FlagProperty.staus==0) {
-                    JumpUtils.actAPK(getActivity(), FragmentType.AIRCONTROLL);
-                    JumpUtils.act60In(getActivity());
-                }else {
-                    Toast.makeText(getActivity(), R.string.空调未连接, Toast.LENGTH_SHORT).show();
-                }
-                    break;
+//            case R.id.rl_air:
+//                if(FlagProperty.staus==0) {
+//                    JumpUtils.actAPK(getActivity(), FragmentType.AIRCONTROLL);
+//                    JumpUtils.act60In(getActivity());
+//                }else {
+//                    Toast.makeText(getActivity(), R.string.空调未连接, Toast.LENGTH_SHORT).show();
+//                }
+//                    break;
+            case  R.id.rl_carctrl:
+                homePagerActivity.jumpFragment(FragmentType.CARCONTROLL);
+                break;
             case  R.id.controll_air:
                 aircontroll();
                 break;
             case R.id.wave_view:
-                JumpUtils.actAPK(getActivity(),FragmentType.CARPOWER);
-                JumpUtils.actRightIn(getActivity());
+//                JumpUtils.actAPK(getActivity(),FragmentType.CARPOWER);
+//                JumpUtils.actRightIn(getActivity());
                 break;
             case R.id.tv_w_time:
                 startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));

@@ -119,6 +119,9 @@ public class PlayerService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		is_start_speed = false;
+		if(intent==null){
+			return super.onStartCommand(intent, flags, startId);
+		}
 		msg = intent.getIntExtra("MSG", 0);			//播放信息
 		if (msg == FlagProperty.PLAY_MSG) {	//直接播放音乐
 			play(0);

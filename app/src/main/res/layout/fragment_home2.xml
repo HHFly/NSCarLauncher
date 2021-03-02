@@ -15,7 +15,8 @@
 
         <include layout="@layout/item_phone" />
         <include layout="@layout/item_music"/>
-        <include layout="@layout/item_carcontroll"/>
+        <!--<include layout="@layout/item_carcontroll"/>-->
+        <include layout="@layout/item_app" />
         <include layout="@layout/item_navigation"/>
     </LinearLayout>
 </LinearLayout>

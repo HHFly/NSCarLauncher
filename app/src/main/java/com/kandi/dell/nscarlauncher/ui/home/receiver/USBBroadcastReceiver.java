@@ -17,10 +17,10 @@ public class USBBroadcastReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
 //            Toast.makeText(context, R.string.USB接入, Toast.LENGTH_SHORT).show();
-            homePagerActivity.getDialogLocalMusic().usbStatus = true;
-           if(!intent.getExtras().getBoolean("userStatus",false)){
-               homePagerActivity.getDialogLocalMusic().ScanVideoMusic(context,0);
-           }
+//            homePagerActivity.getDialogLocalMusic().usbStatus = true;
+//           if(!intent.getExtras().getBoolean("userStatus",false)){
+//               homePagerActivity.getDialogLocalMusic().ScanVideoMusic(context,0);
+//           }
 
 
         } else if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {

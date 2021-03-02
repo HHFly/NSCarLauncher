@@ -45,7 +45,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.driverlayer.kdos_driverServer.IECarDriver;
+import com.driverlayer.os_driverServer.IECarDriver;
 import com.kandi.dell.nscarlauncher.R;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.Activity.BaseActivity;
@@ -64,6 +64,7 @@ import com.kandi.dell.nscarlauncher.receiver.CarMFLReceiver;
 import com.kandi.dell.nscarlauncher.ui.application.AppFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.BTMusicFragment;
 import com.kandi.dell.nscarlauncher.ui.bluetooth.FlagProperty;
+import com.kandi.dell.nscarlauncher.ui.carctrl.CarCtrlFragment;
 import com.kandi.dell.nscarlauncher.ui.fm.FMFragment;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.FragmentType;
 import com.kandi.dell.nscarlauncher.ui.home.androideunm.HandleKey;
@@ -121,6 +122,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
     public VideoFragment videoFragment;//视频
     public BlueToothSetFragment blueToothSetFragment;//蓝牙设置
     public DvrFragment dvrFragment;
+    public CarCtrlFragment carCtrlFragment;
     public BaseActivity context;
     private ArrayList<HomeModel> mData;
     static Dialog alertDialog;//来电弹框
@@ -385,6 +387,7 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         dialogLocalMusic.ScanAllDaTa(this);
 
         dvrFragment = new DvrFragment();
+        carCtrlFragment = new CarCtrlFragment();
     }
 
     /*隐藏fragemt*/
@@ -414,6 +417,11 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
         if(FragmentType.DVR==mCurFragment.getmType()){
             if(homePagerActivity.getDvrFragment()!=null){
                 homePagerActivity.getDvrFragment().Pause();
+            }
+        }
+        if(FragmentType.CARCONTROLL==mCurFragment.getmType()){
+            if(homePagerActivity.getCarCtrlFragment()!=null){
+                homePagerActivity.getCarCtrlFragment().Pause();
             }
         }
         if(homePagerActivity.getBtMusicFragment() != null){
@@ -533,6 +541,10 @@ public class HomePagerActivity extends BaseActivity implements ViewPager.OnPageC
             case FragmentType.BTSET:
                 fragemntType = 0;
                 switchFragment(homePagerActivity.getBlueToothSetFragment());
+                break;
+            case FragmentType.CARCONTROLL:
+                fragemntType = 0;
+                switchFragment(homePagerActivity.getCarCtrlFragment());
                 break;
         }
     }
@@ -1092,211 +1104,211 @@ public int getSim(int num) {
     /*电量车程*/
     private   void setCarPoewr(){
 
-        int[] power =new int[10];
-        try {
-            if(ieCarDriver!=null) {
-               ieCarDriver.Ecoc_getGeneral_Car(power);
-//                if (!tv_power.getText().equals(String.valueOf(power[10]))) {
-//                    int i =power[10]%10;
-//                    FlagProperty.CarPower =power[10]/10;
-////                    setTvText(R.id.tv_t_power, String.valueOf(power[0])+"%");
-//                    tv_t_power.setText(FlagProperty.CarPower +"%");
-//                    iv_t_power.setImageResource(getPower(power[10]));
-////                    setIvImage(R.id.iv_t_power, getPower(power[0]));
+//        int[] power =new int[10];
+//        try {
+//            if(ieCarDriver!=null) {
+//               ieCarDriver.Ecoc_getGeneral_Car(power);
+////                if (!tv_power.getText().equals(String.valueOf(power[10]))) {
+////                    int i =power[10]%10;
+////                    FlagProperty.CarPower =power[10]/10;
+//////                    setTvText(R.id.tv_t_power, String.valueOf(power[0])+"%");
+////                    tv_t_power.setText(FlagProperty.CarPower +"%");
+////                    iv_t_power.setImageResource(getPower(power[10]));
+//////                    setIvImage(R.id.iv_t_power, getPower(power[0]));
+////                }
+//                    FlagProperty.Speed =power[7];
+//                    /*剩余里程*/
+//                if (homePagerOneFragment != null) {
+//                    if (homePagerOneFragment.tv_w_speed.getText().toString().equals(String.valueOf(power[1]))) {
+//                        return;
+//                    }
+//                    if (0 == power[1]) {
+//                        homePagerOneFragment.tv_w_speed.setTextColor(Color.parseColor("#F03A53"));
+//                    } else {
+//                        homePagerOneFragment.tv_w_speed.setTextColor(Color.parseColor("#FFFFFF"));
+//                    }
+//
+//                    homePagerOneFragment.tv_w_speed.setText(String.valueOf(power[1]));
 //                }
-                    FlagProperty.Speed =power[7];
-                    /*剩余里程*/
-                if (homePagerOneFragment != null) {
-                    if (homePagerOneFragment.tv_w_speed.getText().toString().equals(String.valueOf(power[1]))) {
-                        return;
-                    }
-                    if (0 == power[1]) {
-                        homePagerOneFragment.tv_w_speed.setTextColor(Color.parseColor("#F03A53"));
-                    } else {
-                        homePagerOneFragment.tv_w_speed.setTextColor(Color.parseColor("#FFFFFF"));
-                    }
-
-                    homePagerOneFragment.tv_w_speed.setText(String.valueOf(power[1]));
-                }
-            }else {
-
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+//            }else {
+//
+//            }
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
     }
     /*车辆模式*/
     public  void setCarMode(){
-        int[] mode =new int[2];
-        try {
-            if(ieCarDriver!=null){
-            ieCarDriver.GetTBoxStatus(mode);
-            if(FlagProperty.CarMode!=mode[1]){
-                if(homePagerOneFragment!=null){
-                    switch (mode[1]){
-                        case 0:
-                            homePagerOneFragment.tv_w_authorize.setText(R.string.默认状态);
-                            break;
-                        case 1:
-                            homePagerOneFragment.tv_w_authorize.setText(R.string.车辆已授权);
-                            break;
-                        case 2:
-                            homePagerOneFragment.tv_w_authorize.setText(R.string.车辆未授权);
-                            break;
-                    }
-                }
-            }
-            }else {
-
-            }
-
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+//        int[] mode =new int[2];
+//        try {
+//            if(ieCarDriver!=null){
+//            ieCarDriver.GetTBoxStatus(mode);
+//            if(FlagProperty.CarMode!=mode[1]){
+//                if(homePagerOneFragment!=null){
+//                    switch (mode[1]){
+//                        case 0:
+//                            homePagerOneFragment.tv_w_authorize.setText(R.string.默认状态);
+//                            break;
+//                        case 1:
+//                            homePagerOneFragment.tv_w_authorize.setText(R.string.车辆已授权);
+//                            break;
+//                        case 2:
+//                            homePagerOneFragment.tv_w_authorize.setText(R.string.车辆未授权);
+//                            break;
+//                    }
+//                }
+//            }
+//            }else {
+//
+//            }
+//
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /*车辆模式*/
     public  void setCarWork(){
-        int work;
-        try {
-            if(ieCarDriver!=null) {
-                work = ieCarDriver.getCar_WorkMode();
-
-                    if (homePagerOneFragment != null) {
-                        switch (work) {
-                            case 0x01:
-                                homePagerOneFragment.tv_work.setText(R.string.Economic);
-                                break;
-                            case 0x02:
-                                homePagerOneFragment.tv_work.setText(R.string.Sport);
-                                break;
-                            case 0x03:
-                                homePagerOneFragment.tv_work.setText(R.string.Irascible);
-                                break;
-                            case 0x04:
-                                homePagerOneFragment.tv_work.setText(R.string.NEDC);
-                                break;
-                            default:
-                                homePagerOneFragment.tv_work.setText(R.string.Sport);
-                                break;
-                        }
-                    }
-
-            }
-            else {
-
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+//        int work;
+//        try {
+//            if(ieCarDriver!=null) {
+//                work = ieCarDriver.getCar_WorkMode();
+//
+//                    if (homePagerOneFragment != null) {
+//                        switch (work) {
+//                            case 0x01:
+//                                homePagerOneFragment.tv_work.setText(R.string.Economic);
+//                                break;
+//                            case 0x02:
+//                                homePagerOneFragment.tv_work.setText(R.string.Sport);
+//                                break;
+//                            case 0x03:
+//                                homePagerOneFragment.tv_work.setText(R.string.Irascible);
+//                                break;
+//                            case 0x04:
+//                                homePagerOneFragment.tv_work.setText(R.string.NEDC);
+//                                break;
+//                            default:
+//                                homePagerOneFragment.tv_work.setText(R.string.Sport);
+//                                break;
+//                        }
+//                    }
+//
+//            }
+//            else {
+//
+//            }
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
     }
     /*空调*/
     public  void setAir(){
-        int[] air=new int[8];
-
-        try {
-            if(ieCarDriver!=null) {
-                staus = ieCarDriver.GetAirCon_Status(air);
-
-                    if (homePagerOneFragment != null&&staus==0) {
-                        homePagerOneFragment.setTvText(R.id.tv_air,String.valueOf(air[0])+"℃");
-
-                    }
-                if(0x10==(air[4]&0x30)){
-                        if(1!=HomePagerOneFragment.isAirOpen){
-                            HomePagerOneFragment.isAirOpen=1;
-                            homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.AIROPEN);
-                        }
-
-                }else {
-                    if(0!=HomePagerOneFragment.isAirOpen){
-                        HomePagerOneFragment.isAirOpen=0;
-                        homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.AIRCLOSE);
-                    }
-                }
-            }
-            else {
-
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+//        int[] air=new int[8];
+//
+//        try {
+//            if(ieCarDriver!=null) {
+//                staus = ieCarDriver.GetAirCon_Status(air);
+//
+//                    if (homePagerOneFragment != null&&staus==0) {
+//                        homePagerOneFragment.setTvText(R.id.tv_air,String.valueOf(air[0])+"℃");
+//
+//                    }
+//                if(0x10==(air[4]&0x30)){
+//                        if(1!=HomePagerOneFragment.isAirOpen){
+//                            HomePagerOneFragment.isAirOpen=1;
+//                            homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.AIROPEN);
+//                        }
+//
+//                }else {
+//                    if(0!=HomePagerOneFragment.isAirOpen){
+//                        HomePagerOneFragment.isAirOpen=0;
+//                        homePagerActivity.getHomePagerOneFragment().pagerOneHnadler.sendEmptyMessage(HandleKey.AIRCLOSE);
+//                    }
+//                }
+//            }
+//            else {
+//
+//            }
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
     }
     /*空调操作成功返回0*/
     public static  int controllAir(boolean isON){
-        try {
-            if(ieCarDriver!=null) {
-                if(staus==1){
-                    return  -1;
-                }
-                if(isON) {
-                  return   ieCarDriver.setAirCon_Para(0xffff, 0xffff, 0xffff, 0xffff, 1);//
-                }
-                return   ieCarDriver.setAirCon_Para(0xffff, 0xffff, 0xffff, 0xffff, 9);
-            }
-            else {
-
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-
-            return -1;
-        }
+//        try {
+//            if(ieCarDriver!=null) {
+//                if(staus==1){
+//                    return  -1;
+//                }
+//                if(isON) {
+//                  return   ieCarDriver.setAirCon_Para(0xffff, 0xffff, 0xffff, 0xffff, 1);//
+//                }
+//                return   ieCarDriver.setAirCon_Para(0xffff, 0xffff, 0xffff, 0xffff, 9);
+//            }
+//            else {
+//
+//            }
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//
+//            return -1;
+//        }
         return 0;
     }
     /*整车控制状态*/
     public static  void  getCarState(){
-        int [] carState =new int[16];
-        try {
-        if(ieCarDriver!=null) {
-            FlagProperty.BCMStaus= ieCarDriver.getCarState(carState);
-            if(HomePagerTwoFragment.backbox!=carState[8]){
-                HomePagerTwoFragment.backbox=carState[8];
-                homePagerActivity.homePagerTwoFragment.myHandler.sendEmptyMessage(3);
-            }
-            if (HomePagerTwoFragment.centerlock!=carState[7]){
-                HomePagerTwoFragment.centerlock=carState[7];
-                homePagerActivity.homePagerTwoFragment.myHandler.sendEmptyMessage(4);
-            }
-        }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+//        int [] carState =new int[16];
+//        try {
+//        if(ieCarDriver!=null) {
+//            FlagProperty.BCMStaus= ieCarDriver.getCarState(carState);
+//            if(HomePagerTwoFragment.backbox!=carState[8]){
+//                HomePagerTwoFragment.backbox=carState[8];
+//                homePagerActivity.homePagerTwoFragment.myHandler.sendEmptyMessage(3);
+//            }
+//            if (HomePagerTwoFragment.centerlock!=carState[7]){
+//                HomePagerTwoFragment.centerlock=carState[7];
+//                homePagerActivity.homePagerTwoFragment.myHandler.sendEmptyMessage(4);
+//            }
+//        }
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
 
     }
     /*设置后备箱状态*/
     public static  void setBackBox(boolean isOpen){
-        try {
-            if(FlagProperty.Speed<5) {
-
-                ieCarDriver.setCar_Action(0x03, 1, isOpen ? 0x01 : 0x02);
-            }else {
-             ToastUtils.show(R.string.safetip);
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            if(FlagProperty.Speed<5) {
+//
+//                ieCarDriver.setCar_Action(0x03, 1, isOpen ? 0x01 : 0x02);
+//            }else {
+//             ToastUtils.show(R.string.safetip);
+//            }
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
     }
     /*设置中控门锁*/
     public static void  setDoorLock(boolean isOpen){
-        try {
-            if(FlagProperty.Speed<5) {
-
-                ieCarDriver.setCar_Action(0x01, 1, isOpen ? 0x01 : 0x02);
-            }else {
-                ToastUtils.show(R.string.safetip);
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            if(FlagProperty.Speed<5) {
+//
+//                ieCarDriver.setCar_Action(0x01, 1, isOpen ? 0x01 : 0x02);
+//            }else {
+//                ToastUtils.show(R.string.safetip);
+//            }
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
     }
     /*一件下窗*/
     public static void  OneKeyWindowOpen(){
-        try {
-          ieCarDriver.set_OneKeyOpenWindow(0);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+//        try {
+//          ieCarDriver.set_OneKeyOpenWindow(0);
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
     }
     /**
      * 内存不够时
@@ -1435,6 +1447,10 @@ public int getSim(int num) {
 
     public DvrFragment getDvrFragment() {
         return dvrFragment;
+    }
+
+    public CarCtrlFragment getCarCtrlFragment() {
+        return carCtrlFragment;
     }
 
     public HomePagerOneFragment getHomePagerOneFragment() {

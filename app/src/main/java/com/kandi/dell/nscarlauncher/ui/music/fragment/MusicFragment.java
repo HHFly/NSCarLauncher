@@ -212,8 +212,12 @@ public class MusicFragment extends BaseFragment {
     /*记忆上次音乐播放状态*/
     public void recoveryLast(){
         File file_usb = new File(homePagerActivity.getDialogLocalMusic().PATH_USB);
-        if(!file_usb.exists() || (file_usb.exists() && file_usb.list().length == 0)){
-            MusicCollectionDao.deleteFavByUsbOut(context,"/storage/udisk");
+        try{
+            if(!file_usb.exists() || (file_usb.exists() && file_usb.list().length == 0)){
+                MusicCollectionDao.deleteFavByUsbOut(context,"/storage/udisk");
+            }
+        }catch (Exception e){
+            return;
         }
         homePagerActivity.getDialogLocalMusic().ColData = MusicCollectionDao.getAllFav(getContext());
         music_model = SPUtil.getInstance(getContext(),MUSICMODEL).getInt(MUSICMODEL,music_model);
@@ -371,16 +375,18 @@ public class MusicFragment extends BaseFragment {
 
     //文件操作初始化
     public void initOperate(){
-        musicLocalAdapter.isShow = false;
-        if(recodeStatu != null){
-            recodeStatu.clear();
-        }
-        if(btn_select_all.isChecked()){
-            isUserCheck = false;
-            btn_select_all.setChecked(false);
+        if(musicLocalAdapter != null){
+            musicLocalAdapter.isShow = false;
+            if(recodeStatu != null){
+                recodeStatu.clear();
+            }
+            if(btn_select_all.isChecked()){
+                isUserCheck = false;
+                btn_select_all.setChecked(false);
+            }
+            musicLocalAdapter.notifyDataSetChanged();
         }
         operate_layout.setVisibility(View.GONE);
-        musicLocalAdapter.notifyDataSetChanged();
     }
 
     /*初始化进度条*/
@@ -493,10 +499,8 @@ public class MusicFragment extends BaseFragment {
         if(homePagerActivity.getDialogLocalMusic().data.size()==0) {
             return;
         }
-        if (App.get().getAudioManager().requestAudioFocus(afChangeListener, 12,
-                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
-                && App.get().getAudioManager().requestAudioFocus(afSystemChangeListener, AudioManager.STREAM_MUSIC,
-                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+        if ( App.get().getAudioManager().requestAudioFocus(afSystemChangeListener, 23,
+                AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             system_flag = true;
             am_flag = true;
 //            if (homePagerActivity.getDialogLocalMusic().data.size() > 0) {
@@ -743,9 +747,7 @@ public class MusicFragment extends BaseFragment {
     // 开始播放音乐
     public  void listStartPlayMusic() {
         App.get().PauseServiceFMBTMUSic();
-        if (audioManager.requestAudioFocus(afChangeListener, 12,
-                AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
-                && audioManager.requestAudioFocus(afSystemChangeListener, AudioManager.STREAM_MUSIC,
+        if ( App.get().getAudioManager().requestAudioFocus(afSystemChangeListener, 23,
                 AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             system_flag = true;
             am_flag = true;

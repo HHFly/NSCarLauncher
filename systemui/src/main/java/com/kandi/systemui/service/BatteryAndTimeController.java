@@ -7,8 +7,6 @@ import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.kandi.systemui.base.App;
-import com.kandi.systemui.driver.DriverServiceManger;
-import com.kandi.systemui.driver.EcocEnergyInfoDriver;
 import com.kandi.systemui.util.TimeUtils;
 
 
@@ -31,34 +29,6 @@ public class BatteryAndTimeController {
         addBatteryAndTimeObserve();
     }
 
-    private void refreshPannel() {
-        EcocEnergyInfoDriver model = DriverServiceManger.getInstance().getEcocEnergyInfoDriver();
-        //EnergyInfoDriver model = DriverServiceManger.getInstance().getEnergyInfoDriver();
-
-        if(model != null) {
-            try {
-                model.retreveGeneralInfo();
-            }catch (RemoteException e) {
-                e.printStackTrace();
-                return;
-            }
-            if (model.getCargingState() == 1) {
-                mService.setBetteryLevel(-1);
-            }else {
-                mService.setBetteryLevel((int)model.getSOC());
-            }
-            mService.setRemainMileage((int) model.getSOC());
-            if(mService.getDialogPowerIn().isShow){
-                mService.getDialogPowerIn().setProgress((int) model.getSOC());
-//                mService.getDialogPowerIn().setProgress(50);
-            }
-//            Log.d("Power", "CargingState:" + model.getCargingState() + ":Bettery:" + model.getSOC() + ":RemainMileage:" + model.getRemainMileage());
-        }
-        else {
-            mService.restartKdService();
-        }
-    }
-
     private void refreshTime() {
 //        Date date = new Date();
 //
@@ -71,7 +41,6 @@ public class BatteryAndTimeController {
     Handler mHandler = new Handler(){
         public void handleMessage(android.os.Message msg) {
             if (msg.what == 0) {
-                refreshPannel();
 //                refreshTime();
                 WifiController.update(mService);
             }

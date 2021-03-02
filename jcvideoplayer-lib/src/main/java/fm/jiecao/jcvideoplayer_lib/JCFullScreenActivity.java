@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.gyf.barlibrary.BarHide;
-import com.gyf.barlibrary.ImmersionBar;
+//import com.gyf.barlibrary.BarHide;
+//import com.gyf.barlibrary.ImmersionBar;
 
 import java.lang.reflect.Constructor;
 
@@ -53,18 +53,18 @@ public class JCFullScreenActivity extends Activity {
         context.startActivity(intent);
     }
     static View decor;
-    private  static ImmersionBar mImmersionBar;
+//    private  static ImmersionBar mImmersionBar;
     public static void hideAction(){
         if(decor!=null) {
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
 
-        mImmersionBar.hideBar(BarHide.FLAG_HIDE_BAR).init();   //所有子类都将继承这些相同的属性
+//        mImmersionBar.hideBar(BarHide.FLAG_HIDE_BAR).init();   //所有子类都将继承这些相同的属性
     }
     public static void showAction(){
 
 
-        mImmersionBar.hideBar(BarHide.FLAG_SHOW_BAR).init();   //所有子类都将继承这些相同的属性
+//        mImmersionBar.hideBar(BarHide.FLAG_SHOW_BAR).init();   //所有子类都将继承这些相同的属性
     }
     private JCVideoPlayer mJcVideoPlayer;
     /**
@@ -85,7 +85,7 @@ public class JCFullScreenActivity extends Activity {
         decor = this.getWindow().getDecorView();
 //        decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 //        mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.hideBar(BarHide.FLAG_HIDE_BAR).init();   //所有子类都将继承这些相同的属性
+//        mImmersionBar.hideBar(BarHide.FLAG_HIDE_BAR).init();   //所有子类都将继承这些相同的属性
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         try {

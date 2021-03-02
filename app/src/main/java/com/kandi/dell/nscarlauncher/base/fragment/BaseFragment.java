@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gyf.barlibrary.ImmersionBar;
+//import com.gyf.barlibrary.ImmersionBar;
 import com.kandi.dell.nscarlauncher.app.App;
 import com.kandi.dell.nscarlauncher.base.Activity.BaseActivity;
 import com.kandi.dell.nscarlauncher.base.ShowLoadingDialogListener;
@@ -85,6 +85,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public void Resume(){
 
     }
+
+    public void Pause(){
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -104,7 +108,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             mViews.clear();
             mViews = null;
         }
-        ImmersionBar.with(this).destroy(); //必须调用该方法，防止内存泄漏
+//        ImmersionBar.with(this).destroy(); //必须调用该方法，防止内存泄漏
     }
 
     /**

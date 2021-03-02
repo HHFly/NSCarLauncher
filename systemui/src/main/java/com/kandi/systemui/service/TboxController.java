@@ -3,10 +3,6 @@ package com.kandi.systemui.service;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.text.format.DateFormat;
-
-import com.kandi.systemui.driver.DriverServiceManger;
-import com.kandi.systemui.driver.EcocEnergyInfoDriver;
-import com.kandi.systemui.driver.TBoxInfoDriver;
 import com.kandi.systemui.util.TimeUtils;
 
 import java.util.Locale;
@@ -38,30 +34,10 @@ public class TboxController {
     Handler mHandler = new Handler(){
         public void handleMessage(android.os.Message msg) {
             if (msg.what == 0) {
-                refreshPannel();
 //                refreshTime();
 
             }
 
         };
     };
-
-    private void refreshPannel() {
-        TBoxInfoDriver model = DriverServiceManger.getInstance().getM_tBoxInfoDriver();
-        //EnergyInfoDriver model = DriverServiceManger.getInstance().getEnergyInfoDriver();
-
-        if(model != null) {
-
-            if (model.getTBoxInfo() !=-1) {
-                mService.setTbox(model.getTBoxStatus());
-
-
-            }
-
-
-        }
-        else {
-            mService.restartKdService();
-        }
-    }
 }

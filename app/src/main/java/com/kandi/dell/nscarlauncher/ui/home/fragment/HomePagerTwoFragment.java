@@ -72,6 +72,7 @@ public class HomePagerTwoFragment extends BaseFragment {
         setClickListener(R.id.nav_home);
         setClickListener(R.id.nav_company);
         setClickListener(R.id.iv_phone_logo);
+        setClickListener(R.id.rl_app);
         setPalyListen();
     }
     @Override

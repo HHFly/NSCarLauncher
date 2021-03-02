@@ -477,9 +477,7 @@ public class DialogLocalMusic  {
      * @return
      */
     private  void getMediaFile(File file, final int choose) {
-
         file.listFiles(new FileFilter() {
-
             @Override
             public boolean accept(File file) {
 
@@ -488,8 +486,9 @@ public class DialogLocalMusic  {
                 int i = name.indexOf('.');
                 if (i != -1) {
                     try {
-//                        Log.d("1", "accept: "+name);
-                        name = name.substring(i);
+                        Log.d("1", "accept: "+name);
+                        int length =name.split("\\.").length;
+                        name = "." +name.split("\\.")[length-1];
                         if ((choose == 0 || choose == 1) && (name.equalsIgnoreCase(".mp3") || name.equalsIgnoreCase(".ogg") || name.equalsIgnoreCase(".wmv"))) {
                             MediaMetadataRetriever mmr = new MediaMetadataRetriever();
                             mmr.setDataSource(file.getPath());
@@ -543,7 +542,7 @@ public class DialogLocalMusic  {
                             return true;
                         }
                     }catch (Exception e){
-
+                        e.printStackTrace();
                     }
                     // 判断是不是目录
                 } else if (file.isDirectory()) {

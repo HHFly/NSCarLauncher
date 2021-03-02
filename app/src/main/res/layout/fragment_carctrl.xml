@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_f_fm_bg"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="80px"
+        android:layout_marginRight="80px"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/bt_left_light_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_left_light_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_left_light" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/left_light"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bt_right_light_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_right_light_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_right_light" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/right_light"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bt_total_light_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_total_light_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_total_light" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/totallight"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bt_near_light_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_near_light_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_near_light" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/near_light"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bt_far_light_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_far_light_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_far_light" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/far_light"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bt_overtake_light_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_overtake_light_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_overtake_light" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/overtake_light"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bt_rearfog_light_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_rearfog_light_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_rearfog_light" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/rearfog_light"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bt_main_light1_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_main_light1_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_main_light" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/main_light1"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20px"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:id="@+id/bt_main_light2_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_main_light2_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_main_light" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/main_light2"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bt_wiperint_gear_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_wiperint_gear_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_wiperint_gear" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/wiperint"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bt_wiperlo_gear_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_wiperlo_gear_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_wiperlo_gear" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/wiperlo"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bt_wiperhi_gear_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_wiperhi_gear_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_wiperhi_gear" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/wiperhi"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bt_spray_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_spray_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_spray" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/spray"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bt_autolight_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_autolight_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_autolight" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/auto_light"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bt_auto_wiper_layout"
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/bt_auto_wiper_img"
+                    android:layout_width="198px"
+                    android:layout_height="194px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25px"
+                    android:background="@drawable/select_auto_wiper" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="@string/auto_wiper"
+                    android:textColor="@color/white"
+                    android:textSize="28px" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="198px"
+                android:layout_height="265px"
+                android:layout_weight="1"
+                android:visibility="invisible">
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

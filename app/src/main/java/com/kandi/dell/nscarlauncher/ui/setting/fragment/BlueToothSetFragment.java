@@ -304,7 +304,9 @@ public class BlueToothSetFragment extends BaseFragment implements CompoundButton
             switch (msg.what) {
                 case BLUETOOTH_INFO_NAME:
                     try {
+                        Log.i("testtest","========tv_set_bluetooth_name==========");
                         tv_set_bluetooth_name.setText(info[btservice.btGetLocalName(info)]);
+                        Log.i("testtest","========tv_set_bluetooth_name=====11111====="+tv_set_bluetooth_name.getText().toString());
                         tv_set_bluetooth_password.setText(FlagProperty.BtCode);
                     } catch (RemoteException e) {
                         e.printStackTrace();

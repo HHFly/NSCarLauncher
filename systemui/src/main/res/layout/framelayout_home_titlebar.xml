@@ -6,64 +6,64 @@
         android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <RelativeLayout
-        android:background="@android:color/transparent"
-        android:visibility="visible"
-        android:layout_width="match_parent"
-        android:layout_height="50px"
-      >
+        <RelativeLayout
+            android:background="@android:color/transparent"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="50px"
+            >
 
-        <ImageView
-            android:id="@+id/tv_signal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="40px"/>
-        <ImageView
-            android:id="@+id/iv_signal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/tv_signal"
-            />
-        <ImageView
-            android:id="@+id/iv_wifi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_signal"
-            android:layout_marginLeft="25px"
+            <ImageView
+                android:id="@+id/tv_signal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40px"/>
+            <ImageView
+                android:id="@+id/iv_signal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_signal"
+                />
+            <ImageView
+                android:id="@+id/iv_wifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_signal"
+                android:layout_marginLeft="25px"
 
-            />
-        <ImageView
-            android:id="@+id/iv_blueTooth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_wifi"
-            android:layout_marginLeft="25px"
+                />
+            <ImageView
+                android:id="@+id/iv_blueTooth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_wifi"
+                android:layout_marginLeft="25px"
 
-            />
-        <ImageView
+                />
+            <ImageView
 
-            android:id="@+id/iv_car_tbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_blueTooth"
-            android:layout_marginLeft="25px"
+                android:id="@+id/iv_car_tbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_blueTooth"
+                android:layout_marginLeft="25px"
 
-            />
+                />
 
-        <ImageView
-            android:visibility="invisible"
-            android:id="@+id/iv_car_record"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_car_tbox"
-            android:layout_marginLeft="25px"
-            />
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/iv_car_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_car_tbox"
+                android:layout_marginLeft="25px"
+                />
             <TextView
                 android:id="@+id/tv_title_date"
                 android:layout_width="wrap_content"
@@ -74,27 +74,27 @@
                 android:textSize="18px"
                 android:textColor="#ffffff"
                 />
+            <ImageView
+                android:id="@+id/iv_t_power"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14px"
+                android:layout_toLeftOf="@+id/tv_title_date"
+                android:layout_marginRight="25px"
+                android:background="@mipmap/home_top_btn1_01"
+                />
+            <TextView
+                android:id="@+id/tv_t_power"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/iv_t_power"
+                android:layout_marginRight="10px"
+                android:textSize="18px"
+                android:textColor="#ffffff"
+                />
 
-        <ImageView
-            android:id="@+id/iv_t_power"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="25px"
-            android:layout_marginTop="14px"
-            android:layout_toLeftOf="@+id/tv_title_date"
-            android:background="@mipmap/home_top_btn1_01" />
-        <TextView
-            android:id="@+id/tv_t_power"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/iv_t_power"
-            android:layout_marginRight="10px"
-            android:textSize="18px"
-            android:textColor="#ffffff"
-            />
-
-    </RelativeLayout>
-
+        </RelativeLayout>
+        <include layout="@layout/titlebar" />
     </RelativeLayout>
 </FrameLayout>

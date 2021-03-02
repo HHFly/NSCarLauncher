@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 
 import com.kandi.dell.nscarlauncher.BuildConfig;
 import com.kandi.dell.nscarlauncher.base.Activity.BaseActivity;
+import com.kandi.dell.nscarlauncher.candriver.DriverServiceManger;
 import com.kandi.dell.nscarlauncher.common.util.FrescoUtils;
 import com.kandi.dell.nscarlauncher.common.util.JsonUtils;
 import com.kandi.dell.nscarlauncher.common.util.NSLifecycleHandle;
@@ -126,7 +127,7 @@ App extends MultiDexApplication {
         s_app = this;
         //初始化服务
         SystemProperties.set("sys.nushine.k28_application", BuildConfig.VERSION_NAME);
-
+        DriverServiceManger.getInstance().startService(this);
         ToastUtils.init(this);
         registerActivityLifecycleCallbacks(new NSLifecycleHandle());
         //初始化Fresco
